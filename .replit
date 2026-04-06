@@ -1,0 +1,39 @@
+modules = ["web", "nodejs-20", "php-8.2"]
+[agent]
+expertMode = true
+
+[nix]
+channel = "stable-25_05"
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Start application"
+
+[[workflows.workflow]]
+name = "Start application"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd tog4dev-frontend && npm start"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[deployment]
+deploymentTarget = "autoscale"
+run = ["bash", "-c", "cd tog4dev-frontend && PORT=5000 node dist/tog4dev-frontend/server/server.mjs"]
+build = ["bash", "-c", "cd tog4dev-frontend && npm install --legacy-peer-deps && npm run build:prod"]
