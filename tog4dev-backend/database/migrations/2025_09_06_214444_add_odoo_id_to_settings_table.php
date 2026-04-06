@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('settings', function (Blueprint $table) {
-            $table->integer("odoo_id")->nullable();
-        });
+        if (!Schema::hasColumn('settings', 'odoo_id')) {
+            Schema::table('settings', function (Blueprint $table) {
+                $table->integer("odoo_id")->nullable();
+            });
+        }
     }
 
     /**

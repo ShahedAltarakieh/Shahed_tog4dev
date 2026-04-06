@@ -8,9 +8,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('payments', function (Blueprint $table) {
-            $table->unsignedBigInteger('odoo_id')->nullable()->after('id');
-        });
+        if (!Schema::hasColumn('payments', 'odoo_id')) {
+            Schema::table('payments', function (Blueprint $table) {
+                $table->unsignedBigInteger('odoo_id')->nullable()->after('id');
+            });
+        }
     }
 
     public function down(): void

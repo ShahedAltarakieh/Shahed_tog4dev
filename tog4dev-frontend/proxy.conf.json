@@ -1,11 +1,11 @@
 {
-  "/api/v1/**": {
-    "target": "https://stage-admin.tog4dev.com/api/v1",
+  "/backend/api/**": {
+    "target": "http://localhost:3000",
     "changeOrigin": true,
     "secure": false,
     "logLevel": "debug",
     "pathRewrite": {
-      "^/api/v1": ""
+      "^/backend": ""
     }
   }
 }

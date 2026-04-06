@@ -1,5 +1,5 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {Location, NgIf} from '@angular/common';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit, Inject, PLATFORM_ID} from '@angular/core';
+import {Location, NgIf, isPlatformBrowser} from '@angular/common';
 import {RouterOutlet, ActivatedRoute, Router, NavigationStart, NavigationEnd, NavigationError} from '@angular/router';
 
 import { StorageService } from './core/storage/storage.service';
@@ -48,13 +48,18 @@ export class AppComponent implements OnInit, AfterViewInit{
     public basketService: BasketService,
     private route: ActivatedRoute,
     public apiService: ApiService,
-    private gtm: GoogleTagManagerService
+    private gtm: GoogleTagManagerService,
+    @Inject(PLATFORM_ID) private platformId: Object
    ) {
     translate.addLangs(['en', 'ar']);
         const queryParams = { ...this.route.snapshot.queryParams };
   }
 
   ngAfterViewInit() {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     this.editProfileService.getUserInfo().subscribe({
       next: (value: any) => {
         this.authService.is_loggedin = true;
@@ -78,13 +83,32 @@ export class AppComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(): void { 
+    this.setSiteLanguageFromUrl();
+  
+    this.storageService.siteLanguage$.subscribe((lang: 'en' | 'ar') => {
+      this.handleSiteLanguage(lang);
+    });
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.isLoading = true;
+      } else if (event instanceof NavigationEnd || event instanceof NavigationError) {
+        setTimeout( () => {
+          this.isLoading = false;
+        }, 1000)
+      }
+    });
+
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     if(this.isProd){
       if (window.location.protocol !== 'https:') {
         window.location.href = 'https://' + window.location.host + window.location.pathname;
       }
     }
 
-    // Handle adding t4d param from cookie when in Facebook app
     this.handleT4dParam();
 
     this.router.events.pipe(
@@ -95,12 +119,6 @@ export class AppComponent implements OnInit, AfterViewInit{
         page_path: event.urlAfterRedirects
       });
     });
-    
-    this.setSiteLanguageFromUrl();
-  
-    this.storageService.siteLanguage$.subscribe((lang: 'en' | 'ar') => {
-      this.handleSiteLanguage(lang);
-    });
 
     var session_id = this.cookieService.get("session_id");
     if(session_id == null || session_id == ''){
@@ -110,16 +128,6 @@ export class AppComponent implements OnInit, AfterViewInit{
     if(this.cookieService.get("session_id") == null){
       window.location.href = 'https://' + window.location.host + window.location.pathname;
     }
-
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-        this.isLoading = true; // Show loader on route change
-      } else if (event instanceof NavigationEnd || event instanceof NavigationError) {
-        setTimeout( () => {
-          this.isLoading = false;
-        }, 1000)
-      }
-    });
 
     this.route.queryParams.subscribe(params => {
       const referralCode = params['t4d'];            
