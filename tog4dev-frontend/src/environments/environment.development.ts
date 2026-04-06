@@ -1,6 +1,6 @@
 export const environment = {
     production: false,
     gtmId: "GTM-59NPBJP322",
-    apiUrl: '/backend/',
+    apiUrl: 'http://127.0.0.1:8000/',
     networkUrl: 'https://test-network.mtf.gateway.mastercard.com/checkout/pay/'
 };
