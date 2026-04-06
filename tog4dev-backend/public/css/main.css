@@ -1,0 +1,9 @@
+
+.cursor-pointer{
+    cursor: pointer;
+  }
+  
+  .card.active{
+    border: 2px solid #13585D;
+    background-color: #f9f9f9;
+  }

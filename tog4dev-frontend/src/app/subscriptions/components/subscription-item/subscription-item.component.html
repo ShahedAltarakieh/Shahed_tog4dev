@@ -1,0 +1,66 @@
+@if(payment){
+    <div class="subscrption-item-container">
+      <img class="thumbnail" style="width:148px;height:112px;object-fit: cover" src="{{ payment.item.image }}" alt="{{ payment.item.title }}">
+
+      <div class="subscription-info w-100">
+        <div class="project-header">
+          <h3 class="project-name">{{ payment.item.title }}</h3>
+
+          <div class="project-active-with-price">
+            <div class="active-status">
+                @if(payment.status == "active"){
+                    <span>{{ "active" | translate }}</span>
+                    <div class="status-circle active-circle"></div>
+                }
+                @if(payment.status == "inactive"){
+                    <span>{{ "inactive" | translate }}</span>
+                    <div class="inactive-circle active-circle"></div>
+                }
+            </div>
+
+            <span class="price">{{ payment.amount }}{{ "JOD" | translate }}</span>
+          </div>
+        </div>
+
+        <div class="project-info">
+          {{ payment.item.description }}
+        </div>
+
+        <div class="project-location-with-category">
+          <div class="project-location">
+            <img src="/app/assets/images/home/location.svg" alt="location">
+
+            <span>{{ payment.item.location }}</span>
+          </div>
+
+          <div class="project-category">
+            <span>{{ payment.item.category_name }}</span>
+
+            <img src="/app/assets/images/home/category-2.svg" alt="category">
+          </div>
+        </div>
+
+        <div class="project-billing-info">
+          <div class="project-billing-history">
+            <img src="/app/assets/images/shared/time.svg" alt="time">
+
+            <span>{{ "next payment" | translate }} {{ payment.next_payment }}</span>
+          </div>
+
+            @if(payment.status == "active"){
+                <div class="billing-cancel-cta" (click)="show_unsubscribe_modal = true">
+                    {{ 'cancel subscription' | translate }}
+                </div>
+            }
+            @if(payment.status == "inactive"){
+                <div class="billing-cancel-cta">
+                    {{ 'canceled' | translate }}
+                </div>
+            }
+        </div>
+      </div>
+    </div>
+    <app-modal (valueEmitted)="closePopup($event)" (confirmEmitted)="unsubscribe_item()" [confirm_button_label]="'cancel subscription'" [title]="'are you sure you want to unsubscribe?' | translate " [show]="show_unsubscribe_modal" [confirm_remove_button]="true">
+        <p>{{ "by unsubscribing, your monthly delegation that helps improve the lives of others will stop. Do you want to proceed with unsubscribing?" | translate }}</p>
+    </app-modal>
+}

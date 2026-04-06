@@ -1,0 +1,103 @@
+<footer class="footer">
+    <div class="footer-container">
+        <div class="list-container">
+            <div class="footer-sections-container">
+                <div class="lists-wrapper">
+                    <div class="projects-list-container">
+                        <h2 class="list-title">{{ "projects" | translate }}</h2>
+
+                        <ul class="items-list projects-list">
+                            <li><a routerLink="{{ 'route-individual-projects' | translate }}">{{ "individual projects" | translate }}</a></li>
+
+                            <li><a routerLink="{{ 'route-organizations-projects' | translate }}">{{ "organizations projects" | translate }}</a></li>
+
+                            <li><a routerLink="{{ 'route-crowdfunding-projects' | translate }}">{{ "b2c public shares" | translate }}</a></li>
+                        </ul>
+                    </div>
+                    <div class="explore-list-container">
+                        <h2 class="list-title">{{ "explore more" | translate }}</h2>
+
+                        <ul class="items-list explore-list">
+                            <li><a routerLink="{{ 'route-individual-qatra' | translate }}">{{ "water project" | translate }}</a></li>
+                            
+                            <li><a routerLink="{{ 'route-individual-basar' | translate }}">{{ "cataract project" | translate }}</a></li>
+
+                            <li><a routerLink="{{ 'route-individual-etaam' | translate }}">{{ "food project" | translate }}</a></li>
+                            
+                            <li><a routerLink="{{ 'route-individual-etqan' | translate }}">{{ "tech project" | translate }}</a></li>
+                        </ul>
+                    </div>
+                    <div class="company-list-container">
+                        <h2 class="list-title">{{ "about the company" | translate }}</h2>
+
+                        <ul class="items-list company-list">
+                            <li><a [routerLink]="aboutUsRoutes[storageService.siteLanguage$.value]">{{ "about us" | translate }}</a></li>
+
+                            <li><a [routerLink]="ngOverseRoutes[storageService.siteLanguage$.value]">{{ "ngoverse" | translate }}</a></li>
+
+                            <li><a [routerLink]="contactUsRoutes[storageService.siteLanguage$.value]">{{ "contact us" | translate }}</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <app-stay-in-touch-form />
+            </div>
+        </div>
+
+        <div class="footer-links-container">
+            <div class="footer-links">
+                <div>
+                    <img src="/app/assets/images/shared/logo.svg" alt="Together For Development | معاً للتنمية" />
+                    <p class="text-white beta-version">Beta Version</p>
+                </div>
+                <nav class="static-pages-links">
+                    <ul class="flex-wrap justify-content-center">
+                        <li><a routerLink="{{ 'route-terms-and-conditions' | translate }}">{{"Terms & Conditions"| translate}}</a></li>
+                        <li><a routerLink="{{ 'route-privacy-policy' | translate }}">{{"Privacy Policy"| translate}}</a></li>
+                        <li><a routerLink="{{ 'route-refund-policy' | translate }}">{{ "refund policy" | translate }}</a></li>
+                        <li><a routerLink="{{ 'route-subscription-policy' | translate }}">{{ "subscription policy" | translate }}</a></li>
+                        <li><a routerLink="{{ 'route-cookie-policy' | translate }}">{{ "cookie policy" | translate }}</a></li>
+                    </ul>
+                </nav>
+
+                <ul class="socia-media-list">
+                    <li>
+                        <a href="https://www.facebook.com/share/h4FZ2p8TsLWE2vKy/?mibextid=LQQJ4d" target="_blank">
+                            <img src="/app/assets/images/home/facebook.svg" alt="facebook" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://x.com/Tog4Dev?t=YxqzngaJv1WOAeS1241qMw&s=09" target="_blank">
+                            <img src="/app/assets/images/home/x.svg" alt="twitter / X"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.instagram.com/tog4dev/profilecard/?igsh=MmEyNnFhZDR2cDY4" target="_blank">
+                            <img src="/app/assets/images/home/instagram.svg" alt="instagram" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://snapchat.com/t/kwXP9FSM" target="_blank">
+                            <img src="/app/assets/images/home/snapchat.svg" alt="snapchat"/>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <p class="text-white mt-2 mb-1">
+            {{ "together for intermediation services llc (together for development)" | translate }}
+        </p>
+        <a href="https://maps.app.goo.gl/iFyZqwoa4QreQgLZ9?g_st=ipc" target="_blank" class="text-white mb-2 block">
+            {{ "11953, office 103, hayat building, al-shareeh st. near queen rania St., amman, jordan -" | translate }}
+            <span dir="ltr">+962779400900</span>
+        </a>
+        <p class="text-white mt-2 mb-2">
+            <img src="/app/assets/images/payments.webp" alt="allow payment card" style="height: 50px;margin-top: 7px;">
+        </p>
+        <div class="all-rights-reserved-text">
+            {{ "together for intermediation services (together for development) | all rights reserved ©2025" | translate }}
+            <p class="mb-0 mt-2" style="direction: ltr">Powered by <a class="text-white" href="https://artikeys.com/" target="_blank">Artikeys</a>&nbsp;<img src="/app/assets/images/shared/artikeys.webp" height="32px"></p>
+        </div>
+    </div>
+</footer>
+  

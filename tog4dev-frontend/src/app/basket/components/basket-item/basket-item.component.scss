@@ -1,0 +1,132 @@
+.thumbnail {
+  img{
+    width: 148px;
+    height: 112px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 14px;
+    overflow: hidden;
+    @media all and (max-width: 768px) {
+      width: 100%;
+    }
+  }
+}
+
+.basket-item-container {
+  display: flex;
+  gap: 24px;
+  @media all and (max-width: 768px) {
+    flex-direction: column;
+  }
+  .location-info {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+  }
+
+  .category-info {
+    align-items: center;
+    display: flex;
+    gap: 6px;
+    margin-left: auto;
+  }
+  &.ar{
+    .category-info {
+      margin-left: unset;
+      margin-right: auto;
+    }
+  }
+}
+
+.info-container {
+  flex: 1;
+}
+
+.info-title-container {
+  display: flex;
+  gap: 32px;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.info-title {
+
+}
+
+.info-price-with-edit {
+  align-items: center;
+  display: flex;
+  gap: 32px;
+}
+
+.info-desc {
+  max-width: 568px;
+  margin-bottom: 10px;
+}
+
+.location-wrapper { 
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.beneficiary-inputs {
+  margin-bottom: 12px;
+
+  .beneficiary-label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .beneficiary-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 8px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .beneficiary-input {
+    flex: 1;
+    min-width: 180px;
+    max-width: 75%;
+    height: 46px;
+    background-color: #fff;
+  }
+
+  .dedication-phrase-select {
+    height: 46px;
+    min-width: 160px;
+    max-width: 240px;
+    background-color: #fff;
+  }
+}
+
+.info-learn-how-to-contribute {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+
+  a {
+    color: #1283DA;
+    text-decoration: none;
+  }
+}
+
+.basket-item-remove {
+  all: unset;
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+
+  img {
+    max-width: 12px;
+  }
+}

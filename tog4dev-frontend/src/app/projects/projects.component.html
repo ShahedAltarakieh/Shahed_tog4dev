@@ -1,0 +1,42 @@
+<div class="container">
+
+    <div class="categories-list">
+        <app-categories-list [type]="type" [list]="categoriesList" [selected_slug]="slug_en"/>
+    </div>
+
+    <div *ngIf="selected_category">
+        <app-hero-section [details]="selected_category" [quickContribution]="quickContribution"/>
+        <p class="dummy-text text-center">
+            {{ selected_category.description }}
+        </p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-6 col-sm-8 col-12">
+            <p class="text-center primary-color my-4">{{ "wherever there is a need," | translate }} <br>{{ "we take the initiative together." | translate }}</p>
+        </div>
+    </div>
+    <div class="row items-list">
+        @for (item of projectsList; track item) {
+            <div class="col-12 col-lg-6 col-md-6 col-xl-4 pb-4">
+                <app-project-list-item ngskiphydration [project]="item" />
+            </div>
+        }
+    </div>
+</div>
+
+<div class="fact-and-statistics" *ngIf="factsList.length > 0">
+    <app-facts-and-statistics [factsList]="factsList"/>
+</div>
+
+<div id="our-stories" class="our-stories" *ngIf="storiesList.length > 0">
+    <app-our-stories [storiesList]="storiesList" />
+</div>
+
+<div id="testimonials" class="why-together" *ngIf="testimonialsList.length > 0">
+    <app-testimonials [testimonialsList]="testimonialsList"/>
+</div>
+
+<div class="our-partners" *ngIf="partnersList.length > 0">
+    <app-our-partners [partnersList]="partnersList"/>
+</div>

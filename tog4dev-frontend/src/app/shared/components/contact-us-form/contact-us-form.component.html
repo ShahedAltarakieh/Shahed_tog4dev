@@ -1,0 +1,120 @@
+<form class="contact-us-form">
+    <div class="row">
+        <div class="form-group col-md-6">
+            <app-basic-input
+                [inputAttr]="{
+                  id: 'first name',
+                  name: 'first name',
+                  label: 'first name',
+                  placeholder: 'your first name',
+                  isRequired: true,
+                }"
+                [value]="contactUsFormService.contactUsForm.firstName.value"
+                [errorMsg]="contactUsFormService.contactUsForm.firstName.errorMsg"
+                inputType='first name'
+                (valueChanged)="contactUsFormService.contactUsForm.firstName.value = $event"
+                (errorChanged)="firstNameErrorHandler($event)"
+            />
+        </div>
+        <div class="form-group col-md-6">
+            <app-basic-input
+                [inputAttr]="{
+                  id: 'last name',
+                  name: 'last name',
+                  label: 'last name',
+                  placeholder: 'your last name',
+                  isRequired: true,
+                }"
+                [value]="contactUsFormService.contactUsForm.lastName.value"
+                [errorMsg]="contactUsFormService.contactUsForm.lastName.errorMsg"
+                inputType='last name'
+                (valueChanged)="contactUsFormService.contactUsForm.lastName.value = $event"
+                (errorChanged)="lastNameErrorHandler($event)"
+            />
+        </div>
+        <div class="form-group col-md-6">
+
+            <app-select-dropdown
+                id="country"
+                [items]="countries_list"
+                [value]="contactUsFormService.contactUsForm.country.value"
+                [errorMsg]="contactUsFormService.contactUsForm.country.errorMsg"
+                [selectedDropdownValue]="country_selected.country_name_english"
+                icon="{{ country_flag }}"
+                label="country"
+                placeholder="Your Country"
+                rightIcon="mobile-arrow.svg"
+                (valueChanged)="contactUsFormService.contactUsForm.country.value = $event"
+                (errorChanged)="countryErrorHandler($event)"
+            />
+        </div>
+        <div class="form-group col-md-6">
+            <app-basic-input
+                [inputAttr]="{ id: 'organization name', name: 'organization name', label: 'organization name', placeholder: 'organization name', isRequired: false}"
+                [value]="contactUsFormService.contactUsForm.organizationName.value"
+                [errorMsg]="contactUsFormService.contactUsForm.organizationName.errorMsg"
+                inputType="organization name"
+                (valueChanged)="contactUsFormService.contactUsForm.organizationName.value= $event"
+                (errorChanged)="organizationNameErrorHandler($event)"
+            />
+        </div>
+        <div class="form-group col-12">
+            <app-basic-input
+                [inputAttr]="{
+                  id: 'email',
+                  name: 'email',
+                  label: 'e-mail',
+                  placeholder: 'enter your email',
+                  isRequired: true,
+                }"
+                [value]="contactUsFormService.contactUsForm.email.value"
+                [errorMsg]="contactUsFormService.contactUsForm.email.errorMsg"
+                inputType='email'
+                (valueChanged)="contactUsFormService.contactUsForm.email.value = $event"
+                (errorChanged)="emailErrorHandler($event)"
+            />
+        </div>
+        <div class="form-group col-12">
+            <app-mobile-number
+                [value]="contactUsFormService.contactUsForm.phone.value"
+                [errorMsg]="contactUsFormService.contactUsForm.phone.errorMsg"
+                (valueChanged)="contactUsFormService.contactUsForm.phone.value = $event"
+                (errorChanged)="mobileErrorHandler($event)"
+            />
+        </div>
+        <div class="form-group col-12">
+            <app-textarea
+                [inputAttr]="{ id: 'message', name: 'message', label: 'message', placeholder: 'write here', isRequired: true }"
+                [value]="contactUsFormService.contactUsForm.message.value"
+                [errorMsg]="contactUsFormService.contactUsForm.message.errorMsg"
+                (valueChanged)="contactUsFormService.contactUsForm.message.value = $event"
+                (errorChanged)="messageErrorHandler($event)"
+            />
+        </div>
+        <div class="form-group col-12">
+            <button
+                class="submit-btn"
+                type="button"
+                [disabled]="!contactUsFormService.contactUsForm.country.isValid ||
+                !contactUsFormService.contactUsForm.email.isValid ||
+                !contactUsFormService.contactUsForm.firstName.isValid ||
+                !contactUsFormService.contactUsForm.lastName.isValid ||
+                !contactUsFormService.contactUsForm.message.isValid ||
+                !contactUsFormService.contactUsForm.phone.isValid"
+                (click)="submitForm()"
+            >{{ "send" | translate }}</button>
+        </div>
+    </div>
+</form>
+<app-modal [title]="'contact request' | translate " [show]="show_popup" (valueEmitted)="closePopup($event)">
+    @if(type == 1){
+        <p>{{ "we deeply appreciate your commitment to creating positive impact!" | translate }}</p>
+        <p class="d-sm-none">{{ "your request has been successfully received, and our team will contact you soon" | translate }}</p>
+        <p class="d-none d-sm-block">{{ "your request has been successfully received, and our team will contact you soon to explore opportunities for collaboration and enhancing community impact together. if you have any urgent inquiries, please feel free to contact us at +962779400900" | translate}}</p>
+    }
+    @if(type == 2 || type == 3){
+        <p>{{ "thank you for your commitment to making a difference!" | translate }}</p>
+        <p class="d-sm-none">{{ "your request has been successfully received, and our team will contact you soon" | translate }}</p>
+        <p class="d-none d-sm-block">{{ "your request has been successfully submitted, and we will reach out to you soon to continue this journey of giving together. if you need any urgent assistance, please contact us at +962779400900" | translate }}</p>
+    }
+</app-modal>

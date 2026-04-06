@@ -1,0 +1,19 @@
+<div class="stay-in-touch-container">
+  <form>
+    <p class="title">{{ "stay connected" | translate }}</p>
+
+    <div class="email-address-container">
+      <input class="email-input" type="email" [value]="emailValue" placeholder="{{ 'e-mail' | translate}}" (input)="onEmailChange($event)" />
+
+      <button class="form-submit-btn" type="button" (click)="onSubmitClick()">
+        <img src="/app/assets/images/shared/arrow-black.svg" alt="arrow black"/>
+      </button>
+    </div>
+
+    @if (footerService.newsLetterResponseMsg) {
+      <p class="response-message">{{ footerService.newsLetterResponseMsg }}</p>
+    }
+
+    <p class="description">{{ "Want to stay updated with our latest news and projects? Share your email below:" | translate }}</p>
+  </form>
+</div>

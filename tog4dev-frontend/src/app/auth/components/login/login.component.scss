@@ -1,0 +1,93 @@
+.login-section{
+  margin-top: 40px;
+  margin-bottom: 82px;
+  border-radius: 20px;
+  border:2px solid #DBDBDB;
+  padding: 60px;
+
+  .separator {
+    background-color: #CFCFCF;
+    height: 1px;
+    margin-bottom: 35px;
+    position: relative;
+    width: 100%;
+
+    //&::after {
+    //  background: white;
+    //  color: #CFCFCF;
+    //  content: "OR";
+    //  font-size: 11px;
+    //  font-weight: 700;
+    //  left: 50%;
+    //  padding-inline: 5px;
+    //  position: absolute;
+    //  top: 50%;
+    //  transform: translate(-50%, -50%);
+    //}
+  }
+
+  .signup-platforms {
+    margin-bottom: 35px;
+
+    ul{
+      gap: 10px;
+    }
+
+    &-item{
+      width: 100%;
+      
+      &-btn{
+        background: #ffffff;
+        border-radius: 6px;
+        border:1px solid #D2D5DA;
+        padding-bottom:10px;
+        padding-top:10px;
+        width: 100%;
+      }
+    }
+  }
+}
+
+.login-title {
+  font-size: 23px;
+}
+
+.login-desc {
+  font-size: 13px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-bottom: 10px;
+}
+
+.remember-me-container {
+  display: flex;
+  font-size: 16px;
+  font-weight: 500;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.forget-password {
+  color: #E12828;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 15px;
+  text-decoration: underline;
+}
+
+.submit-btn {
+  background-color: #FECD0F;
+  border-radius: 15px;
+  font-weight: 700;
+  height: 40px;
+}
+
+@media all and (max-width: 768px) {
+  .login-section{
+    padding: 30px;
+  }
+}

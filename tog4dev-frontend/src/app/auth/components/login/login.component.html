@@ -1,0 +1,64 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5 col-sm-7 col-12">
+
+            <div class="login-section bg-white">
+                <h1 class="login-title">{{ "login" | translate }}</h1>
+                
+                <p class="login-desc">{{ "welcome back! Log in to access your account and join us in making a difference. choose your preferred method to get started." | translate }}</p>
+                
+                <div class="signup-platforms d-none">
+                    <ul class="list-unstyled d-flex">
+                        <li class="signup-platforms-item"><button class="signup-platforms-item-btn"><img alt="apple" src="/app/assets/images/auth/apple.svg"></button></li>
+                        <li class="signup-platforms-item"><button class="signup-platforms-item-btn"><img alt="facebook" src="/app/assets/images/auth/facebook.svg"></button></li>
+                        <li class="signup-platforms-item"><button class="signup-platforms-item-btn"><img alt="google" src="/app/assets/images/auth/google.svg"></button></li>
+                    </ul>
+                </div>
+
+                <div class="separator"></div>
+
+                <form (submit)="loginUser($event)" class="form-container">
+                    <div class="input-container">
+                        <app-basic-input 
+                            [inputAttr]="{ id: 'email', name: 'email', label: 'e-mail', placeholder: 'enter your email', isRequired: true, icon: 'email'}"
+                            [value]="loginService.loginForm.email.value"
+                            [errorMsg]="loginService.loginForm.email.errorMsg"
+                            inputType="email"
+                            (valueChanged)="loginService.loginForm.email.value = $event"
+                            (errorChanged)="emailErrorHandler($event)"
+                        />
+
+                        <app-basic-input 
+                            [inputAttr]="{ id: 'password', name: 'password', label: 'password', placeholder: 'enter your password', isRequired: true, icon: 'eye'}"
+                            [value]="loginService.loginForm.password.value"
+                            [errorMsg]="loginService.loginForm.password.errorMsg"
+                            inputType="password"
+                            (valueChanged)="loginService.loginForm.password.value = $event"
+                            (errorChanged)="passwordErrorHandler($event)"
+                        />
+                    </div>
+
+                    <div class="remember-me-container">
+                        <input type="checkbox" id="remember-me" name="remember-me" (input)="onRememberMeCheck($event)">
+                        <label for="remember-me">{{ 'remember me' | translate }}</label>
+                    </div>
+
+                    <a  [routerLink]="forgetRoutes[storageService.siteLanguage$.value]" class="forget-password mb-2 d-block">{{ "forget password?" | translate }}</a>
+                    <div class="alert alert-danger p-2" style="font-size:14px;" *ngIf="error_message">
+                        {{ error_message | translate }}
+                    </div>
+                    <button
+                        class="submit-btn btn w-100" 
+                        type="submit"
+                        [disabled]="(!loginService.loginForm.email.isValid || !loginService.loginForm.password.isValid) || isLoading"
+                    >
+                        {{ "login" | translate}}
+                    </button>
+                </form>
+                <p class="text-center mt-3">
+                    {{ "don't have an account?" | translate }} <a [routerLink]="signupRoutes[storageService.siteLanguage$.value]">{{ "sign up" | translate }}</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

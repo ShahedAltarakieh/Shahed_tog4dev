@@ -1,0 +1,30 @@
+<h2 class="section-title">{{ 'beneficiaries Feedback' | translate}}</h2>
+
+<div class="why-together-wrapper {{ storageService.siteLanguage$.value }}">
+  <div class="control-icon next-icon">
+    <img src="/app/assets/images/shared/arrow.svg" alt="arrow"/>
+  </div>
+  <div class="control-icon previous-icon">
+    <img src="/app/assets/images/shared/arrow.svg" alt="arrow"/>
+  </div>
+
+  <div class="swiper" #swiperContainer>
+    <div class="swiper-wrapper">
+        @for (item of testimonialsList; track item) {
+          <div class="swiper-slide">
+            <div class="slide-info">
+              <p class="description">{{ item.description }}</p>
+              <span class="author">{{ item.name }}</span>
+                @if(item.location){
+                  <span class="location"><img src="/app/assets/images/shared/pin.png" alt="pin" style="width: 16px;"> {{ item.location }}</span>
+                }
+            </div>
+
+            <div class="slide-img">
+                <img [src]="item.image" alt="{{ item.name }}" class="img-fluid h-100 w-100">
+            </div>
+          </div>
+        }
+    </div>
+  </div>
+</div>

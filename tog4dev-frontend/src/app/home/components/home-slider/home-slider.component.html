@@ -1,0 +1,35 @@
+<div class="container-fluid slider-container mx-1800">
+    <div class="project-slider position-relative">
+        <div class="swiper" #swiperContainer>
+            <div class="swiper-wrapper">
+                @for (item of homeSlider; track item) {
+                <div class="swiper-slide">
+                    <div class="slide-img">
+                        <img class="img-fluid bg-img w-100 d-none d-lg-block" src="{{ item.image }}" alt="{{ item.title }}">
+                        <img class="img-fluid bg-img w-100 d-none d-sm-block d-lg-none" src="{{ item.image_tablet }}" alt="{{ item.title }}">
+                        <img class="img-fluid bg-img w-100 d-sm-none" src="{{ item.image_mobile }}" alt="{{ item.title }}">
+                        <div class="slider-details {{ storageService.siteLanguage$.value }} position-absolute h-100 w-100">
+                            <div class="row no-gutters h-100 align-items-end align-items-md-center justify-content-between">
+                               
+                                <div class="col-md-4 d-flex flex-column col-details">
+                                    @if(item.logo){
+                                        <div><img src="{{ item.logo }}" alt="logo" class="slider-details-img"></div>
+                                    }
+                                    <p class="slider-details-title text-white mb-0">{{ item.title }}</p>
+                                    <p class="slider-details-desc text-white mb-0">{{ item.description }}</p>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+
+        @if(quickContribution) {
+            <app-quick-contribute ngSkipHydration [quickContribution]="quickContribution"/>
+        }
+        <div class="swiper-pagination {{ storageService.siteLanguage$.value }}"></div>
+    </div>
+</div>

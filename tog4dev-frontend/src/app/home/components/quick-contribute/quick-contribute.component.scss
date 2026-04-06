@@ -1,0 +1,202 @@
+.help-project-form {
+    position: absolute;
+    z-index: 2;
+    top: 35%;
+    right: 70px;
+    background: rgba(19, 88, 93, 0.3);
+    backdrop-filter: blur(56px);
+    padding: 22px;
+    border-radius: 16px;
+    max-width: 442px;
+    &.ar{
+      left: 70px;
+      right: unset;
+    }
+    .contribution-title {
+      font-size: 27px;
+      font-weight: 500;
+      line-height: 34px;
+      width: calc(100% - 15px);
+    }
+  
+    .link-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      border: 1px solid #fff;
+      height: 28px;
+      cursor: pointer;
+      width: 28px;
+    }
+    
+    .custom-contribute {
+      input {
+        all: unset;
+        background-color: #fff;
+        border-radius: 8px;
+        width: 100%;
+        padding: 6px;
+        margin-block: 8px;
+        box-sizing: border-box;
+      }
+    }
+  
+    .contribute-btn {
+      background: rgba(254, 205, 15, 1);
+      border-radius: 14px;
+      border: unset;
+      color: #0F0F0F;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 18px;
+      min-height: 30px;
+      transition: all 0.5s;
+      &:hover{
+        transform: scaleY(1.2);
+        box-shadow: 0px 1.76px 3.52px 0px rgba(0, 0, 0, 0.25);
+      }
+    }
+    
+    .help-project-desc {
+      font-size: 14px;
+      line-height: 16.5px;
+      height: 36px;
+      max-height: 36px;
+      overflow: hidden;
+      font-weight: 400;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;  
+    }
+  
+    .contribute-options {
+      text-align: center;
+      gap: 5px;
+    
+      .contribute-input{
+        height: 30px !important;
+        padding: 5px;
+        background-color: transparent;
+        border: 1px solid #E0E0E0;
+        border-radius: 12px;
+        text-align: center;
+        font-size: 14.06px;
+        font-weight: 400;
+        line-height: 17.58px;
+        color: #fff;
+        min-width: 135px;
+        &::placeholder{
+          color: #E0E0E0;
+        }
+      }
+      .btn-static-amount {
+        height: 30px !important;
+        min-width: 65px;
+        color: #E0E0E0;
+        padding: 5px;
+        border: 1px solid #E0E0E0;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 300ms;
+        width: 100%;
+        &:hover{
+          box-shadow: 0px 1.76px 3.52px 0px rgba(0, 0, 0, 0.25);
+          color: #fff;
+          transform: scale(1.05);
+        }
+        &.active {
+          background-color: rgba(254, 205, 15, 1);
+          color: #000000;
+        }
+      }
+    }
+  
+    .options {
+      display: flex;
+      gap: 5px;
+    
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #E8E8E8;
+        flex: 50%;
+        border-radius: 12px;
+        width: 174.88px;
+        padding: 14px 10px;
+        cursor: pointer;
+        color: #0F0F0F;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 14px;
+        transition: all 0.4s;
+        &:hover{
+          background-color: rgba(254, 205, 15, 1);
+          border: 1px solid rgba(254, 205, 15, 1) !important;
+          color: #000000;
+          transform: scale(1.02);
+        }
+        &.active{
+          background-color: rgba(254, 205, 15, 1);
+          color: #000000;
+        }
+      }
+    }
+  }
+
+@media all and (max-width: 767px) {
+  .help-project-form {
+    top: unset;
+    width: 100%;
+    max-width: unset;
+    bottom: -145px;
+    right: 10px;
+    width: calc(100% - 20px);
+    left: 10px;
+    &.ar{
+      left: 10px;
+      right: 10px;
+    }
+    .contribute-options {   
+      .contribute-input{
+        font-size: 12px;
+        min-width: 105px;
+      }
+      .btn-static-amount {
+        font-size: 12px;
+        min-width: 58px;
+      }
+    }
+    .contribution-title {
+      font-size: 16px;
+      line-height: 24px;
+    }
+    .options {    
+      button {
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+.converted_currency_message{
+  font-size: 12px;
+  color:#fff;
+  text-decoration: underline;
+}
+@media all and (max-width: 500px) {
+  .contribute-options{
+    flex-wrap: wrap;
+    .btn-static-amount{
+      flex: 1;
+    }
+  }
+}
+
+.has_error{
+  border: 1.5px solid #FF0000 !important;
+  &::placeholder{
+    color: #E0E0E0 !important;
+  }
+}

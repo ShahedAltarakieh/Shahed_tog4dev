@@ -1,0 +1,40 @@
+.subscription-container {
+  padding-inline: 21.1%;
+}
+
+.page-title {
+  color: white;
+  font-size: 27px;
+  margin-top: 38px;
+}
+
+.separator {
+  background-color: rgba(#0A142F, 0.06);
+  height: 1px;
+  width: 100%;
+  margin: 15px 0;
+}
+
+.one-time-payments {
+  margin-bottom: 15px;
+  h2 {
+    font-size: 27px;
+    color: #333333;
+  }
+}
+
+.btn-contribute{
+    background: #FECD0F;
+    border-radius: 14px;
+    border: unset;
+    color: #000000;
+    font-size: 18px;
+    padding: 10px 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  &:hover{
+    background: #FECD0F;
+    border: unset;
+    color: #000000;
+  }
+}

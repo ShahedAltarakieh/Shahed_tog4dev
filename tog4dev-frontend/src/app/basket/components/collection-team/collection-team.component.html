@@ -1,0 +1,84 @@
+<!-- The Modal -->
+<div id="myModal" class="custom-modal" *ngIf="show">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <button class="close btn" (click)="close_modal()"><img alt="close icon" src="/app/assets/images/shared/close.png"></button>
+        <div class="d-flex modal-body flex-column">
+            <p class="modal-title text-center">{{ "your information for request a collection team" | translate }}</p>
+            <hr class="my-0">
+            <div class="modal-description d-flex flex-column">
+                <div class="name-fields d-flex">
+                    <app-basic-input
+                            [inputAttr]="{ id: 'first-name', name: 'first-name', label: 'first name', placeholder: 'your first name', isRequired: true}"
+                            [value]="collectionService.collectionForm.first_name.value"
+                            [errorMsg]="collectionService.collectionForm.first_name.errorMsg"
+                            [additionalClass]="'h-46'"
+                            inputType="first name"
+                            (valueChanged)="collectionService.collectionForm.first_name.value = $event"
+                            (errorChanged)="firstNameErrorHandler($event)"
+                    />
+
+                    <app-basic-input
+                            [inputAttr]="{ id: 'last-name', name: 'last-name', label: 'last name', placeholder: 'your last name', isRequired: true}"
+                            [value]="collectionService.collectionForm.last_name.value"
+                            [errorMsg]="collectionService.collectionForm.last_name.errorMsg"
+                            [additionalClass]="'h-46'"
+                            inputType="last name"
+                            (valueChanged)="collectionService.collectionForm.last_name.value = $event"
+                            (errorChanged)="lastNameErrorHandler($event)"
+                    />
+                </div>
+
+                <app-mobile-number
+                        [value]="collectionService.collectionForm.phone.value"
+                        [errorMsg]="collectionService.collectionForm.phone.errorMsg"
+                        [additionalClass]="'h-46'"
+                        (valueChanged)="collectionService.collectionForm.phone.value = $event"
+                        (errorChanged)="mobileErrorHandler($event)"
+                />
+
+                <app-basic-input
+                        [inputAttr]="{ id: 'email', name: 'email', label: 'e-mail', placeholder: 'enter your email', isRequired: true, icon: 'email'}"
+                        [value]="collectionService.collectionForm.email.value"
+                        [errorMsg]="collectionService.collectionForm.email.errorMsg"
+                        [additionalClass]="'h-46'"
+                        inputType="email"
+                        (valueChanged)="collectionService.collectionForm.email.value = $event"
+                        (errorChanged)="emailErrorHandler($event)"
+                />
+
+                <app-basic-input
+                        [inputAttr]="{ id: 'city', name: 'city', label: 'city', placeholder: 'enter city', isRequired: true}"
+                        [value]="collectionService.collectionForm.city.value"
+                        [errorMsg]="collectionService.collectionForm.city.errorMsg"
+                        [additionalClass]="'h-46'"
+                        inputType="city"
+                        (valueChanged)="collectionService.collectionForm.city.value = $event"
+                        (errorChanged)="cityErrorHandler($event)"
+                />
+
+                <app-basic-input
+                        [inputAttr]="{ id: 'address', name: 'address', label: 'address', placeholder: 'enter address', isRequired: true}"
+                        [value]="collectionService.collectionForm.address.value"
+                        [errorMsg]="collectionService.collectionForm.address.errorMsg"
+                        [additionalClass]="'h-46'"
+                        inputType="address"
+                        (valueChanged)="collectionService.collectionForm.address.value = $event"
+                        (errorChanged)="addressErrorHandler($event)"
+                />
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-submit-collection" 
+                [disabled]="!collectionService.collectionForm.first_name.isValid ||
+                !collectionService.collectionForm.last_name.isValid ||
+                !collectionService.collectionForm.phone.isValid ||
+                !collectionService.collectionForm.city.isValid ||
+                !collectionService.collectionForm.email.isValid ||
+                !collectionService.collectionForm.address.isValid ||
+                isLoading"
+                (click)="onFormSubmit()">{{ "complete order" | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

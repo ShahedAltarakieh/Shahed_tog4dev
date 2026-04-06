@@ -1,0 +1,81 @@
+.price-innerdetail h5 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.price-innerdetail p {
+  font-size: 20px;
+}
+
+.detail-pricing {
+  padding: 10px 0 10px 0;
+}
+
+.detail-pricing .float-left {
+  padding: 0 0 0 40px;
+}
+
+.detail-pricing .float-left i {
+  position: absolute;
+  left: 0;
+  font-size: 20px;
+}
+
+.detail-pricing span {
+  display: inline-block;
+  position: relative;
+  font-weight: 400;
+}
+
+.wrap-price {
+  background: rgba(32, 33, 36, .1);
+  padding: 50px 20px 40px;
+  border-radius: 10px;
+}
+
+.center-wrap {
+  background: #070707;
+  color: #fff;
+}
+
+.custom-bullets{
+  list-style: none;
+  padding-left: 0;
+  li{
+    position: relative;
+    padding-left: 1.5em;  /* space to preserve indentation on wrap */
+  }
+  &.ar{
+    li{
+      position: relative;
+      padding-right: 1.5em;  /* space to preserve indentation on wrap */
+      padding-left: unset;
+    }
+  }
+  li:before {
+    content: '';  /* placeholder for the SVG */
+    position: absolute;
+    left: 0;  /* place the SVG at the start of the padding */
+    width: 1em;
+    height: 1em;
+    background: url("data:image/svg+xml;utf8,<?xml version='1.0' encoding='utf-8'?><svg width='18' height='18' fill='lightseagreen' viewBox='0 0 1792 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1671 566q0 40-28 68l-724 724-136 136q-28 28-68 28t-68-28l-136-136-362-362q-28-28-28-68t28-68l136-136q28-28 68-28t68 28l294 295 656-657q28-28 68-28t68 28l136 136q28 28 28 68z'/></svg>") no-repeat;  
+  }
+  &.ar{
+    li:before {
+      right: 0;  /* place the SVG at the start of the padding */
+      left: unset;
+    }  
+  }
+}
+
+.w-150{
+  width: 150px;
+}
+
+.form-title {
+  color: #13585D;
+  font-size: 21px;
+  font-weight: 500;
+  margin-inline: auto;
+  max-width: 66%;
+}

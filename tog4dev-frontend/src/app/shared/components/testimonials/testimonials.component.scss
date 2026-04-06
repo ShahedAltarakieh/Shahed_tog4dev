@@ -1,0 +1,161 @@
+.why-together-wrapper {
+  height: 450px;
+  margin-bottom: 60px;
+  margin-inline: auto;
+  max-width: 1058px;
+  position: relative;
+}
+
+.section-title {
+  color: #13585D;
+  font-size: 27px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.swiper {
+  max-width: 1058px;
+  height: 450px;
+}
+
+.swiper-slide {
+  align-items: center;
+  display: flex;
+  overflow: hidden;
+  border-radius: 24px;
+
+  > div {
+    flex-basis: 50%;
+  }
+  .slide-img{
+    background-color: #fff;
+    height: 100%;
+    img{
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+  .slide-info{
+    background-color: #FECD0F;
+  }
+}
+
+.control-icon {
+  z-index: 2;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 50%;
+  box-shadow: 0px 0px 1px 0px #00000014, 0px 1px 4px 0px #0000001F;
+  height: 56px;
+  width: 56px;
+  top: 50%;
+  user-select: none;
+}
+
+.next-icon {
+  inset-inline-end: 0;
+  transform: translate(50%, -50%) rotate(180deg);
+}
+
+.previous-icon {
+  inset-inline-start: 0;
+  transform: translate(-50%, -50%);
+}
+
+.slide-info {
+  padding: 48px 64px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.description {
+  display: flex;
+  align-items: center;
+  color: #1F1F1F;
+  flex: 1;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 44px;
+  margin-bottom: 0;
+}
+
+.author {
+  color: #1F1F1F;
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 26px;
+}
+
+.why-together-wrapper {
+  &.ar {
+    .next-icon {
+      transform: translate(-50%, -50%);
+    }
+
+    .previous-icon {
+      transform: translate(50%, -50%) rotate(180deg);
+    }
+  }
+}
+
+@media all and (max-width: 576px) {
+  .why-together-wrapper {
+    &.ar {
+      .next-icon {
+        max-width: 47px;
+      }
+  
+      .previous-icon {
+        max-width: 47px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .swiper-slide {
+    flex-direction: column-reverse;
+    .slide-img{
+      margin-inline: 15px;
+      border-top-left-radius: 14px;
+      border-top-right-radius: 14px;
+      overflow: hidden;
+      img{
+        height: 318px;
+      }
+    }
+  }  
+  .why-together-wrapper{
+    height: 636px;    
+  }
+  .swiper {
+    height: 636px;
+  }
+  .slide-info {
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+  }
+  
+  .description {
+    font-size: 12px;
+    line-height: 24px;
+  }
+  
+  .author {
+    font-size: 16px;
+    line-height: 26px;
+  }
+  .control-icon {
+    top: 25%;
+  }
+}

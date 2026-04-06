@@ -1,0 +1,21 @@
+
+<h2 class="section-title">{{ "facts and statistics" | translate }}</h2>
+
+<p class="section-desc">{{ "these facts and statistics highlight the real impact we are making in the targeted communities and shed light on the urgent need for sustainable solutions worldwide." | translate }}</p>
+
+
+<div class="container">
+  <div class="grid-container">
+
+      @for (item of factsList; track item) {
+        <div class="item">
+          <img class="img" src="{{ item.logo }}" alt="{{ item.title }}" />
+
+          <p class="views-count">{{ item.title }}</p>
+
+          <span class="desc">{{ item.description }}</span>
+        </div>
+      }
+
+  </div>
+</div>

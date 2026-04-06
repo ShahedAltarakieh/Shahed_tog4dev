@@ -1,0 +1,110 @@
+<!-- The Modal -->
+<div id="myModal" class="custom-modal" *ngIf="show">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <button class="close btn" (click)="close_modal()"><img alt="close icon" src="/app/assets/images/shared/close.png"></button>
+        <div class="d-flex modal-body flex-column">
+            <p class="modal-title text-center">{{ "orange money" | translate }} {{ "jordan" | translate }}</p>
+            <p class="text-center mb-0">{{ "enter your cliq number" | translate }}</p>
+            <hr class="my-0">
+            <div class="modal-description d-flex flex-column">
+                <app-basic-input
+                    [inputAttr]="{ id: 'cliq_number', name: 'cliq_number', label: 'cliq number', placeholder: '07XXXXXXXX', isRequired: true}"
+                    [value]="orangeMoneyService.orangeMoneyForm.cliq_number.value"
+                    [errorMsg]="orangeMoneyService.orangeMoneyForm.cliq_number.errorMsg"
+                    inputType="cliq number"
+                    [additionalInputClass]="'text-left-important dir-ltr'"
+                    (valueChanged)="orangeMoneyService.orangeMoneyForm.cliq_number.value = $event; error_message = ''"
+                    (errorChanged)="cliqNumberErrorHandler($event)"
+                />
+            </div>
+            <p class="text-danger mb-0" *ngIf="error_message">{{ error_message }}</p>
+            <div class="modal-footer">
+                <button class="btn btn-submit-payment" 
+                [disabled]="!orangeMoneyService.orangeMoneyForm.cliq_number.isValid || isLoading || error_message"
+                (click)="onFormSubmit()">{{ "send verification code" | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div id="otp_form" class="custom-modal" *ngIf="show_otp">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <button class="close btn" (click)="close_modal()"><img alt="close icon" src="/app/assets/images/shared/close.png"></button>
+        <div class="d-flex modal-body flex-column">
+            <p class="modal-title text-center">{{ "orange money" | translate }}</p>
+            <p class="text-center px-5 mb-0">{{ "enter the verification code sent to your number" | translate }} <strong>{{ orangeMoneyService.orangeMoneyForm.cliq_number.value }}</strong></p>
+            <hr class="my-0">
+            <div class="modal-description dir-ltr">
+                <div class="d-flex justify-content-center gap-2">
+                    <input
+                        #firstOtpInput
+                        type="text"
+                        maxlength="1"
+                        class="form-control text-center"
+                        style="width: 50px; height: 50px; font-size: 24px;"
+                        id="otp1"
+                        [(ngModel)]="otp1"
+                        autocomplete="off"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
+                        placeholder="-"
+                        (input)="moveToNext($event, 'otp2')"
+                        (keydown.backspace)="moveToPrev($event, '')"
+                    />
+                    <input
+                        type="text"
+                        maxlength="1"
+                        class="form-control text-center"
+                        style="width: 50px; height: 50px; font-size: 24px;"
+                        id="otp2"
+                        [(ngModel)]="otp2"
+                        autocomplete="off"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
+                        placeholder="-"
+                        (input)="moveToNext($event, 'otp3')"
+                        (keydown.backspace)="moveToPrev($event, 'otp1')"
+                    />
+                    <input
+                        type="text"
+                        maxlength="1"
+                        class="form-control text-center"
+                        style="width: 50px; height: 50px; font-size: 24px;"
+                        id="otp3"
+                        [(ngModel)]="otp3"
+                        autocomplete="off"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
+                        placeholder="-"
+                        (input)="moveToNext($event,'otp4')"
+                        (keydown.backspace)="moveToPrev($event, 'otp2')"
+                    />
+                    <input
+                        type="text"
+                        maxlength="1"
+                        class="form-control text-center"
+                        style="width: 50px; height: 50px; font-size: 24px;"
+                        id="otp4"
+                        [(ngModel)]="otp4"
+                        autocomplete="off"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
+                        placeholder="-"
+                        (input)="moveToNext($event,'')"
+                        (keydown.backspace)="moveToPrev($event, 'otp3')"
+                    />
+                </div>
+                <p class="text-danger text-center mb-0 mt-2" *ngIf="error_message">{{ error_message }}</p>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-submit-payment"
+                [disabled]="isLoading"
+                (click)="completeOrder()">{{ "complete order" | translate}}</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+.categories-list{
+  margin-top: 38px;
+}
+
+.primary-color{
+  color:#13585D;
+  font-size: 27px;
+  font-weight: 500;
+  line-height: 34px;
+}
+
+.items-list{
+  margin-bottom: 70px;
+}
+
+.dummy-text{
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 26px;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.section-title {
+  color: #13585D;
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.section-desc {
+  color: #1A202C;
+  font-size: 18px;
+  line-height: 27px;
+  margin-bottom: 25px;
+  max-width: 548px;
+  text-align: center;
+  margin-inline: auto;
+}
+
+.why-together{
+  margin-top: 118px;
+  margin-bottom: 124px;
+  padding-inline: 8.56%;
+}
+
+.our-partners{
+  margin-top: 40px;
+  margin-bottom: 46px;
+}
+
+@media all and (max-width: 576px) {
+  app-testimonials {
+    display: block;
+    max-width: 364px;
+    margin-inline: auto;
+  }
+
+  .why-together {
+    margin-bottom: 60px;
+    padding-inline: 48px;
+  }
+}

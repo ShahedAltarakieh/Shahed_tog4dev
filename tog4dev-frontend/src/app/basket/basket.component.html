@@ -1,0 +1,131 @@
+<div class="container basket-wrapper mb-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10">
+            <h1 class="text-white">{{ "basket" | translate }}</h1>
+            <hr>
+            @if(this.items == undefined){
+                <div class="d-flex justify-content-center flex-column align-items-center mb-4">
+                    <img class="empty-icon" alt="empty basket" src="/app/assets/images/loader-yellow.gif">
+                    <h2 class="empty-title">{{"your basket empty" | translate }}</h2>
+                </div>
+            }
+            @if(this.items && this.items.length >= 1 && is_data_fetched){
+                <div class="basket-container">
+                    @for (item of items; track item) {
+                        <div class="item-wrapper">
+                            <app-basket-item [item]="item" (itemRemoved)="fetchBasketData()"/>
+                        </div>
+                    }
+                    <div class="checkout-container d-flex flex-column align-items-end">
+                        <p class="total-price w-fit-content">{{"total" | translate }}: {{ tota_price }}{{ 'JOD' | translate }}</p>
+                        <p class="checkout-disclaimer" *ngIf="currency_convert_amount">
+                            {{ "equivalent to your currency approximately without transfer fees" | translate: {'total':currency_convert_amount, 'currency': currency_convert_label} }}
+                        </p>
+                        <button class="checkout-btn mt-2"
+                                [disabled]="isLoading"
+                                (click)="show_payment_modal()">
+                            <img src="/app/assets/images/shared/loading.gif" alt="loading" [ngClass]="{'d-none': !isLoading}" style="width:25px;"/>
+                            {{ 'proceed to payment' | translate }}
+                        </button>
+                        @if (dedicationError) {
+                            <p class="dedication-error mt-2 mb-0 text-danger">{{ dedicationErrorKey | translate }}</p>
+                        }
+                    </div>
+                </div>
+            }
+            @else {
+                <div class="d-flex justify-content-center flex-column align-items-center mb-4">
+                    <img class="empty-icon" alt="empty basket" src="/app/assets/images/shared/basket.svg">
+                    <h2 class="empty-title">{{"your basket empty" | translate }}</h2>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+<!-- The Modal -->
+<div id="myModal" class="custom-modal" *ngIf="show_payment_option">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <button class="close btn" (click)="close_modal()"><img alt="close icon" src="/app/assets/images/shared/close.png"></button>
+        <div class="d-flex modal-body flex-column">
+            <p class="modal-title text-center">{{"choose a way to pay" | translate }}</p>
+            <hr class="my-0">
+            <div>
+                <input type="radio" id="r1" [(ngModel)]="payment_type" value="card" class="d-none">
+                <label for="r1" class="payment-option d-flex justify-content-center align-items-center">
+                    <div class="payment-icon">
+                        <img alt="payment icon inactive" src="/app/assets/images/shared/card.svg" class="payment_icon">
+                        <img alt="payment icon active" src="/app/assets/images/shared/card_active.svg" class="payment_icon_active">
+                    </div>
+                    <span>{{ "card" | translate }}</span>
+                </label>
+            </div>
+            <hr class="my-0">
+            <div>
+                <input type="radio" id="r2" [(ngModel)]="payment_type" value="cash" class="d-none">
+                <label for="r2" class="payment-option d-flex justify-content-center align-items-center">
+                    <div class="payment-icon">
+                        <img alt="cash contriubute icon inactive" src="/app/assets/images/shared/cash_contribution.svg" class="payment_icon">
+                        <img alt="cash contriubute icon inactive" src="/app/assets/images/shared/cash_contribution_active.svg" class="payment_icon_active">
+                    </div>
+                    <span>{{ "collection team" | translate }}</span>
+                </label>
+            </div>
+            <hr class="my-0">
+            @if(show_orange_money){
+                <div>
+                    <input type="radio" id="r3" [(ngModel)]="payment_type" value="orange_money" class="d-none">
+                    <label for="r3" class="payment-option d-flex justify-content-center align-items-center">
+                        <div class="payment-icon">
+                            <img alt="cash orange_money icon inactive" src="/app/assets/images/shared/orange-money-black.svg" class="payment_icon" style="height: 18px;">
+                            <img alt="cash orange_money icon inactive" src="/app/assets/images/shared/orange-money-white.svg" class="payment_icon_active" style="height: 18px;">
+                        </div>
+                        <span>{{ "orange money" | translate }} {{ "jordan" | translate }}</span>
+                    </label>
+                </div>
+                <hr class="my-0">
+            }
+            <div class="checkbox-section d-flex flex-column">
+                <div class="checkbox-container">
+                    <input id="privacy-policy" type="checkbox" (input)="onPrivacyPolicyCheck($event)">
+                    <label for="privacy-policy">
+                        @if(storageService.siteLanguage$.value == "ar"){
+                            <span>لقد قرأت وأوافق على <a [routerLink]="'route-terms-and-conditions' | translate ">شروط الاستخدام</a> و <a [routerLink]="'route-privacy-policy' | translate ">سياسة الخصوصية</a>.</span>
+                        }
+                        @else{
+                            <span>I have read and agree to the <a [routerLink]="'route-terms-and-conditions' | translate ">Terms of Use</a> and <a [routerLink]="'route-privacy-policy' | translate ">Privacy Policy</a>.</span>
+                        }
+                    </label>
+                </div>
+                <div class="checkbox-container">
+                    <input id="receive-emails" checked type="checkbox" (input)="onReceiveEmailCheck($event)">
+                    <label for="receive-emails">
+                        <span>{{ 'receive email updates from Together for Development (including borrower updates and promotions). you can unsubscribe anytime.' | translate}}</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-submit" (click)="submit_payment()" [disabled]="!privacyPolicyChecked || payment_type == ''">{{ "proceed to payment" | translate }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+<app-collection-team [show]="show_collection_modal" (closeModal)="close_modal()"/>
+<app-guest-form [show]="show_guest_form" (closeModal)="close_modal()" (userCreated)="submit_payment($event)"/>
+@if(show_orange_mony_form){
+    <app-orange-money [show]="show_orange_mony_form" (closeModal)="close_modal()" [userData]="userData"/>
+}
+<app-modal [yellow_button]='"try again" | translate' [title]="'something wrong!' | translate " [show]="show_error_payment" (valueEmitted)="close_modal()">
+    <p class="mb-0">{{ payment_error_message }}</p>
+</app-modal>
+
+<app-modal [title]="'temporary payment redirect' | translate " [show]="payment_error_modal" (valueEmitted)="close_modal()">
+    <p class="mb-2 text-center">{{ "We are working on enhancing and updating the system for the project delegation to us." | translate }} </p>
+    <p class="mb-0 text-center">{{ "Please use the temporary alternative link to complete your payment" | translate }} <a href="https://tog4dev.zbooni.com" target="_blank">https://tog4dev.zbooni.com</a></p>
+</app-modal>
+
+<!-- @if(selected_payment == "network"){
+    <app-network [sessionId]="response_payment.session_id"/>   
+} -->

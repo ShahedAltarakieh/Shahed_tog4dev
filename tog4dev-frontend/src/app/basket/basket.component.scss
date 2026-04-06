@@ -1,0 +1,199 @@
+.basket-wrapper{
+  margin-top: 40px
+}
+h1 {
+  font-size: 27px;
+  margin-bottom: 32px;
+}
+
+.checkout-container{
+  width: fit-content;
+  margin-inline-start: auto;
+}
+
+.dedication-error {
+  font-size: 0.9rem;
+}
+
+.basket-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item-wrapper {
+  position: relative;
+  margin-bottom: 10px;
+  
+  &::before {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: rgba(#0A142F, 0.06);
+    bottom: 0;
+  }
+}
+
+.checkout-btn {
+  all: unset;
+  cursor: pointer;
+  background-color: #FECD0F;
+  padding: 6.5px 23px;
+  border-radius: 14px;
+  width: fit-content;
+}
+
+.total-price {
+  color: #333333;
+  font-size: 21px;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.checkout-disclaimer {
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+
+/* The Modal (background) */
+.custom-modal {
+  //display: none; /* Hidden by default */
+  display: block;
+  position: fixed; /* Stay in place */
+  z-index: 10; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  .modal-content {
+    background-color: #fff;
+    border: 2px solid #DBDBDB;
+    margin: auto;
+    padding: 60px;
+    border-radius: 20px;
+    max-width: 500px;
+    @media all and (max-width: 768px) {
+      padding: 30px;
+    }
+    @media all and (max-width: 500px) {
+      max-width: 400px;
+    }
+    @media all and (max-width: 400px) {
+      max-width: 300px;
+    }
+    .modal-body{
+      gap:18px;
+      input[type="radio"]:checked + .payment-option {
+        span{
+          color: #000000 !important;
+        }
+        .payment-icon{
+          background: #13585D;
+          border: 1px solid #13585D;
+          .payment_icon{
+            display: none;
+          }
+          .payment_icon_active{
+            display: block;
+          }
+        }
+      }
+      .payment-option{
+        gap: 6px;
+        color: #808080;
+        .payment-icon{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding:5px 11px;
+          border: 1px solid #808080;
+          border-radius: 15px;
+          .payment_icon_active{
+            display: none;
+          }
+        }
+      }
+      .checkbox-section{
+        gap: 18px;
+      }
+      .checkbox-container {
+        display: flex;
+        align-items: start;
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 16px;
+        gap: 18px;
+        label {
+          display: block;
+          margin-top: -5px;
+        }
+      }
+      .modal-footer{
+        .btn-submit{
+          width: 100%;
+          font-size: 15px;
+          font-weight: 700;
+          line-height: 22px;
+          text-align: center;
+          background: #FECD0F;
+          padding: 9px;
+          border-radius: 150px;
+        }
+      }
+    }
+  }
+}
+
+.close{
+  width: fit-content;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  img{
+    width: 20px;
+  }
+  @media all and (max-width: 768px) {
+    top: 5px;
+    right: 5px;
+    img{
+      width: 15px;
+    }
+  }
+}
+
+.empty-icon{
+  margin-top: 36px;
+  max-width: 135px;
+}
+
+.empty-title{
+  margin-top: 24px;
+  color: #13585D;
+  font-size: 27px;
+  font-weight: 500;
+  line-height: 34px;
+  text-align: center;
+}
+
+.loader-overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9;
+  background: rgba(0, 0, 0, 0.2);
+  img{
+    width: 100px;
+  }
+}

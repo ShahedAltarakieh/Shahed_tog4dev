@@ -1,0 +1,55 @@
+app-projects-list-with-filter{
+  display: block;
+  margin-bottom: 82px;
+}
+
+.how-it-work-home {
+  margin-bottom: 113px;
+  margin-inline: auto;
+  padding-inline: 7.52%;
+}
+
+.why-together-home{
+  margin-bottom: 133px;
+  padding-inline: 8.56%;
+}
+
+.our-partners-home{
+  margin-top: 55px;
+  margin-bottom: 92px;
+}
+
+.home-slider {
+  margin-top: 40px;
+  margin-bottom: 43px;
+}
+
+@media all and (max-width: 768px) {
+  app-testimonials {
+    display: block;
+    max-width: 364px;
+    margin-inline: auto;
+
+  }
+
+  .home-slider {
+    margin-bottom: 190px;
+  }
+
+  .how-it-work-home {
+    margin-bottom: 60px;
+  }
+
+  .why-together-home{
+    margin-bottom: 62px;
+    padding-inline: 40px;
+  }
+
+  .our-partners-home {
+    margin-bottom: 30px;
+  }
+
+  .project-list{
+    margin-top: 230px;
+  }
+}

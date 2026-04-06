@@ -1,0 +1,1 @@
+export type Countries = Record<'usa' | 'jordan', string>;

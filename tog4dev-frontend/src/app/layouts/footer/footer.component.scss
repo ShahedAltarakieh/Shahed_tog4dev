@@ -1,0 +1,158 @@
+/* footer.component.scss */
+app-stay-in-touch-form {
+  display: block;
+  max-width: 338px;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer {
+  background: linear-gradient(180deg, #309CA4 0%, #13585D 58.78%);
+  color: #0A142F;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  .footer-container{
+    max-width: 1800px;
+    margin-inline: auto;
+  }
+}
+
+.footer-sections-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 26px;
+}
+
+.footer-links {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.lists-wrapper {
+  align-items: start;
+  display: flex;
+  gap: 8%;
+  text-align: start;
+  flex: 1;
+  
+}
+
+.list-title {
+  color: #FFFFFF;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 25px;
+  margin-bottom: 15px;
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  a {
+    color: rgba(white, 0.5);
+    text-decoration: none;
+  }
+}
+
+.static-pages-links {
+  ul {
+    display: flex;
+    gap: 36px;
+  }
+
+  a {
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+}
+
+.socia-media-list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-btn {
+  all: unset;
+  background-color: #F3F3F3;
+  border: 1px solid #000;
+  cursor: pointer;
+  padding: 11px 26px;
+}
+
+.all-rights-reserved-text {
+  border-top: 1px solid rgba(#0A142F, 0.06);
+  color: white;
+  font-size: 16px;
+  padding-bottom: 10px;
+  padding-top: 40px;
+}
+
+.list-container {
+  border-bottom: 1px solid rgba(#0A142F, 0.06);
+  border-top: 1px solid rgba(#0A142F, 0.06);
+  padding-bottom: 54px;
+  padding-top: 82px;
+  padding-inline: 13.67%;
+}
+
+.footer-links-container {
+  border-bottom: 1px solid rgba(#0A142F, 0.06);
+  border-top: 1px solid rgba(#0A142F, 0.06);
+  padding-bottom: 40px;
+  padding-top: 40px;
+  padding-inline: 12.7%;
+}
+
+@media all and (max-width: 1024px) {
+  app-stay-in-touch-form {
+    margin-top: 27px;
+    flex: 1;
+  }
+
+  .footer-sections-container {
+    margin-top: 27px;
+  }
+}
+
+@media all and (max-width: 576px) {
+  app-stay-in-touch-form {
+    max-width: 100%;
+  }
+
+  .footer-sections-container {
+    flex-direction: column;
+    gap: 3%;
+  }
+
+  .lists-wrapper {
+    padding-inline: unset;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 26px;
+    justify-content: center; 
+  }
+
+  .all-rights-reserved-text {
+    font-size: 11px;
+  }
+}
+
+.beta-version{
+  margin-bottom: 0;
+  font-size: 12px;
+  margin-top: -5px;
+}

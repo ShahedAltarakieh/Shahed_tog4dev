@@ -1,0 +1,51 @@
+<div class="container">
+  <h1 class="page-title">{{ "my subscriptions" | translate }}</h1>
+</div>
+
+<div class="separator"></div>
+
+<div class="container subscription-payments">
+  <div class="row justify-content-center">
+      @if(subscriptions_payments.length > 0){
+        <div class="col-12">
+            @for (payment of subscriptions_payments; track payment) {
+                <app-subscription-item (unSubscribeEmitted)="unsubscribePayment($event)" [payment]="payment"/>
+                <div class="separator"></div>
+            }
+        </div>
+      }
+      @else {
+          <div class="col-10 col-md-8 mt-3 mb-5 text-center">
+              <h4 class="mb-2">{{"you currently have no subscriptions." | translate}}</h4>
+              <h4 class="mb-2">{{ "start now and be part of the change!" | translate }}</h4>
+              <a [routerLink]="'route-save-gaza' | translate" class="btn btn-contribute">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  {{ 'monthly' | translate }}
+              </a>
+              <h4 class="mb-2">{{ "with your subscription, you provide 300 displaced people in mawasi Khan younis with their basic right to life." | translate }}</h4>
+          </div>
+      }
+  </div>
+</div>
+
+<app-modal (valueEmitted)="closePopup($event)" [title]="'unsubscription successful' | translate " [show]="show_unsubscribed_modal">
+    <p>{{ "thank you for your previous support, which has helped improve the lives of others. if you’d like to rejoin in the future, we are always here for you." | translate }}</p>
+</app-modal>
+
+<!--<div class="container one-time-payments">-->
+<!--  <h2>Contribution history</h2>-->
+
+<!--  <div class="row">-->
+<!--    <div class="col-12">-->
+<!--      <div class="separator"></div>-->
+<!--        @for (item of one_time_payments; track item) {-->
+<!--            <app-contribution-history-item [item]="item"/>-->
+<!--            <div class="separator"></div>-->
+<!--        }-->
+<!--      <div class="separator"></div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

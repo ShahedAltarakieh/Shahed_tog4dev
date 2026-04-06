@@ -1,0 +1,56 @@
+<div class="prayer-times-card" [class.ar]="storageService.siteLanguage$.value === 'ar'">
+  <div class="card-bg">
+    <div class="crescent"></div>
+    <div class="stars">
+      @for (s of stars; track s) {
+        <span class="star"></span>
+      }
+    </div>
+  </div>
+  <div class="card-content">
+    <span class="ramadan-badge">{{ "ramadan" | translate }}</span>
+    <h2 class="card-title">{{ "prayer times" | translate }}</h2>
+    @if (timezoneCity || countryName) {
+      <div class="location-chip">
+        <img src="/app/assets/images/shared/time-white.svg" alt="clock icon" class="location-icon" />
+        <span class="location-text">
+          @if (timezoneCity) {
+            {{ timezoneCity }}
+          }
+          @if (timezoneCity && countryName) {
+            &nbsp;•&nbsp;
+          }
+          @if (countryName) {
+            {{ countryName }}
+          }
+        </span>
+      </div>
+    }
+    <ul class="prayer-list">
+      @if (loading) {
+        <li class="prayer-row loading-row">{{ "loading prayer times" | translate }}</li>
+      } @else {
+        @for (prayer of prayerNames; track prayer.name) {
+          <li
+            class="prayer-row"
+            [class.is-fajr]="prayer.name === 'Fajr'"
+            [class.is-maghrib]="prayer.name === 'Maghrib'"
+          >
+            <span class="prayer-name">{{ prayer.name | translate }}</span>
+            <span class="prayer-time">{{ prayer.time }}@if (prayer.ampm) { {{ prayer.ampm | translate }} }</span>
+          </li>
+        }
+      }
+    </ul>
+    @if (currentDua) {
+      <div class="dua-ticker">
+        <div class="dua-ticker-inner">
+          {{ currentDua }}
+        </div>
+      </div>
+    }
+    <div class="card-footer">
+      <img src="/app/assets/images/ramadan-theme/fanous-small.svg" alt="" class="fanous" />
+    </div>
+  </div>
+</div>

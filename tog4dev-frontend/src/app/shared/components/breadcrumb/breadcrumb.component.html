@@ -1,0 +1,9 @@
+<ul>
+  @for (item of data; track $index; let last = $last) {
+    <li><a [routerLink]="item.link" class="{{ $last ? 'fw-bold' : '' }}">{{ item.title | translate}}</a></li>
+
+    @if (!$last) {
+      <span>/</span>
+    }
+  }
+</ul>

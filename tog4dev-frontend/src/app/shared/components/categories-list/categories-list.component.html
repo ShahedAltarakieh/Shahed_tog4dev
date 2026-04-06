@@ -1,0 +1,6 @@
+<div class="filter-buttons">
+    @for (item of list; track item) {
+        <button [ngClass]="{'active': (activeCategory === item.slug_en)}" (click)="setActiveCategory(item)">
+            {{ item.title }}</button>
+    }
+</div>

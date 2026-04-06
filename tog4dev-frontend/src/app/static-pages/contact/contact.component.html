@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="contact-page">
+    <h1 class="title text-center">{{ "contact us" | translate }}</h1>
+  
+    <p class="title-desc text-center">
+        {{ "together for intermediation services llc (together for development)" | translate }} - {{ "First Floor, Office 103 - Hayat" | translate }}
+    <br>
+        {{ "FM Building, behind Al-Dustour Newspaper - University of Jordan Street, Amman, Jordan." | translate }}
+    </p>
+
+    <p class="address text-center">{{ "Mobile & WhatsApp: +962 779 400 900" | translate }}
+      <br /> {{ "Landline: +962 6 40 20 202" | translate }}</p>
+  
+    <ul class="social-media-links">
+      <li>
+        <a href="https://www.facebook.com/share/h4FZ2p8TsLWE2vKy/?mibextid=LQQJ4d" target="_blank">
+          <img src="/app/assets/images/contact-us/facebook.svg" alt="facebook">
+        </a>
+      </li>
+      <li>
+        <a href="https://www.instagram.com/tog4dev/profilecard/?igsh=MmEyNnFhZDR2cDY4" target="_blank">
+          <img src="/app/assets/images/contact-us/instagram.svg" alt="instagram">
+        </a>
+      </li>
+      <li>
+        <a href="https://snapchat.com/t/kwXP9FSM" target="_blank">
+          <img src="/app/assets/images/contact-us/snapchat.svg" alt="snapchat">
+        </a>
+      </li>
+      <li>
+        <a href="https://x.com/Tog4Dev?t=YxqzngaJv1WOAeS1241qMw&s=09" target="_blank">
+          <img src="/app/assets/images/contact-us/x.svg" alt="twitter / X">
+        </a>
+      </li>
+    </ul>
+    <p class="form-title text-center"> {{ "If you have any inquiries" | translate }}<br>{{ "please complete the form below" | translate }}.</p>
+      <div class="row justify-content-center">
+          <div class="col-md-8">
+              <app-contact-us-form [type]="2"/>
+          </div>
+      </div>
+  </div>
+</div>
+<hr>

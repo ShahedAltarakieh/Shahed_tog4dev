@@ -1,0 +1,40 @@
+<div class="input-container {{ additionalClass }}" (click)="onInputClick()">
+  <label [ngClass]="{'required': isRequired}" [for]="id">{{ label | translate }}</label>
+
+  @if (value) {
+    <span class="custom-placeholder">{{ getCountryName(value) }}</span>
+  } @else {
+    <span class="custom-placeholder">{{ placeholder }}</span>
+  }
+
+  <div class="dropdown-country-select">
+    <img [src]="icon" alt="icon" [width]="22" [height]="16"/>
+  </div>
+
+  @if (isExpanded) {
+      <div class="dropdown-items">
+          <div class="search-box">
+              <input type="text" class="form-control form-control-sm px-2" placeholder="{{ 'search' | translate}}" [(ngModel)]="searchQuery">
+          </div>
+          <ul class="mb-0">
+              <li *ngFor="let item of filteredCountries()" (click)="onItemSelect(item)">
+                  <img width="22" height="16" src="{{ item.flag }}" alt="{{ item.country_name_arabic }}"/>
+                  @if(storageService.siteLanguage$.value === 'ar'){
+                      {{ item.country_name_arabic }}
+                  }
+                  @else{
+                      {{ item.country_name_english }}
+                  }
+              </li>
+          </ul>
+      </div>
+  }
+
+  @if (rightIcon) {
+    <img class="right-icon" alt="right icon" [src]="'/app/assets/images/shared/inputs/' + rightIcon" />
+  }
+</div>
+
+@if (!!errorMsg) {
+  <p class="error-msg">{{ errorMsg }}</p>
+}

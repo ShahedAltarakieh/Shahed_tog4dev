@@ -1,0 +1,21 @@
+<h2 class="section-title text-center">{{ 'our stories' | translate }}</h2>
+<div class="swiper" #swiperContainer>
+  <div class="swiper-wrapper">
+
+  @for (item of storiesList; track item) {
+    <div class="swiper-slide">
+      <div class="slide-img position-relative">
+        <div class="img-overlay d-flex align-items-end justify-content-center w-100 h-100 position-absolute">
+            <p class="story-title">{{ item.title }}</p>
+        </div>
+        <img [src]="item.image" alt="{{ item.title }}">
+      </div>
+
+      <button (click)="setActiveCategory(item.category)" class="btn story-category">
+        <span class="category-text">{{ item.category.title }}</span>
+        <img src="/app/assets/images/home/category.svg" alt="{{ item.category.title }}">
+      </button>
+    </div>
+  }
+  </div>
+</div>

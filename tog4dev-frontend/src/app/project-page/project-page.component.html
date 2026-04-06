@@ -1,0 +1,199 @@
+<div class="container" *ngIf="project">
+    <div class="row">
+        <div class="col-12">
+            <div class="hero-section">
+                <div class="container project-container">
+                    <div class="position-relative h-100 d-flex align-items-center hero-wrapper">
+                        <div class="overlay w-100 h-100 position-absolute {{ storageService.siteLanguage$.value }}"></div>
+                        <div class="help-project-intro position-absolute w-100 h-100">
+                            <img [src]="project.category.hero_image" rel="preload" fetchpriority="high" class="img-fluid w-100 h-100" alt="{{ project.category.hero_title }}">
+                        </div>
+
+                        <div class="help-project-container d-flex flex-column flex-md-row justify-content-end justify-content-md-between align-items-center">
+                            <div class="project-details d-flex flex-column">
+                                @if(project.category.image){
+                                  <div><img src="{{ project.category.image }}" alt="{{ project.category.title }}" class="hero-logo img-fluid"/></div>
+                                }
+                                <p class="project-details-desc mb-0">{{ project.category.hero_title }}</p>
+
+                                <p class="project-details-title mb-0">{{ project.category.hero_description }}</p>
+                            </div>
+                            <div class="help-project-form static d-block d-lg-none {{ storageService.siteLanguage$.value }}" [class.scrolled]="fixed_div">
+                                <div class="d-flex justify-content-between mb-3">
+                                    @if(this.payment_type != "subscription"){
+                                        <h2 class="text-center text-white fw-bold">{{ project.title }}</h2>
+                                    }
+                                    @if(this.payment_type == "subscription"){
+                                        <h2 class="text-center fw-bold mx-auto monthly_label">{{ "monthly subscription" | translate }}</h2>
+                                    }
+                                    <div class="link-icon">
+                                        <img src="/app/assets/images/shared/share-icon.png" alt="share"  (click)="show_share = true">
+                                    </div>
+                                </div>
+
+                                @if(this.payment_type != "subscription" && this.payment_type != "one_time"){
+                                    <div class="options mb-3">
+                                        <button class="btn" (click)="setType('one_time')" [ngClass]="{'active': type === 'one_time', 'has_error': type_error}">
+                                            {{ "once" | translate }}
+                                        </button>
+
+                                        <button class="btn" (click)="setType('monthly')" [ngClass]="{'active': type === 'monthly', 'has_error': type_error}">
+                                            {{ "monthly" | translate }}
+                                        </button>
+                                    </div>
+                                }
+
+                                <p class="help-project-desc text-white">{{ project.description }}</p>
+
+                                <div class="dropdown-list d-flex flex-column {{ storageService.siteLanguage$.value }}">
+                                    <div class="dropdown-item" *ngIf="dropdown1.length > 0">
+                                        <select class="form-control custom-dropdown" [(ngModel)]="selected_d1" (change)="onSelectionChange()">
+                                            @for (item of dropdown1; track item) {
+                                                <option [value]="item" [selected]="item === selected_d1">{{ item }}</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="dropdown-item" *ngIf="dropdown2.length > 0">
+                                        <select class="form-control custom-dropdown" [(ngModel)]="selected_d2" (change)="onSelectionChange()">
+                                            @for (item of dropdown2; track item) {
+                                                <option [value]="item" [selected]="item === selected_d2">{{ item }}</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <p class="converted_currency_message" *ngIf="converted_price">
+                                    {{ amount }}{{ 'JOD' | translate }} {{ "equivalent to your currency approximately without transfer fees" | translate: {'total':converted_price, 'currency': converted_currency_label} }}
+                                </p>
+                                <div class="footer-section d-flex justify-content-between">
+                                    <div class="quantity-section w-100 text-white d-flex align-items-center">
+                                        <span class="remove-quantity" (click)="decrease_quantity()"><img alt="decrease quantity" src="/app/assets/images/shared/minus-white.svg"></span>
+                                        <span class="quantity-number text-center">{{ default_quantity }}</span>
+                                        <span class="add-quantity" (click)="increase_quantity()"><img alt="increase quantity" src="/app/assets/images/shared/plus-white.svg"></span>
+                                    </div>
+                                    <span class="total-price w-100 text-center">{{"total" | translate }}: <span>{{ amount }}{{ 'JOD' | translate }}</span></span>
+                                </div>
+                                @if(this.payment_type == "subscription"){
+                                    <button class="btn contribute-btn text-center mt-3 w-100" (click)="submitContribute($event)">{{ "subscribe monthly" | translate }}</button>
+                                } @else {
+                                    <button class="btn contribute-btn text-center mt-3 w-100" (click)="submitContribute($event)">{{ "order now" | translate }}</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-10 mx-auto col-lg-6">
+            <app-breadcrumb [data]="breadcrumb" />
+            <div *ngIf="project.itemSlider.length > 0">
+                <app-project-slider [data]="project.itemSlider"/>
+            </div>
+            @if(project.id == 113){
+                <div class="project-promo-videos mb-4">
+                    <video
+                        class="project-promo-video project-promo-video-mobile w-100"
+                        controls
+                        playsinline
+                        preload="metadata"
+                        [attr.aria-label]="project.title">
+                        <source [src]="project113VideoMobileSrc" type="video/mp4">
+                        {{ "your browser does not support the video tag" | translate }}
+                    </video>
+                    <video
+                        class="project-promo-video project-promo-video-web w-100"
+                        controls
+                        preload="metadata"
+                        [attr.aria-label]="project.title">
+                        <source [src]="project113VideoWebSrc" type="video/mp4">
+                        {{ "your browser does not support the video tag" | translate }}
+                    </video>
+                </div>
+            }
+            <div class="project-story" *ngIf="project.additionalInfo">
+                <h2>{{ "project story" | translate }}</h2>
+                <p class="project-story-text" [innerHTML]="project.additionalInfo.project_story"></p>
+            </div>
+
+            <div class="project-story-additional" *ngIf="project.additionalInfo">
+                <h2 [innerHTML]="project.additionalInfo.bold_description"></h2>
+                <p class="project-additional-story-text-1">{{ "more about this project" | translate }}</p>
+                <p class="project-story-additional-text-2" [innerHTML]="project.additionalInfo.normal_description"></p>
+            </div>
+        </div>
+        <div class="col-md-6 d-none d-lg-block">
+            <div class="help-project-form {{ storageService.siteLanguage$.value }}" [class.scrolled]="fixed_div">
+                <div class="d-flex justify-content-between mb-3">
+                    @if(this.payment_type != "subscription"){
+                        <h2 class="text-center text-white fw-bold">{{ project.title }}</h2>
+                    }
+                    @if(this.payment_type == "subscription"){
+                        <h2 class="text-center  fw-bold mx-auto monthly_label">{{ "monthly subscription" | translate }}</h2>
+                    }
+                    <div class="link-icon">
+                        <img src="/app/assets/images/shared/share-icon.png" alt="share"  (click)="show_share = true">
+                    </div>
+                </div>
+                @if(this.payment_type == "subscription"){
+                    <h2 class="mb-3 text-white fw-bold">{{ project.title }}</h2>
+                }
+
+                @if(this.payment_type != "subscription" && this.payment_type != "one_time"){
+                    <div class="options mb-3">
+                        <button class="btn" (click)="setType('one_time')" [ngClass]="{'active': type === 'one_time', 'has_error': type_error}">
+                            {{ "once" | translate }}
+                        </button>
+
+                        <button class="btn" (click)="setType('monthly')" [ngClass]="{'active': type === 'monthly', 'has_error': type_error}">
+                            {{ "monthly" | translate }}
+                        </button>
+                    </div>
+                }
+
+                <p class="help-project-desc text-white">{{ project.description }}</p>
+
+                <div class="dropdown-list d-flex flex-column {{ storageService.siteLanguage$.value }}">
+                    <div class="dropdown-item" *ngIf="dropdown1.length > 0">
+                        <select class="form-control custom-dropdown" [(ngModel)]="selected_d1" (change)="onSelectionChange()">
+                            @for (item of dropdown1; track item) {
+                                <option [value]="item" [selected]="item === selected_d1">{{ item }}</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="dropdown-item" *ngIf="dropdown2.length > 0">
+                        <select class="form-control custom-dropdown" [(ngModel)]="selected_d2" (change)="onSelectionChange()">
+                            @for (item of dropdown2; track item) {
+                                <option [value]="item" [selected]="item === selected_d2">{{ item }}</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <p class="converted_currency_message" *ngIf="converted_price">
+                    {{ amount }}{{ 'JOD' | translate }} {{ "equivalent to your currency approximately without transfer fees" | translate: {'total':converted_price, 'currency': converted_currency_label} }}
+                </p>
+                <div class="footer-section d-flex justify-content-between">
+                    <div class="quantity-section w-100 text-white d-flex align-items-center">
+                        <span class="remove-quantity" (click)="decrease_quantity()"><img alt="decrease quantity" src="/app/assets/images/shared/minus-white.svg"></span>
+                        <span class="quantity-number text-center">{{ default_quantity }}</span>
+                        <span class="add-quantity" (click)="increase_quantity()"><img alt="increase quantity" src="/app/assets/images/shared/plus-white.svg"></span>
+                    </div>
+                    <span class="total-price w-100 text-center">{{"total" | translate }}: <span>{{ amount }}{{ 'JOD' | translate }}</span></span>
+                    @if(this.payment_type != "subscription"){
+                        <button class="btn contribute-btn text-center w-100" (click)="submitContribute($event)">{{ "order now" | translate }}</button>
+                    }
+                </div>
+                @if(this.payment_type == "subscription"){
+                    <button class="btn contribute-btn text-center mt-3 w-100" (click)="submitContribute($event)">{{ "subscribe monthly" | translate }}</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="our-partners-wrapper" id="our-partners-wrapper">
+  <app-our-partners [partnersList]="partnersList" />
+</div>
+<app-share *ngIf="project" [URL]="url" [title]="project.title" [description]="project.description" [show]="show_share" (valueEmitted)="closePopup($event)"/>
+
+<app-modal [with_icon]="true" [title]="'added to basket' | translate " [show]="show_add_popup" (valueEmitted)="closePopup($event)">
+    <img withicon src="/app/assets/images/shared/check.png" alt="check" style="width:100px" class="d-block mx-auto">
+</app-modal>

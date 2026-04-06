@@ -1,0 +1,26 @@
+.contact-us-form {
+  .row{
+    row-gap: 25px;
+  }
+}
+
+.submit-btn {
+  all: unset;
+  background-color: #FECD0F;
+  border-radius: 14px;
+  color: #0F0F0F;
+  cursor: pointer;
+  height: 33px;
+  text-align: center;
+  width: 100%;
+  margin-top: 16px;
+  &:disabled {
+    background-color: rgba(#FECD0F, 0.5);
+  }
+}
+
+.full-column {
+  display: grid;
+  gap: 25px;
+  grid-column: 1 / 3;
+}

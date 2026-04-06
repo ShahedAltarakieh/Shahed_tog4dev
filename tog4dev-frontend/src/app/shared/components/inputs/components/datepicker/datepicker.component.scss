@@ -1,0 +1,20 @@
+input[name='dp'] {
+  all: unset;
+}
+
+.input-container {
+  border-radius: 8px;
+  border: 1px solid #D2D5DA;
+  cursor: pointer;
+  display: block;
+  height: 58px;
+  padding: 16px;
+  width: 100%;
+}
+
+.right-icon {
+  inset-inline-end: 16px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}

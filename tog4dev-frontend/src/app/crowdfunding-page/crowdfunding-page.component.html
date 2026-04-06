@@ -1,0 +1,160 @@
+<div class="container" *ngIf="project">
+
+    <div class="hero-section">
+        <div class="container project-container">
+            <div class="position-relative h-100 d-flex align-items-center hero-wrapper">
+                <div class="overlay w-100 h-100 position-absolute {{ storageService.siteLanguage$.value }}"></div>
+                <div class="help-project-intro position-absolute w-100 h-100">
+                    <img [src]="project.category.hero_image" rel="preload" fetchpriority="high" class="img-fluid w-100 h-100" alt="{{ project.category.hero_title }}">
+                </div>
+
+                <div class="help-project-container d-flex flex-column flex-md-row justify-content-end justify-content-md-between align-items-center">
+                    <div class="project-details d-flex flex-column">
+                        @if(project.category.image){
+                            <div><img src="{{ project.category.image }}" alt="category logo" class="hero-logo img-fluid" /></div>
+                        }
+                        <p class="project-details-desc mb-0">{{ project.category.hero_title }}</p>
+
+                        <p class="project-details-title mb-0">{{ project.category.hero_description }}</p>
+
+                        <p class="target-section"><img src="/app/assets/images/home/target.svg" alt="target"> {{ "target" | translate }}: <span class="font-weight-bold">{{ project.price | number:'1.0-0' }}{{ 'JOD' | translate }}</span></p>
+                    </div>
+
+                    <div class="help-project-form static d-block d-lg-none {{ storageService.siteLanguage$.value }}" [class.scrolled]="fixed_div">
+                        <div class="d-flex justify-content-between mb-2">
+                            <h2 class="text-center text-white fw-bold">{{ project.title }}</h2>
+
+                            <div class="link-icon">
+                                <img src="/app/assets/images/shared/share-icon.png" alt="share" (click)="show_share = true">
+                            </div>
+                        </div>
+
+                        <div class="progress-bar" style="padding-top:26px;">
+                            <div class="bar">
+                                <div class="completed-bar {{ storageService.siteLanguage$.value }}" style="width: {{project.percentage_amount}}%"
+                                [ngClass]="{ 'zero-value': percentage_amount_int <= 1}">
+                                    <div class="tooltiptext">
+                                        {{percentage_amount_int}}%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="help-project-desc text-white">{{ project.description }}</p>
+
+                        <div class="contribute-options d-flex" [ngClass]="{'mb-3': !amount_error, 'mb-2': amount_error}">
+                            @for (item of project.price_list; track item) {
+                                <button [ngClass]="{'active': contributeOptionIndex === $index, 'disabled': project.percentage_amount >= 100}" class="btn btn-static-amount d-flex align-items-center justify-content-center" (click)="setContributeValue(item, $index)">{{ item }}{{ 'JOD' | translate }}</button>
+                            }
+                            <input type="text" class="form-control contribute-input hide-placeholder-on-foucs"
+                                   [value]="customAmount"
+                                   (input)="onAmountChange($event)"
+                                   [ngClass]="{'has_error': amount_error, 'disabled': project.percentage_amount >= 100}"
+                                   placeholder="{{ 'other amount' | translate }}" />
+                        </div>
+
+                        <p class="converted_currency_message" *ngIf="converted_price">
+                            @if(amount == 0){
+                                {{ middle_amount }}
+                            }
+                            @else {
+                                {{ amount }}
+                            }
+                            {{ 'JOD' | translate }} {{ "equivalent to your currency approximately without transfer fees" | translate: {'total':converted_price, 'currency': converted_currency_label} }}
+                        </p>
+                        <p *ngIf="calculatedPrice" class="calculated_price_msg text-white" [innerHTML]="'you have delegated us to purchase of this product and supply it based on the collective delegation agreement' | translate: {'amount':calculatedPrice}"></p>
+                        <p class="text-danger mb-1" style="font-size:14px" *ngIf="amount_error">{{ "the minimum delegation amount is 5 jod" | translate }}</p>
+                        @if(project.percentage_amount >= 100){
+                            <button class="contribute-btn w-100 d-block pointer-none">{{ "completed" | translate }}</button>
+                        }
+                        @else{
+                            <button class="contribute-btn w-100 d-block" (click)="submitContribute($event)">{{ "order now" | translate }}</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-10 mx-auto col-lg-6">
+            <app-breadcrumb [data]="breadcrumb" />
+            <div *ngIf="project.itemSlider.length > 0">
+                <app-project-slider [data]="project.itemSlider"/>
+            </div>
+            <div class="project-story" *ngIf="project.additionalInfo">
+                <h2>{{ "project story" | translate }}</h2>
+                <p class="project-story-text" [innerHTML]="project.additionalInfo.project_story"></p>
+            </div>
+
+            <div class="project-story-additional" *ngIf="project.additionalInfo">
+                <h2 [innerHTML]="project.additionalInfo.bold_description"></h2>
+                <p class="project-additional-story-text-1">{{ "more about this project" | translate }}</p>
+                <p class="project-story-additional-text-2" [innerHTML]="project.additionalInfo.normal_description"></p>
+            </div>
+        </div>
+        <div class="col-md-6 d-none d-lg-block">
+            <div class="help-project-form {{ storageService.siteLanguage$.value }}" [class.scrolled]="fixed_div">
+                <div class="d-flex justify-content-between mb-2">
+                    <h2 class="text-center text-white fw-bold">{{ project.title }}</h2>
+
+                    <div class="link-icon">
+                        <img src="/app/assets/images/shared/share-icon.png" alt="share" (click)="show_share = true">
+                    </div>
+                </div>
+
+                <div class="progress-bar" style="padding-top:26px;">
+                    <div class="bar">
+                        <div class="completed-bar {{ storageService.siteLanguage$.value }}" style="width: {{project.percentage_amount}}%"
+                        [ngClass]="{ 'zero-value': percentage_amount_int <= 1}">
+                            <div class="tooltiptext">
+                                {{percentage_amount_int}}%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="help-project-desc text-white">{{ project.description }}</p>
+
+                <div class="contribute-options d-flex" [ngClass]="{'mb-3': !amount_error, 'mb-2': amount_error}">
+                    @for (item of project.price_list; track item) {
+                        <button [ngClass]="{'active': contributeOptionIndex === $index, 'disabled': project.percentage_amount >= 100}" class="btn btn-static-amount d-flex align-items-center justify-content-center" (click)="setContributeValue(item, $index)">{{ item }}{{ 'JOD' | translate }}</button>
+                    }
+                    <input type="text" class="form-control contribute-input hide-placeholder-on-foucs"
+                           [value]="customAmount"
+                           (input)="onAmountChange($event)"
+                           [ngClass]="{'has_error': amount_error, 'disabled': project.percentage_amount >= 100}"
+                           placeholder="{{ 'other amount' | translate }}" />
+                </div>
+
+                <p class="converted_currency_message" *ngIf="converted_price">
+                    @if(amount == 0){
+                        {{ middle_amount }}
+                    }
+                    @else {
+                        {{ amount }}
+                    }
+                    {{ 'JOD' | translate }} {{ "equivalent to your currency approximately without transfer fees" | translate: {'total':converted_price, 'currency': converted_currency_label} }}
+                </p>
+                <p *ngIf="calculatedPrice" class="calculated_price_msg text-white" [innerHTML]="'you have delegated us to purchase of this product and supply it based on the collective delegation agreement' | translate: {'amount':calculatedPrice}"></p>
+                <p class="text-danger mb-1" style="font-size:14px" *ngIf="amount_error">{{ "the minimum delegation amount is 5 jod" | translate }}</p>
+                @if(project.percentage_amount >= 100){
+                    <button class="contribute-btn w-100 d-block pointer-none">{{ "completed" | translate }}</button>
+                }
+                @else{
+                    <button class="contribute-btn w-100 d-block" (click)="submitContribute($event)">{{ "order now" | translate }}</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="our-partners-wrapper">
+  <app-our-partners [partnersList]="partnersList" />
+</div>
+
+<app-modal [with_icon]="true" [title]="'added to basket' | translate " [show]="show_add_popup" (valueEmitted)="closePopup($event)">
+    <img withicon src="/app/assets/images/shared/check.png" alt="check" style="width:100px" class="d-block mx-auto">
+</app-modal>
+
+<app-share *ngIf="project" [URL]="url" [title]="project.title" [description]="project.description" [show]="show_share" (valueEmitted)="closePopup($event)"/>

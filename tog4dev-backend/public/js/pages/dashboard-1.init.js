@@ -1,0 +1,1 @@
+var colors=["#f1556c"];(dataColors=$("#total-revenue").data("colors"))&&(colors=dataColors.split(","));var options={series:[68],chart:{height:220,type:"radialBar"},plotOptions:{radialBar:{hollow:{size:"65%"}}},colors:colors,labels:["Revenue"]};var dataColors;colors=["#1abc9c","#4a81d4"];

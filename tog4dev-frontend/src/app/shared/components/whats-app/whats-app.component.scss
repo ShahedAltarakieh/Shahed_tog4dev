@@ -1,0 +1,28 @@
+.whatsapp-section{
+    background: #13585D;
+    box-shadow: 0px 4px 11px 0px #00000040;
+    border-radius: 50px;
+    color: #fff;
+    a{
+        padding: 15px;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        text-decoration: none;
+        span{
+            opacity: 0; /* Initially hidden */
+            visibility: hidden; /* Ensures it's not clickable when hidden */
+            transition: all 0.3s linear;
+            max-width: 0;
+            white-space: nowrap;
+        }
+        &:hover{
+            span {
+                opacity: 1;
+                visibility: visible;
+                max-width: 100%;
+                margin-inline-start: 10px;
+            }
+        }
+    }
+}

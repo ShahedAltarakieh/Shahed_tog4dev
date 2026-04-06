@@ -1,0 +1,47 @@
+<!-- The Modal -->
+<div id="myModal" class="custom-modal" *ngIf="show">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <button class="close btn" (click)="accept()"><img src="/app/assets/images/shared/close.png" alt="close"></button>
+        <div class="d-flex modal-body flex-column">
+            @if(with_icon == true){
+                <div class="modal-description">
+                    <ng-content select="[withicon]"></ng-content>
+                </div>
+                <p class="modal-title text-center">{{ title }}</p>
+            } @else {
+                <p class="modal-title text-center">{{ title }}</p>
+                <hr class="my-0">
+                <div class="modal-description">
+                    <ng-content></ng-content>
+                </div>
+            }
+            <hr class="my-0">
+            <div class="modal-footer">
+                @if(confirm_remove_button == true){
+                    <div class="d-flex two-button w-100">
+                        <button class="btn btn-cancel" (click)="accept()">{{ "cancel" | translate}}</button>
+                        <button class="btn btn-remove" (click)="remove()" [disabled]="isLoading">
+                            @if(confirm_button_label){
+                                <img src="/app/assets/images/shared/loading.gif" alt="loading" [ngClass]="{'d-none': !isLoading}" style="width:25px;"/>
+                                <span [ngClass]="{'d-none': isLoading}" >{{ confirm_button_label | translate }}</span>
+                            }
+                            @else{
+                                {{ "remove" | translate}}
+                            }
+                        </button>
+                    </div>
+                } @else {
+                    <button class="btn btn-accept" (click)="accept()">
+                        @if(yellow_button){
+                            {{ yellow_button }}
+                        }
+                        @else {
+                            {{ "done" | translate}}
+                        }
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

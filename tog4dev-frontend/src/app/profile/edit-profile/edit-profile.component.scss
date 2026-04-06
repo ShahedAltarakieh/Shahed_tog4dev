@@ -1,0 +1,72 @@
+input[type='file'] {
+  display: none;
+}
+
+h1 {
+  font-size: 27px;
+  margin-bottom: 15px;
+}
+
+.form-row {
+  row-gap: 25px;
+}
+
+.form-container{
+ margin-top: 50px;
+}
+.edit-profile-form-wrapper {
+  display: flex;
+  gap: 24px;
+  max-width: 890px;
+  width: 100%;
+  margin-inline: auto;
+}
+
+.edit-profile-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  flex: 1;
+}
+
+.profile-img {
+  border-radius: 14px;
+}
+
+.upload-btn {
+  all: unset;
+  background-color: transparent;
+  border-radius: 8px;
+  border: 1px solid #020617;
+  cursor: pointer;
+  font-size: 14px;
+  height: 33px;
+  padding-inline: 28.5px;
+}
+
+.edit-profile-action {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  img{
+    border-radius: 15px;
+  }
+}
+
+.edit-profile-submit {
+  all: unset;
+  max-width: 274px;
+  width: 100%;
+  text-align: center;
+  margin-inline: auto;
+  cursor: pointer;
+  border-radius: 16px;
+  color: #0F0F0F;
+  height: 42px;
+  font-weight: 700;
+  background-color: #FECD0F;
+  margin-top: 48px;
+  &:disabled {
+    background-color: rgba(#FECD0F, 0.5);
+  }
+}

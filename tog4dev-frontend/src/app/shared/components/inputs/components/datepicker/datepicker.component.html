@@ -1,0 +1,23 @@
+<div class="input-container" (click)="d.toggle()">
+  <input
+    #d="ngbDatepicker"
+    [(ngModel)]="model"
+    [autoClose]="true"
+    name="dp"
+    value="11-11-2024"
+    placeholder="yyyy-mm-dd"
+    readonly
+    (dateSelect)="onDateSelect()"
+    ngbDatepicker
+  />
+
+  <label [ngClass]="{'required': isRequired, 'error': !!errorMsg}" [for]="id">{{ label | translate }}</label>
+
+  <div class="right-icon">
+    <img src="/app/assets/images/shared/inputs/date.svg" alt="date icon"/>
+  </div>
+
+  @if (!!errorMsg) {
+    <p class="error-msg">{{ errorMsg }}</p>
+  }
+</div>

@@ -1,0 +1,164 @@
+.page-title {
+  font-size: 27px;
+  font-weight: 500;
+  margin-bottom: 60px;
+}
+
+.text-container {
+  max-width: 952px;
+  margin-bottom: 60px;
+  margin-inline: auto;
+  
+  .text-intro {
+    line-height: 26px;
+
+    &:last-of-type {
+      margin-bottom: 60px;
+    }
+  }
+}
+
+.goals {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    display: flex;
+    gap: 28px;
+  }
+
+  .goal-title {
+    color: #333333;
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  .goal-desc {
+    color: #333333;
+    font-size: 17px;
+    margin-bottom: 0;
+  }
+}
+
+.how-to-contribute {
+  .title {
+    color: #333333;
+    font-size: 27px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .desc {
+    font-size: 21px;
+    font-weight: 500;
+    margin-bottom: 60px;
+  }
+}
+
+.how-to-contribute-info {
+  margin-bottom: 60px;
+  background-color: #D4FCF4;
+  color: #333333;
+  padding: 35px 0;
+
+  .title {
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  @media all and (max-width: 768px) {
+    padding: 35px;
+  }
+}
+
+.how-to-contribute-adresses {
+  padding-top: 28px;
+  max-width: 800px;
+  margin-inline: auto;
+  text-align: start;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+
+  .address-info {
+    line-height: 26px;
+  }
+  @media all and (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+// start contribute-from-everywhere 
+.contribute-from-everywhere {
+  margin-bottom: 60px;
+}
+
+.contribute-from-everywhere-text {
+  margin-bottom: 60px;
+
+  p {
+    &:first-of-type {
+      margin-bottom: 26px;
+      font-size: 21px;
+      font-weight: 500;
+    }
+
+    &:last-of-type {
+      font-size: 17px;
+    }
+  }
+
+  span {
+    display: block;
+    margin-bottom: 60px;
+    font-size: 17px;
+  }
+
+
+  @media all and (max-width: 768px) {
+    padding-inline: 20px;
+  }
+}
+// end contribute-from-everywhere
+
+// start contribute-benefits
+
+.contribute-benefits {
+  background-color: #FBF5DD;
+  padding: 60px 0;
+
+  @media all and (max-width: 768px) {
+    padding: 60px 30px;
+  }
+}
+
+.contribute-benefits-stats {
+  color: #13585D;
+  display: block;
+  font-size: 35px;
+  font-weight: 700;
+  line-height: 44px;
+  margin-bottom: 8px;
+}
+
+.contribute-benefits-text-1 {
+  display: block;
+  font-size: 21px;
+  margin-bottom: 60px;
+}
+
+.contribute-benefits-text-2 {
+  color: #13585D;
+  font-size: 35px;
+  font-weight: 700;
+  line-height: 44px;
+  margin-bottom: 0;
+  margin-inline: auto;
+  max-width: 710px;
+}
+
+// end contribute-benefits

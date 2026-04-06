@@ -1,0 +1,45 @@
+// Define the styles for the div acting as a checkbox toggle
+.div-toggle {
+  direction: rtl;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+
+  // The span elements that represent the bars
+  div {
+    background: #fff;
+    border-radius: 10px;
+    height: 3px;
+    margin: 3px 0;
+    transition: .4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+
+    &.first {
+      width: 100%;
+    }
+
+    &.second {
+      width: 70%;
+    }
+
+    &.third {
+      width: 100%;
+    }
+  }
+
+  // Simulate the checked state with the class .checked on the div
+  &.checked {
+    .first {
+      transform-origin: bottom;
+      transform: rotateZ(45deg) translate(6px, 10px);
+    }
+
+    .second {
+      opacity: 0;
+    }
+
+    .third {
+      transform-origin: bottom;
+      transform: rotateZ(-45deg) translate(5px, -5px);
+    }
+  }
+}

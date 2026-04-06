@@ -1,0 +1,25 @@
+<div class="input-container {{additionalClass}} {{ storageService.siteLanguage$.value }}">
+  <label [ngClass]="{'required': inputAttr.isRequired, 'error': !!errorMsg}" [for]="inputAttr.id">{{ inputAttr.label | translate }}</label>
+
+  <input 
+    class="{{additionalInputClass}}"
+    [type]="type"
+    [ngClass]="{'with-icon': inputAttr.icon, 'error': !!errorMsg}"
+    [id]="inputAttr.id"
+    [name]="inputAttr.name"
+    [value]="value"
+    [placeholder]="inputAttr.placeholder | translate"
+    (input)="onInputChange($event)"
+    (blur)="onInputChange($event)"
+    (nativeAutofill)="onInputChange($event)"
+    appAutoFill
+  >
+
+  @if (inputAttr.icon) {
+    <img class="icon" alt="icon" [src]="'/app/assets/images/shared/inputs/' + inputAttr.icon + '.svg'" (click)="onIconClick()" />
+  }
+</div>
+
+@if (!!errorMsg) {
+  <p class="error-msg">{{ errorMsg | translate }}</p>
+}

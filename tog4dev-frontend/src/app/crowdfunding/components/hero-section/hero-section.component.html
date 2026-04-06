@@ -1,0 +1,80 @@
+<div class="container project-container" *ngIf="details">
+    <div class="position-relative h-100 d-flex align-items-center hero-wrapper">
+      <div class="overlay w-100 h-100 position-absolute {{ storageService.siteLanguage$.value }}"></div>
+      <div class="help-project-intro position-absolute w-100 h-100">
+        <img [src]="details.hero_image" class="img-fluid w-100 h-100" alt="{{ details.hero_title }}">
+      </div>
+    
+      <div class="help-project-container d-flex flex-column flex-md-row justify-content-md-between align-items-center"
+           [ngClass]="{'justify-content-end': quickContribution, 'justify-content-center': !quickContribution}">
+        <div class="project-details d-flex flex-column">
+
+          @if(details.image){
+              <div><img src="{{ details.image }}" alt="logo img" class="hero-logo img-fluid" /></div>
+          }
+
+          <p class="project-details-desc mb-0">{{ details.hero_title }}</p>
+  
+          <p class="project-details-title mb-0">{{ details.hero_description }}</p>
+
+          <p class="target-section" *ngIf="quickContribution"><img src="/app/assets/images/home/target.svg" alt="target"> {{ "target" | translate }}: <span class="font-weight-bold">{{ quickContribution.target | number:'1.0-0' }}{{ 'JOD' | translate }}</span></p>
+        </div>
+  
+        <div class="help-project-form" *ngIf="quickContribution">
+          <div class="d-flex justify-content-between mb-1">
+            <h2 class="text-center text-white fw-bold">{{ quickContribution.title }}</h2>
+  
+            <div class="link-icon">
+              <img src="/app/assets/images/shared/share-icon.png" alt="share" (click)="show_share = true">
+            </div>
+          </div>
+  
+          <div class="progress-bar" style="padding-top:26px;">
+              <div class="bar">
+                  <div class="completed-bar {{ storageService.siteLanguage$.value }}" style="width: {{quickContribution.percentage_amount}}%"
+                  [ngClass]="{ 'zero-value': percentage_amount_int <= 1}">
+                      <div class="tooltiptext">
+                          {{percentage_amount_int}}%
+                      </div>
+                  </div>
+              </div>
+          </div>
+  
+          <p class="help-project-desc text-white" [ngClass]="{'mb-2': !amount_error, 'mb-0': amount_error}">{{ quickContribution.description }}</p>
+          
+          <p class="text-danger mb-1" style="font-size:14px" *ngIf="amount_error">{{ "the minimum delegation amount is 5 jod" | translate }}</p>
+          <div class="contribute-options d-flex mb-3">
+            @for (item of quickContribution.price_list; track item) {
+              <button [ngClass]="{'active': contributeOptionIndex === $index}" class="btn btn-static-amount d-flex align-items-center justify-content-center" (click)="setContributeValue(item, $index)">{{ item }}{{ 'JOD' | translate }}</button>
+            }
+            <input type="text" class="form-control contribute-input hide-placeholder-on-foucs"
+              [value]="customAmount"
+              (input)="onAmountChange($event)"
+              [ngClass]="{'has_error': amount_error}"
+              placeholder="{{ 'other amount' | translate }}" />
+          </div>
+            <p class="converted_currency_message" *ngIf="converted_price">
+                @if(amount == 0){
+                    {{ middle_amount }}
+                }
+                @else {
+                    {{ amount }}
+                }
+                {{ 'JOD' | translate }}
+                {{ "equivalent to your currency approximately without transfer fees" | translate: {'total':converted_price, 'currency': converted_currency_label} }}
+            </p>
+            <p *ngIf="calculatedPrice" class="calculated_price_msg text-white" [innerHTML]="'you have delegated us to purchase of this product and supply it based on the collective delegation agreement' | translate: {'amount':calculatedPrice}"></p>
+            @if(quickContribution.percentage_amount && quickContribution.percentage_amount >= 100){
+                <button class="contribute-btn w-100 d-block pointer-none">{{ "completed" | translate }}</button>
+            }
+            @else{
+              <button class="contribute-btn w-100 d-block" (click)="submitContribute($event)">{{ "order now" | translate }}</button>
+            }
+        </div>
+      </div>
+    </div>
+  </div>
+<app-modal [with_icon]="true" [title]="'added to basket' | translate " [show]="show_add_popup" (valueEmitted)="closePopup($event)">
+    <img withicon src="/app/assets/images/shared/check.png" alt="check" style="width:100px" class="d-block mx-auto">
+</app-modal>
+<app-share *ngIf="quickContribution" [URL]="url" [title]="quickContribution.title" [description]="quickContribution.description" [show]="show_share" (valueEmitted)="closePopup($event)"/>

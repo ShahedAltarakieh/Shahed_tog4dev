@@ -1,0 +1,67 @@
+<!-- The Modal -->
+<div id="myModal" class="custom-modal" *ngIf="show">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <button class="close btn" (click)="close_modal()"><img alt="close icon" src="/app/assets/images/shared/close.png"></button>
+        <div class="d-flex modal-body flex-column">
+            <p class="modal-title text-center">{{ "fill your information" | translate }}</p>
+            <hr class="my-0">
+            <div class="modal-description d-flex flex-column">
+                <div class="name-fields d-flex">
+                    <app-basic-input
+                            [inputAttr]="{ id: 'first-name', name: 'first-name', label: 'first name', placeholder: 'your first name', isRequired: true}"
+                            [value]="GuestFormService.guestForm.first_name.value"
+                            [errorMsg]="GuestFormService.guestForm.first_name.errorMsg"
+                            [additionalClass]="'h-46'"
+                            inputType="first name"
+                            (valueChanged)="GuestFormService.guestForm.first_name.value = $event"
+                            (errorChanged)="firstNameErrorHandler($event)"
+                    />
+
+                    <app-basic-input
+                            [inputAttr]="{ id: 'last-name', name: 'last-name', label: 'last name', placeholder: 'your last name', isRequired: true}"
+                            [value]="GuestFormService.guestForm.last_name.value"
+                            [errorMsg]="GuestFormService.guestForm.last_name.errorMsg"
+                            [additionalClass]="'h-46'"
+                            inputType="last name"
+                            (valueChanged)="GuestFormService.guestForm.last_name.value = $event"
+                            (errorChanged)="lastNameErrorHandler($event)"
+                    />
+                </div>
+
+                <app-basic-input
+                        [inputAttr]="{ id: 'email', name: 'email', label: 'e-mail', placeholder: 'enter your email', isRequired: true, icon: 'email'}"
+                        [value]="GuestFormService.guestForm.email.value"
+                        [errorMsg]="GuestFormService.guestForm.email.errorMsg"
+                        [additionalClass]="'h-46'"
+                        inputType="email"
+                        (valueChanged)="GuestFormService.guestForm.email.value = $event"
+                        (errorChanged)="emailErrorHandler($event)"
+                />
+
+                <app-mobile-number
+                        [isRequired]="true"
+                        [value]="GuestFormService.guestForm.phone.value"
+                        [errorMsg]="GuestFormService.guestForm.phone.errorMsg"
+                        (phoneCodeChanged)="GuestFormService.guestForm.phone_code.value = $event"
+                        (valueChanged)="GuestFormService.guestForm.phone.value = $event"
+                        (errorChanged)="mobileErrorHandler($event)"
+                />
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-submit-collection" 
+                [disabled]="!GuestFormService.guestForm.first_name.isValid ||
+                !GuestFormService.guestForm.last_name.isValid ||
+                !GuestFormService.guestForm.email.isValid ||
+                !GuestFormService.guestForm.phone.isValid ||
+                isLoading"
+                (click)="onFormSubmit()">{{ "proceed to payment" | translate}}</button>
+            </div>
+            <p class="mb-0 font-size-14 text-danger">
+                {{ "by entering your correct name, email address, and a valid WhatsApp number, you ensure easy and accurate delivery of your delegation contracts and full access to all your previous delegations through your" | translate }}
+                <a [routerLink]="(storageService.siteLanguage$.value == 'ar') ? '/ar/تسجيل-الدخول' : '/en/login'">{{ "account label" | translate }}</a>
+            </p>
+        </div>
+    </div>
+</div>

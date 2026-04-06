@@ -1,0 +1,27 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::table('subscriptions', function (Blueprint $table) {
+            $table->string('agreement_id')->nullable(); // adjust 'after' as needed
+            $table->tinyInteger('first_time')->default(0)->after('agreement_id');
+        });
+    }
+    
+    public function down()
+    {
+        Schema::table('subscriptions', function (Blueprint $table) {
+            $table->dropColumn(['agreement_id', 'first_time']);
+        });
+    }
+    
+};

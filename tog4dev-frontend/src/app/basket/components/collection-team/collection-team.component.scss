@@ -1,0 +1,75 @@
+/* The Modal (background) */
+.custom-modal {
+  //display: none; /* Hidden by default */
+  display: block;
+  position: fixed; /* Stay in place */
+  z-index: 10; /* Sit on top */
+  padding-top: 50px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  .modal-content {
+    background-color: #fff;
+    border: 2px solid #DBDBDB;
+    margin: auto;
+    padding: 60px;
+    border-radius: 20px;
+    max-width: 500px;
+    @media all and (max-width: 768px) {
+      padding: 30px;
+    }
+    @media all and (max-width: 500px) {
+      max-width: 400px;
+    }
+    @media all and (max-width: 400px) {
+      max-width: 300px;
+    }
+    .modal-body{
+      gap:18px;
+      .modal-title{
+        font-size: 23px;
+        font-weight: 500;
+        line-height: 29px;
+      }
+      .modal-description{
+        gap: 30px;
+        .name-fields {
+          gap: 25px;
+        }
+      }
+      .modal-footer{
+        .btn-submit-collection{
+          background: #FECD0F;
+          color: #0F0F0F;
+          font-size: 15px;
+          font-weight: 700;
+          line-height: 22px;
+          text-align: center;
+          border-radius: 15px;
+          width: 100%;
+          padding: 10px;
+        }
+      }
+    }
+  }
+}
+.close{
+  width: fit-content;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  img{
+    width: 20px;
+  }
+  @media all and (max-width: 768px) {
+    top: 5px;
+    right: 5px;
+    img{
+      width: 15px;
+    }
+  }
+}

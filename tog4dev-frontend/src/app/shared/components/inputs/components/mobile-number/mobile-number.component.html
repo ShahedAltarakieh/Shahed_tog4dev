@@ -1,0 +1,54 @@
+<div class="input-container {{ additionalClass }}">
+  <label [ngClass]="{'required': isRequired}" for="mobile-number">{{ "phone" | translate }}</label>
+
+  <input 
+    class="with-icon input-mobile-{{ storageService.siteLanguage$.value }}"
+    [ngClass]="{'error': !!errorMsg}"
+    type="number"
+    id="mobile-number"
+    [name]="value"
+    [value]="value"
+    placeholder="XXXXXXXXX"
+    (change)="onInputChange($event)"
+    (blur)="onInputChange($event)"
+    (input)="onInputChange($event)"
+    (nativeAutofill)="onInputChange($event)"
+    appAutoFill
+  >
+
+  <div class="phone-country-select" (click)="onPhoneCountryClick($event)">
+    <img [src]='country_flag' class="country_flag" alt="country flag" [width]="22" [height]="16"/>
+    <img src="/app/assets/images/shared/inputs/mobile-arrow.svg" alt="arrow"/>
+    @if(storageService.siteLanguage$.value != "ar"){
+      <span>{{ phone_code }}</span>
+    }
+  </div>
+
+  @if (phoneCountrySanitizer.isDropdownExpanded) {
+      <div class="phone-country-dropdown">
+        <div class="search-box">
+            <input type="text" class="form-control form-control-sm px-2" placeholder="{{ 'search' | translate }}" [(ngModel)]="searchQuery">
+        </div>
+        <ul class="mb-0">
+            <li *ngFor="let item of filteredCountries()" (click)="onCountryClick($event, item)">
+                <img width="22" height="16" src="{{ item.flag }}" alt="{{ item.country_name_arabic }}"/>
+                @if(storageService.siteLanguage$.value === 'ar'){
+                    {{ item.country_name_arabic }}
+                }
+                @else{
+                    {{ item.country_name_english }}
+                }
+            </li>
+        </ul>
+      </div>
+  }
+  <div class="ar-phone-icon">
+    @if(storageService.siteLanguage$.value == "ar"){
+      <span class="dir-ltr mx-2 d-inline-block">{{ phone_code }}</span>
+    }
+    <img src="/app/assets/images/shared/inputs/phone.svg" alt="phone alt"/>
+  </div>
+</div>
+@if (!!errorMsg) {
+    <p class="error-msg">{{ errorMsg | translate }}</p>
+}

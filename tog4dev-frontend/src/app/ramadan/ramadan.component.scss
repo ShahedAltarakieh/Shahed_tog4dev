@@ -1,0 +1,82 @@
+.fact-and-statistics{
+  margin-bottom: 70px;
+}
+
+.our-stories{
+  margin-bottom: 115px;
+}
+
+.dummy-text{
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 26px;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.why-together{
+  margin-bottom: 124px;
+  padding-inline: 8.56%;
+}
+
+.our-partners-home{
+  margin-bottom: 46px;
+}
+
+.categories-list{
+  margin-top: 38px;
+}
+
+.primary-color{
+  color:#13585D;
+  font-size: 27px;
+  font-weight: 500;
+  line-height: 34px;
+}
+
+.items-list{
+  margin-bottom: 70px;
+}
+
+@media all and (max-width: 576px) {
+  app-testimonials {
+    display: block;
+    max-width: 364px;
+    margin-inline: auto;
+  }
+
+  .why-together {
+    margin-bottom: 60px;
+    padding-inline: 48px;
+  }
+}
+
+.ramadan-video-wrapper {
+  position: relative;
+
+  .ramadan-video-mobile {
+    display: block;
+  }
+
+  .ramadan-video-web {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .ramadan-video-mobile {
+      display: none;
+    }
+
+    .ramadan-video-web {
+      display: block;
+    }
+  }
+}
+
+.section-title {
+  color: #13585D;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+}

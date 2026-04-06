@@ -1,0 +1,113 @@
+/* You can add global styles to this file, and also import other style files */
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Readex Pro", sans-serif;
+}
+
+input.hide-placeholder-on-foucs:focus::placeholder{
+  color: transparent !important;
+}
+
+.primary-color{
+  color: #13585D;
+}
+
+.secondary-color{
+  color:#FECD0F;
+}
+
+.calculated_price_msg{
+  font-size: 14px;
+}
+
+.font-size-14{
+  font-size: 14px;
+}
+
+.completed-bar {
+  background: #FECD0F;
+  height: 100%;
+  border-radius: 10px;
+  position: relative;
+  font-size: 10px;
+  display: flex;
+  justify-content: end;
+  &.zero-value{
+    .tooltiptext {
+      right: -20px;
+    }
+  }
+  .tooltiptext {
+    background-color: #13585D;
+    color: #fff;
+    border:1px solid #13585D;
+    text-align: center;
+    border-radius: 6px;
+    padding: 2px 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    right: -11px;
+    transition: opacity 0.3s;
+    font-size: 11px;
+    white-space: nowrap;
+    &::after{
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #13585D transparent transparent transparent;
+    }
+  }
+  &.ar{
+    &.zero-value{
+      .tooltiptext {
+        right: unset;
+        left: -20px;
+      }
+    }
+    .tooltiptext {
+      right: unset;
+      left: -11px;
+    }
+  }
+}
+
+.button-secondary{
+  all: unset;
+  cursor: pointer;
+  padding-inline: 16px;
+  transition: all 300ms;
+  background-color: #FECD0F;
+  color: #000000;
+  height: 40px;
+  border-radius: 6px;
+  box-shadow: 0 0 1px 0 #00000014, 0 1px 4px 0 #0000001F;
+
+  &:hover {
+    background-color: #13585D;
+    color: #ffffff;
+  }
+}
+
+.border-radius-28{
+  border-radius: 28px;
+}
+
+.dir-ltr{
+  direction: ltr;
+}
+
+.text-left-important{
+  text-align: left !important;
+}

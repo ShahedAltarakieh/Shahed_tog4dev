@@ -1,0 +1,56 @@
+<div class="container" *ngIf="project">
+    <div class="hero-section">
+        <div class="container project-container">
+            <div class="position-relative">
+                <div class="overlay w-100 h-100 position-absolute {{ storageService.siteLanguage$.value }}"></div>
+                <div class="help-project-intro">
+                    <img [src]="project.image" rel="preload" fetchpriority="high" class="img-fluid w-100" alt="{{ project.title }}">
+                </div>
+
+                <div class="help-project-container position-absolute">
+                    <div class="project-details">
+                        @if(project.category.image){
+                          <div><img src="{{ project.category.image }}" alt="{{ project.category.title }}" class="hero-logo img-fluid"></div>
+                        }
+                        <p class="project-details-desc my-2">{{ project.title }}</p>
+
+                        <p class="project-details-title">{{ project.description }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-10">
+            <app-breadcrumb [data]="breadcrumb" />
+            <div *ngIf="project.itemSlider.length > 0">
+                <app-project-slider [data]="project.itemSlider"/>
+            </div>
+            <div class="project-story" *ngIf="project.additionalInfo">
+                <h2>{{ "project story" | translate }}</h2>
+                <p class="project-story-text" [innerHTML]="project.additionalInfo.project_story"></p>
+            </div>
+
+            <div class="project-story-additional" *ngIf="project.additionalInfo">
+                <h2 [innerHTML]="project.additionalInfo.bold_description"></h2>
+                <p class="project-additional-story-text-1">{{ "more about this project" | translate }}</p>
+                <p class="project-story-additional-text-2" [innerHTML]="project.additionalInfo.normal_description"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (factsList.length > 0) {
+    <div class="facts-and-statistics">
+        <app-facts-and-statistics [factsList]="factsList" />
+    </div>
+}
+
+@if (testimonialsList.length > 0) {
+  <app-testimonials [testimonialsList]="testimonialsList" />
+}
+
+@if (partnersList.length > 0) {
+  <app-our-partners [partnersList]="partnersList" />
+}

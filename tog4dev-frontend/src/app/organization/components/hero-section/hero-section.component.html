@@ -1,0 +1,19 @@
+<div class="container project-container" *ngIf="details">
+    <div class="position-relative">
+      <div class="overlay w-100 h-100 position-absolute {{ storageService.siteLanguage$.value }}"></div>
+      <div class="help-project-intro">
+        <img [src]="details.hero_image" class="img-fluid w-100" alt="{{ details.hero_title }}">
+      </div>
+    
+      <div class="help-project-container position-absolute">
+        <div class="project-details">
+            @if(details.image){
+                <div><img src="{{ details.image }}" alt="{{ details.hero_title }}" class="hero-logo img-fluid"></div>
+            }
+            <p class="project-details-desc my-2">{{ details.hero_title }}</p>
+
+            <p class="project-details-title">{{ details.hero_description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>

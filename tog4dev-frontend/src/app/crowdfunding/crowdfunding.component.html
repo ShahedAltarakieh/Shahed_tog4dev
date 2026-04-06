@@ -1,0 +1,77 @@
+<div class="container">
+
+    <div class="categories-list">
+        <app-categories-list [type]="type" [list]="categoriesList" [selected_slug]="slug_en"/>
+    </div>
+
+    <div *ngIf="selected_category">
+        <app-hero-section [details]="selected_category" [quickContribution]="quickContribution"/>
+        <p class="dummy-text text-center">
+            {{ selected_category.description }}
+        </p>
+    </div>
+    @if(selected_category.id == 23) {
+        <div class="row">
+            <div class="col-12">
+                <h2 class="section-title">{{ 'Together, We Made an Impact in Ramadan 2025' | translate}}</h2>
+            </div>
+            <div class="col-10 mx-auto col-lg-8 mb-4 ramadan-video-wrapper">
+                <video
+                    class="ramadan-video ramadan-video-mobile w-100"
+                    controls
+                    playsinline
+                    preload="metadata">
+                    <source src="/app/assets/videos/Ramadan-2026.mp4" type="video/mp4">
+                    {{ "your browser does not support the video tag" | translate }}
+                </video>
+                <video
+                    class="ramadan-video ramadan-video-web w-100"
+                    controls
+                    playsinline
+                    preload="metadata">
+                    <source src="/app/assets/videos/Ramadan-2026-web.mp4" type="video/mp4">
+                    {{ "your browser does not support the video tag" | translate }}
+                </video>
+            </div>
+        </div>
+    }
+
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-6 col-sm-8 col-12">
+            <p class="text-center primary-color my-4">{{ "wherever there is a need," | translate }} <br>{{ "we take the initiative together." | translate }}</p>
+        </div>
+    </div>
+    <div class="row items-list">
+        <div class="col-12">
+            <div class="filter-buttons">
+                <button [ngClass]="{'active': (activeCategory === 'all')}" (click)="setActiveCategory('all')">{{ "all" | translate}}</button>
+                <button [ngClass]="{'active': (activeCategory === 'current')}" (click)="setActiveCategory('current')">{{ "current" | translate}}</button>
+                <button [ngClass]="{'active': (activeCategory === 'completed')}" (click)="setActiveCategory('completed')">{{ "completed" | translate}}</button>
+            </div>
+        </div>
+        @for (item of projectsList; track item) {
+            <div class="col-12 col-lg-6 col-md-6 col-xl-4 pb-4"
+                 [ngClass]="{'d-none': (activeCategory !== 'all' && ((item.percentage_amount < 100 && activeCategory != 'current') || (item.percentage_amount >= 100 && activeCategory != 'completed')))}">
+                <app-project-list-item ngskiphydration [project]="item" />
+            </div>
+        }
+    </div>
+
+</div>
+
+
+<div class="fact-and-statistics" *ngIf="factsList.length > 0">
+    <app-facts-and-statistics [factsList]="factsList"/>
+</div>
+
+<div id="our-stories" class="our-stories" *ngIf="storiesList.length > 0">
+    <app-our-stories [storiesList]="storiesList" />
+</div>
+
+<div class="why-together" *ngIf="testimonialsList.length > 0">
+    <app-testimonials [testimonialsList]="testimonialsList"/>
+</div>
+
+<div class="our-partners" *ngIf="partnersList.length > 0">
+    <app-our-partners [partnersList]="partnersList"/>
+</div>

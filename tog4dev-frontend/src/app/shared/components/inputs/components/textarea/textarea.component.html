@@ -1,0 +1,13 @@
+<div class="input-container">
+  <label [ngClass]="{'required': inputAttr.isRequired}" [for]="inputAttr.id">{{ inputAttr.label | translate }}</label>
+
+  <textarea [id]="inputAttr.id" [ngClass]="{'error': !!errorMsg}" [name]="inputAttr.name" [value]="value" [placeholder]="inputAttr.placeholder | translate" (input)="onInputChange($event)"></textarea>
+
+  @if (inputAttr.icon) {
+    <img class="icon" alt="textbox icon" [src]="'/app/assets/images/shared/inputs/' + inputAttr.icon + '.svg'" />
+  }
+
+  @if (!!errorMsg) {
+    <p class="error-msg">{{ errorMsg | translate }}</p>
+  }
+</div>

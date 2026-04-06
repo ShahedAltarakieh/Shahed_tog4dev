@@ -1,0 +1,189 @@
+@if(project && project.type_id == 1){
+<div class="item-container org-item d-flex flex-column justify-content-between">
+  <div class="img-wrapper">
+    <img [src]="project.image" class="img-fluid item-image d-none d-lg-block" alt="{{ project.title }}">
+    <img [src]="project.image_tablet" class="img-fluid item-image d-none d-sm-block d-lg-none" alt="{{ project.title }}">
+    <img [src]="project.image_mobile" class="img-fluid item-image d-sm-none" alt="{{ project.title }}">
+  </div>
+
+  <div class="project-body d-flex flex-column h-100 justify-content-between">
+    <div class="project-info-container">
+      <div class="project-info">
+        <div class="location-info">
+          <img src="/app/assets/images/home/location.svg" alt="pin icon">
+          <span>{{ project.location }}</span>
+        </div>
+
+        <div class="category-info">
+          <span>{{ project.category.title }}</span>
+          <img src="/app/assets/images/home/category.svg" alt="{{ project.category.title }}">
+        </div>
+      </div>
+      </div>
+      <div class="d-flex flex-column item-info">
+          <h2 class="project-title mb-0">{{ project.title }}</h2>
+          <p class="project-desc mb-0">{{ project.description }}</p>
+      </div>
+      <a class="btn details-page text-center" [routerLink]="[detailsOrganizationsRoutes[storageService.siteLanguage$.value], project.category.slug, project.slug]">{{ "more details" | translate }}</a>
+  </div>
+
+  <div class="link-icon-wrapper">
+    <img src="/app/assets/images/shared/share-icon.png" alt="share" (click)="show_share = true"/>
+  </div>
+</div>
+<app-share [title]="project.title" [description]="project.description" [URL]="url" [show]="show_share" (valueEmitted)="closePopup($event)"/>
+}
+@else if(project && project.type_id == 2){
+    <div class="item-container crowd-item d-flex flex-column justify-content-between">
+        <div class="img-wrapper">
+            <img [src]="project.image" class="img-fluid item-image d-none d-lg-block" alt="{{ project.title }}">
+            <img [src]="project.image_tablet" class="img-fluid item-image d-none d-sm-block d-lg-none" alt="{{ project.title }}">
+            <img [src]="project.image_mobile" class="img-fluid item-image d-sm-none" alt="{{ project.title }}">
+        </div>
+
+        <div class="project-body d-flex flex-column h-100 justify-content-between">
+            <div class="project-info-container">
+                <div class="project-info">
+                    <div class="location-info">
+                        <img src="/app/assets/images/home/location.svg" alt="pin">
+                        <span>{{ project.location }}</span>
+                    </div>
+
+                    <div class="category-info">
+                        <span>{{ project.category.title }}</span>
+                        <img src="/app/assets/images/home/category.svg" alt="{{ project.category.title }}">
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <a class="d-flex flex-column item-info text-decoration-none" [routerLink]="[detailsProjectsRoutes[storageService.siteLanguage$.value], project.category.slug, project.slug]">
+                    <h2 class="project-title mb-0">{{ project.title }}</h2>
+                    <p class="project-desc mb-0">{{ project.description }}</p>
+                </a>
+            </div>
+
+            <div class="dropdown-list d-flex flex-column {{ storageService.siteLanguage$.value }}">
+                <div class="dropdown-item" *ngIf="dropdown1.length > 0">
+                    <select class="form-control custom-dropdown" [(ngModel)]="selected_d1" (change)="onSelectionChange()">
+                        <option *ngFor="let item of dropdown1" [value]="item" [selected]="item === selected_d1">{{ item }}</option>
+                    </select>
+                </div>
+                <div class="dropdown-item" *ngIf="dropdown2.length > 0">
+                    <select class="form-control custom-dropdown" [(ngModel)]="selected_d2" (change)="onSelectionChange()">
+                        <option *ngFor="let item of dropdown2" [value]="item" [selected]="item === selected_d2">{{ item }}</option>
+                    </select>
+                </div>
+            </div>
+            <p class="converted_currency_message" *ngIf="converted_price">
+                {{ amount }}{{ 'JOD' | translate }} {{ "equivalent to your currency approximately without transfer fees" | translate: {'total':converted_price, 'currency': converted_currency_label} }}
+            </p>
+            <div class="footer-section d-flex justify-content-between">
+                <div class="quantity-section w-100 d-flex align-items-center">
+                    <span class="remove-quantity" (click)="decrease_quantity()"><img src="/app/assets/images/shared/minus.svg"></span>
+                    <span class="quantity-number text-center">{{ default_quantity }}</span>
+                    <span class="add-quantity" (click)="increase_quantity()"><img src="/app/assets/images/shared/plus.svg"></span>
+                </div>
+                <span class="total-price w-100 text-center">{{"total" | translate }}: <span>{{ amount }}{{ 'JOD' | translate }}</span></span>
+                <button class="btn contribute-btn text-center w-100" (click)="submitContribute($event)">{{ "order now" | translate }}</button>
+            </div>
+        </div>
+
+        <div class="link-icon-wrapper">
+            <img src="/app/assets/images/shared/share-icon.png" alt="share" (click)="show_share = true" />
+
+        </div>
+    </div>
+    <app-share [title]="project.title" [description]="project.description" [URL]="url" [show]="show_share" (valueEmitted)="closePopup($event)"/>
+}
+@else if(project && project.type_id == 3){
+    <div class="item-container crowd-item d-flex flex-column justify-content-between" [ngClass]="{ 'item-completed': project.percentage_amount >= 100 }">
+        <div class="img-wrapper position-relative">
+            <div class="overlay"></div>
+            <img [src]="project.image" class="img-fluid item-image d-none d-lg-block" alt="{{ project.title }}">
+            <img [src]="project.image_tablet" class="img-fluid item-image d-none d-sm-block d-lg-none" alt="{{ project.title }}">
+            <img [src]="project.image_mobile" class="img-fluid item-image d-sm-none" alt="{{ project.title }}">
+        </div>
+
+        <div class="project-body d-flex flex-column h-100 justify-content-between">
+            <div class="project-info-container mb-2">
+                <div class="project-info">
+                    <div class="location-info">
+                        <img src="/app/assets/images/home/location.svg" alt="pin">
+                        <span>{{ project.location }}</span>
+                    </div>
+
+                    <div class="category-info">
+                        <span>{{ project.category.title }}</span>
+                        <img src="/app/assets/images/home/category.svg" alt="{{ project.category.title }}">
+                    </div>
+                </div>
+                <div class="bar">
+                    <div class="completed-bar {{ storageService.siteLanguage$.value }}" style="width: {{project.percentage_amount}}%"
+                    [ngClass]="{ 'zero-value': percentage_amount_int <= 1}">
+                        <div class="tooltiptext">
+                            {{percentage_amount_int}}%
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex flex-column item-info">
+
+                <a class="d-flex flex-column text-decoration-none" [routerLink]="[detailsCrowdFundingsRoutes[storageService.siteLanguage$.value], project.category.slug, project.slug]">
+                    <h2 class="project-title mb-3">{{ project.title }}</h2>
+                    <p class="project-desc mb-0">{{ project.description }}</p>
+                </a>
+                <!-- Contribute Second case -->
+                @if ((project.price_list || []).length > 0) {
+                    <div class="contribute-options-container">
+                        <p class="text-danger mb-1" style="font-size:14px" *ngIf="amount_error">{{ "the minimum delegation amount is 5 jod" | translate }}</p>
+                        <div class="contribute-options d-flex">
+                            @for (item of project.price_list; track item) {
+                                <button [ngClass]="{'active': contributeOptionIndex === $index, 'disabled': project.percentage_amount >= 100}" class="btn btn-static-amount d-flex align-items-center justify-content-center" (click)="setContributeValue(item, $index)">{{ item }}{{ 'JOD' | translate }}</button>
+                            }
+                            <input type="text" class="form-control contribute-input hide-placeholder-on-foucs"
+                               [value]="customAmount"
+                               (input)="onAmountChange($event)"
+                               [ngClass]="{'has_error': amount_error, 'disabled': project.percentage_amount >= 100}"
+                               placeholder="{{ 'other amount' | translate }}" />
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <p class="converted_currency_message" *ngIf="converted_price">
+                @if(amount == 0){
+                    {{ middle_amount }}
+                }
+                @else {
+                    {{ amount }}
+                }
+                {{ 'JOD' | translate }}
+                {{ "equivalent to your currency approximately without transfer fees" | translate: {'total':converted_price, 'currency': converted_currency_label} }}
+            </p>
+            <p *ngIf="calculatedPrice" class="calculated_price_msg mt-2 primary-color" [innerHTML]="'you have delegated us to purchase of this product and supply it based on the collective delegation agreement' | translate: {'amount':calculatedPrice}"></p>
+            @if(project.percentage_amount >= 100){
+                <button class="btn contribute-btn text-center pointer-none">{{ "completed" | translate }}</button>
+            }
+            @else{
+                <button class="btn contribute-btn text-center" (click)="submitContribute($event)">{{ "order now" | translate }}</button>
+            }
+        </div>
+
+        <div class="link-icon-wrapper">
+            <img src="/app/assets/images/shared/share-icon.png" alt="share icon" (click)="show_share = true"/>
+        </div>
+
+        <div class="target-wrapper">
+            <img src="/app/assets/images/home/target.svg" alt="target icon">
+
+            <p class="target-desc">{{ "target" |translate }}: <span class="target-price">{{ project.price | number:'1.0-0' }}{{ 'JOD' | translate }}</span></p>
+        </div>
+    </div>
+    <app-share [title]="project.title" [description]="project.description" [URL]="url" [show]="show_share" (valueEmitted)="closePopup($event)"/>
+}
+
+<app-modal [with_icon]="true" [title]="'added to basket' | translate " [show]="show_add_popup" (valueEmitted)="closePopup($event)">
+   <img withicon src="/app/assets/images/shared/check.png" alt="check" style="width:100px" class="d-block mx-auto">
+</app-modal>
