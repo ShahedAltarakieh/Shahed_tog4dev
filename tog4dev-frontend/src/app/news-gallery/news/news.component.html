@@ -1,62 +1,125 @@
 <div class="news-page">
     <div class="hero-section">
-        <div class="container">
-            <h1 class="page-title text-center text-white">{{ "news" | translate }}</h1>
+        <div class="hero-pattern"></div>
+        <div class="container position-relative">
+            <div class="hero-content text-center">
+                <span class="hero-badge">{{ "news & gallery" | translate }}</span>
+                <h1 class="page-title text-white">{{ "news" | translate }}</h1>
+                <p class="hero-subtitle text-white">{{ "stay updated with our latest stories" | translate }}</p>
+            </div>
         </div>
     </div>
 
-    <div class="container py-5">
-        <div class="filters-section d-flex flex-wrap gap-3 mb-4 align-items-center">
-            <div class="search-box flex-grow-1">
+    <div class="container">
+        <div class="filters-bar">
+            <div class="search-wrapper">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+                </svg>
                 <input type="text"
-                       class="form-control"
+                       class="search-input"
                        [placeholder]="'search news' | translate"
                        (input)="onSearchInput($any($event.target).value)" />
             </div>
-
-            <div class="category-filter">
-                <select class="form-select" (change)="onCategoryChange($any($event.target).value)">
-                    <option value="">{{ "all categories" | translate }}</option>
-                    @for (cat of categories; track cat.id) {
-                        <option [value]="cat.slug">{{ cat.name }}</option>
-                    }
-                </select>
+            <div class="category-pills">
+                <button class="pill" [class.active]="!selectedCategory" (click)="onCategoryChange('')">
+                    {{ "all" | translate }}
+                </button>
+                @for (cat of categories; track cat.id) {
+                    <button class="pill" [class.active]="selectedCategory === cat.slug" (click)="onCategoryChange(cat.slug)">
+                        {{ cat.name }}
+                    </button>
+                }
             </div>
         </div>
 
         @if (loading) {
-            <div class="text-center py-5">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
+            <div class="loading-state">
+                <div class="loading-grid">
+                    @for (i of [1,2,3,4,5,6]; track i) {
+                        <div class="skeleton-card">
+                            <div class="skeleton-image shimmer"></div>
+                            <div class="skeleton-body">
+                                <div class="skeleton-line short shimmer"></div>
+                                <div class="skeleton-line shimmer"></div>
+                                <div class="skeleton-line medium shimmer"></div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         }
 
         @if (hasError) {
-            <div class="error-state text-center py-5">
-                <div class="error-icon mb-3">
-                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="1.5">
+            <div class="state-card error-state">
+                <div class="state-icon">
+                    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#e74c3c" stroke-width="1.5">
                         <circle cx="12" cy="12" r="10"/>
                         <line x1="12" y1="8" x2="12" y2="12"/>
                         <line x1="12" y1="16" x2="12.01" y2="16"/>
                     </svg>
                 </div>
                 <h3>{{ "error loading content" | translate }}</h3>
-                <p class="text-muted">{{ "please try again later" | translate }}</p>
+                <p>{{ "please try again later" | translate }}</p>
             </div>
         }
 
         @if (!loading && !hasError && newsList.length === 0) {
-            <div class="empty-state text-center py-5">
+            <div class="state-card empty-state">
+                <div class="state-icon">
+                    <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.5">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                    </svg>
+                </div>
                 <h3>{{ "no news found" | translate }}</h3>
             </div>
         }
 
         @if (!loading && !hasError && newsList.length > 0) {
+            @if (newsList.length > 0 && currentPage === 1 && !searchQuery) {
+                <div class="featured-article">
+                    <a [routerLink]="getNewsDetailRoute(newsList[0].slug)" class="featured-link">
+                        <div class="featured-image">
+                            @if (newsList[0].image) {
+                                <img [src]="newsList[0].image" [alt]="newsList[0].title" loading="lazy" />
+                            } @else {
+                                <div class="placeholder-image">
+                                    <img src="/app/assets/images/shared/logo.svg" alt="placeholder" />
+                                </div>
+                            }
+                            <div class="featured-gradient"></div>
+                        </div>
+                        <div class="featured-content">
+                            @if (newsList[0].category) {
+                                <span class="featured-category">{{ newsList[0].category.name }}</span>
+                            }
+                            <h2 class="featured-title">{{ newsList[0].title }}</h2>
+                            @if (newsList[0].excerpt) {
+                                <p class="featured-excerpt">{{ newsList[0].excerpt }}</p>
+                            }
+                            <div class="featured-meta">
+                                @if (newsList[0].published_at) {
+                                    <span class="meta-date">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                                        </svg>
+                                        {{ formatDate(newsList[0].published_at) }}
+                                    </span>
+                                }
+                                <span class="meta-read">{{ "read more" | translate }} &rarr;</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+
             <div class="news-grid">
-                @for (item of newsList; track item.id) {
-                    <a class="news-card" [routerLink]="getNewsDetailRoute(item.slug)">
-                        <div class="news-image">
+                @for (item of (currentPage === 1 && !searchQuery ? newsList.slice(1) : newsList); track item.id; let idx = $index) {
+                    <a class="news-card" [routerLink]="getNewsDetailRoute(item.slug)" [style.animation-delay]="(idx * 60) + 'ms'">
+                        <div class="card-image">
                             @if (item.image) {
                                 <img [src]="item.image" [alt]="item.title" loading="lazy" />
                             } @else {
@@ -64,20 +127,25 @@
                                     <img src="/app/assets/images/shared/logo.svg" alt="placeholder" />
                                 </div>
                             }
+                            @if (item.is_featured) {
+                                <span class="featured-badge">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                </span>
+                            }
                         </div>
-                        <div class="news-content">
+                        <div class="card-body">
                             @if (item.category) {
-                                <span class="news-category">{{ item.category.name }}</span>
+                                <span class="card-category">{{ item.category.name }}</span>
                             }
-                            <h3 class="news-title">{{ item.title }}</h3>
+                            <h3 class="card-title">{{ item.title }}</h3>
                             @if (item.excerpt) {
-                                <p class="news-excerpt">{{ item.excerpt }}</p>
+                                <p class="card-excerpt">{{ item.excerpt }}</p>
                             }
-                            <div class="news-footer">
+                            <div class="card-footer">
                                 @if (item.published_at) {
-                                    <span class="news-date">{{ formatDate(item.published_at) }}</span>
+                                    <span class="card-date">{{ formatDate(item.published_at) }}</span>
                                 }
-                                <span class="read-more-btn">{{ "read more" | translate }}</span>
+                                <span class="card-arrow">&rarr;</span>
                             </div>
                         </div>
                     </a>
@@ -85,20 +153,16 @@
             </div>
 
             @if (totalPages > 1) {
-                <nav class="pagination-container d-flex justify-content-center mt-5">
-                    <ul class="pagination">
-                        <li class="page-item" [ngClass]="{'disabled': currentPage === 1}">
-                            <button class="page-link" (click)="goToPage(currentPage - 1)">&laquo;</button>
-                        </li>
-                        @for (page of getPages(); track page) {
-                            <li class="page-item" [ngClass]="{'active': page === currentPage}">
-                                <button class="page-link" (click)="goToPage(page)">{{ page }}</button>
-                            </li>
-                        }
-                        <li class="page-item" [ngClass]="{'disabled': currentPage === totalPages}">
-                            <button class="page-link" (click)="goToPage(currentPage + 1)">&raquo;</button>
-                        </li>
-                    </ul>
+                <nav class="pagination-nav">
+                    <button class="page-btn" [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                    </button>
+                    @for (page of getPages(); track page) {
+                        <button class="page-btn" [class.active]="page === currentPage" (click)="goToPage(page)">{{ page }}</button>
+                    }
+                    <button class="page-btn" [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                    </button>
                 </nav>
             }
         }
