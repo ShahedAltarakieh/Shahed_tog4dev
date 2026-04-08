@@ -259,9 +259,7 @@ $radius: 14px;
 }
 
 .related-news {
-    margin-top: 36px;
-    padding-top: 28px;
-    border-top: 1px solid #f0f0f0;
+    padding: 20px 0 60px;
 
     .section-header {
         display: flex;
@@ -286,7 +284,7 @@ $radius: 14px;
 
     .related-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        grid-template-columns: repeat(3, 1fr);
         gap: 20px;
     }
 
@@ -435,6 +433,12 @@ $radius: 14px;
         align-items: flex-start;
     }
 
+    .related-news .related-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 480px) {
     .related-news .related-grid {
         grid-template-columns: 1fr;
     }
