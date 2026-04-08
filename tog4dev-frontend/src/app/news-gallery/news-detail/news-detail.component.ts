@@ -92,11 +92,6 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
         return lang === 'ar' ? '/ar/الأخبار' : '/en/news';
     }
 
-    getNewsGalleryRoute(): string {
-        const lang = this.storageService.siteLanguage$.value;
-        return lang === 'ar' ? '/ar/الأخبار-والمعرض' : '/en/news-gallery';
-    }
-
     getNewsDetailRoute(slug: string): string {
         const lang = this.storageService.siteLanguage$.value;
         return lang === 'ar' ? '/ar/الأخبار/' + slug : '/en/news/' + slug;

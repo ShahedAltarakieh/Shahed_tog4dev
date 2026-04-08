@@ -35,9 +35,9 @@
 
         @if (loading) {
             <div class="loading-state">
-                <div class="masonry-grid">
+                <div class="photo-grid">
                     @for (i of [1,2,3,4,5,6,7,8]; track i) {
-                        <div class="skeleton-photo shimmer" [style.aspect-ratio]="i % 3 === 0 ? '3/4' : '4/3'"></div>
+                        <div class="skeleton-photo shimmer"></div>
                     }
                 </div>
             </div>
@@ -73,9 +73,9 @@
                 <span>{{ photos.length }} {{ "photos" | translate }}</span>
             </div>
 
-            <div class="masonry-grid">
+            <div class="photo-grid">
                 @for (photo of photos; track photo.id; let idx = $index) {
-                    <div class="photo-card" (click)="openLightbox(photo)" [style.animation-delay]="(idx * 50) + 'ms'">
+                    <div class="photo-card" (click)="openLightbox(idx)" [style.animation-delay]="(idx * 60) + 'ms'">
                         @if (photo.image) {
                             <img [src]="photo.image" [alt]="photo.title" loading="lazy" />
                         } @else {
@@ -118,31 +118,42 @@
         }
     </div>
 
-    @if (lightboxPhoto) {
+    @if (currentLightboxPhoto) {
         <div class="lightbox-overlay" (click)="closeLightbox()">
+            <button class="lightbox-nav lightbox-prev" (click)="prevPhoto($event)" [class.disabled]="lightboxIndex === 0">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+
             <div class="lightbox-content" (click)="$event.stopPropagation()">
                 <button class="lightbox-close" (click)="closeLightbox()">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </button>
                 <div class="lightbox-image">
-                    @if (lightboxPhoto.image) {
-                        <img [src]="lightboxPhoto.image" [alt]="lightboxPhoto.title" />
+                    @if (currentLightboxPhoto.image) {
+                        <img [src]="currentLightboxPhoto.image" [alt]="currentLightboxPhoto.title" />
                     }
                 </div>
-                @if (lightboxPhoto.title || lightboxPhoto.description) {
+                <div class="lightbox-footer">
                     <div class="lightbox-info">
-                        @if (lightboxPhoto.title) {
-                            <h3>{{ lightboxPhoto.title }}</h3>
+                        @if (currentLightboxPhoto.title) {
+                            <h3>{{ currentLightboxPhoto.title }}</h3>
                         }
-                        @if (lightboxPhoto.description) {
-                            <p>{{ lightboxPhoto.description }}</p>
+                        @if (currentLightboxPhoto.description) {
+                            <p>{{ currentLightboxPhoto.description }}</p>
                         }
-                        @if (lightboxPhoto.category) {
-                            <span class="lightbox-category">{{ lightboxPhoto.category.name }}</span>
+                        @if (currentLightboxPhoto.category) {
+                            <span class="lightbox-category">{{ currentLightboxPhoto.category.name }}</span>
                         }
                     </div>
-                }
+                    <div class="lightbox-counter">
+                        {{ lightboxIndex! + 1 }} / {{ photos.length }}
+                    </div>
+                </div>
             </div>
+
+            <button class="lightbox-nav lightbox-next" (click)="nextPhoto($event)" [class.disabled]="lightboxIndex === photos.length - 1">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
         </div>
     }
 </div>

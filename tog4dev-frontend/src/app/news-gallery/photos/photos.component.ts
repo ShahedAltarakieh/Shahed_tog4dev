@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID, HostListener } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
@@ -25,15 +26,22 @@ export class PhotosComponent implements OnInit, OnDestroy {
     totalPages: number = 1;
     loading: boolean = false;
     hasError: boolean = false;
-    lightboxPhoto: GalleryPhoto | null = null;
+    lightboxIndex: number | null = null;
+    get currentLightboxPhoto(): GalleryPhoto | null {
+        return this.lightboxIndex !== null ? this.photos[this.lightboxIndex] : null;
+    }
     destroy$ = new Subject<void>();
     searchSubject$ = new Subject<string>();
+    private isBrowser: boolean;
 
     constructor(
         public storageService: StorageService,
         private galleryService: GalleryService,
-        private newsService: NewsService
-    ) {}
+        private newsService: NewsService,
+        @Inject(PLATFORM_ID) platformId: Object
+    ) {
+        this.isBrowser = isPlatformBrowser(platformId);
+    }
 
     ngOnInit(): void {
         this.searchSubject$.pipe(
@@ -100,16 +108,40 @@ export class PhotosComponent implements OnInit, OnDestroy {
         if (page >= 1 && page <= this.totalPages) {
             this.currentPage = page;
             this.fetchPhotos();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (this.isBrowser) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
     }
 
-    openLightbox(photo: GalleryPhoto): void {
-        this.lightboxPhoto = photo;
+    openLightbox(index: number): void {
+        this.lightboxIndex = index;
     }
 
     closeLightbox(): void {
-        this.lightboxPhoto = null;
+        this.lightboxIndex = null;
+    }
+
+    prevPhoto(event: Event): void {
+        event.stopPropagation();
+        if (this.lightboxIndex !== null && this.lightboxIndex > 0) {
+            this.lightboxIndex--;
+        }
+    }
+
+    nextPhoto(event: Event): void {
+        event.stopPropagation();
+        if (this.lightboxIndex !== null && this.lightboxIndex < this.photos.length - 1) {
+            this.lightboxIndex++;
+        }
+    }
+
+    @HostListener('document:keydown', ['$event'])
+    handleKeydown(event: KeyboardEvent): void {
+        if (this.lightboxIndex === null) return;
+        if (event.key === 'ArrowLeft') this.prevPhoto(event);
+        else if (event.key === 'ArrowRight') this.nextPhoto(event);
+        else if (event.key === 'Escape') this.closeLightbox();
     }
 
     getPages(): number[] {

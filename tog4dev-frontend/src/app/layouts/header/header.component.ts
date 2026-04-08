@@ -89,6 +89,7 @@ export class HeaderComponent {
   };
 
   isDropdownExpanded = false;
+  isNavDropdownOpen = false;
   isMobileMenuCollapse = true;
   isScrolled: boolean = false;
 
@@ -97,6 +98,15 @@ export class HeaderComponent {
     if ((this.elementRef.nativeElement as HTMLElement).querySelector('.profile-box') && !(this.elementRef.nativeElement as HTMLElement).querySelector('.profile-box')!.contains(target)) {
       this.isDropdownExpanded = false;
     }
+    if (!(this.elementRef.nativeElement as HTMLElement).querySelector('.nav-dropdown')?.contains(target)) {
+      this.isNavDropdownOpen = false;
+    }
+  }
+
+  toggleNavDropdown(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isNavDropdownOpen = !this.isNavDropdownOpen;
   }
 
   @HostListener('window:scroll', [])
