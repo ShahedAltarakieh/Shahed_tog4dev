@@ -1,5 +1,5 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
-import {Location, NgClass} from '@angular/common';
+import { Component, ElementRef, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import {Location, NgClass, isPlatformBrowser} from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -113,7 +113,8 @@ export class HeaderComponent {
     public basketService: BasketService,
     public router: Router,
     public elementRef: ElementRef,
-    public cookieService: CookieService
+    public cookieService: CookieService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
   }
 
@@ -169,6 +170,15 @@ export class HeaderComponent {
   activeTab(viewLocation: string): boolean {
     const currentPath = decodeURIComponent(this.location.path());
     return currentPath.includes(viewLocation);
+  }
+
+  openAdminPanel() {
+    if (isPlatformBrowser(this.platformId)) {
+      const protocol = window.location.protocol;
+      const hostname = window.location.hostname;
+      const adminUrl = `${protocol}//${hostname}:3000/login`;
+      window.open(adminUrl, '_blank');
+    }
   }
 
   generateSessionID() {
