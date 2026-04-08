@@ -33,7 +33,7 @@ type ExtraParams = Record<string, any>;
 @Injectable({ providedIn: 'root' })
 export class MetaPixelService {
   private get fbq() {
-    return window.fbq;
+    return typeof window !== 'undefined' ? window.fbq : undefined;
   }
 
   trackViewContentProduct(

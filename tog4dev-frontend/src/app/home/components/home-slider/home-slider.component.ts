@@ -1,4 +1,5 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, Input, PLATFORM_ID, ViewChild} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import Swiper from "swiper";
 import {Subject, takeUntil} from "rxjs";
 import {StorageService} from "../../../core/storage/storage.service";
@@ -20,7 +21,7 @@ export class HomeSliderComponent {
   @Input({ required: true }) homeSlider: HomeSlider[] = [];
   @Input() quickContribution!: Contribution;
 
-  constructor(public storageService: StorageService) {}
+  constructor(public storageService: StorageService, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   /**
    * Angular afterViewInit lifecycle method
@@ -50,6 +51,7 @@ export class HomeSliderComponent {
    * @returns { void }
    */
   initSwiper(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
     this.swiper?.destroy();
 
     this.swiper = new Swiper(this.swiperContainer.nativeElement, {

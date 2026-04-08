@@ -98,3 +98,6 @@ Full-stack module for news articles and media gallery (photos/videos).
 - The migration `2024_06_21` was renamed to `2024_12_03_000312` to fix ordering (it references `payments` table created later)
 - The `2025_09_06_214444` migration was wrapped with `hasColumn` check to avoid duplicate column error
 - `app.component.ts` was patched with `isPlatformBrowser()` guards to prevent SSR crashes from browser-only APIs (sessionStorage, window)
+- SSR compatibility fixes applied across ~20 components: all `window.location.href`, `window.scrollY`, `window.pageYOffset`, `window.location.origin` calls wrapped with `typeof window !== 'undefined'` guards
+- All 6 Swiper slider components (home-slider, project-slider, our-stories, testimonials, about-us-slider, ngoverse-slider) protected with `isPlatformBrowser()` guard in `initSwiper()` to prevent `i.children is not iterable` SSR errors
+- `MetaPixelService.fbq` getter guarded against SSR (`typeof window !== 'undefined'`) to prevent `window is not defined` errors during server rendering

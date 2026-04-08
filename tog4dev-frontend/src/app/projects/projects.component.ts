@@ -101,11 +101,12 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     scrollToFragment(fragment: string): void {
         // Delay to ensure the section is loaded
         setTimeout(() => {
+            if (typeof document === 'undefined') return;
             const element = document.getElementById(fragment);
             if (element) {
-                const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-                const offset = 150; // Adjust the offset value (e.g., 20px)
-                window.scrollTo({
+                const elementPosition = element.getBoundingClientRect().top + (typeof window !== 'undefined' ? window.pageYOffset : 0);
+                const offset = 150;
+                if (typeof window !== 'undefined') window.scrollTo({
                     top: elementPosition - offset, // Scroll to the element position minus the offset
                     behavior: 'smooth' // Smooth scrolling
                 });
@@ -194,7 +195,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
         });
         this.metaService.updateTag({
             property: 'og:url',
-            content: window.location.href
+            content: typeof window !== 'undefined' ? window.location.href : ''
         });
         this.metaService.updateTag({
             property: 'og:type',

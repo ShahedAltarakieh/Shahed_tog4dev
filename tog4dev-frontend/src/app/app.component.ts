@@ -31,7 +31,7 @@ export class AppComponent implements OnInit, AfterViewInit{
   private apiUrl = environment.apiUrl;
   private isProd = environment.production;
   title = 'Together for Development';
-  isLoading = true;
+  isLoading = false;
   translatedRoutes!: { [route: string]: string; };
 
   constructor( 
@@ -89,6 +89,10 @@ export class AppComponent implements OnInit, AfterViewInit{
       this.handleSiteLanguage(lang);
     });
 
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.isLoading = true;
@@ -98,10 +102,6 @@ export class AppComponent implements OnInit, AfterViewInit{
         }, 1000)
       }
     });
-
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
 
     if(this.isProd){
       if (window.location.protocol !== 'https:') {

@@ -77,7 +77,7 @@ export class ProjectListItemComponent implements OnInit, OnDestroy{
   ngOnInit() {
     this.converted_currency_label = this.cookieService.get("currency");
     if(this.project.type_id == 1){
-      this.url = window.location.origin + this.detailsOrganizationsRoutes[this.storageService.siteLanguage$.value] + this.project.category.slug + "/" + this.project.slug;
+      this.url = (typeof window !== 'undefined' ? window.location.origin : '') + this.detailsOrganizationsRoutes[this.storageService.siteLanguage$.value] + this.project.category.slug + "/" + this.project.slug;
     }
     else if(this.project.type_id == 3){
       this.type = "one_time";
@@ -90,7 +90,7 @@ export class ProjectListItemComponent implements OnInit, OnDestroy{
       }
       this.middle_amount = this.project.price_list[1];
       this.getConvertedPrice(this.project.price_list[1]);
-      this.url = window.location.origin + this.detailsCrowdFundingsRoutes[this.storageService.siteLanguage$.value] + this.project.category.slug + "/" + this.project.slug;
+      this.url = (typeof window !== 'undefined' ? window.location.origin : '') + this.detailsCrowdFundingsRoutes[this.storageService.siteLanguage$.value] + this.project.category.slug + "/" + this.project.slug;
     } else if(this.project.type_id == 2){
       this.options = this.project?.dropdown;
         for (let counter = 0; counter < this.options.options.length; counter++) {
@@ -117,7 +117,7 @@ export class ProjectListItemComponent implements OnInit, OnDestroy{
       } else {
         this.type = "one_time";
       }
-      this.url = window.location.origin + this.detailsProjectsRoutes[this.storageService.siteLanguage$.value] + this.project.category.slug + "/" + this.project.slug;
+      this.url = (typeof window !== 'undefined' ? window.location.origin : '') + this.detailsProjectsRoutes[this.storageService.siteLanguage$.value] + this.project.category.slug + "/" + this.project.slug;
     }
   }
 

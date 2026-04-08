@@ -96,7 +96,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
   @HostListener('window:scroll', [])
   onWindowScroll() {
     // Change the header style when the scroll position is greater than 50px
-    this.fixed_div = window.scrollY > 75;
+    this.fixed_div = typeof window !== 'undefined' ? window.scrollY > 75 : false;
   }
 
   increase_quantity(){
@@ -183,7 +183,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
                 title: this.project.title
               });
 
-              this.url = window.location.href;
+              this.url = typeof window !== 'undefined' ? window.location.href : '';
 
               if(this.project.payment_type == "Subscription"){
                 this.payment_type = "subscription";
@@ -351,7 +351,7 @@ export class ProjectPageComponent implements OnInit, OnDestroy {
     });
     this.metaService.updateTag({
       property: 'og:url',
-      content: window.location.href
+      content: typeof window !== 'undefined' ? window.location.href : ''
     });
     this.metaService.updateTag({
       property: 'og:type',

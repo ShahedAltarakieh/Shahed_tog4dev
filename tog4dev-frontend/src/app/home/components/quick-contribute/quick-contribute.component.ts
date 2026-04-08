@@ -161,7 +161,7 @@ export class QuickContributionComponent implements OnInit{
       this.contributeOptionIndex = -1;
       this.customAmount = '';
       this.amount = 0;
-      this.url = window.location.href;
+      this.url = typeof window !== 'undefined' ? window.location.href : '';
       this.pixel.trackViewContentProduct(
         {
           productId: this.quickContribution.id,

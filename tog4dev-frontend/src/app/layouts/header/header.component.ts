@@ -112,7 +112,7 @@ export class HeaderComponent {
   @HostListener('window:scroll', [])
   onWindowScroll() {
     // Change the header style when the scroll position is greater than 50px
-    this.isScrolled = window.scrollY > 50;
+    this.isScrolled = typeof window !== 'undefined' ? window.scrollY > 50 : false;
   }
 
   constructor(

@@ -63,7 +63,7 @@ export class AboutUsComponent implements OnInit {
     });
     this.metaService.updateTag({
       property: 'og:url',
-      content: window.location.href
+      content: typeof window !== 'undefined' ? window.location.href : ''
     });
     this.metaService.updateTag({
       property: 'og:type',

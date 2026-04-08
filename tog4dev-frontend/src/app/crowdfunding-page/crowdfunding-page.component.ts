@@ -92,7 +92,7 @@ export class CrowdfundingPageComponent implements OnInit{
   @HostListener('window:scroll', [])
   onWindowScroll() {
     // Change the header style when the scroll position is greater than 50px
-    this.fixed_div = window.scrollY > 75;
+    this.fixed_div = typeof window !== 'undefined' ? window.scrollY > 75 : false;
   }
 
   /**
@@ -152,7 +152,7 @@ export class CrowdfundingPageComponent implements OnInit{
               title: this.project.title
             });
 
-            this.url = window.location.href;
+            this.url = typeof window !== 'undefined' ? window.location.href : '';
 
             this.percentage_amount_int = parseInt(String(this.project.percentage_amount));    
             if(this.project.percentage_amount && this.project.percentage_amount > 0 && this.project.percentage_amount <= 1){
@@ -313,7 +313,7 @@ export class CrowdfundingPageComponent implements OnInit{
     });
     this.metaService.updateTag({
       property: 'og:url',
-      content: window.location.href
+      content: typeof window !== 'undefined' ? window.location.href : ''
     });
     this.metaService.updateTag({
       property: 'og:type',

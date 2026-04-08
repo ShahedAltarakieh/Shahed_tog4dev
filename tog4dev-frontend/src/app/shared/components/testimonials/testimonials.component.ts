@@ -1,5 +1,6 @@
 
-import {AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Inject, Input, OnDestroy, PLATFORM_ID, ViewChild} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { StorageService } from 'app/core/storage/storage.service';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -23,7 +24,7 @@ export class TestimonialsComponent implements AfterViewInit, OnDestroy{
   swiper!: Swiper;
   destroy$ = new Subject<void>;
 
-  constructor(public storageService: StorageService) {}
+  constructor(public storageService: StorageService, @Inject(PLATFORM_ID) private platformId: Object) {}
 
   /**
    * Angular afterViewInit lifecycle method
@@ -53,6 +54,7 @@ export class TestimonialsComponent implements AfterViewInit, OnDestroy{
    * @returns { void }
    */
   initSwiper(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
     this.swiper?.destroy();
 
     this.swiper = new Swiper(this.swiperContainer.nativeElement, {

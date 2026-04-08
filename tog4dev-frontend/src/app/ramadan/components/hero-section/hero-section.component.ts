@@ -170,7 +170,7 @@ export class HeroSectionComponent implements OnInit{
       if(this.quickContribution){
         this.middle_amount = this.quickContribution.price_list[1];
         this.getConvertedPrice(this.middle_amount);
-        this.url = window.location.href;
+        this.url = typeof window !== 'undefined' ? window.location.href : '';
         this.pixel.trackViewContentProduct(
           {
             productId: this.quickContribution.id,
