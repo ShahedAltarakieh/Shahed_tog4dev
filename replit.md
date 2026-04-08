@@ -88,9 +88,10 @@ Full-stack module for news articles and media gallery (photos/videos).
 
 **Frontend** (`tog4dev-frontend/src/app/news-gallery/`):
 - Services: `NewsService`, `GalleryService`
-- Pages: `NewsGalleryMainComponent` (landing page with 3 sections + cross-search), `NewsComponent`, `NewsDetailComponent` (with share section + breadcrumb), `PhotosComponent` (lightbox), `VideosComponent` (embedded player)
-- Routes: `/en/news-gallery`, `/en/news`, `/en/news/:slug`, `/en/photos`, `/en/videos` + Arabic equivalents
-- Navigation: "News & Gallery" dropdown in header links to landing page (desktop hover dropdown + mobile flat list)
+- Pages: `NewsComponent`, `NewsDetailComponent` (with share section + breadcrumb), `PhotosComponent` (lightbox), `VideosComponent` (embedded player)
+- Routes: `/en/news`, `/en/news/:slug`, `/en/photos`, `/en/videos` + Arabic equivalents; old `/en/news-gallery` loads NewsComponent directly
+- Navigation: "News & Gallery" dropdown with SVG icons next to each item (News, Photos, Videos); no combined landing page
+- Fallback images: components use `/app/assets/images/shared/default-image.jpg` when API returns no image
 - Features: debounced search, category filtering, pagination, share (Facebook/WhatsApp/Instagram/Copy link), breadcrumbs, loading/empty/error states, "Read More" buttons
 
 ## Notes

@@ -272,12 +272,12 @@ export const routes: Routes = [
   // },
   {
     path: ':lang/news-gallery',
-    loadComponent: () => import('./news-gallery/news-gallery-main/news-gallery-main.component').then(c => c.NewsGalleryMainComponent),
+    loadComponent: () => import('./news-gallery/news/news.component').then(c => c.NewsComponent),
     pathMatch: 'full'
   },
   {
     path: ':lang/الأخبار-والمعرض',
-    loadComponent: () => import('./news-gallery/news-gallery-main/news-gallery-main.component').then(c => c.NewsGalleryMainComponent),
+    loadComponent: () => import('./news-gallery/news/news.component').then(c => c.NewsComponent),
     pathMatch: 'full'
   },
   {

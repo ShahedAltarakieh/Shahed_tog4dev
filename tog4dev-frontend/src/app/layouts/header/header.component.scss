@@ -169,11 +169,19 @@ nav ul li a:hover {
         border-radius: 8px;
         transition: all 0.15s ease;
 
+        svg {
+          flex-shrink: 0;
+          color: #9ca3af;
+          transition: color 0.15s ease;
+        }
+
         &:hover {
           background: #e8f5f5;
           color: #1a6e6e !important;
           text-decoration: none !important;
           transform: translateX(2px);
+
+          svg { color: #1a6e6e; }
         }
       }
     }
