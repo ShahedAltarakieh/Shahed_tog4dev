@@ -106,6 +106,17 @@ class NewsController extends Controller
                 ->limit($limit)
                 ->get();
 
+            if ($related->count() < $limit) {
+                $existingIds = $related->pluck('id')->push($news->id)->toArray();
+                $fallback = News::published()
+                    ->with(['category', 'media'])
+                    ->whereNotIn('id', $existingIds)
+                    ->orderBy('published_at', 'DESC')
+                    ->limit($limit - $related->count())
+                    ->get();
+                $related = $related->merge($fallback);
+            }
+
             return NewsResource::collection($related);
         } catch (\Exception $e) {
             return response()->json([
