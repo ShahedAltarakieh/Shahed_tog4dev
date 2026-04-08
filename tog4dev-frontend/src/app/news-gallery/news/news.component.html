@@ -32,13 +32,27 @@
             </div>
         }
 
-        @if (!loading && newsList.length === 0) {
+        @if (hasError) {
+            <div class="error-state text-center py-5">
+                <div class="error-icon mb-3">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="1.5">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                </div>
+                <h3>{{ "error loading content" | translate }}</h3>
+                <p class="text-muted">{{ "please try again later" | translate }}</p>
+            </div>
+        }
+
+        @if (!loading && !hasError && newsList.length === 0) {
             <div class="empty-state text-center py-5">
                 <h3>{{ "no news found" | translate }}</h3>
             </div>
         }
 
-        @if (!loading && newsList.length > 0) {
+        @if (!loading && !hasError && newsList.length > 0) {
             <div class="news-grid">
                 @for (item of newsList; track item.id) {
                     <a class="news-card" [routerLink]="getNewsDetailRoute(item.slug)">
@@ -59,9 +73,12 @@
                             @if (item.excerpt) {
                                 <p class="news-excerpt">{{ item.excerpt }}</p>
                             }
-                            @if (item.published_at) {
-                                <span class="news-date">{{ formatDate(item.published_at) }}</span>
-                            }
+                            <div class="news-footer">
+                                @if (item.published_at) {
+                                    <span class="news-date">{{ formatDate(item.published_at) }}</span>
+                                }
+                                <span class="read-more-btn">{{ "read more" | translate }}</span>
+                            </div>
                         </div>
                     </a>
                 }

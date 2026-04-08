@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { NgClass } from '@angular/common';
 import { Subject, takeUntil } from 'rxjs';
 
 import { StorageService } from 'app/core/storage/storage.service';
@@ -11,7 +11,7 @@ import { NewsItem } from '../types/news-gallery.types';
 @Component({
     selector: 'app-news-detail',
     standalone: true,
-    imports: [TranslatePipe, RouterLink, NgClass],
+    imports: [TranslatePipe, RouterLink],
     templateUrl: './news-detail.component.html',
     styleUrl: './news-detail.component.scss'
 })
@@ -19,13 +19,19 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
     article: NewsItem | null = null;
     relatedNews: NewsItem[] = [];
     loading: boolean = true;
+    hasError: boolean = false;
+    linkCopied: boolean = false;
+    isBrowser: boolean;
     destroy$ = new Subject<void>();
 
     constructor(
         public storageService: StorageService,
         private newsService: NewsService,
-        private route: ActivatedRoute
-    ) {}
+        private route: ActivatedRoute,
+        @Inject(PLATFORM_ID) platformId: Object
+    ) {
+        this.isBrowser = isPlatformBrowser(platformId);
+    }
 
     ngOnInit(): void {
         this.route.params.pipe(takeUntil(this.destroy$)).subscribe(params => {
@@ -45,6 +51,7 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
         this.loading = true;
         this.article = null;
         this.relatedNews = [];
+        this.hasError = false;
         const lang = this.storageService.siteLanguage$.value as 'ar' | 'en';
         this.newsService.getNewsArticle(lang, slug).subscribe({
             next: (res: any) => {
@@ -60,6 +67,7 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
             },
             error: () => {
                 this.article = null;
+                this.hasError = true;
                 this.loading = false;
             }
         });
@@ -67,18 +75,26 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
 
     fetchRelated(slug: string): void {
         const lang = this.storageService.siteLanguage$.value as 'ar' | 'en';
-        this.newsService.getRelatedNews(lang, slug).subscribe(res => {
-            if (res && res.data) {
-                this.relatedNews = res.data;
-            } else if (res && Array.isArray(res)) {
-                this.relatedNews = res;
-            }
+        this.newsService.getRelatedNews(lang, slug).subscribe({
+            next: (res) => {
+                if (res && res.data) {
+                    this.relatedNews = res.data;
+                } else if (res && Array.isArray(res)) {
+                    this.relatedNews = res;
+                }
+            },
+            error: () => {}
         });
     }
 
     getNewsListRoute(): string {
         const lang = this.storageService.siteLanguage$.value;
         return lang === 'ar' ? '/ar/الأخبار' : '/en/news';
+    }
+
+    getNewsGalleryRoute(): string {
+        const lang = this.storageService.siteLanguage$.value;
+        return lang === 'ar' ? '/ar/الأخبار-والمعرض' : '/en/news-gallery';
     }
 
     getNewsDetailRoute(slug: string): string {
@@ -94,6 +110,37 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
             year: 'numeric',
             month: 'long',
             day: 'numeric'
+        });
+    }
+
+    getCurrentUrl(): string {
+        if (!this.isBrowser) return '';
+        return window.location.href;
+    }
+
+    shareOnFacebook(): void {
+        if (!this.isBrowser) return;
+        const url = encodeURIComponent(this.getCurrentUrl());
+        window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, '_blank', 'width=600,height=400');
+    }
+
+    shareOnWhatsApp(): void {
+        if (!this.isBrowser) return;
+        const url = encodeURIComponent(this.getCurrentUrl());
+        const text = encodeURIComponent(this.article?.title || '');
+        window.open('https://wa.me/?text=' + text + '%20' + url, '_blank');
+    }
+
+    shareOnInstagram(): void {
+        if (!this.isBrowser) return;
+        this.copyLink();
+    }
+
+    copyLink(): void {
+        if (!this.isBrowser) return;
+        navigator.clipboard.writeText(this.getCurrentUrl()).then(() => {
+            this.linkCopied = true;
+            setTimeout(() => { this.linkCopied = false; }, 2000);
         });
     }
 }

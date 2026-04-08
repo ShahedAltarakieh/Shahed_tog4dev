@@ -25,6 +25,7 @@ export class NewsComponent implements OnInit, OnDestroy {
     totalPages: number = 1;
     totalItems: number = 0;
     loading: boolean = false;
+    hasError: boolean = false;
     destroy$ = new Subject<void>();
     searchSubject$ = new Subject<string>();
 
@@ -58,13 +59,17 @@ export class NewsComponent implements OnInit, OnDestroy {
 
     fetchCategories(): void {
         const lang = this.storageService.siteLanguage$.value as 'ar' | 'en';
-        this.newsService.getCategories(lang).subscribe(res => {
-            if (res) this.categories = res.data;
+        this.newsService.getCategories(lang).subscribe({
+            next: (res) => {
+                if (res) this.categories = res.data;
+            },
+            error: () => {}
         });
     }
 
     fetchNews(): void {
         this.loading = true;
+        this.hasError = false;
         const lang = this.storageService.siteLanguage$.value as 'ar' | 'en';
         this.newsService.getNews(lang, {
             category: this.selectedCategory || undefined,
@@ -81,6 +86,7 @@ export class NewsComponent implements OnInit, OnDestroy {
                 this.loading = false;
             },
             error: () => {
+                this.hasError = true;
                 this.loading = false;
             }
         });

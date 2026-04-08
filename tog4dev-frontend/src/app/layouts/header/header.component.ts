@@ -55,6 +55,10 @@ export class HeaderComponent {
     ar: 'ar/التمويل-الجماعي',
     en: 'en/crowdfunding',
   };
+  newsGalleryRoutes: Record<'ar' | 'en', string> = {
+    ar: 'ar/الأخبار-والمعرض',
+    en: 'en/news-gallery',
+  };
   newsRoutes: Record<'ar' | 'en', string> = {
     ar: 'ar/الأخبار',
     en: 'en/news',

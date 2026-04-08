@@ -93,6 +93,10 @@
         }
     }
 
+    .error-state {
+        h3 { color: #dc3545; font-weight: 500; }
+    }
+
     .empty-state h3 { color: #999; font-weight: 400; }
 
     .pagination .page-item {

@@ -25,6 +25,7 @@ export class VideosComponent implements OnInit, OnDestroy {
     currentPage: number = 1;
     totalPages: number = 1;
     loading: boolean = false;
+    hasError: boolean = false;
     activeVideo: GalleryVideo | null = null;
     activeVideoUrl: SafeResourceUrl | null = null;
     destroy$ = new Subject<void>();
@@ -49,8 +50,11 @@ export class VideosComponent implements OnInit, OnDestroy {
         });
 
         this.storageService.siteLanguage$.pipe(takeUntil(this.destroy$)).subscribe(() => {
-            this.newsService.getCategories(this.storageService.siteLanguage$.value as 'ar' | 'en').subscribe(res => {
-                if (res) this.categories = res.data;
+            this.newsService.getCategories(this.storageService.siteLanguage$.value as 'ar' | 'en').subscribe({
+                next: (res) => {
+                    if (res) this.categories = res.data;
+                },
+                error: () => {}
             });
             this.fetchVideos();
         });
@@ -63,6 +67,7 @@ export class VideosComponent implements OnInit, OnDestroy {
 
     fetchVideos(): void {
         this.loading = true;
+        this.hasError = false;
         const lang = this.storageService.siteLanguage$.value as 'ar' | 'en';
         this.galleryService.getVideos(lang, {
             category: this.selectedCategory || undefined,
@@ -77,7 +82,10 @@ export class VideosComponent implements OnInit, OnDestroy {
                 }
                 this.loading = false;
             },
-            error: () => { this.loading = false; }
+            error: () => {
+                this.hasError = true;
+                this.loading = false;
+            }
         });
     }
 

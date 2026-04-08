@@ -23,6 +23,7 @@ export const routeTranslations: RouteTranslations = {
     'عالم-المنظمات': 'ngoverse',
     'رمضان-2026': 'ramadan-2026',
     'درب-العطاء-لأمي': 'mama-giving-shope',
+    'الأخبار-والمعرض': 'news-gallery',
     'الأخبار': 'news',
     'الصور': 'photos',
     'الفيديو': 'videos'
@@ -51,6 +52,7 @@ export const routeTranslations: RouteTranslations = {
     'ngoverse': 'عالم-المنظمات',
     'ramadan-2026': 'رمضان-2026',
     'mama-giving-shope': 'درب-العطاء-لأمي',
+    'news-gallery': 'الأخبار-والمعرض',
     'news': 'الأخبار',
     'photos': 'الصور',
     'videos': 'الفيديو'

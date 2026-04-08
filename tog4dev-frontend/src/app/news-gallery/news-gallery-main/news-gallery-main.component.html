@@ -1,0 +1,155 @@
+<div class="news-gallery-main-page">
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="page-title text-center text-white">{{ "news & gallery" | translate }}</h1>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <div class="search-section d-flex justify-content-center mb-5">
+            <div class="search-box">
+                <input type="text"
+                       class="form-control"
+                       [placeholder]="'search news gallery' | translate"
+                       (input)="onSearchInput($any($event.target).value)" />
+            </div>
+        </div>
+
+        @if (loading) {
+            <div class="text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        }
+
+        @if (hasError) {
+            <div class="error-state text-center py-5">
+                <div class="error-icon mb-3">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="1.5">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                </div>
+                <h3>{{ "error loading content" | translate }}</h3>
+                <p class="text-muted">{{ "please try again later" | translate }}</p>
+            </div>
+        }
+
+        @if (hasNoResults && searchQuery) {
+            <div class="empty-state text-center py-5">
+                <h3>{{ "no results found" | translate }}</h3>
+            </div>
+        }
+
+        @if (!loading && !hasError) {
+            @if (newsList.length > 0) {
+                <section class="content-section mb-5">
+                    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="section-title">{{ "news" | translate }}</h2>
+                        <a [routerLink]="getNewsRoute()" class="section-cta">{{ "more news" | translate }} &rarr;</a>
+                    </div>
+                    <div class="news-preview-grid">
+                        @for (item of newsList; track item.id) {
+                            <a class="news-card" [routerLink]="getNewsDetailRoute(item.slug)">
+                                <div class="news-image">
+                                    @if (item.image) {
+                                        <img [src]="item.image" [alt]="item.title" loading="lazy" />
+                                    } @else {
+                                        <div class="placeholder-image">
+                                            <img src="/app/assets/images/shared/logo.svg" alt="placeholder" />
+                                        </div>
+                                    }
+                                </div>
+                                <div class="news-content">
+                                    @if (item.category) {
+                                        <span class="news-category">{{ item.category.name }}</span>
+                                    }
+                                    <h3 class="news-title">{{ item.title }}</h3>
+                                    @if (item.excerpt) {
+                                        <p class="news-excerpt">{{ item.excerpt }}</p>
+                                    }
+                                    <div class="news-footer">
+                                        @if (item.published_at) {
+                                            <span class="news-date">{{ formatDate(item.published_at) }}</span>
+                                        }
+                                        <span class="read-more-btn">{{ "read more" | translate }}</span>
+                                    </div>
+                                </div>
+                            </a>
+                        }
+                    </div>
+                </section>
+            }
+
+            @if (photos.length > 0) {
+                <section class="content-section mb-5">
+                    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="section-title">{{ "photos" | translate }}</h2>
+                        <a [routerLink]="getPhotosRoute()" class="section-cta">{{ "more photos" | translate }} &rarr;</a>
+                    </div>
+                    <div class="photos-preview-grid">
+                        @for (photo of photos; track photo.id) {
+                            <div class="photo-preview-card">
+                                @if (photo.image) {
+                                    <img [src]="photo.image" [alt]="photo.title" loading="lazy" />
+                                } @else {
+                                    <div class="placeholder-image">
+                                        <img src="/app/assets/images/shared/logo.svg" alt="placeholder" />
+                                    </div>
+                                }
+                                @if (photo.title) {
+                                    <div class="photo-overlay">
+                                        <span>{{ photo.title }}</span>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                </section>
+            }
+
+            @if (videos.length > 0) {
+                <section class="content-section mb-5">
+                    <div class="section-header d-flex justify-content-between align-items-center mb-4">
+                        <h2 class="section-title">{{ "videos" | translate }}</h2>
+                        <a [routerLink]="getVideosRoute()" class="section-cta">{{ "more videos" | translate }} &rarr;</a>
+                    </div>
+                    <div class="videos-preview-grid">
+                        @for (video of videos; track video.id) {
+                            <a class="video-preview-card" [routerLink]="getVideosRoute()">
+                                <div class="video-thumbnail">
+                                    @if (getThumbnailUrl(video)) {
+                                        <img [src]="getThumbnailUrl(video)" [alt]="video.title" loading="lazy" />
+                                    } @else {
+                                        <div class="placeholder-thumbnail">
+                                            <img src="/app/assets/images/shared/logo.svg" alt="placeholder" />
+                                        </div>
+                                    }
+                                    <div class="play-icon">
+                                        <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+                                            <circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.6)"/>
+                                            <path d="M20 16L34 24L20 32V16Z" fill="white"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                @if (video.title) {
+                                    <div class="video-info">
+                                        <h4>{{ video.title }}</h4>
+                                    </div>
+                                }
+                            </a>
+                        }
+                    </div>
+                </section>
+            }
+
+            @if (!searchQuery && newsList.length === 0 && photos.length === 0 && videos.length === 0) {
+                <div class="empty-state text-center py-5">
+                    <h3>{{ "no content available" | translate }}</h3>
+                </div>
+            }
+        }
+    </div>
+</div>
