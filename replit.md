@@ -81,7 +81,7 @@ Full-stack module for news articles and media gallery (photos/videos).
 - Migrations: `news_categories`, `news`, `gallery_photos`, `gallery_videos`
 - API Controllers: `NewsController` (index/show/related/categories/search), `GalleryController` (photos/videos)
 - Admin Controllers: `AdminNewsController`, `AdminGalleryPhotoController`, `AdminGalleryVideoController`, `AdminNewsCategoryController`
-- Routes: `/api/v1/news/*`, `/api/v1/gallery/*` (API); admin routes under `master` middleware
+- Routes: `/api/v1/news/*`, `/api/v1/gallery/*`, `/api/v1/search?q=` (unified search); admin routes under `master` middleware
 
 **Frontend** (`tog4dev-frontend/src/app/news-gallery/`):
 - Services: `NewsService`, `GalleryService`
