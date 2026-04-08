@@ -100,42 +100,95 @@ nav ul li a:hover {
 
   .dropdown-toggle {
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    &::after {
+      content: '';
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-right: 1.5px solid currentColor;
+      border-bottom: 1.5px solid currentColor;
+      transform: rotate(45deg);
+      margin-top: -2px;
+      transition: transform 0.2s ease;
+    }
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 14px;
   }
 
   .nav-dropdown-menu {
     display: none;
     position: absolute;
-    top: 100%;
+    top: calc(100% + 12px);
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateY(4px);
     background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-    padding: 8px 0;
-    min-width: 150px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0,0,0,0.06);
+    padding: 6px;
+    min-width: 170px;
     z-index: 100;
     flex-direction: column;
-    gap: 0;
+    gap: 2px;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      width: 12px;
+      height: 12px;
+      background: #fff;
+      border-radius: 2px;
+    }
 
     li {
       a {
-        display: block;
-        padding: 8px 16px;
-        color: #1a1a1a !important;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        color: #374151 !important;
         font-size: 13px;
+        font-weight: 500;
         white-space: nowrap;
         text-decoration: none;
+        border-radius: 8px;
+        transition: all 0.15s ease;
 
         &:hover {
           background: #e8f5f5;
+          color: #1a6e6e !important;
           text-decoration: none !important;
+          transform: translateX(2px);
         }
       }
     }
   }
 
-  &:hover .nav-dropdown-menu {
-    display: flex;
+  &:hover {
+    .nav-dropdown-menu {
+      display: flex;
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .dropdown-toggle::after {
+      transform: rotate(-135deg);
+      margin-top: 2px;
+    }
   }
 }
 
