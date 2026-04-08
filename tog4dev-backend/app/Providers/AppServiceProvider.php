@@ -24,14 +24,6 @@ class AppServiceProvider extends ServiceProvider
         if (env('APP_ENV') !== 'local') {
             URL::forceScheme('https');
         }
-
-        $replitDomain = env('REPLIT_DEV_DOMAIN');
-        if ($replitDomain) {
-            $port = request()->server('SERVER_PORT', 3000);
-            URL::forceRootUrl("https://{$replitDomain}:{$port}");
-            URL::forceScheme('https');
-        }
-
         Schema::defaultStringLength(191);
     }
 }

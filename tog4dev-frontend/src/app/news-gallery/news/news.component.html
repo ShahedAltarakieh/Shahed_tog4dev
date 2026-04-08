@@ -83,7 +83,13 @@
                 <div class="featured-article">
                     <a [routerLink]="getNewsDetailRoute(newsList[0].slug)" class="featured-link">
                         <div class="featured-image">
-                                <img [src]="newsList[0].image || '/app/assets/images/shared/default-image.jpg'" [alt]="newsList[0].title" loading="lazy" />
+                            @if (newsList[0].image) {
+                                <img [src]="newsList[0].image" [alt]="newsList[0].title" loading="lazy" />
+                            } @else {
+                                <div class="placeholder-image">
+                                    <img src="/app/assets/images/shared/logo.svg" alt="placeholder" />
+                                </div>
+                            }
                             <div class="featured-gradient"></div>
                         </div>
                         <div class="featured-content">
@@ -114,7 +120,13 @@
                 @for (item of (currentPage === 1 && !searchQuery ? newsList.slice(1) : newsList); track item.id; let idx = $index) {
                     <a class="news-card" [routerLink]="getNewsDetailRoute(item.slug)" [style.animation-delay]="(idx * 60) + 'ms'">
                         <div class="card-image">
-                                <img [src]="item.image || '/app/assets/images/shared/default-image.jpg'" [alt]="item.title" loading="lazy" />
+                            @if (item.image) {
+                                <img [src]="item.image" [alt]="item.title" loading="lazy" />
+                            } @else {
+                                <div class="placeholder-image">
+                                    <img src="/app/assets/images/shared/logo.svg" alt="placeholder" />
+                                </div>
+                            }
                             @if (item.is_featured) {
                                 <span class="featured-badge">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>

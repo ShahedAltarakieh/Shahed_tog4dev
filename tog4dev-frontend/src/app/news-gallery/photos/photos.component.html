@@ -35,9 +35,9 @@
 
         @if (loading) {
             <div class="loading-state">
-                <div class="gallery-grid">
+                <div class="masonry-grid">
                     @for (i of [1,2,3,4,5,6,7,8]; track i) {
-                        <div class="skeleton-photo shimmer"></div>
+                        <div class="skeleton-photo shimmer" [style.aspect-ratio]="i % 3 === 0 ? '3/4' : '4/3'"></div>
                     }
                 </div>
             </div>
@@ -69,30 +69,34 @@
         }
 
         @if (!loading && !hasError && photos.length > 0) {
-            <div class="results-header">
-                <span class="photo-count">{{ photos.length }} {{ "photos" | translate }}</span>
+            <div class="photo-count">
+                <span>{{ photos.length }} {{ "photos" | translate }}</span>
             </div>
 
-            <div class="gallery-grid">
+            <div class="masonry-grid">
                 @for (photo of photos; track photo.id; let idx = $index) {
-                    <div class="photo-card" (click)="openLightbox(photo)" [style.animation-delay]="(idx * 60) + 'ms'">
-                        <div class="photo-image-wrapper">
-                                <img [src]="photo.image || '/app/assets/images/shared/default-image.jpg'" [alt]="photo.title" loading="lazy" />
-                            <div class="photo-overlay">
-                                <div class="overlay-icon">
-                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/>
-                                    </svg>
-                                </div>
+                    <div class="photo-card" (click)="openLightbox(photo)" [style.animation-delay]="(idx * 50) + 'ms'">
+                        @if (photo.image) {
+                            <img [src]="photo.image" [alt]="photo.title" loading="lazy" />
+                        } @else {
+                            <div class="placeholder-image">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5">
+                                    <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
+                                </svg>
                             </div>
-                        </div>
-                        <div class="photo-info">
-                            @if (photo.title) {
-                                <h3 class="photo-title">{{ photo.title }}</h3>
-                            }
-                            @if (photo.category) {
-                                <span class="photo-category">{{ photo.category.name }}</span>
-                            }
+                        }
+                        <div class="photo-overlay">
+                            <div class="overlay-content">
+                                <svg class="zoom-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/>
+                                </svg>
+                                @if (photo.title) {
+                                    <span class="photo-title">{{ photo.title }}</span>
+                                }
+                                @if (photo.category) {
+                                    <span class="photo-category">{{ photo.category.name }}</span>
+                                }
+                            </div>
                         </div>
                     </div>
                 }
@@ -116,28 +120,28 @@
 
     @if (lightboxPhoto) {
         <div class="lightbox-overlay" (click)="closeLightbox()">
-            <div class="lightbox-container" (click)="$event.stopPropagation()">
+            <div class="lightbox-content" (click)="$event.stopPropagation()">
                 <button class="lightbox-close" (click)="closeLightbox()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                 </button>
-                <div class="lightbox-body">
-                    <div class="lightbox-image">
-                        <img [src]="lightboxPhoto.image || '/app/assets/images/shared/default-image.jpg'" [alt]="lightboxPhoto.title" />
-                    </div>
-                    @if (lightboxPhoto.title || lightboxPhoto.description) {
-                        <div class="lightbox-details">
-                            @if (lightboxPhoto.category) {
-                                <span class="lightbox-category">{{ lightboxPhoto.category.name }}</span>
-                            }
-                            @if (lightboxPhoto.title) {
-                                <h3 class="lightbox-title">{{ lightboxPhoto.title }}</h3>
-                            }
-                            @if (lightboxPhoto.description) {
-                                <p class="lightbox-desc">{{ lightboxPhoto.description }}</p>
-                            }
-                        </div>
+                <div class="lightbox-image">
+                    @if (lightboxPhoto.image) {
+                        <img [src]="lightboxPhoto.image" [alt]="lightboxPhoto.title" />
                     }
                 </div>
+                @if (lightboxPhoto.title || lightboxPhoto.description) {
+                    <div class="lightbox-info">
+                        @if (lightboxPhoto.title) {
+                            <h3>{{ lightboxPhoto.title }}</h3>
+                        }
+                        @if (lightboxPhoto.description) {
+                            <p>{{ lightboxPhoto.description }}</p>
+                        }
+                        @if (lightboxPhoto.category) {
+                            <span class="lightbox-category">{{ lightboxPhoto.category.name }}</span>
+                        }
+                    </div>
+                }
             </div>
         </div>
     }
