@@ -72,6 +72,23 @@ tog4dev-frontend/    # Angular 19 frontend (port 5000)
 | Auth | Laravel Sanctum (API tokens) |
 | Payments | PayTabs, Orange Money, Network/Mastercard |
 
+## News & Gallery Module
+
+Full-stack module for news articles and media gallery (photos/videos).
+
+**Backend** (`tog4dev-backend/`):
+- Models: `News`, `NewsCategory`, `GalleryPhoto`, `GalleryVideo` (with Sluggable, Spatie Media)
+- Migrations: `news_categories`, `news`, `gallery_photos`, `gallery_videos`
+- API Controllers: `NewsController` (index/show/related/categories/search), `GalleryController` (photos/videos)
+- Admin Controllers: `AdminNewsController`, `AdminGalleryPhotoController`, `AdminGalleryVideoController`, `AdminNewsCategoryController`
+- Routes: `/api/v1/news/*`, `/api/v1/gallery/*` (API); admin routes under `master` middleware
+
+**Frontend** (`tog4dev-frontend/src/app/news-gallery/`):
+- Services: `NewsService`, `GalleryService`
+- Pages: `NewsComponent`, `NewsDetailComponent`, `PhotosComponent` (lightbox), `VideosComponent` (embedded player)
+- Routes: `/en/news`, `/en/photos`, `/en/videos` + Arabic equivalents (`/ar/الأخبار`, `/ar/الصور`, `/ar/الفيديو`)
+- Navigation: "News & Gallery" dropdown in header (desktop hover dropdown + mobile flat list)
+
 ## Notes
 
 - The migration `2024_06_21` was renamed to `2024_12_03_000312` to fix ordering (it references `payments` table created later)

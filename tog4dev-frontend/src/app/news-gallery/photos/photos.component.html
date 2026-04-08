@@ -1,0 +1,100 @@
+<div class="photos-page">
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="page-title text-center text-white">{{ "photo gallery" | translate }}</h1>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <div class="filters-section d-flex flex-wrap gap-3 mb-4 align-items-center">
+            <div class="search-box flex-grow-1">
+                <input type="text"
+                       class="form-control"
+                       [placeholder]="'search photos' | translate"
+                       (input)="onSearchInput($any($event.target).value)" />
+            </div>
+            <div class="category-filter">
+                <select class="form-select" (change)="onCategoryChange($any($event.target).value)">
+                    <option value="">{{ "all categories" | translate }}</option>
+                    @for (cat of categories; track cat.id) {
+                        <option [value]="cat.slug">{{ cat.name }}</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        @if (loading) {
+            <div class="text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        }
+
+        @if (!loading && photos.length === 0) {
+            <div class="empty-state text-center py-5">
+                <h3>{{ "no photos found" | translate }}</h3>
+            </div>
+        }
+
+        @if (!loading && photos.length > 0) {
+            <div class="photos-grid">
+                @for (photo of photos; track photo.id) {
+                    <div class="photo-card" (click)="openLightbox(photo)">
+                        @if (photo.image) {
+                            <img [src]="photo.image" [alt]="photo.title" loading="lazy" />
+                        } @else {
+                            <div class="placeholder-image">
+                                <img src="/app/assets/images/shared/logo.svg" alt="placeholder" />
+                            </div>
+                        }
+                        @if (photo.title) {
+                            <div class="photo-overlay">
+                                <span class="photo-title">{{ photo.title }}</span>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+
+            @if (totalPages > 1) {
+                <nav class="pagination-container d-flex justify-content-center mt-5">
+                    <ul class="pagination">
+                        <li class="page-item" [ngClass]="{'disabled': currentPage === 1}">
+                            <button class="page-link" (click)="goToPage(currentPage - 1)">&laquo;</button>
+                        </li>
+                        @for (page of getPages(); track page) {
+                            <li class="page-item" [ngClass]="{'active': page === currentPage}">
+                                <button class="page-link" (click)="goToPage(page)">{{ page }}</button>
+                            </li>
+                        }
+                        <li class="page-item" [ngClass]="{'disabled': currentPage === totalPages}">
+                            <button class="page-link" (click)="goToPage(currentPage + 1)">&raquo;</button>
+                        </li>
+                    </ul>
+                </nav>
+            }
+        }
+    </div>
+
+    @if (lightboxPhoto) {
+        <div class="lightbox-overlay" (click)="closeLightbox()">
+            <div class="lightbox-content" (click)="$event.stopPropagation()">
+                <button class="lightbox-close" (click)="closeLightbox()">&times;</button>
+                @if (lightboxPhoto.image) {
+                    <img [src]="lightboxPhoto.image" [alt]="lightboxPhoto.title" />
+                }
+                @if (lightboxPhoto.title || lightboxPhoto.description) {
+                    <div class="lightbox-info">
+                        @if (lightboxPhoto.title) {
+                            <h3>{{ lightboxPhoto.title }}</h3>
+                        }
+                        @if (lightboxPhoto.description) {
+                            <p>{{ lightboxPhoto.description }}</p>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

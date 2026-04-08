@@ -22,6 +22,8 @@ use App\Http\Controllers\Api\V1\PaymentController;
 use App\Http\Controllers\Api\V1\QuickContributionController;
 use App\Http\Controllers\Api\V1\ReferralController;
 use App\Http\Controllers\Api\V1\ShortLinkController;
+use App\Http\Controllers\Api\V1\NewsController;
+use App\Http\Controllers\Api\V1\GalleryController;
 
 Route::prefix('v1')->group(function () {
     // Authentication routes
@@ -54,6 +56,15 @@ Route::prefix('v1')->group(function () {
     Route::post('/contact-us', [ContactUsController::class, 'store'])->name('contact_us');
     // Sliders
     Route::get('/sliders', [SliderController::class, 'index'])->name('sliders');
+
+    Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+    Route::get('/news/search', [NewsController::class, 'search'])->name('news.search');
+    Route::get('/news/categories', [NewsController::class, 'categories'])->name('news.categories');
+    Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
+    Route::get('/news/{slug}/related', [NewsController::class, 'related'])->name('news.related');
+
+    Route::get('/gallery/photos', [GalleryController::class, 'photos'])->name('gallery.photos');
+    Route::get('/gallery/videos', [GalleryController::class, 'videos'])->name('gallery.videos');
 
     Route::get('/quick-contributions', [QuickContributionController::class, 'index']);
 

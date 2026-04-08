@@ -271,6 +271,46 @@ export const routes: Routes = [
   //   pathMatch: 'full',
   // },
   {
+    path: ':lang/news',
+    loadComponent: () => import('./news-gallery/news/news.component').then(c => c.NewsComponent),
+    pathMatch: 'full'
+  },
+  {
+    path: ':lang/الأخبار',
+    loadComponent: () => import('./news-gallery/news/news.component').then(c => c.NewsComponent),
+    pathMatch: 'full'
+  },
+  {
+    path: ':lang/news/:slug',
+    loadComponent: () => import('./news-gallery/news-detail/news-detail.component').then(c => c.NewsDetailComponent),
+    pathMatch: 'full'
+  },
+  {
+    path: ':lang/الأخبار/:slug',
+    loadComponent: () => import('./news-gallery/news-detail/news-detail.component').then(c => c.NewsDetailComponent),
+    pathMatch: 'full'
+  },
+  {
+    path: ':lang/photos',
+    loadComponent: () => import('./news-gallery/photos/photos.component').then(c => c.PhotosComponent),
+    pathMatch: 'full'
+  },
+  {
+    path: ':lang/الصور',
+    loadComponent: () => import('./news-gallery/photos/photos.component').then(c => c.PhotosComponent),
+    pathMatch: 'full'
+  },
+  {
+    path: ':lang/videos',
+    loadComponent: () => import('./news-gallery/videos/videos.component').then(c => c.VideosComponent),
+    pathMatch: 'full'
+  },
+  {
+    path: ':lang/الفيديو',
+    loadComponent: () => import('./news-gallery/videos/videos.component').then(c => c.VideosComponent),
+    pathMatch: 'full'
+  },
+  {
     path: ':lang/mama-giving-shope',
     loadComponent: () => import('./ramadan/ramadan.component').then(c => c.RamadanComponent),
     pathMatch: 'full',

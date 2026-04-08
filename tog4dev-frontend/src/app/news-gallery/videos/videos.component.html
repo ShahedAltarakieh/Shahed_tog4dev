@@ -1,0 +1,105 @@
+<div class="videos-page">
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="page-title text-center text-white">{{ "video gallery" | translate }}</h1>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <div class="filters-section d-flex flex-wrap gap-3 mb-4 align-items-center">
+            <div class="search-box flex-grow-1">
+                <input type="text"
+                       class="form-control"
+                       [placeholder]="'search videos' | translate"
+                       (input)="onSearchInput($any($event.target).value)" />
+            </div>
+            <div class="category-filter">
+                <select class="form-select" (change)="onCategoryChange($any($event.target).value)">
+                    <option value="">{{ "all categories" | translate }}</option>
+                    @for (cat of categories; track cat.id) {
+                        <option [value]="cat.slug">{{ cat.name }}</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        @if (loading) {
+            <div class="text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        }
+
+        @if (!loading && videos.length === 0) {
+            <div class="empty-state text-center py-5">
+                <h3>{{ "no videos found" | translate }}</h3>
+            </div>
+        }
+
+        @if (!loading && videos.length > 0) {
+            <div class="videos-grid">
+                @for (video of videos; track video.id) {
+                    <div class="video-card" (click)="playVideo(video)">
+                        <div class="video-thumbnail">
+                            @if (getThumbnailUrl(video)) {
+                                <img [src]="getThumbnailUrl(video)" [alt]="video.title" loading="lazy" />
+                            } @else {
+                                <div class="placeholder-thumbnail">
+                                    <img src="/app/assets/images/shared/logo.svg" alt="placeholder" />
+                                </div>
+                            }
+                            <div class="play-button">
+                                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                    <circle cx="24" cy="24" r="24" fill="rgba(0,0,0,0.6)"/>
+                                    <path d="M20 16L34 24L20 32V16Z" fill="white"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            @if (video.title) {
+                                <h3 class="video-title">{{ video.title }}</h3>
+                            }
+                            @if (video.category) {
+                                <span class="video-category">{{ video.category.name }}</span>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+
+            @if (totalPages > 1) {
+                <nav class="pagination-container d-flex justify-content-center mt-5">
+                    <ul class="pagination">
+                        <li class="page-item" [ngClass]="{'disabled': currentPage === 1}">
+                            <button class="page-link" (click)="goToPage(currentPage - 1)">&laquo;</button>
+                        </li>
+                        @for (page of getPages(); track page) {
+                            <li class="page-item" [ngClass]="{'active': page === currentPage}">
+                                <button class="page-link" (click)="goToPage(page)">{{ page }}</button>
+                            </li>
+                        }
+                        <li class="page-item" [ngClass]="{'disabled': currentPage === totalPages}">
+                            <button class="page-link" (click)="goToPage(currentPage + 1)">&raquo;</button>
+                        </li>
+                    </ul>
+                </nav>
+            }
+        }
+    </div>
+
+    @if (activeVideo && activeVideoUrl) {
+        <div class="video-player-overlay" (click)="closePlayer()">
+            <div class="video-player-content" (click)="$event.stopPropagation()">
+                <button class="player-close" (click)="closePlayer()">&times;</button>
+                <iframe [src]="activeVideoUrl"
+                        width="100%"
+                        height="100%"
+                        frameborder="0"
+                        allow="autoplay; encrypted-media"
+                        allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    }
+</div>

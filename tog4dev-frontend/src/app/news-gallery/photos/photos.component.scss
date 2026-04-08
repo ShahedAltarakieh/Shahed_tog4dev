@@ -1,0 +1,170 @@
+.photos-page {
+    .hero-section {
+        background: linear-gradient(135deg, #1a6e6e 0%, #0d4f4f 100%);
+        padding: 60px 0 40px;
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+    }
+
+    .filters-section {
+        .search-box {
+            max-width: 400px;
+            input {
+                border-radius: 8px;
+                border: 1px solid #ddd;
+                padding: 10px 16px;
+                &:focus {
+                    border-color: #1a6e6e;
+                    box-shadow: 0 0 0 0.2rem rgba(26, 110, 110, 0.15);
+                }
+            }
+        }
+        .category-filter {
+            min-width: 200px;
+            select {
+                border-radius: 8px;
+                border: 1px solid #ddd;
+                padding: 10px 16px;
+                &:focus {
+                    border-color: #1a6e6e;
+                    box-shadow: 0 0 0 0.2rem rgba(26, 110, 110, 0.15);
+                }
+            }
+        }
+    }
+
+    .photos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 16px;
+    }
+
+    .photo-card {
+        position: relative;
+        border-radius: 10px;
+        overflow: hidden;
+        cursor: pointer;
+        aspect-ratio: 4/3;
+        background: #f0f0f0;
+        transition: transform 0.2s ease;
+
+        &:hover {
+            transform: scale(1.02);
+            .photo-overlay { opacity: 1; }
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .placeholder-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background: linear-gradient(135deg, #e8f5f5, #d0ebeb);
+            img {
+                width: 60px;
+                object-fit: contain;
+                opacity: 0.4;
+            }
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            opacity: 0;
+            transition: opacity 0.2s ease;
+
+            .photo-title {
+                color: #fff;
+                font-size: 0.9rem;
+                font-weight: 500;
+            }
+        }
+    }
+
+    .empty-state h3 { color: #999; font-weight: 400; }
+
+    .pagination .page-item {
+        &.active .page-link {
+            background-color: #1a6e6e;
+            border-color: #1a6e6e;
+        }
+        .page-link {
+            color: #1a6e6e;
+            &:hover { background-color: #e8f5f5; }
+        }
+    }
+}
+
+.lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    padding: 20px;
+
+    .lightbox-content {
+        position: relative;
+        max-width: 90vw;
+        max-height: 90vh;
+
+        img {
+            max-width: 100%;
+            max-height: 80vh;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            line-height: 1;
+            &:hover { opacity: 0.8; }
+        }
+
+        .lightbox-info {
+            color: #fff;
+            padding: 16px 0;
+            h3 { font-size: 1.2rem; margin-bottom: 8px; }
+            p { font-size: 0.9rem; opacity: 0.8; }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .photos-page {
+        .hero-section { padding: 40px 0 30px; }
+        .filters-section {
+            flex-direction: column;
+            .search-box { max-width: 100%; }
+            .category-filter { width: 100%; }
+        }
+        .photos-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+    }
+}

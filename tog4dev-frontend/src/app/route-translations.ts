@@ -22,7 +22,10 @@ export const routeTranslations: RouteTranslations = {
     'سياسة-ملفات-تعريف-الارتباط': 'cookie-policy',
     'عالم-المنظمات': 'ngoverse',
     'رمضان-2026': 'ramadan-2026',
-    'درب-العطاء-لأمي': 'mama-giving-shope'
+    'درب-العطاء-لأمي': 'mama-giving-shope',
+    'الأخبار': 'news',
+    'الصور': 'photos',
+    'الفيديو': 'videos'
   },
   ar:
   {
@@ -47,7 +50,10 @@ export const routeTranslations: RouteTranslations = {
     'cookie-policy': 'سياسة-ملفات-تعريف-الارتباط',
     'ngoverse': 'عالم-المنظمات',
     'ramadan-2026': 'رمضان-2026',
-    'mama-giving-shope': 'درب-العطاء-لأمي'
+    'mama-giving-shope': 'درب-العطاء-لأمي',
+    'news': 'الأخبار',
+    'photos': 'الصور',
+    'videos': 'الفيديو'
   }
 };
 

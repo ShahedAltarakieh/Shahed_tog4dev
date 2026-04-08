@@ -19,6 +19,14 @@
                     <li><a [class.active]="activeTab(projectsRoutes[storageService.siteLanguage$.value])" [routerLink]="projectsRoutes[storageService.siteLanguage$.value]">{{ "individual projects" | translate }}</a></li>
                     <li><a [class.active]="activeTab(organizationRoutes[storageService.siteLanguage$.value])" [routerLink]="organizationRoutes[storageService.siteLanguage$.value]">{{ "organizations projects" | translate }}</a></li>
                     <li><a [class.active]="activeTab(crowdfundingRoutes[storageService.siteLanguage$.value])" [routerLink]="crowdfundingRoutes[storageService.siteLanguage$.value]">{{ "crowdfunding" | translate }}</a></li>
+                    <li class="nav-dropdown">
+                        <a class="dropdown-toggle" [class.active]="activeTab(newsRoutes[storageService.siteLanguage$.value]) || activeTab(photosRoutes[storageService.siteLanguage$.value]) || activeTab(videosRoutes[storageService.siteLanguage$.value])">{{ "news & gallery" | translate }}</a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a [routerLink]="newsRoutes[storageService.siteLanguage$.value]">{{ "news" | translate }}</a></li>
+                            <li><a [routerLink]="photosRoutes[storageService.siteLanguage$.value]">{{ "photos" | translate }}</a></li>
+                            <li><a [routerLink]="videosRoutes[storageService.siteLanguage$.value]">{{ "videos" | translate }}</a></li>
+                        </ul>
+                    </li>
                     <li><a [class.active]="activeTab(aboutUsRoutes[storageService.siteLanguage$.value])" [routerLink]="aboutUsRoutes[storageService.siteLanguage$.value]">{{ "about us" | translate }}</a></li>
                     <li><a [class.active]="activeTab(contactUsRoutes[storageService.siteLanguage$.value])" [routerLink]="contactUsRoutes[storageService.siteLanguage$.value]">{{ "contact us" | translate }}</a></li>
                 </ul>
@@ -107,6 +115,9 @@
                 <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="projectsRoutes[storageService.siteLanguage$.value]">{{ "individual projects" | translate }}</a></li>
                 <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="organizationRoutes[storageService.siteLanguage$.value]">{{ "organizations projects" | translate }}</a></li>
                 <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="crowdfundingRoutes[storageService.siteLanguage$.value]">{{ "crowdfunding" | translate }}</a></li>
+                <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="newsRoutes[storageService.siteLanguage$.value]">{{ "news" | translate }}</a></li>
+                <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="photosRoutes[storageService.siteLanguage$.value]">{{ "photos" | translate }}</a></li>
+                <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="videosRoutes[storageService.siteLanguage$.value]">{{ "videos" | translate }}</a></li>
                 <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="aboutUsRoutes[storageService.siteLanguage$.value]">{{ "about us" | translate }}</a></li>
                 <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="contactUsRoutes[storageService.siteLanguage$.value]">{{ "contact us" | translate }}</a></li>
                 @if (authService.is_loggedin == true) {

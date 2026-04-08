@@ -26,6 +26,9 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\SeoController;
 use App\Http\Controllers\ShortLinkController;
+use App\Http\Controllers\Admin\NewsAdminController;
+use App\Http\Controllers\Admin\NewsCategoryAdminController;
+use App\Http\Controllers\Admin\GalleryAdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -196,6 +199,36 @@ Route::group(
         Route::get('/excel/download/{id}/{type}', [ExcelController::class, 'download_excel'])->name('excel.download')->middleware('master');
         Route::post('excel/mapping', [ExcelController::class, 'updateMap'])->name('excel.update_map');
         Route::post('/excel/delete-map', [ExcelController::class, 'deleteMap'])->name('excel.delete_map');
+
+        Route::prefix('news-management')->middleware('master')->group(function () {
+            Route::get('/', [NewsAdminController::class, 'index'])->name('news-admin.index');
+            Route::post('/', [NewsAdminController::class, 'store'])->name('news-admin.store');
+            Route::get('/{id}', [NewsAdminController::class, 'show'])->name('news-admin.show');
+            Route::put('/{id}', [NewsAdminController::class, 'update'])->name('news-admin.update');
+            Route::delete('/{id}', [NewsAdminController::class, 'destroy'])->name('news-admin.destroy');
+        });
+
+        Route::prefix('news-categories')->middleware('master')->group(function () {
+            Route::get('/', [NewsCategoryAdminController::class, 'index'])->name('news-categories-admin.index');
+            Route::post('/', [NewsCategoryAdminController::class, 'store'])->name('news-categories-admin.store');
+            Route::get('/{id}', [NewsCategoryAdminController::class, 'show'])->name('news-categories-admin.show');
+            Route::put('/{id}', [NewsCategoryAdminController::class, 'update'])->name('news-categories-admin.update');
+            Route::delete('/{id}', [NewsCategoryAdminController::class, 'destroy'])->name('news-categories-admin.destroy');
+        });
+
+        Route::prefix('gallery-management')->middleware('master')->group(function () {
+            Route::get('/photos', [GalleryAdminController::class, 'indexPhotos'])->name('gallery-admin.photos.index');
+            Route::post('/photos', [GalleryAdminController::class, 'storePhoto'])->name('gallery-admin.photos.store');
+            Route::get('/photos/{id}', [GalleryAdminController::class, 'showPhoto'])->name('gallery-admin.photos.show');
+            Route::put('/photos/{id}', [GalleryAdminController::class, 'updatePhoto'])->name('gallery-admin.photos.update');
+            Route::delete('/photos/{id}', [GalleryAdminController::class, 'destroyPhoto'])->name('gallery-admin.photos.destroy');
+
+            Route::get('/videos', [GalleryAdminController::class, 'indexVideos'])->name('gallery-admin.videos.index');
+            Route::post('/videos', [GalleryAdminController::class, 'storeVideo'])->name('gallery-admin.videos.store');
+            Route::get('/videos/{id}', [GalleryAdminController::class, 'showVideo'])->name('gallery-admin.videos.show');
+            Route::put('/videos/{id}', [GalleryAdminController::class, 'updateVideo'])->name('gallery-admin.videos.update');
+            Route::delete('/videos/{id}', [GalleryAdminController::class, 'destroyVideo'])->name('gallery-admin.videos.destroy');
+        });
 
         Route::get('/', [
             DashboardController::class,

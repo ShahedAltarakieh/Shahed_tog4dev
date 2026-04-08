@@ -1,0 +1,89 @@
+<div class="news-page">
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="page-title text-center text-white">{{ "news" | translate }}</h1>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <div class="filters-section d-flex flex-wrap gap-3 mb-4 align-items-center">
+            <div class="search-box flex-grow-1">
+                <input type="text"
+                       class="form-control"
+                       [placeholder]="'search news' | translate"
+                       (input)="onSearchInput($any($event.target).value)" />
+            </div>
+
+            <div class="category-filter">
+                <select class="form-select" (change)="onCategoryChange($any($event.target).value)">
+                    <option value="">{{ "all categories" | translate }}</option>
+                    @for (cat of categories; track cat.id) {
+                        <option [value]="cat.slug">{{ cat.name }}</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        @if (loading) {
+            <div class="text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        }
+
+        @if (!loading && newsList.length === 0) {
+            <div class="empty-state text-center py-5">
+                <h3>{{ "no news found" | translate }}</h3>
+            </div>
+        }
+
+        @if (!loading && newsList.length > 0) {
+            <div class="news-grid">
+                @for (item of newsList; track item.id) {
+                    <a class="news-card" [routerLink]="getNewsDetailRoute(item.slug)">
+                        <div class="news-image">
+                            @if (item.image) {
+                                <img [src]="item.image" [alt]="item.title" loading="lazy" />
+                            } @else {
+                                <div class="placeholder-image">
+                                    <img src="/app/assets/images/shared/logo.svg" alt="placeholder" />
+                                </div>
+                            }
+                        </div>
+                        <div class="news-content">
+                            @if (item.category) {
+                                <span class="news-category">{{ item.category.name }}</span>
+                            }
+                            <h3 class="news-title">{{ item.title }}</h3>
+                            @if (item.excerpt) {
+                                <p class="news-excerpt">{{ item.excerpt }}</p>
+                            }
+                            @if (item.published_at) {
+                                <span class="news-date">{{ formatDate(item.published_at) }}</span>
+                            }
+                        </div>
+                    </a>
+                }
+            </div>
+
+            @if (totalPages > 1) {
+                <nav class="pagination-container d-flex justify-content-center mt-5">
+                    <ul class="pagination">
+                        <li class="page-item" [ngClass]="{'disabled': currentPage === 1}">
+                            <button class="page-link" (click)="goToPage(currentPage - 1)">&laquo;</button>
+                        </li>
+                        @for (page of getPages(); track page) {
+                            <li class="page-item" [ngClass]="{'active': page === currentPage}">
+                                <button class="page-link" (click)="goToPage(page)">{{ page }}</button>
+                            </li>
+                        }
+                        <li class="page-item" [ngClass]="{'disabled': currentPage === totalPages}">
+                            <button class="page-link" (click)="goToPage(currentPage + 1)">&raquo;</button>
+                        </li>
+                    </ul>
+                </nav>
+            }
+        }
+    </div>
+</div>
