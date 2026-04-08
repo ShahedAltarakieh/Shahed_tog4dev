@@ -10,8 +10,13 @@ class NewsCategoryAdminController extends Controller
 {
     public function index()
     {
-        $categories = NewsCategory::orderBy('position', 'ASC')->get();
-        return response()->json(['data' => $categories]);
+        $data = NewsCategory::orderBy('position', 'ASC')->get();
+        return view('admin.news_categories.index', compact('data'));
+    }
+
+    public function create()
+    {
+        return view('admin.news_categories.create');
     }
 
     public function store(Request $request)
@@ -19,18 +24,20 @@ class NewsCategoryAdminController extends Controller
         $validated = $request->validate([
             'name' => 'required|string',
             'name_en' => 'nullable|string',
-            'status' => 'boolean',
-            'position' => 'integer',
+            'position' => 'nullable|integer',
         ]);
 
-        $category = NewsCategory::create($validated);
-        return response()->json(['data' => $category, 'message' => 'Category created successfully.'], 201);
+        $validated['status'] = $request->has('status') ? 1 : 0;
+        $validated['position'] = $validated['position'] ?? 0;
+
+        NewsCategory::create($validated);
+        return redirect()->route('news-categories-admin.index')->with('success', __('app.created successfully'));
     }
 
     public function show($id)
     {
-        $category = NewsCategory::findOrFail($id);
-        return response()->json(['data' => $category]);
+        $data = NewsCategory::findOrFail($id);
+        return view('admin.news_categories.edit', compact('data'));
     }
 
     public function update(Request $request, $id)
@@ -40,18 +47,27 @@ class NewsCategoryAdminController extends Controller
         $validated = $request->validate([
             'name' => 'sometimes|required|string',
             'name_en' => 'nullable|string',
-            'status' => 'boolean',
-            'position' => 'integer',
+            'position' => 'nullable|integer',
         ]);
 
+        $validated['status'] = $request->has('status') ? 1 : 0;
+
         $category->update($validated);
-        return response()->json(['data' => $category, 'message' => 'Category updated successfully.']);
+        return redirect()->route('news-categories-admin.index')->with('success', __('app.updated successfully'));
     }
 
     public function destroy($id)
     {
         $category = NewsCategory::findOrFail($id);
         $category->delete();
-        return response()->json(['message' => 'Category deleted successfully.']);
+        echo json_encode(array("status" => "success"));
+    }
+
+    public function change_status($id)
+    {
+        $category = NewsCategory::findOrFail($id);
+        $category->status = !$category->status;
+        $category->save();
+        echo json_encode(array("status" => "success"));
     }
 }

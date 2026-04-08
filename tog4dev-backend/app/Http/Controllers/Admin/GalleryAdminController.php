@@ -5,45 +5,64 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\GalleryPhoto;
 use App\Models\GalleryVideo;
+use App\Models\NewsCategory;
 use Illuminate\Http\Request;
 
 class GalleryAdminController extends Controller
 {
     public function indexPhotos(Request $request)
     {
-        $perPage = $request->query('per-page', 20);
-        $photos = GalleryPhoto::with('category')
+        $data = GalleryPhoto::with('category')
             ->orderBy('position', 'ASC')
-            ->paginate($perPage);
+            ->get();
 
-        return response()->json(['data' => $photos]);
+        return view('admin.gallery.photos.index', compact('data'));
+    }
+
+    public function createPhoto()
+    {
+        $categories = NewsCategory::getActive()->orderBy('position', 'ASC')->get();
+        return view('admin.gallery.photos.create', compact('categories'));
     }
 
     public function storePhoto(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'nullable|string',
+            'title' => 'required|string',
             'title_en' => 'nullable|string',
             'description' => 'nullable|string',
             'description_en' => 'nullable|string',
-            'news_category_id' => 'nullable|exists:news_categories,id',
-            'status' => 'boolean',
-            'position' => 'integer',
+            'news_category_id' => 'required|exists:news_categories,id',
+            'position' => 'nullable|integer',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'image_tablet' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'image_mobile' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
         ]);
+
+        $validated['status'] = $request->has('status') ? 1 : 0;
+        $validated['position'] = $validated['position'] ?? 0;
+        unset($validated['image'], $validated['image_tablet'], $validated['image_mobile']);
 
         $photo = GalleryPhoto::create($validated);
 
         if ($request->hasFile('image')) {
             $photo->addMediaFromRequest('image')->toMediaCollection('gallery_photos');
         }
+        if ($request->hasFile('image_tablet')) {
+            $photo->addMediaFromRequest('image_tablet')->toMediaCollection('gallery_photos_tablet');
+        }
+        if ($request->hasFile('image_mobile')) {
+            $photo->addMediaFromRequest('image_mobile')->toMediaCollection('gallery_photos_mobile');
+        }
 
-        return response()->json(['data' => $photo, 'message' => 'Photo created successfully.'], 201);
+        return redirect()->route('gallery-admin.photos.index')->with('success', __('app.created successfully'));
     }
 
     public function showPhoto($id)
     {
-        $photo = GalleryPhoto::with('category', 'media')->findOrFail($id);
-        return response()->json(['data' => $photo]);
+        $data = GalleryPhoto::with('category', 'media')->findOrFail($id);
+        $categories = NewsCategory::getActive()->orderBy('position', 'ASC')->get();
+        return view('admin.gallery.photos.edit', compact('data', 'categories'));
     }
 
     public function updatePhoto(Request $request, $id)
@@ -51,14 +70,19 @@ class GalleryAdminController extends Controller
         $photo = GalleryPhoto::findOrFail($id);
 
         $validated = $request->validate([
-            'title' => 'nullable|string',
+            'title' => 'sometimes|required|string',
             'title_en' => 'nullable|string',
             'description' => 'nullable|string',
             'description_en' => 'nullable|string',
-            'news_category_id' => 'nullable|exists:news_categories,id',
-            'status' => 'boolean',
-            'position' => 'integer',
+            'news_category_id' => 'required|exists:news_categories,id',
+            'position' => 'nullable|integer',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'image_tablet' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'image_mobile' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
         ]);
+
+        $validated['status'] = $request->has('status') ? 1 : 0;
+        unset($validated['image'], $validated['image_tablet'], $validated['image_mobile']);
 
         $photo->update($validated);
 
@@ -66,40 +90,65 @@ class GalleryAdminController extends Controller
             $photo->clearMediaCollection('gallery_photos');
             $photo->addMediaFromRequest('image')->toMediaCollection('gallery_photos');
         }
+        if ($request->hasFile('image_tablet')) {
+            $photo->clearMediaCollection('gallery_photos_tablet');
+            $photo->addMediaFromRequest('image_tablet')->toMediaCollection('gallery_photos_tablet');
+        }
+        if ($request->hasFile('image_mobile')) {
+            $photo->clearMediaCollection('gallery_photos_mobile');
+            $photo->addMediaFromRequest('image_mobile')->toMediaCollection('gallery_photos_mobile');
+        }
 
-        return response()->json(['data' => $photo, 'message' => 'Photo updated successfully.']);
+        return redirect()->route('gallery-admin.photos.index')->with('success', __('app.updated successfully'));
     }
 
     public function destroyPhoto($id)
     {
         $photo = GalleryPhoto::findOrFail($id);
         $photo->delete();
-        return response()->json(['message' => 'Photo deleted successfully.']);
+        echo json_encode(array("status" => "success"));
+    }
+
+    public function changeStatusPhoto($id)
+    {
+        $photo = GalleryPhoto::findOrFail($id);
+        $photo->status = !$photo->status;
+        $photo->save();
+        echo json_encode(array("status" => "success"));
     }
 
     public function indexVideos(Request $request)
     {
-        $perPage = $request->query('per-page', 20);
-        $videos = GalleryVideo::with('category')
+        $data = GalleryVideo::with('category')
             ->orderBy('position', 'ASC')
-            ->paginate($perPage);
+            ->get();
 
-        return response()->json(['data' => $videos]);
+        return view('admin.gallery.videos.index', compact('data'));
+    }
+
+    public function createVideo()
+    {
+        $categories = NewsCategory::getActive()->orderBy('position', 'ASC')->get();
+        return view('admin.gallery.videos.create', compact('categories'));
     }
 
     public function storeVideo(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'nullable|string',
+            'title' => 'required|string',
             'title_en' => 'nullable|string',
             'description' => 'nullable|string',
             'description_en' => 'nullable|string',
-            'video_url' => 'nullable|string',
+            'video_url' => 'required|string|url',
             'thumbnail_url' => 'nullable|string',
-            'news_category_id' => 'nullable|exists:news_categories,id',
-            'status' => 'boolean',
-            'position' => 'integer',
+            'news_category_id' => 'required|exists:news_categories,id',
+            'position' => 'nullable|integer',
+            'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
         ]);
+
+        $validated['status'] = $request->has('status') ? 1 : 0;
+        $validated['position'] = $validated['position'] ?? 0;
+        unset($validated['thumbnail']);
 
         $video = GalleryVideo::create($validated);
 
@@ -107,13 +156,14 @@ class GalleryAdminController extends Controller
             $video->addMediaFromRequest('thumbnail')->toMediaCollection('video_thumbnails');
         }
 
-        return response()->json(['data' => $video, 'message' => 'Video created successfully.'], 201);
+        return redirect()->route('gallery-admin.videos.index')->with('success', __('app.created successfully'));
     }
 
     public function showVideo($id)
     {
-        $video = GalleryVideo::with('category', 'media')->findOrFail($id);
-        return response()->json(['data' => $video]);
+        $data = GalleryVideo::with('category', 'media')->findOrFail($id);
+        $categories = NewsCategory::getActive()->orderBy('position', 'ASC')->get();
+        return view('admin.gallery.videos.edit', compact('data', 'categories'));
     }
 
     public function updateVideo(Request $request, $id)
@@ -121,16 +171,19 @@ class GalleryAdminController extends Controller
         $video = GalleryVideo::findOrFail($id);
 
         $validated = $request->validate([
-            'title' => 'nullable|string',
+            'title' => 'sometimes|required|string',
             'title_en' => 'nullable|string',
             'description' => 'nullable|string',
             'description_en' => 'nullable|string',
-            'video_url' => 'nullable|string',
+            'video_url' => 'required|string|url',
             'thumbnail_url' => 'nullable|string',
-            'news_category_id' => 'nullable|exists:news_categories,id',
-            'status' => 'boolean',
-            'position' => 'integer',
+            'news_category_id' => 'required|exists:news_categories,id',
+            'position' => 'nullable|integer',
+            'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
         ]);
+
+        $validated['status'] = $request->has('status') ? 1 : 0;
+        unset($validated['thumbnail']);
 
         $video->update($validated);
 
@@ -139,13 +192,21 @@ class GalleryAdminController extends Controller
             $video->addMediaFromRequest('thumbnail')->toMediaCollection('video_thumbnails');
         }
 
-        return response()->json(['data' => $video, 'message' => 'Video updated successfully.']);
+        return redirect()->route('gallery-admin.videos.index')->with('success', __('app.updated successfully'));
     }
 
     public function destroyVideo($id)
     {
         $video = GalleryVideo::findOrFail($id);
         $video->delete();
-        return response()->json(['message' => 'Video deleted successfully.']);
+        echo json_encode(array("status" => "success"));
+    }
+
+    public function changeStatusVideo($id)
+    {
+        $video = GalleryVideo::findOrFail($id);
+        $video->status = !$video->status;
+        $video->save();
+        echo json_encode(array("status" => "success"));
     }
 }

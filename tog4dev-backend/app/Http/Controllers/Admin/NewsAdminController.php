@@ -11,12 +11,17 @@ class NewsAdminController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = $request->query('per-page', 20);
-        $news = News::with('category')
+        $data = News::with('category')
             ->orderBy('created_at', 'DESC')
-            ->paginate($perPage);
+            ->get();
 
-        return response()->json(['data' => $news]);
+        return view('admin.news.index', compact('data'));
+    }
+
+    public function create()
+    {
+        $categories = NewsCategory::getActive()->orderBy('position', 'ASC')->get();
+        return view('admin.news.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -28,26 +33,39 @@ class NewsAdminController extends Controller
             'excerpt_en' => 'nullable|string',
             'body' => 'nullable|string',
             'body_en' => 'nullable|string',
-            'news_category_id' => 'nullable|exists:news_categories,id',
-            'is_featured' => 'boolean',
-            'status' => 'boolean',
+            'news_category_id' => 'required|exists:news_categories,id',
             'published_at' => 'nullable|date',
-            'position' => 'integer',
+            'position' => 'nullable|integer',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'image_tablet' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'image_mobile' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
         ]);
+
+        $validated['status'] = $request->has('status') ? 1 : 0;
+        $validated['is_featured'] = $request->has('is_featured') ? 1 : 0;
+        $validated['position'] = $validated['position'] ?? 0;
+        unset($validated['image'], $validated['image_tablet'], $validated['image_mobile']);
 
         $news = News::create($validated);
 
         if ($request->hasFile('image')) {
             $news->addMediaFromRequest('image')->toMediaCollection('news');
         }
+        if ($request->hasFile('image_tablet')) {
+            $news->addMediaFromRequest('image_tablet')->toMediaCollection('news_tablet');
+        }
+        if ($request->hasFile('image_mobile')) {
+            $news->addMediaFromRequest('image_mobile')->toMediaCollection('news_mobile');
+        }
 
-        return response()->json(['data' => $news, 'message' => 'News created successfully.'], 201);
+        return redirect()->route('news-admin.index')->with('success', __('app.created successfully'));
     }
 
     public function show($id)
     {
-        $news = News::with('category', 'media')->findOrFail($id);
-        return response()->json(['data' => $news]);
+        $data = News::with('category', 'media')->findOrFail($id);
+        $categories = NewsCategory::getActive()->orderBy('position', 'ASC')->get();
+        return view('admin.news.edit', compact('data', 'categories'));
     }
 
     public function update(Request $request, $id)
@@ -61,12 +79,17 @@ class NewsAdminController extends Controller
             'excerpt_en' => 'nullable|string',
             'body' => 'nullable|string',
             'body_en' => 'nullable|string',
-            'news_category_id' => 'nullable|exists:news_categories,id',
-            'is_featured' => 'boolean',
-            'status' => 'boolean',
+            'news_category_id' => 'required|exists:news_categories,id',
             'published_at' => 'nullable|date',
-            'position' => 'integer',
+            'position' => 'nullable|integer',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'image_tablet' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            'image_mobile' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
         ]);
+
+        $validated['status'] = $request->has('status') ? 1 : 0;
+        $validated['is_featured'] = $request->has('is_featured') ? 1 : 0;
+        unset($validated['image'], $validated['image_tablet'], $validated['image_mobile']);
 
         $news->update($validated);
 
@@ -74,15 +97,30 @@ class NewsAdminController extends Controller
             $news->clearMediaCollection('news');
             $news->addMediaFromRequest('image')->toMediaCollection('news');
         }
+        if ($request->hasFile('image_tablet')) {
+            $news->clearMediaCollection('news_tablet');
+            $news->addMediaFromRequest('image_tablet')->toMediaCollection('news_tablet');
+        }
+        if ($request->hasFile('image_mobile')) {
+            $news->clearMediaCollection('news_mobile');
+            $news->addMediaFromRequest('image_mobile')->toMediaCollection('news_mobile');
+        }
 
-        return response()->json(['data' => $news, 'message' => 'News updated successfully.']);
+        return redirect()->route('news-admin.index')->with('success', __('app.updated successfully'));
     }
 
     public function destroy($id)
     {
         $news = News::findOrFail($id);
         $news->delete();
+        echo json_encode(array("status" => "success"));
+    }
 
-        return response()->json(['message' => 'News deleted successfully.']);
+    public function change_status($id)
+    {
+        $news = News::findOrFail($id);
+        $news->status = !$news->status;
+        $news->save();
+        echo json_encode(array("status" => "success"));
     }
 }

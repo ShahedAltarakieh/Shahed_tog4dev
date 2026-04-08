@@ -1,0 +1,123 @@
+@extends('layouts.admin.add')
+@section('title'){{ __('app.add new') }} - {{ __('app.news') }}@endsection
+
+@section('content')
+@include('includes.admin.header', ['label_name' => __('app.add new') . ' - ' . __('app.news')])
+
+<div class="row">
+    <div class="col-12">
+        <div class="widget-rounded-circle card-box d-flex justify-content-between">
+            <form class='w-100' action="{{ route('news-admin.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul class='ml-3 mb-0'>
+                                        @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                @endif
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="title">{{ __('app.title') }} (AR) <span class="text-danger">*</span></label>
+                                <input type="text" id="title" name="title" placeholder="{{ __('app.title') }}"
+                                    value="{{ old('title') }}" class="form-control" required>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="title_en">{{ __('app.title') }} (EN)</label>
+                                <input type="text" id="title_en" name="title_en" placeholder="{{ __('app.title') }}"
+                                    value="{{ old('title_en') }}" class="form-control">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="excerpt">{{ __('app.short description') }} (AR)</label>
+                                <textarea id="excerpt" name="excerpt" placeholder="{{ __('app.short description') }}"
+                                    class="form-control" rows="3">{{ old('excerpt') }}</textarea>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="excerpt_en">{{ __('app.short description') }} (EN)</label>
+                                <textarea id="excerpt_en" name="excerpt_en" placeholder="{{ __('app.short description') }}"
+                                    class="form-control" rows="3">{{ old('excerpt_en') }}</textarea>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="body">{{ __('app.full content') }} (AR)</label>
+                                <textarea id="body" name="body" placeholder="{{ __('app.full content') }}"
+                                    class="form-control quill-editor" rows="8">{{ old('body') }}</textarea>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="body_en">{{ __('app.full content') }} (EN)</label>
+                                <textarea id="body_en" name="body_en" placeholder="{{ __('app.full content') }}"
+                                    class="form-control quill-editor" rows="8">{{ old('body_en') }}</textarea>
+                            </div>
+
+                            <div class="form-group col-4">
+                                <label for="image">{{ __('app.image') }} (Web) <span class="text-danger">*</span></label>
+                                <input type="file" id="image" name="image" data-plugins="dropify" data-height="200"
+                                    data-allowed-file-extensions="png jpg jpeg webp" />
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="image_tablet">{{ __('app.image') }} (Tablet)</label>
+                                <input type="file" id="image_tablet" name="image_tablet" data-plugins="dropify" data-height="200"
+                                    data-allowed-file-extensions="png jpg jpeg webp" />
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="image_mobile">{{ __('app.image') }} (Mobile)</label>
+                                <input type="file" id="image_mobile" name="image_mobile" data-plugins="dropify" data-height="200"
+                                    data-allowed-file-extensions="png jpg jpeg webp" />
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="news_category_id">{{ __('app.category') }} <span class="text-danger">*</span></label>
+                                <select name="news_category_id" id="news_category_id" class="form-control" required>
+                                    <option value="">{{ __('app.choose') }}</option>
+                                    @foreach($categories as $category)
+                                    <option value="{{ $category->id }}" {{ old('news_category_id') == $category->id ? 'selected' : '' }}>
+                                        {{ $category->name }} - {{ $category->name_en }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="published_at">{{ __('app.publish date') }}</label>
+                                <input type="date" id="published_at" name="published_at"
+                                    value="{{ old('published_at', date('Y-m-d')) }}" class="form-control">
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label for="position">{{ __('app.position') }}</label>
+                                <input type="number" id="position" name="position"
+                                    value="{{ old('position', 0) }}" class="form-control">
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="status" class="d-block">{{ __('app.published') }}</label>
+                                <input type="checkbox" data-plugin="switchery" data-color="#1bb99a" name="status" value="1" {{ old('status', 1) ? 'checked' : '' }} />
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="is_featured" class="d-block">{{ __('app.featured') }}</label>
+                                <input type="checkbox" data-plugin="switchery" data-color="#3bafda" name="is_featured" value="1" {{ old('is_featured') ? 'checked' : '' }} />
+                            </div>
+
+                            <div class="form-group col-md-12 text-center mt-3">
+                                <button type="submit" class="btn btn-primary px-5">{{ __('app.save') }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endsection

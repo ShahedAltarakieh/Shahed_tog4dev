@@ -156,6 +156,42 @@
 </li>
 
 <li>
+    <a href="#newsGallery" data-toggle="collapse">
+        <i class="mdi mdi-newspaper"></i>
+        <span> {{ __('app.news & gallery') }} </span>
+        <span class="menu-arrow"></span>
+    </a>
+    <div class="collapse" id="newsGallery">
+        <ul class="nav-second-level">
+            <li>
+                <a href="{{ route('news-admin.index') }}">
+                    <i class="fas fa-newspaper"></i>
+                    <span>{{ __('app.news') }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('news-categories-admin.index') }}">
+                    <i class="fas fa-tags"></i>
+                    <span>{{ __('app.news categories') }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('gallery-admin.photos.index') }}">
+                    <i class="fas fa-images"></i>
+                    <span>{{ __('app.photos') }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('gallery-admin.videos.index') }}">
+                    <i class="fas fa-video"></i>
+                    <span>{{ __('app.videos') }}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</li>
+
+<li>
     <a href="#paymentsTab" data-toggle="collapse">
         <i class=" fas fa-dollar-sign"></i>
         <span> {{ __('app.payments') }} </span>

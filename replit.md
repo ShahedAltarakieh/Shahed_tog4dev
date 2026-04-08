@@ -80,8 +80,11 @@ Full-stack module for news articles and media gallery (photos/videos).
 - Models: `News`, `NewsCategory`, `GalleryPhoto`, `GalleryVideo` (with Sluggable, Spatie Media)
 - Migrations: `news_categories`, `news`, `gallery_photos`, `gallery_videos`
 - API Controllers: `NewsController` (index/show/related/categories/search), `GalleryController` (photos/videos)
-- Admin Controllers: `AdminNewsController`, `AdminGalleryPhotoController`, `AdminGalleryVideoController`, `AdminNewsCategoryController`
-- Routes: `/api/v1/news/*`, `/api/v1/gallery/*`, `/api/v1/search?q=` (unified search); admin routes under `master` middleware
+- Admin Controllers: `NewsAdminController`, `GalleryAdminController`, `NewsCategoryAdminController` (return Blade views, AJAX delete/status toggle)
+- Admin Blade Views: `admin/news/`, `admin/gallery/photos/`, `admin/gallery/videos/`, `admin/news_categories/` (index/create/edit each)
+- Admin UI: DataTables listing, Dropify file upload, Switchery toggles, SweetAlert2 delete confirm, Bootstrap 4 forms
+- Routes: `/api/v1/news/*`, `/api/v1/gallery/*`, `/api/v1/search?q=` (unified search); admin routes under `master` middleware at `news-management/*`, `news-categories/*`, `gallery-management/photos/*`, `gallery-management/videos/*`
+- Sidebar: "News & Gallery" section with links to News, Categories, Photos, Videos
 
 **Frontend** (`tog4dev-frontend/src/app/news-gallery/`):
 - Services: `NewsService`, `GalleryService`
