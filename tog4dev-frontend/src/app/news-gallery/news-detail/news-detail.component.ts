@@ -126,9 +126,31 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
         window.open('https://wa.me/?text=' + text + '%20' + url, '_blank');
     }
 
-    shareOnInstagram(): void {
+    shareOnTwitter(): void {
         if (!this.isBrowser) return;
-        this.copyLink();
+        const url = encodeURIComponent(this.getCurrentUrl());
+        const text = encodeURIComponent(this.article?.title || '');
+        window.open('https://twitter.com/intent/tweet?url=' + url + '&text=' + text, '_blank', 'width=600,height=400');
+    }
+
+    shareOnTelegram(): void {
+        if (!this.isBrowser) return;
+        const url = encodeURIComponent(this.getCurrentUrl());
+        const text = encodeURIComponent(this.article?.title || '');
+        window.open('https://t.me/share/url?url=' + url + '&text=' + text, '_blank', 'width=600,height=400');
+    }
+
+    shareOnLinkedIn(): void {
+        if (!this.isBrowser) return;
+        const url = encodeURIComponent(this.getCurrentUrl());
+        window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + url, '_blank', 'width=600,height=400');
+    }
+
+    shareViaEmail(): void {
+        if (!this.isBrowser) return;
+        const subject = encodeURIComponent(this.article?.title || '');
+        const body = encodeURIComponent(this.getCurrentUrl());
+        window.open('mailto:?subject=' + subject + '&body=' + body);
     }
 
     copyLink(): void {
