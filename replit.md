@@ -104,6 +104,21 @@ Redesigned 3-band footer layout:
 - **RTL**: Logical properties (`padding-inline-start`), RTL-safe underline positioning
 - Files: `layouts/footer/footer.component.{html,scss,ts}`, `layouts/footer/components/stay-in-touch-form/`
 
+## Admin Dashboard
+
+Modern, professional admin dashboard (Laravel Blade + Bootstrap):
+- **Stats grid**: 5 payment summary cards (Today/Week/Month/Year/All) with responsive grid (5-col → 3 → 2 → 1), color-coded icons, percentage change badges, and individual download buttons
+- **Custom date range**: Gradient teal bar with flatpickr range picker, live total display, and export
+- **Chart cards**: Subscription pie, payment methods bar, top 10 countries, project categories, crowdfunding categories — each with title icon, info note, and Export button
+- **Crowdfunding projects**: Tabbed view by category with detailed bar tooltips (target, paid, remaining, closure status)
+- **Influencer table**: Numbered rows, sticky header, sortable by total amount, clickable names linking to detail pages
+- **Validation notes**: Quick-reference section explaining dashboard features, date filtering, export, and chart interactions
+- **Size reference**: Grid of quick-glance payment totals at each time period
+- **Section dividers**: Labeled horizontal rules between dashboard sections
+- **Hover/active effects**: Cards lift on hover with shadow, active card has teal top-border accent
+- **RTL support**: Download button position flipped, logical properties maintained
+- Files: `resources/views/admin/dashboard.blade.php`, `public/css/main.css`, `public/css/main-rtl.css`
+
 ## Notes
 
 - The migration `2024_06_21` was renamed to `2024_12_03_000312` to fix ordering (it references `payments` table created later)
