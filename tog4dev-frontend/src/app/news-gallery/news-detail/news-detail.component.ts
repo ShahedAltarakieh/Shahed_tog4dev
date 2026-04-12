@@ -40,6 +40,13 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
                 this.fetchArticle(slug);
             }
         });
+
+        this.storageService.siteLanguage$.pipe(takeUntil(this.destroy$)).subscribe(() => {
+            const slug = this.route.snapshot.params['slug'];
+            if (slug && this.article) {
+                this.fetchArticle(slug);
+            }
+        });
     }
 
     ngOnDestroy(): void {
