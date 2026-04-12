@@ -249,31 +249,18 @@ ul {
     .payment-badges {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
         flex-shrink: 0;
 
         .pay-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: #fff;
-            border-radius: 6px;
-            padding: 5px 8px;
-            height: 36px;
-            width: 56px;
 
-            img {
-                max-height: 24px;
-                max-width: 40px;
-                object-fit: contain;
-            }
-
-            &.applepay-badge {
-                background: #000;
-
-                img {
-                    filter: invert(1);
-                }
+            svg {
+                width: 52px;
+                height: 34px;
+                border-radius: 4px;
             }
         }
     }
@@ -437,17 +424,10 @@ ul {
         .payment-badges {
             flex-wrap: wrap;
             justify-content: center;
-            gap: 6px;
 
-            .pay-icon {
-                height: 30px;
-                width: 48px;
-                padding: 4px 6px;
-
-                img {
-                    max-height: 20px;
-                    max-width: 34px;
-                }
+            .pay-icon svg {
+                width: 44px;
+                height: 28px;
             }
         }
     }
