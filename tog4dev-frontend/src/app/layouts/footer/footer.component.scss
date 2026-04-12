@@ -108,7 +108,7 @@ ul {
     }
 
     .footer-logo {
-        height: 52px;
+        height: 72px;
         width: auto;
     }
 
@@ -247,11 +247,21 @@ ul {
     }
 
     .payment-badges {
+        display: flex;
+        align-items: center;
+        gap: 8px;
         flex-shrink: 0;
 
-        img {
-            height: 36px;
-            opacity: 0.85;
+        .pay-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            svg {
+                width: 52px;
+                height: 34px;
+                border-radius: 4px;
+            }
         }
     }
 
@@ -288,7 +298,7 @@ ul {
         }
 
         img {
-            height: 22px;
+            height: 30px;
         }
     }
 }
@@ -411,8 +421,14 @@ ul {
             font-size: 0.72rem;
         }
 
-        .payment-badges img {
-            height: 30px;
+        .payment-badges {
+            flex-wrap: wrap;
+            justify-content: center;
+
+            .pay-icon svg {
+                width: 44px;
+                height: 28px;
+            }
         }
     }
 }
