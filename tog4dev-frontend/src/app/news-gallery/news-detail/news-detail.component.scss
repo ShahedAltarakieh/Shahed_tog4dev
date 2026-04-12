@@ -515,6 +515,33 @@ $radius: 14px;
     100% { background-position: -200% 0; }
 }
 
+@media (max-width: 992px) {
+    .hero-image-section {
+        max-height: 450px;
+
+        .hero-full-image {
+            height: 450px;
+        }
+    }
+
+    .article-body-wrapper {
+        padding: 32px 30px;
+        border-radius: 16px;
+    }
+
+    .article-title {
+        font-size: 1.5rem;
+    }
+
+    .related-news .related-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .breadcrumb-bar .breadcrumb-nav .breadcrumb .breadcrumb-item.active {
+        max-width: 250px;
+    }
+}
+
 @media (max-width: 768px) {
     .hero-image-section {
         max-height: 300px;
@@ -529,20 +556,53 @@ $radius: 14px;
     }
 
     .article-body-wrapper {
-        padding: 28px 22px;
+        padding: 24px 20px;
         border-radius: 14px;
     }
 
     .article-title {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
+    }
+
+    .article-meta-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
     }
 
     .share-section {
-        padding: 18px;
+        padding: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .share-label {
+            margin-bottom: 10px;
+        }
+
+        .share-buttons {
+            flex-wrap: wrap;
+        }
     }
 
-    .related-news .related-grid {
-        grid-template-columns: 1fr 1fr;
+    .related-news {
+        padding: 30px 16px;
+
+        .related-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .related-title {
+            font-size: 1.1rem;
+        }
+    }
+
+    .breadcrumb-bar .breadcrumb-nav .breadcrumb .breadcrumb-item {
+        font-size: 0.78rem;
+
+        &.active {
+            max-width: 180px;
+        }
     }
 }
 
@@ -560,11 +620,16 @@ $radius: 14px;
     }
 
     .article-body-wrapper {
-        padding: 22px 18px;
+        padding: 20px 16px;
+        border-radius: 12px;
     }
 
     .article-title {
-        font-size: 1.2rem;
+        font-size: 1.15rem;
+    }
+
+    .article-body {
+        font-size: 0.9rem;
     }
 
     .related-news .related-grid {
@@ -572,7 +637,11 @@ $radius: 14px;
     }
 
     .share-section .share-buttons .share-btn {
-        width: 38px;
-        height: 38px;
+        width: 36px;
+        height: 36px;
+    }
+
+    .breadcrumb-bar .breadcrumb-nav .breadcrumb .breadcrumb-item.active {
+        max-width: 140px;
     }
 }
