@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, PLATFORM_ID, Inject } from '@angular/core
 import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, skip } from 'rxjs';
 
 import { StorageService } from 'app/core/storage/storage.service';
 import { NewsService } from '../services/news.service';
@@ -36,6 +36,16 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.route.params.pipe(takeUntil(this.destroy$)).subscribe(params => {
             const slug = params['slug'];
+            if (slug) {
+                this.fetchArticle(slug);
+            }
+        });
+
+        this.storageService.siteLanguage$.pipe(
+            skip(1),
+            takeUntil(this.destroy$)
+        ).subscribe(() => {
+            const slug = this.route.snapshot.params['slug'];
             if (slug) {
                 this.fetchArticle(slug);
             }

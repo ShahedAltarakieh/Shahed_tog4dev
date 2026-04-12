@@ -69,6 +69,14 @@ class NewsController extends Controller
                 ->first();
 
             if (!$news) {
+                $fallbackColumn = $locale === 'ar' ? 'slug_en' : 'slug';
+                $news = News::published()
+                    ->with(['category', 'media'])
+                    ->where($fallbackColumn, $slug)
+                    ->first();
+            }
+
+            if (!$news) {
                 return response()->json([
                     'message' => 'News article not found.',
                     'redirect' => true,
