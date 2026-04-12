@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { FooterService } from 'app/layouts/footer/services/footer.service';
 import {TranslatePipe} from "@ngx-translate/core";
@@ -6,7 +7,8 @@ import {TranslatePipe} from "@ngx-translate/core";
 @Component({
     selector: 'app-stay-in-touch-form',
     imports: [
-        TranslatePipe
+        TranslatePipe,
+        FormsModule,
     ],
     templateUrl: './stay-in-touch-form.component.html',
     styleUrl: './stay-in-touch-form.component.scss'

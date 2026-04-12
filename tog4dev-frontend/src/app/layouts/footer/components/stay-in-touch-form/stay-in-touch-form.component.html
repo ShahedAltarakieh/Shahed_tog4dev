@@ -1,12 +1,13 @@
 <div class="stay-in-touch-container">
-  <form>
+  <form (ngSubmit)="onSubmitClick()">
     <p class="title">{{ "stay connected" | translate }}</p>
 
     <div class="email-address-container">
-      <input class="email-input" type="email" [value]="emailValue" placeholder="{{ 'e-mail' | translate}}" (input)="onEmailChange($event)" />
+      <label for="newsletter-email" class="sr-only">{{ "e-mail" | translate }}</label>
+      <input id="newsletter-email" class="email-input" type="email" [value]="emailValue" placeholder="{{ 'e-mail' | translate}}" (input)="onEmailChange($event)" />
 
-      <button class="form-submit-btn" type="button" (click)="onSubmitClick()">
-        <img src="/app/assets/images/shared/arrow-black.svg" alt="arrow black"/>
+      <button class="form-submit-btn" type="submit" aria-label="Subscribe">
+        <img src="/app/assets/images/shared/arrow-black.svg" alt="" aria-hidden="true" />
       </button>
     </div>
 

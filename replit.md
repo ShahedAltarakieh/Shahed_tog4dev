@@ -93,6 +93,17 @@ Full-stack module for news articles and media gallery (photos/videos).
 - Navigation: "News & Gallery" dropdown in header with SVG icons (News/Photos/Videos), click+hover toggle, rotating arrow indicator, closes on outside click
 - Features: debounced search, category filtering, pagination, share (Facebook/WhatsApp/Copy link), breadcrumbs, loading/empty/error states, "Read More" buttons
 
+## Footer
+
+Redesigned 3-band footer layout:
+- **Newsletter band** (top): Teal background with frosted-glass newsletter signup form, decorative circles
+- **Main columns** (middle): Dark teal background with 4-column grid — brand column (logo, description, address, social icons) + 3 link columns (Projects, Explore More, About)
+- **Bottom bar**: Darker teal with legal links, payment badges, copyright, and Artikeys credit
+- **Responsive**: 4-col → 2-col (tablet) → 1-col (mobile) grid, newsletter stacks vertically on tablet
+- **Accessibility**: `aria-label` on social icons, `sr-only` label for email input, `rel="noopener noreferrer"` on external links
+- **RTL**: Logical properties (`padding-inline-start`), RTL-safe underline positioning
+- Files: `layouts/footer/footer.component.{html,scss,ts}`, `layouts/footer/components/stay-in-touch-form/`
+
 ## Notes
 
 - The migration `2024_06_21` was renamed to `2024_12_03_000312` to fix ordering (it references `payments` table created later)

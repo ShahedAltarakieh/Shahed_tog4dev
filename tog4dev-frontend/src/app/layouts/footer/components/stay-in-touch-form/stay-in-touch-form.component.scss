@@ -1,52 +1,93 @@
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 form {
-  text-align: start;
+    text-align: start;
 }
 
 .stay-in-touch-container {
-  background-color: #F4F5F9;
-  border-radius: 14px;
-  padding: 32px 48px 38px 42px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    padding: 24px 28px;
 }
 
 .title {
-  color: #13585D;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 28px;
-  margin-bottom: 15px;
+    display: none;
 }
 
 .description {
-  color: rgba(#0A142F, 0.5);
-  font-size: 14px;
-  line-height: 18.23px;
+    display: none;
 }
 
 .email-address-container {
-  border-radius: 6px;
-  border: 1.5px solid #E7E8F2;
-  display: flex;
-  height: 50px;
-  overflow: hidden;
-  margin-bottom: 20px;
+    border-radius: 8px;
+    border: none;
+    display: flex;
+    height: 48px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .email-input {
-  all: unset;
-  background-color: #FFFFFF;
-  padding: 16px;
-  width: 100%;
+    all: unset;
+    background-color: #FFFFFF;
+    padding: 12px 16px;
+    width: 100%;
+    font-size: 0.88rem;
+    color: #333;
+
+    &::placeholder {
+        color: #999;
+    }
 }
 
 .form-submit-btn {
-  all: unset;
-  height: 100%;
-  background-color: #FECD0F;
-  color:#000000;
-  padding-inline: 16.72px 18px;
-  cursor: pointer;
+    all: unset;
+    height: 100%;
+    background-color: #FECD0F;
+    color: #000000;
+    padding-inline: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.25s;
+
+    &:hover {
+        background-color: #ffe04a;
+    }
+
+    img {
+        width: 18px;
+        height: 18px;
+    }
 }
 
 .response-message {
-  margin-bottom: 20px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.82rem;
+    margin: 0;
+    padding-top: 4px;
+}
+
+@media (max-width: 480px) {
+    .stay-in-touch-container {
+        padding: 20px 20px;
+    }
+
+    .email-address-container {
+        height: 44px;
+    }
 }
