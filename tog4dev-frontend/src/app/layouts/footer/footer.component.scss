@@ -251,16 +251,21 @@ ul {
         align-items: center;
         gap: 8px;
         flex-shrink: 0;
+        flex-wrap: wrap;
 
         .pay-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            background: #fff;
+            border-radius: 6px;
+            padding: 4px 6px;
+            height: 36px;
 
-            svg {
-                width: 52px;
-                height: 34px;
-                border-radius: 4px;
+            img {
+                height: 24px;
+                width: auto;
+                display: block;
             }
         }
     }
@@ -422,12 +427,15 @@ ul {
         }
 
         .payment-badges {
-            flex-wrap: wrap;
             justify-content: center;
 
-            .pay-icon svg {
-                width: 44px;
-                height: 28px;
+            .pay-icon {
+                height: 30px;
+                padding: 3px 5px;
+
+                img {
+                    height: 20px;
+                }
             }
         }
     }

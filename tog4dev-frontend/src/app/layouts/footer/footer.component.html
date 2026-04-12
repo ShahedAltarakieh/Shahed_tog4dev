@@ -81,44 +81,20 @@
                     <a routerLink="{{ 'route-cookie-policy' | translate }}">{{ "cookie policy" | translate }}</a>
                 </nav>
                 <div class="payment-badges">
-                    <span class="pay-icon visa-icon" title="Visa">
-                        <svg viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="48" height="32" rx="4" fill="#fff"/>
-                            <path d="M19.5 21h-2.9l1.8-11h2.9l-1.8 11zm12.1-10.7c-.6-.2-1.5-.5-2.6-.5-2.9 0-4.9 1.5-4.9 3.7 0 1.6 1.5 2.5 2.6 3.1 1.1.5 1.5.9 1.5 1.4 0 .8-.9 1.1-1.7 1.1-1.1 0-1.8-.2-2.7-.6l-.4-.2-.4 2.5c.7.3 1.9.6 3.2.6 3.1 0 5.1-1.5 5.1-3.8 0-1.3-.8-2.2-2.4-3-.1-.1-1.4-.7-1.4-1.3s.5-1 1.5-1c.9 0 1.5.2 2 .4l.2.1.4-2.5zm7.2-.3h-2.2c-.7 0-1.2.2-1.5.9l-4.2 10.1h3l.6-1.6h3.6l.3 1.6h2.6l-2.2-11zm-3.5 7.1l1.5-4 .8 4h-2.3zM17 10l-2.7 7.5-.3-1.5c-.5-1.7-2.1-3.6-3.9-4.5l2.5 9.5h3.1L20.1 10H17z" fill="#1A1F71"/>
-                            <path d="M12.3 10H7.7l-.1.3c3.7.9 6.1 3.2 7.1 5.9L13.6 11c-.2-.7-.7-.9-1.3-1z" fill="#F7A600"/>
-                        </svg>
+                    <span class="pay-icon" title="Visa">
+                        <img src="/app/assets/images/payments/visa.svg" alt="Visa" />
                     </span>
-                    <span class="pay-icon mc-icon" title="Mastercard">
-                        <svg viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="48" height="32" rx="4" fill="#fff"/>
-                            <circle cx="19" cy="16" r="8" fill="#EB001B"/>
-                            <circle cx="29" cy="16" r="8" fill="#F79E1B"/>
-                            <path d="M24 9.8a8 8 0 0 1 0 12.4 8 8 0 0 1 0-12.4z" fill="#FF5F00"/>
-                        </svg>
+                    <span class="pay-icon" title="Mastercard">
+                        <img src="/app/assets/images/payments/mastercard.svg" alt="Mastercard" />
                     </span>
-                    <span class="pay-icon applepay-icon" title="Apple Pay">
-                        <svg viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="48" height="32" rx="4" fill="#000"/>
-                            <path d="M15.2 11.4c-.5.6-1.2 1-2 .9-.1-.8.3-1.6.7-2.1.5-.6 1.3-1 2-.9.1.8-.2 1.6-.7 2.1zm.7.5c-1.1-.1-2 .6-2.6.6-.5 0-1.3-.6-2.2-.6-1.1 0-2.2.7-2.7 1.7-1.2 2-.3 5 .8 6.7.6.8 1.2 1.7 2.1 1.7.8 0 1.2-.6 2.2-.6 1 0 1.3.6 2.2.5.9 0 1.5-.8 2-1.7.6-1 .9-2 .9-2-.1 0-1.7-.7-1.7-2.6 0-1.6 1.3-2.4 1.4-2.5-.8-1.2-2-1.3-2.4-1.2zm7.1-1.5v11.2h1.7v-3.8h2.4c2.2 0 3.7-1.5 3.7-3.7s-1.5-3.7-3.7-3.7h-4.1zm1.7 1.5h2c1.5 0 2.3.8 2.3 2.2s-.8 2.2-2.3 2.2H24.7v-4.4zm9.7 9.9c1.1 0 2-.5 2.5-1.4h0v1.3h1.6v-5.5c0-1.6-1.3-2.6-3.2-2.6-1.8 0-3.1 1-3.1 2.5h1.5c.2-.7.8-1.1 1.6-1.1 1 0 1.6.5 1.6 1.4v.6l-2.1.1c-2 .1-3 .9-3 2.3 0 1.4 1 2.4 2.6 2.4zm.4-1.3c-.9 0-1.5-.4-1.5-1.1 0-.7.6-1.1 1.6-1.2l1.9-.1v.6c0 1-.9 1.8-2 1.8z" fill="#fff"/>
-                        </svg>
+                    <span class="pay-icon" title="Apple Pay">
+                        <img src="/app/assets/images/payments/applepay.svg" alt="Apple Pay" />
                     </span>
-                    <span class="pay-icon googlepay-icon" title="Google Pay">
-                        <svg viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="48" height="32" rx="4" fill="#fff" stroke="#ddd" stroke-width=".5"/>
-                            <path d="M23.3 16.5v3.1h-1v-8.6h2.6c.6 0 1.2.2 1.7.7.5.4.7 1 .7 1.6s-.2 1.2-.7 1.6c-.5.4-1 .7-1.7.7h-1.6zm0-4.4v3.4h1.7c.4 0 .8-.2 1.1-.4.6-.5.6-1.4.1-2l-.1-.1c-.3-.3-.7-.5-1.1-.5h-1.7zm7.7 1.8c.7 0 1.3.2 1.8.6.5.4.7 1 .7 1.7v3.4h-1v-.8c-.3.5-.9.8-1.5.9-.7 0-1.3-.2-1.7-.6-.4-.3-.7-.8-.7-1.4 0-.5.2-1 .7-1.4.4-.3 1-.5 1.7-.5.6 0 1.1.1 1.5.4v-.1c0-.4-.2-.8-.5-1-.3-.3-.7-.4-1.1-.4-.6 0-1.1.3-1.4.7l-.8-.6c.5-.6 1.2-1 2.3-.9zm-1.3 4.5c.3.2.6.3 1 .3.4 0 .8-.1 1.1-.4.3-.3.5-.6.5-1-.3-.3-.8-.5-1.4-.5-.4 0-.8.1-1.1.3-.3.2-.5.5-.5.8 0 .2.1.4.4.5zm8-4.3l-3.4 7.8h-1l1.3-2.7-2.2-5.1h1.1l1.6 4h0l1.6-4h1z" fill="#3C4043"/>
-                            <path d="M21.4 16c0-.4 0-.8-.1-1.2h-4.5v2.2h2.6c-.1.6-.4 1.1-.9 1.4v1.2h1.5c.9-.8 1.4-2 1.4-3.6z" fill="#4285F4"/>
-                            <path d="M16.8 19.8c1.2 0 2.2-.4 2.9-1.1l-1.5-1.1c-.4.3-.9.4-1.5.4-1.1 0-2.1-.8-2.4-1.8h-1.5v1.2c.8 1.5 2.3 2.4 3.9 2.4z" fill="#34A853"/>
-                            <path d="M14.4 16.2c-.2-.5-.2-1.1 0-1.6v-1.2h-1.5c-.6 1.1-.6 2.4 0 3.5l1.5-1.2v.5z" fill="#FBBC04"/>
-                            <path d="M16.8 12.8c.6 0 1.2.2 1.7.7l1.2-1.2c-.8-.7-1.8-1.1-2.9-1.1-1.6 0-3.1.9-3.9 2.4l1.5 1.2c.3-1 1.3-1.8 2.4-2z" fill="#EA4335"/>
-                        </svg>
+                    <span class="pay-icon" title="Google Pay">
+                        <img src="/app/assets/images/payments/googlepay.svg" alt="Google Pay" />
                     </span>
-                    <span class="pay-icon orange-icon" title="Orange Money">
-                        <svg viewBox="0 0 48 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="48" height="32" rx="4" fill="#fff"/>
-                            <rect x="8" y="6" width="32" height="20" rx="3" fill="#FF6600"/>
-                            <text x="24" y="18" text-anchor="middle" font-size="6" font-weight="700" fill="#fff" font-family="Arial, sans-serif">Orange</text>
-                            <text x="24" y="23" text-anchor="middle" font-size="5" font-weight="600" fill="#fff" font-family="Arial, sans-serif">Money</text>
-                        </svg>
+                    <span class="pay-icon" title="Orange Money">
+                        <img src="/app/assets/images/payments/orangemoney.svg" alt="Orange Money" />
                     </span>
                 </div>
             </div>
