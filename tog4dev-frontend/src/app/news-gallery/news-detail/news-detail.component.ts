@@ -126,17 +126,6 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
         window.open('https://wa.me/?text=' + text + '%20' + url, '_blank');
     }
 
-    shareOnInstagram(): void {
-        if (!this.isBrowser) return;
-        this.copyLink();
-    }
-
-    shareOnSnapchat(): void {
-        if (!this.isBrowser) return;
-        const url = encodeURIComponent(this.getCurrentUrl());
-        window.open('https://www.snapchat.com/scan?attachmentUrl=' + url, '_blank');
-    }
-
     shareOnTwitter(): void {
         if (!this.isBrowser) return;
         const url = encodeURIComponent(this.getCurrentUrl());
