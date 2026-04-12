@@ -119,19 +119,20 @@ nav ul li a:hover {
     display: none;
     position: absolute;
     top: 100%;
-    left: 0 !important;
+    left: -10px !important;
     right: auto !important;
     transform: none !important;
     background: #fff;
-    border-radius: 12px;
+    border-radius: 20px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
     margin-top: 0;
-    padding: 12px 8px;
-    min-width: 180px;
+    padding: 20px 24px;
+    min-width: 170px;
     z-index: 100;
     flex-direction: column;
     gap: 0;
     text-align: left;
+    list-style: none;
 
     &::before {
       content: '';
@@ -145,29 +146,31 @@ nav ul li a:hover {
 
     li {
       text-align: left;
+      list-style: none;
 
       a {
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        gap: 12px;
-        padding: 14px 18px;
+        gap: 14px;
+        padding: 12px 0;
         color: #374151 !important;
-        font-size: 15px;
+        font-size: 16px;
         font-weight: 500;
         white-space: nowrap;
         text-decoration: none;
-        border-radius: 8px;
+        border-radius: 0;
         transition: all 0.15s ease;
 
         svg {
           color: #6b7280;
           flex-shrink: 0;
+          width: 20px;
+          height: 20px;
           transition: color 0.15s ease;
         }
 
         &:hover {
-          background: #e8f5f5;
           color: #1a6e6e !important;
           text-decoration: none !important;
 
