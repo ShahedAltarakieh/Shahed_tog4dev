@@ -50,14 +50,14 @@
 
                             <div class="form-group col-md-6">
                                 <label for="body">{{ __('app.full content') }} (AR)</label>
-                                <textarea id="body" name="body" placeholder="{{ __('app.full content') }}"
-                                    class="form-control quill-editor" rows="8">{{ old('body') }}</textarea>
+                                <div id="editor-body" style="height: 250px;">{!! old('body') !!}</div>
+                                <textarea id="body" name="body" style="display:none;">{{ old('body') }}</textarea>
                             </div>
 
                             <div class="form-group col-md-6">
                                 <label for="body_en">{{ __('app.full content') }} (EN)</label>
-                                <textarea id="body_en" name="body_en" placeholder="{{ __('app.full content') }}"
-                                    class="form-control quill-editor" rows="8">{{ old('body_en') }}</textarea>
+                                <div id="editor-body-en" style="height: 250px;">{!! old('body_en') !!}</div>
+                                <textarea id="body_en" name="body_en" style="display:none;">{{ old('body_en') }}</textarea>
                             </div>
 
                             <div class="form-group col-4">
@@ -120,4 +120,36 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('jsCode')
+<script>
+var toolbarOptions = [
+    [{header: [1, 2, 3, 4, 5, 6, false]}],
+    ['bold', 'italic', 'underline', 'strike'],
+    [{color: []}, {background: []}],
+    [{list: 'ordered'}, {list: 'bullet'}],
+    [{align: []}],
+    ['blockquote'],
+    ['link', 'image'],
+    ['clean']
+];
+
+var quillBody = new Quill('#editor-body', {
+    theme: 'snow',
+    modules: {toolbar: toolbarOptions},
+    placeholder: '{{ __("app.full content") }}'
+});
+
+var quillBodyEn = new Quill('#editor-body-en', {
+    theme: 'snow',
+    modules: {toolbar: toolbarOptions},
+    placeholder: '{{ __("app.full content") }}'
+});
+
+document.querySelector('form').addEventListener('submit', function() {
+    document.getElementById('body').value = quillBody.root.innerHTML;
+    document.getElementById('body_en').value = quillBodyEn.root.innerHTML;
+});
+</script>
 @endsection
