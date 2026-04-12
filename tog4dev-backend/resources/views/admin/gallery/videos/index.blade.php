@@ -56,6 +56,13 @@
                                             title="{{ __('app.edit') }}">
                                             <i class='fas fa-edit'></i>
                                         </a>
+                                        <form action="{{ route('gallery-admin.videos.duplicate', ['id' => $item->id]) }}" method="POST" style="display:inline">
+                                            @csrf
+                                            <button type="submit" class='btn btn-info' data-toggle="tooltip"
+                                                title="{{ __('app.duplicate') }}">
+                                                <i class='fas fa-copy'></i>
+                                            </button>
+                                        </form>
                                         <button class='btn btn-danger btn-delete' data-toggle="tooltip"
                                             title="{{ __('app.delete') }}"
                                             data-table="gallery-management/videos" data-id="{{ $item->id }}">

@@ -19,6 +19,8 @@ return [
     'action' => 'الإجراء',
     'edit' => 'تعديل',
     'delete' => 'حذف',
+    'duplicate' => 'تكرار',
+    'duplicated successfully' => 'تم التكرار بنجاح',
     'target' => 'المستهدف',
     'user requests' => 'طلبات المستخدمين',
     'organization requests' => 'طلبات المنظمات',

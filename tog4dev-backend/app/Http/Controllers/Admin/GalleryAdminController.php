@@ -209,4 +209,46 @@ class GalleryAdminController extends Controller
         $video->save();
         echo json_encode(array("status" => "success"));
     }
+
+    public function duplicatePhoto($id)
+    {
+        $original = GalleryPhoto::with('media')->findOrFail($id);
+
+        $clone = $original->replicate();
+        $clone->title = $original->title . ' (copy)';
+        $clone->title_en = $original->title_en ? $original->title_en . ' (copy)' : null;
+        $clone->status = 0;
+        $clone->save();
+
+        foreach (['gallery_photos', 'gallery_photos_tablet', 'gallery_photos_mobile'] as $collection) {
+            $media = $original->getFirstMedia($collection);
+            if ($media) {
+                $clone->addMedia($media->getPath())
+                    ->preservingOriginal()
+                    ->toMediaCollection($collection);
+            }
+        }
+
+        return redirect()->route('gallery-admin.photos.index')->with('success', __('app.duplicated successfully'));
+    }
+
+    public function duplicateVideo($id)
+    {
+        $original = GalleryVideo::with('media')->findOrFail($id);
+
+        $clone = $original->replicate();
+        $clone->title = $original->title . ' (copy)';
+        $clone->title_en = $original->title_en ? $original->title_en . ' (copy)' : null;
+        $clone->status = 0;
+        $clone->save();
+
+        $media = $original->getFirstMedia('video_thumbnails');
+        if ($media) {
+            $clone->addMedia($media->getPath())
+                ->preservingOriginal()
+                ->toMediaCollection('video_thumbnails');
+        }
+
+        return redirect()->route('gallery-admin.videos.index')->with('success', __('app.duplicated successfully'));
+    }
 }

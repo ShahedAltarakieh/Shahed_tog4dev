@@ -36,6 +36,8 @@ return [
     'redirect url' => 'Redirect URL',
     'edit' => 'Edit',
     'delete' => 'Delete',
+    'duplicate' => 'Duplicate',
+    'duplicated successfully' => 'Duplicated successfully',
     'custom date' => 'Custom Date',
     'individual projects categories' => 'Individual projects categories',
     'crowdfunding projects categories' => 'Crowdfunding projects categories',

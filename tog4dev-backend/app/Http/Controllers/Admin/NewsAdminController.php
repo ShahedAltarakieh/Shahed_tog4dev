@@ -123,4 +123,26 @@ class NewsAdminController extends Controller
         $news->save();
         echo json_encode(array("status" => "success"));
     }
+
+    public function duplicate($id)
+    {
+        $original = News::with('media')->findOrFail($id);
+
+        $clone = $original->replicate();
+        $clone->title = $original->title . ' (copy)';
+        $clone->title_en = $original->title_en ? $original->title_en . ' (copy)' : null;
+        $clone->status = 0;
+        $clone->save();
+
+        foreach (['news', 'news_tablet', 'news_mobile'] as $collection) {
+            $media = $original->getFirstMedia($collection);
+            if ($media) {
+                $clone->addMedia($media->getPath())
+                    ->preservingOriginal()
+                    ->toMediaCollection($collection);
+            }
+        }
+
+        return redirect()->route('news-admin.index')->with('success', __('app.duplicated successfully'));
+    }
 }

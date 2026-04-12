@@ -208,6 +208,7 @@ Route::group(
             Route::put('/{id}', [NewsAdminController::class, 'update'])->name('news-admin.update');
             Route::delete('/{id}', [NewsAdminController::class, 'destroy'])->name('news-admin.destroy');
             Route::post('/change-status/{id}', [NewsAdminController::class, 'change_status'])->name('news-admin.change_status');
+            Route::post('/duplicate/{id}', [NewsAdminController::class, 'duplicate'])->name('news-admin.duplicate');
         });
 
         Route::prefix('news-categories')->middleware('master')->group(function () {
@@ -228,6 +229,7 @@ Route::group(
             Route::put('/photos/{id}', [GalleryAdminController::class, 'updatePhoto'])->name('gallery-admin.photos.update');
             Route::delete('/photos/{id}', [GalleryAdminController::class, 'destroyPhoto'])->name('gallery-admin.photos.destroy');
             Route::post('/photos/change-status/{id}', [GalleryAdminController::class, 'changeStatusPhoto'])->name('gallery-admin.photos.change_status');
+            Route::post('/photos/duplicate/{id}', [GalleryAdminController::class, 'duplicatePhoto'])->name('gallery-admin.photos.duplicate');
 
             Route::get('/videos', [GalleryAdminController::class, 'indexVideos'])->name('gallery-admin.videos.index');
             Route::get('/videos/create', [GalleryAdminController::class, 'createVideo'])->name('gallery-admin.videos.create');
@@ -236,6 +238,7 @@ Route::group(
             Route::put('/videos/{id}', [GalleryAdminController::class, 'updateVideo'])->name('gallery-admin.videos.update');
             Route::delete('/videos/{id}', [GalleryAdminController::class, 'destroyVideo'])->name('gallery-admin.videos.destroy');
             Route::post('/videos/change-status/{id}', [GalleryAdminController::class, 'changeStatusVideo'])->name('gallery-admin.videos.change_status');
+            Route::post('/videos/duplicate/{id}', [GalleryAdminController::class, 'duplicateVideo'])->name('gallery-admin.videos.duplicate');
         });
 
         Route::get('/', [
