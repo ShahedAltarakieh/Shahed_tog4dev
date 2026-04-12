@@ -107,7 +107,7 @@ $radius: 14px;
     border-radius: 18px;
     padding: 44px 48px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 8px 32px rgba(0, 0, 0, 0.08);
-    margin-top: -48px;
+    margin-top: 24px;
     position: relative;
     z-index: 2;
 }
@@ -277,16 +277,16 @@ $radius: 14px;
                 &:hover { background: #1fba59; }
             }
 
-            &.telegram {
-                background: #0088cc;
+            &.instagram {
+                background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
                 color: #fff;
-                &:hover { background: #0077b5; }
+                &:hover { opacity: 0.9; }
             }
 
-            &.linkedin {
-                background: #0a66c2;
-                color: #fff;
-                &:hover { background: #084d94; }
+            &.snapchat {
+                background: #fffc00;
+                color: #000;
+                &:hover { background: #e6e300; }
             }
 
             &.email {
@@ -468,7 +468,7 @@ $radius: 14px;
     .article-body-wrapper {
         padding: 28px 22px;
         border-radius: 14px;
-        margin-top: -32px;
+        margin-top: 20px;
     }
 
     .article-title {

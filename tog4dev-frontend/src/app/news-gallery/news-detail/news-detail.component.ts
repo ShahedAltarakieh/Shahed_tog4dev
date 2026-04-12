@@ -146,6 +146,17 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
         window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + url, '_blank', 'width=600,height=400');
     }
 
+    shareOnInstagram(): void {
+        if (!this.isBrowser) return;
+        this.copyLink();
+    }
+
+    shareOnSnapchat(): void {
+        if (!this.isBrowser) return;
+        const url = encodeURIComponent(this.getCurrentUrl());
+        window.open('https://www.snapchat.com/share?link=' + url, '_blank', 'width=600,height=400');
+    }
+
     shareViaEmail(): void {
         if (!this.isBrowser) return;
         const subject = encodeURIComponent(this.article?.title || '');
