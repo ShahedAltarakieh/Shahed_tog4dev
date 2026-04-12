@@ -155,6 +155,14 @@ var quillBodyEn = new Quill('#editor-body-en', {
     placeholder: '{{ __("app.full content") }}'
 });
 
+quillBody.on('text-change', function() {
+    document.getElementById('body').value = quillBody.root.innerHTML;
+});
+
+quillBodyEn.on('text-change', function() {
+    document.getElementById('body_en').value = quillBodyEn.root.innerHTML;
+});
+
 document.querySelector('form').addEventListener('submit', function() {
     document.getElementById('body').value = quillBody.root.innerHTML;
     document.getElementById('body_en').value = quillBodyEn.root.innerHTML;
