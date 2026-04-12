@@ -298,22 +298,40 @@ $radius: 14px;
                 box-shadow: 0 6px 16px rgba(0,0,0,0.15);
             }
 
-            &.twitter {
-                background: #55acee;
-                color: #fff;
-                &:hover { background: #3d99db; }
-            }
-
             &.facebook {
                 background: #1877f2;
                 color: #fff;
                 &:hover { background: #1464d8; }
             }
 
+            &.instagram {
+                background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+                color: #fff;
+                &:hover { opacity: 0.85; }
+            }
+
             &.whatsapp {
                 background: #25d366;
                 color: #fff;
                 &:hover { background: #1fba59; }
+            }
+
+            &.twitter {
+                background: #000;
+                color: #fff;
+                &:hover { background: #333; }
+            }
+
+            &.snapchat {
+                background: #fffc00;
+                color: #000;
+                &:hover { background: #e6e300; }
+            }
+
+            &.email {
+                background: #ea4335;
+                color: #fff;
+                &:hover { background: #d33426; }
             }
 
             &.copy-link {
