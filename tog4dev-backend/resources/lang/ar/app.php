@@ -254,4 +254,8 @@ return [
     'featured' => 'مميز',
     'position' => 'الترتيب',
     'created successfully' => 'تم الإنشاء بنجاح',
+    'main' => 'الرئيسية',
+    'business' => 'الأعمال',
+    'system' => 'النظام',
+    'quick_actions' => 'إجراءات سريعة',
 ];

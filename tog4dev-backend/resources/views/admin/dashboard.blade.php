@@ -4,256 +4,253 @@
 
 @section('content')
 
-    <div class="row mt-3">
-        <div class="col-10 mb-3 d-none">
-                <ul class="nav nav-pills navtab-bg nav-justified">
-                    <li class="nav-item">
-                        <a href="{{ route('dashboard', ['type' => 1, 'start_date' => $list_of_dates['today'], 'end_date' => $list_of_dates['today'] ]) }}" data-bs-toggle="tab" class="nav-link {{ ($type == 1) ? 'active' : '' }}">
-                            {{ __('app.today') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('dashboard', ['type' => 8, 'start_date' => $list_of_dates['yesterday'], 'end_date' => $list_of_dates['yesterday'] ]) }}" data-bs-toggle="tab" class="nav-link {{ ($type == 8) ? 'active' : '' }}">
-                            {{ __('app.yesterday') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('dashboard', ['type' => 2, 'start_date' => $list_of_dates['this_week_start'], 'end_date' => $list_of_dates['this_week_end'] ]) }}" data-bs-toggle="tab" class="nav-link {{ ($type == 2) ? 'active' : '' }}">
-                            {{ __('app.this week') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('dashboard', ['type' => 3, 'start_date' => $list_of_dates['last_week_start'], 'end_date' => $list_of_dates['last_week_end'] ]) }}" data-bs-toggle="tab" class="nav-link {{ ($type == 3) ? 'active' : '' }}">
-                            {{ __('app.last week') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('dashboard', ['type' => 4, 'start_date' => $list_of_dates['this_month_start'], 'end_date' => $list_of_dates['this_month_end'] ]) }}" data-bs-toggle="tab" class="nav-link {{ ($type == 4) ? 'active' : '' }}">
-                            {{ __('app.this month') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('dashboard', ['type' => 5, 'start_date' => $list_of_dates['last_month_start'], 'end_date' => $list_of_dates['last_month_end'] ]) }}" data-bs-toggle="tab" class="nav-link {{ ($type == 5) ? 'active' : '' }}">
-                            {{ __('app.last month') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('dashboard', ['type' => 6, 'start_date' => $list_of_dates['this_year_start'], 'end_date' => $list_of_dates['this_year_end'] ]) }}" data-bs-toggle="tab" class="nav-link {{ ($type == 6) ? 'active' : '' }}">
-                            {{ __('app.this year') }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('dashboard', ['type' => 7, 'start_date' => $list_of_dates['last_year_start'], 'end_date' => $list_of_dates['last_year_end'] ]) }}" data-bs-toggle="tab" class="nav-link {{ ($type == 7) ? 'active' : '' }}">
-                            {{ __('app.last year') }}
-                        </a>
-                    </li>
-                </ul>
-        </div>
-        <div class="col-md-6 col-xl-3">
-            <div class="card cursor-pointer {{ ($type == 1) ? 'active' : '' }}" id="tooltip-container" onclick="location.href = '{{ route('dashboard', ['type' => 1, 'start_date' => $list_of_dates['today'], 'end_date' => $list_of_dates['today'] ]) }}';">
-                <div class="card-body">
-                    <h4 class="mt-0 font-16 d-flex justify-content-between align-items-center">
-                        {{ __('app.today') }}
-                        <button class="btn btn-light btn-download-dashboard" data-type="payments" data-start="{{ $list_of_dates['today'] }}" data-end="{{ $list_of_dates['today'] }}"><i class="fas fa-download"></i></button>
-                    </h4>
-                    <h2 class="text-primary my-3 text-center"><span data-plugin="counterup">{{ number_format($payments_today["today"], 0) }}</span>{{ __('app.currency')}}</h2>
-                    <p class="text-muted mb-0 d-flex justify-content-between">
-                        <span>{{ __('app.yesterday') }}: {{ number_format($payments_today["yesterday"], 0) }}{{ __('app.currency')}} </span>
-                        <span>
-                            @if($payments_today["percentage_change"] >= 0)
-                                <i class="fa fa-caret-up text-success me-1"></i>
-                                @else($payments_today["percentage_change"] < 0)
-                                <i class="fa fa-caret-down text-danger me-1"></i>
-                            @endif
-                            {{ $payments_today["percentage_change"] }}%
-                        </span>
-                    </p>
+    <div class="row mt-3 mb-2">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h4 class="page-title mb-1">{{ __('app.dashboard') }}</h4>
+                    <p class="text-muted mb-0" style="font-size:14px;">{{ __('app.welcome') }}, {{ Auth::user()->username }}</p>
                 </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-xl-3">
-            <div class="card cursor-pointer {{ ($type == 2) ? 'active' : '' }}" id="tooltip-container" onclick="location.href = '{{ route('dashboard', ['type' => 2, 'start_date' => $list_of_dates['this_week_start'], 'end_date' => $list_of_dates['this_week_end'] ]) }}';">
-                <div class="card-body">
-                    <h4 class="mt-0 font-16 d-flex justify-content-between align-items-center">
-                        {{ __('app.this week') }}
-                        <button class="btn btn-light btn-download-dashboard" data-type="payments" data-start="{{ $list_of_dates['this_week_start'] }}" data-end="{{ $list_of_dates['this_week_end'] }}"><i class="fas fa-download"></i></button>
-                    </h4>
-                    <h2 class="text-primary my-3 text-center"><span data-plugin="counterup">{{ number_format($payments_week["this_week"], 0) }}</span>{{ __('app.currency')}}</h2>
-                    <p class="text-muted mb-0 d-flex justify-content-between">
-                        <span>{{ __('app.last week') }}: {{ number_format($payments_week["last_week"], 0) }}{{ __('app.currency')}} </span>
-                        <span>
-                            @if($payments_week["percentage_change"] >= 0)
-                                <i class="fa fa-caret-up text-success me-1"></i>
-                                @else($payments_week["percentage_change"] < 0)
-                                <i class="fa fa-caret-down text-danger me-1"></i>
-                            @endif
-                            {{ $payments_week["percentage_change"] }}%
-                        </span>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-xl-3">
-            <div class="card cursor-pointer {{ ($type == 4) ? 'active' : '' }}" id="tooltip-container" onclick="location.href = '{{ route('dashboard', ['type' => 4, 'start_date' => $list_of_dates['this_month_start'], 'end_date' => $list_of_dates['this_month_end'] ]) }}';">
-                <div class="card-body">
-                    <h4 class="mt-0 font-16 d-flex justify-content-between align-items-center">
-                        {{ __('app.this month') }}
-                        <button class="btn btn-light btn-download-dashboard" data-type="payments" data-start="{{ $list_of_dates['this_month_start'] }}" data-end="{{ $list_of_dates['this_month_end'] }}"><i class="fas fa-download"></i></button>
-                    </h4>
-                    <h2 class="text-primary my-3 text-center"><span data-plugin="counterup">{{ number_format($payments_month["this_month"], 0) }}</span>{{ __('app.currency')}}</h2>
-                    <p class="text-muted mb-0 d-flex justify-content-between">
-                        <span>{{ __('app.last month') }}: {{ number_format($payments_month["last_month"], 0) }}{{ __('app.currency')}} </span>
-                        <span>
-                            @if($payments_month["percentage_change"] >= 0)
-                                <i class="fa fa-caret-up text-success me-1"></i>
-                                @else($payments_month["percentage_change"] < 0)
-                                <i class="fa fa-caret-down text-danger me-1"></i>
-                            @endif
-                            {{ $payments_month["percentage_change"] }}%
-                        </span>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-xl-3">
-            <div class="card cursor-pointer {{ ($type == 6) ? 'active' : '' }}" id="tooltip-container" onclick="location.href = '{{ route('dashboard', ['type' => 6, 'start_date' => $list_of_dates['this_year_start'], 'end_date' => $list_of_dates['this_year_end'] ]) }}';">
-                <div class="card-body">
-                    <h4 class="mt-0 font-16 d-flex justify-content-between align-items-center">
-                        {{ __('app.this year') }}
-                        <button class="btn btn-light btn-download-dashboard" data-type="payments" data-start="{{ $list_of_dates['this_year_start'] }}" data-end="{{ $list_of_dates['this_year_end'] }}"><i class="fas fa-download"></i></button>
-                    </h4>
-                    <h2 class="text-primary my-3 text-center"><span data-plugin="counterup">{{ number_format($payments_year["this_year"], 0) }}</span>{{ __('app.currency')}}</h2>
-                    <p class="text-muted mb-0 d-flex justify-content-between">
-                        <span>{{ __('app.last year') }}: {{ number_format($payments_year["last_year"], 0) }}{{ __('app.currency')}} </span>
-                        <span>
-                            @if($payments_year["percentage_change"] >= 0)
-                                <i class="fa fa-caret-up text-success me-1"></i>
-                                @else($payments_year["percentage_change"] < 0)
-                                <i class="fa fa-caret-down text-danger me-1"></i>
-                            @endif
-                            {{ $payments_year["percentage_change"] }}%
-                        </span>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-xl-3">
-            <div class="card cursor-pointer {{ ($type == 9) ? 'active' : '' }}" id="tooltip-container" onclick="location.href = '{{ route('dashboard', ['type' => 9, 'start_date' => $firstStartDate, 'end_date' => $lastEndDate ]) }}';">
-                <div class="card-body">
-                    <h4 class="mt-0 font-16 d-flex justify-content-between align-items-center">
-                        {{ __('app.all payments') }}
-                        <button class="btn btn-light btn-download-dashboard" data-type="payments" data-start="{{ $firstStartDate }}" data-end="{{ $lastEndDate }}"><i class="fas fa-download"></i></button>
-                    </h4>
-                    <h2 class="text-primary my-0 text-center"><span data-plugin="counterup">{{ number_format($all_payments, 0) }}</span>{{ __('app.currency')}}</h2>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col-md-9">
-            <div class="card cursor-pointer {{ ($type == -1) ? 'active' : '' }}" id="tooltip-container">
-                <div class="card-body d-flex justify-content-between align-items-center">
-                    <div class="row w-100">
-                        <div class="col-md-6 d-flex align-items-center justify-content-between">
-                            <h4 class="mt-0 font-16 d-flex align-items-center mb-0" style="gap:16px">
-                                <span class="me-2" style="white-space: nowrap;">{{ __('app.custom date') }}</span>
-                                <input type="text" id="range-datepicker" class="form-control not-readonly" style="width: 200px;" placeholder="{{ __('app.from - to') }}">
-                            </h4>
-                        </div>
-                        <div class="col-md-6 d-flex align-items-center justify-content-between">
-                            <h2 class="text-primary my-3 text-center">
-                                <span data-plugin="counterup">
-                                    {{ number_format($payments_custom_range, 0) }}
-                                </span>
-                                {{ __('app.currency')}}
-                            </h2>
-                            <button class="btn btn-light btn-download-dashboard" data-type="payments" data-start="{{ $startDate }}" data-end="{{ $endDate }}"><i class="fas fa-download"></i></button>
-                        </div>
+                <div class="d-flex align-items-center" style="gap:12px;">
+                    <div class="d-flex align-items-center" style="gap:8px; background:#fff; padding:8px 16px; border-radius:var(--admin-radius-sm); border:1px solid var(--admin-gray-200);">
+                        <i class="fas fa-calendar-alt text-muted"></i>
+                        <input type="text" id="range-datepicker" class="border-0 bg-transparent not-readonly" style="width: 200px; font-size:14px;" placeholder="{{ __('app.from - to') }}">
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
+
     <div class="row">
-        <!-- Pie Chart for Subscription Status -->
-        <div class="col-xl-6 mt-3">
-            <div class="card h-100">
+        <div class="col-md-6 col-xl-3">
+            <a href="{{ route('dashboard', ['type' => 1, 'start_date' => $list_of_dates['today'], 'end_date' => $list_of_dates['today'] ]) }}" class="card dashboard-kpi-card {{ ($type == 1) ? 'active' : '' }}" style="text-decoration:none;display:block;">
                 <div class="card-body">
-                    <h4 class="header-title mb-0 d-flex justify-content-between align-items-center">
-                        {{ __('app.subscription_status') }}
-                        <button class="btn btn-light btn-download-dashboard" data-type="subscriptions" data-start="{{ $startDate }}" data-end="{{ $endDate }}"><i class="fas fa-download"></i></button>
-                    </h4>
-                    <div id="subscription-pie-chart" class="apex-charts pt-3"></div>
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="kpi-icon primary">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <button class="btn btn-download-dashboard" aria-label="{{ __('app.download') }} {{ __('app.today') }}" data-type="payments" data-start="{{ $list_of_dates['today'] }}" data-end="{{ $list_of_dates['today'] }}" onclick="event.preventDefault();event.stopPropagation();"><i class="fas fa-download"></i></button>
+                    </div>
+                    <div class="kpi-value"><span data-plugin="counterup">{{ number_format($payments_today["today"], 0) }}</span><small style="font-size:14px;font-weight:500;color:var(--admin-gray-500);"> {{ __('app.currency')}}</small></div>
+                    <div class="kpi-label mt-1 mb-2">{{ __('app.today') }}</div>
+                    <div class="d-flex justify-content-between align-items-center" style="font-size:13px;">
+                        <span class="text-muted">{{ __('app.yesterday') }}: {{ number_format($payments_today["yesterday"], 0) }}{{ __('app.currency')}}</span>
+                        <span class="kpi-change {{ $payments_today['percentage_change'] >= 0 ? 'up' : 'down' }}">
+                            <i class="fa {{ $payments_today['percentage_change'] >= 0 ? 'fa-arrow-up' : 'fa-arrow-down' }}"></i>
+                            {{ $payments_today["percentage_change"] }}%
+                        </span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <a href="{{ route('dashboard', ['type' => 2, 'start_date' => $list_of_dates['this_week_start'], 'end_date' => $list_of_dates['this_week_end'] ]) }}" class="card dashboard-kpi-card {{ ($type == 2) ? 'active' : '' }}" style="text-decoration:none;display:block;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="kpi-icon success">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <button class="btn btn-download-dashboard" aria-label="{{ __('app.download') }} {{ __('app.this week') }}" data-type="payments" data-start="{{ $list_of_dates['this_week_start'] }}" data-end="{{ $list_of_dates['this_week_end'] }}" onclick="event.preventDefault();event.stopPropagation();"><i class="fas fa-download"></i></button>
+                    </div>
+                    <div class="kpi-value"><span data-plugin="counterup">{{ number_format($payments_week["this_week"], 0) }}</span><small style="font-size:14px;font-weight:500;color:var(--admin-gray-500);"> {{ __('app.currency')}}</small></div>
+                    <div class="kpi-label mt-1 mb-2">{{ __('app.this week') }}</div>
+                    <div class="d-flex justify-content-between align-items-center" style="font-size:13px;">
+                        <span class="text-muted">{{ __('app.last week') }}: {{ number_format($payments_week["last_week"], 0) }}{{ __('app.currency')}}</span>
+                        <span class="kpi-change {{ $payments_week['percentage_change'] >= 0 ? 'up' : 'down' }}">
+                            <i class="fa {{ $payments_week['percentage_change'] >= 0 ? 'fa-arrow-up' : 'fa-arrow-down' }}"></i>
+                            {{ $payments_week["percentage_change"] }}%
+                        </span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <a href="{{ route('dashboard', ['type' => 4, 'start_date' => $list_of_dates['this_month_start'], 'end_date' => $list_of_dates['this_month_end'] ]) }}" class="card dashboard-kpi-card {{ ($type == 4) ? 'active' : '' }}" style="text-decoration:none;display:block;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="kpi-icon warning">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <button class="btn btn-download-dashboard" aria-label="{{ __('app.download') }} {{ __('app.this month') }}" data-type="payments" data-start="{{ $list_of_dates['this_month_start'] }}" data-end="{{ $list_of_dates['this_month_end'] }}" onclick="event.preventDefault();event.stopPropagation();"><i class="fas fa-download"></i></button>
+                    </div>
+                    <div class="kpi-value"><span data-plugin="counterup">{{ number_format($payments_month["this_month"], 0) }}</span><small style="font-size:14px;font-weight:500;color:var(--admin-gray-500);"> {{ __('app.currency')}}</small></div>
+                    <div class="kpi-label mt-1 mb-2">{{ __('app.this month') }}</div>
+                    <div class="d-flex justify-content-between align-items-center" style="font-size:13px;">
+                        <span class="text-muted">{{ __('app.last month') }}: {{ number_format($payments_month["last_month"], 0) }}{{ __('app.currency')}}</span>
+                        <span class="kpi-change {{ $payments_month['percentage_change'] >= 0 ? 'up' : 'down' }}">
+                            <i class="fa {{ $payments_month['percentage_change'] >= 0 ? 'fa-arrow-up' : 'fa-arrow-down' }}"></i>
+                            {{ $payments_month["percentage_change"] }}%
+                        </span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <a href="{{ route('dashboard', ['type' => 6, 'start_date' => $list_of_dates['this_year_start'], 'end_date' => $list_of_dates['this_year_end'] ]) }}" class="card dashboard-kpi-card {{ ($type == 6) ? 'active' : '' }}" style="text-decoration:none;display:block;">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="kpi-icon info">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <button class="btn btn-download-dashboard" aria-label="{{ __('app.download') }} {{ __('app.this year') }}" data-type="payments" data-start="{{ $list_of_dates['this_year_start'] }}" data-end="{{ $list_of_dates['this_year_end'] }}" onclick="event.preventDefault();event.stopPropagation();"><i class="fas fa-download"></i></button>
+                    </div>
+                    <div class="kpi-value"><span data-plugin="counterup">{{ number_format($payments_year["this_year"], 0) }}</span><small style="font-size:14px;font-weight:500;color:var(--admin-gray-500);"> {{ __('app.currency')}}</small></div>
+                    <div class="kpi-label mt-1 mb-2">{{ __('app.this year') }}</div>
+                    <div class="d-flex justify-content-between align-items-center" style="font-size:13px;">
+                        <span class="text-muted">{{ __('app.last year') }}: {{ number_format($payments_year["last_year"], 0) }}{{ __('app.currency')}}</span>
+                        <span class="kpi-change {{ $payments_year['percentage_change'] >= 0 ? 'up' : 'down' }}">
+                            <i class="fa {{ $payments_year['percentage_change'] >= 0 ? 'fa-arrow-up' : 'fa-arrow-down' }}"></i>
+                            {{ $payments_year["percentage_change"] }}%
+                        </span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row mb-2">
+        <div class="col-md-6 col-xl-3">
+            <a href="{{ route('dashboard', ['type' => 9, 'start_date' => $firstStartDate, 'end_date' => $lastEndDate ]) }}" class="card dashboard-kpi-card {{ ($type == 9) ? 'active' : '' }}" style="text-decoration:none;display:block;">
+                <div class="card-body" style="padding:20px 24px !important;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="kpi-label mb-1">{{ __('app.all payments') }}</div>
+                            <div class="kpi-value" style="font-size:24px;"><span data-plugin="counterup">{{ number_format($all_payments, 0) }}</span><small style="font-size:13px;font-weight:500;color:var(--admin-gray-500);"> {{ __('app.currency')}}</small></div>
+                        </div>
+                        <div class="d-flex align-items-center" style="gap:8px;">
+                            <button class="btn btn-download-dashboard" aria-label="{{ __('app.download') }} {{ __('app.all payments') }}" data-type="payments" data-start="{{ $firstStartDate }}" data-end="{{ $lastEndDate }}" onclick="event.preventDefault();event.stopPropagation();"><i class="fas fa-download"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-6 col-xl-9">
+            <div class="card" style="border:1px dashed var(--admin-gray-300) !important;">
+                <div class="card-body" style="padding:16px 24px !important;">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap" style="gap:12px;">
+                        <span class="kpi-label" style="margin-bottom:0;">{{ __('app.custom date') }}</span>
+                        <div class="d-flex align-items-center flex-grow-1 justify-content-center" style="gap:16px;">
+                            <h3 class="mb-0" style="color:var(--admin-primary);font-weight:700;">
+                                <span data-plugin="counterup">{{ number_format($payments_custom_range, 0) }}</span>
+                                <small style="font-size:14px;font-weight:500;color:var(--admin-gray-500);">{{ __('app.currency')}}</small>
+                            </h3>
+                        </div>
+                        <button class="btn btn-download-dashboard" data-type="payments" data-start="{{ $startDate }}" data-end="{{ $endDate }}"><i class="fas fa-download"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body" style="padding:20px 24px !important;">
+                    <h6 style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--admin-gray-400);margin-bottom:16px;">{{ __('app.quick_actions') ?? 'Quick Actions' }}</h6>
+                    <div class="quick-actions-grid">
+                        <a href="{{ route('news-admin.create') }}" class="quick-action-btn">
+                            <i class="fas fa-newspaper"></i>
+                            <span>{{ __('app.add new') }} {{ __('app.news') }}</span>
+                        </a>
+                        <a href="{{ route('gallery-admin.photos.create') }}" class="quick-action-btn">
+                            <i class="fas fa-images"></i>
+                            <span>{{ __('app.add new') }} {{ __('app.photos') }}</span>
+                        </a>
+                        <a href="{{ route('gallery-admin.videos.create') }}" class="quick-action-btn">
+                            <i class="fas fa-video"></i>
+                            <span>{{ __('app.add new') }} {{ __('app.videos') }}</span>
+                        </a>
+                        <a href="{{ route('payments.index') }}" class="quick-action-btn">
+                            <i class="fas fa-credit-card"></i>
+                            <span>{{ __('app.payments') }}</span>
+                        </a>
+                        <a href="/users" class="quick-action-btn">
+                            <i class="fas fa-users"></i>
+                            <span>{{ __('app.users') }}</span>
+                        </a>
+                        <a href="{{ route('sliders.index') }}" class="quick-action-btn">
+                            <i class="fas fa-sliders-h"></i>
+                            <span>{{ __('app.sliders') }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="header-title mb-0">{{ __('app.subscription_status') }}</h5>
+                        <button class="btn btn-download-dashboard" aria-label="{{ __('app.download') }} {{ __('app.subscription_status') }}" data-type="subscriptions" data-start="{{ $startDate }}" data-end="{{ $endDate }}"><i class="fas fa-download"></i></button>
+                    </div>
+                    <div id="subscription-pie-chart" class="apex-charts"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Bar Chart for Payment Methods -->
-        <div class="col-xl-6 mt-3">
-            <div class="card h-100">
+        <div class="col-xl-6">
+            <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title mb-0 d-flex justify-content-between align-items-center">
-                        {{ __('app.payment_methods') }}
-                        <button class="btn btn-light btn-download-dashboard" data-type="payment-method" data-start="{{ $startDate }}" data-end="{{ $endDate }}"><i class="fas fa-download"></i></button>
-                    </h4>
-                    <div id="payment-methods-bar-chart" class="apex-charts pt-3"></div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="header-title mb-0">{{ __('app.payment_methods') }}</h5>
+                        <button class="btn btn-download-dashboard" aria-label="{{ __('app.download') }} {{ __('app.payment_methods') }}" data-type="payment-method" data-start="{{ $startDate }}" data-end="{{ $endDate }}"><i class="fas fa-download"></i></button>
+                    </div>
+                    <div id="payment-methods-bar-chart" class="apex-charts"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Countries Table -->
         <div class="col-xl-12">
-            <div class="card mt-3">
+            <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title mb-0 d-flex justify-content-between align-items-center">
-                        {{ __('app.most 10 countries') }}
-                        <button class="btn btn-light btn-download-dashboard" data-type="countries" data-start="{{ $startDate }}" data-end="{{ $endDate }}"><i class="fas fa-download"></i></button>
-                    </h4>
-                    <div id="countries-bar-chart" class="apex-charts pt-3"></div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="header-title mb-0">{{ __('app.most 10 countries') }}</h5>
+                        <button class="btn btn-download-dashboard" aria-label="{{ __('app.download') }} {{ __('app.most 10 countries') }}" data-type="countries" data-start="{{ $startDate }}" data-end="{{ $endDate }}"><i class="fas fa-download"></i></button>
+                    </div>
+                    <div id="countries-bar-chart" class="apex-charts"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Projects Categories Table -->
         <div class="col-xl-12">
-            <div class="card mt-3">
+            <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title mb-0 d-flex justify-content-between align-items-center">
-                        {{ __('app.individual projects categories') }}
-                        <button class="btn btn-light btn-download-dashboard" data-type="projects" data-start="{{ $startDate }}" data-end="{{ $endDate }}"><i class="fas fa-download"></i></button>
-                    </h4>
-                    <div id="categories-bar-chart" class="apex-charts pt-3"></div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="header-title mb-0">{{ __('app.individual projects categories') }}</h5>
+                        <button class="btn btn-download-dashboard" data-type="projects" data-start="{{ $startDate }}" data-end="{{ $endDate }}"><i class="fas fa-download"></i></button>
+                    </div>
+                    <div id="categories-bar-chart" class="apex-charts"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Crowdfunding Categories Table -->
         <div class="col-xl-12">
-            <div class="card mt-3">
+            <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title mb-0 d-flex justify-content-between align-items-center">
-                        {{ __('app.crowdfunding projects categories') }}
-                        <button class="btn btn-light btn-download-dashboard" data-type="projects" data-start="{{ $startDate }}" data-end="{{ $endDate }}"><i class="fas fa-download"></i></button>
-                    </h4>
-                    <div id="crowdfunding-categories-bar-chart" class="apex-charts pt-3"></div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="header-title mb-0">{{ __('app.crowdfunding projects categories') }}</h5>
+                        <button class="btn btn-download-dashboard" data-type="projects" data-start="{{ $startDate }}" data-end="{{ $endDate }}"><i class="fas fa-download"></i></button>
+                    </div>
+                    <div id="crowdfunding-categories-bar-chart" class="apex-charts"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Crowdfunding Categories Table -->
         <div class="col-xl-12">
-            <div class="card mt-3">
+            <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title mb-0 d-flex justify-content-between align-items-center">
-                        {{ __('app.crowdfunding projects') }}
-                        <button class="btn btn-light btn-download-dashboard" data-type="crowdfunding" data-start="{{ $startDate }}" data-end="{{ $endDate }}"><i class="fas fa-download"></i></button>
-                    </h4>
-                    <ul class="nav nav-tabs mt-3" id="categoryTabs" role="tablist">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="header-title mb-0">{{ __('app.crowdfunding projects') }}</h5>
+                        <button class="btn btn-download-dashboard" data-type="crowdfunding" data-start="{{ $startDate }}" data-end="{{ $endDate }}"><i class="fas fa-download"></i></button>
+                    </div>
+                    <ul class="nav nav-tabs" id="categoryTabs" role="tablist">
                         @foreach($categoryCrowdfundingTargets as $index => $category)
                             <li class="nav-item" role="presentation">
                                 <button 
@@ -270,7 +267,6 @@
                             </li>
                         @endforeach
                     </ul>
-
                     <div class="tab-content" id="categoryTabContent">
                         @foreach($categoryCrowdfundingTargets as $index => $category)
                             <div 
@@ -278,27 +274,24 @@
                                 id="content-{{ $category['id'] }}" 
                                 role="tabpanel" 
                                 aria-labelledby="tab-{{ $category['id'] }}">
-
                                 <div id="chart-{{ $category['id'] }}" class="apex-chart"></div>
                             </div>
                         @endforeach
                     </div>
-
                 </div>
             </div>
         </div>
 
-        <!-- Influencers Table -->
         <div class="col-xl-12">
-            <div class="card mt-3">
+            <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title d-flex justify-content-between align-items-center mb-3">
-                        {{ __('app.influencer_name') }}
-                        <button class="btn btn-light btn-download-dashboard" data-type="influencers" data-start="{{ $startDate }}" data-end="{{ $endDate }}"><i class="fas fa-download"></i></button>
-                    </h4>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="header-title mb-0">{{ __('app.influencer_name') }}</h5>
+                        <button class="btn btn-download-dashboard" aria-label="{{ __('app.download') }} {{ __('app.influencer_name') }}" data-type="influencers" data-start="{{ $startDate }}" data-end="{{ $endDate }}"><i class="fas fa-download"></i></button>
+                    </div>
                     <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
-                        <table class="table table-sm table-striped table-bordered">
-                            <thead class="bg-light" style="position: sticky;top: 0;">
+                        <table class="table table-sm">
+                            <thead>
                                 <tr>
                                     <th>{{ __('app.influencer_name') }}</th>
                                     <th>{{ __('app.active_subscriptions') }}</th>
@@ -313,22 +306,22 @@
                                 @foreach ($influencers as $influencer)
                                     <tr>
                                         <td>
-                                            <a href="{{ route('influencer.payments', $influencer['id']) }}" style="color:#13585D">
+                                            <a href="{{ route('influencer.payments', $influencer['id']) }}" style="color:var(--admin-primary);font-weight:500;">
                                                 {{ $influencer['name'] }}
                                             </a>
                                         </td>
                                         <td>
-                                            {{ $influencer['active_subscriptions'] }} =
+                                            <span class="badge badge-soft-success">{{ $influencer['active_subscriptions'] }}</span>
                                             {{ number_format($influencer['active_subscription_total'], 3) }} JOD
                                         </td>
                                         <td>
-                                            {{ $influencer['inactive_subscriptions'] }} =
+                                            <span class="badge badge-soft-danger">{{ $influencer['inactive_subscriptions'] }}</span>
                                             {{ number_format($influencer['inactive_subscription_total'], 3) }} JOD
                                         </td>
                                         <td>{{ $influencer['number_of_transactions'] }}</td>
                                         <td>{{ number_format($influencer['one_time_total'], 3) }} JOD</td>
                                         <td>{{ number_format($influencer['subscription_total'], 3) }} JOD</td>
-                                        <td>{{ number_format($influencer['total_amount'], 3) }} JOD</td>
+                                        <td><strong>{{ number_format($influencer['total_amount'], 3) }} JOD</strong></td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -355,70 +348,75 @@
         }
         return value;
     }
+
+    var chartDefaults = {
+        chart: {
+            toolbar: { show: false },
+            fontFamily: 'Inter, sans-serif'
+        },
+        colors: ['#13585D', '#FECD0F'],
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: '50px',
+                borderRadius: 8,
+                borderRadiusApplication: 'end'
+            }
+        },
+        dataLabels: { enabled: false },
+        stroke: { show: true, width: 2, colors: ['transparent'] },
+        grid: {
+            borderColor: '#f1f3f5',
+            strokeDashArray: 4,
+            padding: { left: 0, right: 0 }
+        },
+        yaxis: {
+            labels: {
+                formatter: function (val) { return formatNumber(val); },
+                style: { colors: '#9ca3af', fontSize: '12px' }
+            }
+        },
+        xaxis: {
+            labels: { style: { colors: '#6b7280', fontSize: '12px' } }
+        },
+        tooltip: {
+            shared: true,
+            intersect: false,
+            style: { fontSize: '13px' }
+        },
+        fill: { opacity: 1 }
+    };
 </script>
 @foreach($categoryCrowdfundingTargets as $index => $category)
 <script>
-
     var transactionsData{{ $category['id'] }} = {!! $category['items']->pluck('total_transactions')->toJson() !!};
     var leftTargetData{{ $category['id'] }} = {!! $category['items']->pluck('left_target')->toJson() !!};
     var createdAtData{{ $category['id'] }} = {!! $category['items']->pluck('created_at')->toJson() !!};
     var targetData{{ $category['id'] }} = {!! $category['items']->pluck('amount')->toJson() !!};
     var isClosedData{{ $category['id'] }} = {!! $category['items']->pluck('is_closed')->toJson() !!};
 
-    var options{{ $category['id'] }} = {
+    var options{{ $category['id'] }} = Object.assign({}, chartDefaults, {
         series: [{
             name: '',
             data: {!! $category['items']->pluck('paid') !!}
         }],
-        chart: {
+        chart: Object.assign({}, chartDefaults.chart, {
             type: 'bar',
-            height: 350,
-            toolbar: {
-                show: false
-            }
-        },
-        plotOptions: {
-            bar: {
-                horizontal: false,
-                columnWidth: '50px',
-                borderRadius: 5,
-                borderRadiusApplication: 'end'
-            },
-        },
-        dataLabels: {
-            enabled: false
-        },
-        stroke: {
-        show: true,
-        width: 2,
-            colors: ['transparent']
-        },
-        colors: ['#13585D', '#FECD0F'],
+            height: 350
+        }),
         xaxis: {
             categories: {!! $category['items']->map(function ($item) {
                 $words = explode(' ', $item["title"]);
-                $chunks = array_chunk($words, 3); // Group every 3 words
+                $chunks = array_chunk($words, 3);
                 return array_map(function ($chunk) {
                     return implode(' ', $chunk);
                 }, $chunks);
-            })->values()->toJson() !!}
-        },
-        yaxis: {
-            title: {
-                text: ''
-            },
-            labels: {
-                formatter: function (val) {
-                    return formatNumber(val);
-                }
-            }
-        },
-        fill: {
-            opacity: 1
+            })->values()->toJson() !!},
+            labels: chartDefaults.xaxis.labels
         },
         tooltip: {
-            shared: true, // Show tooltip for the entire column when hovering
-            intersect: false, // Show tooltip when hovering over the whole column (not just a segment)
+            shared: true,
+            intersect: false,
             y: {
                 formatter: function(value, { dataPointIndex }) {                                        
                     return `
@@ -432,7 +430,7 @@
                 }
             }
         }
-    };
+    });
 
     var chart = new ApexCharts(document.querySelector("#chart-{{ $category['id'] }}"), options{{ $category['id'] }});
     chart.render();
@@ -450,35 +448,39 @@
                 if (selectedDates.length === 2) {
                     const startDate = instance.formatDate(selectedDates[0], "Y-m-d");
                     const endDate = instance.formatDate(selectedDates[1], "Y-m-d");
-                    window.location.href = `/?type=-1&start_date=${startDate}&end_date=${endDate}`;
+                    var baseUrl = '{{ route('dashboard') }}';
+                    window.location.href = baseUrl + '?type=-1&start_date=' + startDate + '&end_date=' + endDate;
                 }
             }
         });
 
-        // Pie Chart for Subscription Status
         var subscriptionData = @json($subscriptionData);
         var pieOptions = {
             chart: {
                 type: 'pie',
-                height: 350
+                height: 350,
+                fontFamily: 'Inter, sans-serif'
             },
             dataLabels: {
                 formatter: function (val, opts) {
-                    return opts.w.config.series[opts.seriesIndex] + "JOD"; // Display the actual number
+                    return opts.w.config.series[opts.seriesIndex] + " JOD";
                 },
-                style: {
-                    colors: ['#FFFFFF'] // Makes text color white
-                }
+                style: { colors: ['#FFFFFF'], fontSize: '13px' }
             },
             series: [subscriptionData.activeSubscriptions, subscriptionData.inactiveSubscriptions],
             labels: subscriptionData.subscriptionLabels,
-            colors: ['#13585D', '#3ca1a8']
+            colors: ['#13585D', '#3ca1a8'],
+            stroke: { width: 2, colors: ['#fff'] },
+            legend: {
+                position: 'bottom',
+                fontFamily: 'Inter, sans-serif',
+                fontSize: '13px'
+            }
         };
         var pieChart = new ApexCharts(document.querySelector("#subscription-pie-chart"), pieOptions);
         pieChart.render();
 
-      
-        var options = {
+        var paymentBarOptions = Object.assign({}, chartDefaults, {
             series: [{
                 name: 'Amount',
                 data: @json($paymentMethodData)
@@ -486,60 +488,23 @@
                 name: 'Users',
                 data: @json($paymentMethodUsers)
             }],
-            chart: {
+            chart: Object.assign({}, chartDefaults.chart, {
                 type: 'bar',
-                height: 350,
-                toolbar: {
-                    show: false
-                }
-            },
-            tooltip: {
-                shared: true, // Show tooltip for the entire column when hovering
-                intersect: false, // Show tooltip when hovering over the whole column (not just a segment)
-            },
-            plotOptions: {
-                bar: {
-                    horizontal: false,
-                    columnWidth: '55%',
-                    borderRadius: 5,
-                    borderRadiusApplication: 'end'
-                },
-            },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-            show: true,
-            width: 2,
-                colors: ['transparent']
-            },
-            colors: ['#13585D', '#FECD0F'],
+                height: 350
+            }),
             xaxis: {
                 categories: @json(
                     collect($paymentMethodCategories)->map(function ($item) {
                         return str_contains($item, ' ') ? explode(' ', $item) : $item;
                     })
-                )
-            },
-            yaxis: {
-                title: {
-                    text: ''
-                },
-                labels: {
-                    formatter: function (val) {
-                        return formatNumber(val);
-                    }
-                }
-            },
-            fill: {
-                opacity: 1
+                ),
+                labels: chartDefaults.xaxis.labels
             }
-        };
-
-        var chart = new ApexCharts(document.querySelector("#payment-methods-bar-chart"), options);
+        });
+        var chart = new ApexCharts(document.querySelector("#payment-methods-bar-chart"), paymentBarOptions);
         chart.render();
         
-        var options = {
+        var countryBarOptions = Object.assign({}, chartDefaults, {
             series: [{
                 name: 'Amount',
                 data: @json($countryData)
@@ -547,60 +512,23 @@
                 name: 'Users',
                 data: @json($countryUsers)
             }],
-            chart: {
+            chart: Object.assign({}, chartDefaults.chart, {
                 type: 'bar',
-                height: 350,
-                toolbar: {
-                    show: false
-                }
-            },
-            tooltip: {
-                shared: true, // Show tooltip for the entire column when hovering
-                intersect: false, // Show tooltip when hovering over the whole column (not just a segment)
-            },
-            plotOptions: {
-                bar: {
-                    horizontal: false,
-                    columnWidth: '55%',
-                    borderRadius: 5,
-                    borderRadiusApplication: 'end'
-                },
-            },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-            show: true,
-            width: 2,
-                colors: ['transparent']
-            },
-            colors: ['#13585D', '#FECD0F'],
+                height: 350
+            }),
             xaxis: {
                 categories: @json(
                     collect($countryCategories)->map(function ($item) {
                         return str_contains($item, ' ') ? explode(' ', $item) : $item;
                     })
-                )
-            },
-            yaxis: {
-                title: {
-                    text: ''
-                },
-                labels: {
-                    formatter: function (val) {
-                        return formatNumber(val);
-                    }
-                }
-            },
-            fill: {
-                opacity: 1
+                ),
+                labels: chartDefaults.xaxis.labels
             }
-        };
-
-        var chart = new ApexCharts(document.querySelector("#countries-bar-chart"), options);
+        });
+        var chart = new ApexCharts(document.querySelector("#countries-bar-chart"), countryBarOptions);
         chart.render();
 
-        var options = {
+        var catBarOptions = Object.assign({}, chartDefaults, {
             series: [{
                 name: '# of Transactions',
                 data: @json($transactionsCategories)
@@ -608,56 +536,22 @@
                 name: 'Total Amount',
                 data: @json($totalAmountsCategories)
             }],
-            chart: {
+            chart: Object.assign({}, chartDefaults.chart, {
                 type: 'bar',
-                height: 350,
-                toolbar: {
-                    show: false
-                }
-            },
-            tooltip: {
-                shared: true, // Show tooltip for the entire column when hovering
-                intersect: false, // Show tooltip when hovering over the whole column (not just a segment)
-            },
+                height: 350
+            }),
             plotOptions: {
-                bar: {
-                    horizontal: false,
-                    columnWidth: '40px',
-                    borderRadius: 5,
-                    borderRadiusApplication: 'end'
-                },
+                bar: { horizontal: false, columnWidth: '40px', borderRadius: 8, borderRadiusApplication: 'end' }
             },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-            show: true,
-            width: 2,
-                colors: ['transparent']
-            },
-            colors: ['#13585D', '#FECD0F'],
             xaxis: {
-                categories: @json($categoriesChart)
-            },
-            yaxis: {
-                title: {
-                    text: ''
-                },
-                labels: {
-                    formatter: function (val) {
-                        return formatNumber(val);
-                    }
-                }
-            },
-            fill: {
-                opacity: 1
+                categories: @json($categoriesChart),
+                labels: chartDefaults.xaxis.labels
             }
-        };
-
-        var chart = new ApexCharts(document.querySelector("#categories-bar-chart"), options);
+        });
+        var chart = new ApexCharts(document.querySelector("#categories-bar-chart"), catBarOptions);
         chart.render();
 
-        var options = {
+        var crowdBarOptions = Object.assign({}, chartDefaults, {
             series: [{
                 name: '# of Transactions',
                 data: @json($transactionsCategoriesCrowd)
@@ -665,53 +559,19 @@
                 name: 'Total Amount',
                 data: @json($totalAmountsCategoriesCrowd)
             }],
-            chart: {
+            chart: Object.assign({}, chartDefaults.chart, {
                 type: 'bar',
-                height: 350,
-                toolbar: {
-                    show: false
-                }
-            },
-            tooltip: {
-                shared: true, // Show tooltip for the entire column when hovering
-                intersect: false, // Show tooltip when hovering over the whole column (not just a segment)
-            },
+                height: 350
+            }),
             plotOptions: {
-                bar: {
-                    horizontal: false,
-                    columnWidth: '40px',
-                    borderRadius: 5,
-                    borderRadiusApplication: 'end'
-                },
+                bar: { horizontal: false, columnWidth: '40px', borderRadius: 8, borderRadiusApplication: 'end' }
             },
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-            show: true,
-            width: 2,
-                colors: ['transparent']
-            },
-            colors: ['#13585D', '#FECD0F'],
             xaxis: {
-                categories: @json($categoriesChartCrowd)
-            },
-            yaxis: {
-                title: {
-                    text: ''
-                },
-                labels: {
-                    formatter: function (val) {
-                        return formatNumber(val);
-                    }
-                }
-            },
-            fill: {
-                opacity: 1
+                categories: @json($categoriesChartCrowd),
+                labels: chartDefaults.xaxis.labels
             }
-        };
-
-        var chart = new ApexCharts(document.querySelector("#crowdfunding-categories-bar-chart"), options);
+        });
+        var chart = new ApexCharts(document.querySelector("#crowdfunding-categories-bar-chart"), crowdBarOptions);
         chart.render();
     </script>
 @endsection

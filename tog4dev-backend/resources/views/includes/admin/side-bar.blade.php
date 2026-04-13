@@ -1,3 +1,5 @@
+<li class="sidebar-section-title">{{ __('app.main') }}</li>
+
 <li>
     <a href="{{ route('dashboard') }}">
         <i class="mdi mdi-view-dashboard-outline"></i>
@@ -5,10 +7,12 @@
     </a>
 </li>
 
+<li class="sidebar-section-title">{{ __('app.content') }}</li>
+
 <li>
     <a href="#website" data-toggle="collapse">
-        <i class="mdi mdi-share-variant"></i>
-        <span> {{ __('app.content') }} </span>
+        <i class="mdi mdi-web"></i>
+        <span>{{ __('app.content') }}</span>
         <span class="menu-arrow"></span>
     </a>
     <div class="collapse" id="website">
@@ -158,7 +162,7 @@
 <li>
     <a href="#newsGallery" data-toggle="collapse">
         <i class="mdi mdi-newspaper"></i>
-        <span> {{ __('app.news & gallery') }} </span>
+        <span>{{ __('app.news & gallery') }}</span>
         <span class="menu-arrow"></span>
     </a>
     <div class="collapse" id="newsGallery">
@@ -191,10 +195,12 @@
     </div>
 </li>
 
+<li class="sidebar-section-title">{{ __('app.business') }}</li>
+
 <li>
     <a href="#paymentsTab" data-toggle="collapse">
-        <i class=" fas fa-dollar-sign"></i>
-        <span> {{ __('app.payments') }} </span>
+        <i class="fas fa-credit-card"></i>
+        <span>{{ __('app.payments') }}</span>
         <span class="menu-arrow"></span>
     </a>
     <div class="collapse" id="paymentsTab">
@@ -205,15 +211,9 @@
                     <span>{{ __('app.payments') }}</span>
                 </a>
             </li>
-            <!-- <li>
-                <a href="/refunds">
-                    <i class="mdi mdi-cash-refund"></i>
-                    <span>{{ __('app.refunds') }}</span>
-                </a>
-            </li> -->
             <li>
                 <a href="#subscriptions" data-toggle="collapse">
-                    <i class="fas fa-credit-card"></i>
+                    <i class="fas fa-sync-alt"></i>
                     <span>{{ __('app.subscriptions') }}</span>
                     <span class="menu-arrow"></span>
                 </a>
@@ -252,10 +252,12 @@
     </div>
 </li>
 
+<li class="sidebar-section-title">{{ __('app.users list') }}</li>
+
 <li>
     <a href="#users" data-toggle="collapse">
-        <i class="icon-people"></i>
-        <span> {{ __('app.users list') }} </span>
+        <i class="mdi mdi-account-group"></i>
+        <span>{{ __('app.users') }}</span>
         <span class="menu-arrow"></span>
     </a>
     <div class="collapse" id="users">
@@ -274,7 +276,7 @@
             </li>
             <li>
                 <a href="#admins" data-toggle="collapse">
-                    <i class="fas fa-users"></i>
+                    <i class="fas fa-user-shield"></i>
                     <span>{{ __('app.admins') }}</span>
                     <span class="menu-arrow"></span>
                 </a>
@@ -293,10 +295,12 @@
     </div>
 </li>
 
+<li class="sidebar-section-title">{{ __('app.communications') }}</li>
+
 <li>
     <a href="#communications" data-toggle="collapse">
-        <i class="mdi mdi-forum-outline"></i>
-        <span> {{ __('app.communications') }} </span>
+        <i class="mdi mdi-message-text-outline"></i>
+        <span>{{ __('app.communications') }}</span>
         <span class="menu-arrow"></span>
     </a>
     <div class="collapse" id="communications">
@@ -320,7 +324,7 @@
             </li>
             <li>
                 <a href="/newsletter">
-                    <i class="mdi mdi-newspaper"></i>
+                    <i class="mdi mdi-email-outline"></i>
                     <span>{{ __('app.newsletter') }}</span>
                 </a>
             </li>
@@ -328,23 +332,25 @@
     </div>
 </li>
 
+<li class="sidebar-section-title">{{ __('app.system') }}</li>
+
 <li>
     <a href="#settings" data-toggle="collapse">
-        <i class="fab fa-whmcs"></i>
-        <span> {{ __('app.settings') }} </span>
+        <i class="mdi mdi-cog-outline"></i>
+        <span>{{ __('app.settings') }}</span>
         <span class="menu-arrow"></span>
     </a>
     <div class="collapse" id="settings">
         <ul class="nav-second-level">
             <li>
                 <a href="{{ route('seo.index') }}">
-                    <i class="far fa-folder-open"></i>
+                    <i class="fas fa-search"></i>
                     <span>{{ __('app.seo') }}</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('shortlinks.index') }}">
-                    <i class="fas fa-compress-alt"></i>
+                    <i class="fas fa-link"></i>
                     <span>{{ __('app.short links') }}</span>
                 </a>
             </li>

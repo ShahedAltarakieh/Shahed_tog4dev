@@ -50,6 +50,11 @@
     <link href="{{ asset('libs/dropzone/min/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('libs/dropify/css/dropify.min.css') }}" rel="stylesheet" type="text/css" />
 
+    <link href="{{ asset('css/admin-modern.css') }}" rel="stylesheet" type="text/css" />
+    @if(App::getLocale() == "ar")
+        <link href="{{ asset('css/admin-modern-rtl.css') }}" rel="stylesheet" type="text/css" />
+    @endif
+
     @yield('cssCode')
 
     <link rel="icon" type="image/ico" href="{{ asset('favicon.ico') }}" />

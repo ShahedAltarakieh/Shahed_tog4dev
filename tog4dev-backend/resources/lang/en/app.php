@@ -254,4 +254,8 @@ return [
     'featured' => 'Featured',
     'position' => 'Position',
     'created successfully' => 'Created Successfully',
+    'main' => 'Main',
+    'business' => 'Business',
+    'system' => 'System',
+    'quick_actions' => 'Quick Actions',
 ];

@@ -1,0 +1,57 @@
+.content-page {
+    margin-left: 0 !important;
+    margin-right: var(--sidebar-width) !important;
+}
+
+.left-side-menu {
+    left: auto !important;
+    right: 0 !important;
+}
+
+.navbar-custom .topnav-menu {
+    float: left !important;
+}
+
+.navbar-custom .topnav-menu-left {
+    float: right !important;
+}
+
+.navbar-custom .dropdown-menu-right {
+    right: auto !important;
+    left: 0 !important;
+}
+
+select.form-control {
+    background-position: left 12px center !important;
+    padding-left: 36px !important;
+    padding-right: 14px !important;
+}
+
+.nav-second-level > li > a {
+    padding: 8px 52px 8px 16px !important;
+}
+
+.nav-second-level .nav-second-level > li > a {
+    padding-right: 68px !important;
+    padding-left: 16px !important;
+}
+
+.status-dot {
+    margin-right: 0;
+    margin-left: 6px;
+}
+
+.action-btns {
+    direction: ltr;
+}
+
+.dt-buttons .btn {
+    margin-right: 0 !important;
+    margin-left: 4px !important;
+}
+
+@media (max-width: 991.98px) {
+    .content-page {
+        margin-right: 0 !important;
+    }
+}

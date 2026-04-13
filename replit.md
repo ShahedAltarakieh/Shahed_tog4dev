@@ -106,6 +106,41 @@ Redesigned 3-band footer layout:
 - **RTL**: Logical properties (`padding-inline-start`), RTL-safe underline positioning
 - Files: `layouts/footer/footer.component.{html,scss,ts}`, `layouts/footer/components/stay-in-touch-form/`
 
+## Admin Dashboard Redesign
+
+Major visual and structural overhaul of the Laravel admin dashboard:
+
+**Modern CSS Theme** (`public/css/admin-modern.css` + `admin-modern-rtl.css`):
+- Custom design system with CSS custom properties (colors, spacing, shadows, radii, typography)
+- Inter font family, smooth transitions, modern scrollbar styling
+- Upgraded cards (soft borders, subtle shadows, hover effects), tables (uppercase headers, clean borders), forms (focus rings, custom selects), badges (soft-color scheme), buttons (rounded, primary/success/danger tokens)
+- KPI card component with colored icon badges, value/label hierarchy, and change indicators
+- Quick actions grid with icon buttons
+- DataTables pagination, search, and export button refinements
+- Dropify, SweetAlert2, Selectize, Select2, Quill editor style overrides
+- Empty state and breadcrumb components
+- Full RTL support via `admin-modern-rtl.css`
+
+**Sidebar Reorganization** (`includes/admin/side-bar.blade.php`):
+- Grouped into labeled sections: MAIN, CONTENT, BUSINESS, USERS, COMMUNICATION, SYSTEM
+- Section headers styled as uppercase labels (`sidebar-section-title`)
+- Updated icons for better visual consistency
+- Dark gradient sidebar background with hover states
+
+**Dashboard Home Redesign** (`admin/dashboard.blade.php`):
+- Welcome header with date range picker
+- 4 primary KPI cards (today/week/month/year) with colored icon badges and % change indicators
+- All payments summary card + custom date range card
+- Quick Actions grid (6 shortcut buttons to common tasks)
+- Charts and influencer table with cleaner card layout
+
+**Page Header Modernization** (`includes/admin/header.blade.php`):
+- Breadcrumb navigation
+- Clean button row with icons
+- Responsive flex layout
+
+**Files changed**: `public/css/admin-modern.css`, `public/css/admin-modern-rtl.css`, `includes/admin/side-bar.blade.php`, `includes/admin/header.blade.php`, `admin/dashboard.blade.php`, `layouts/admin/show.blade.php`, `layouts/admin/add.blade.php`, `resources/lang/en/app.php`, `resources/lang/ar/app.php`
+
 ## Notes
 
 - The migration `2024_06_21` was renamed to `2024_12_03_000312` to fix ordering (it references `payments` table created later)
