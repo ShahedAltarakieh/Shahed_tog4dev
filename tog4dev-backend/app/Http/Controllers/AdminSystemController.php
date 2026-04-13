@@ -29,7 +29,7 @@ class AdminSystemController extends Controller
 
         $recentUsers = User::orderBy('created_at', 'desc')
             ->limit(20)
-            ->get(['id', 'name', 'email', 'created_at']);
+            ->get(['id', 'first_name', 'last_name', 'email', 'created_at']);
 
         $recentSubscriptions = Subscription::orderBy('created_at', 'desc')
             ->limit(20)

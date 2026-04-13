@@ -66,84 +66,87 @@
     <!-- Begin page -->
     <div id="wrapper">
 
-        <!-- Topbar Start -->
+        <!-- Topbar -->
         <div class="navbar-custom">
             <div class="container-fluid">
                 <ul class="list-unstyled topnav-menu float-right mb-0">
+
+                    <li class="dropdown notification-list topbar-dropdown d-none d-md-block">
+                        <div class="topbar-search">
+                            <input type="text" class="form-control topbar-search-input" placeholder="{{ __('app.search_placeholder') }}" id="topbarSearchAdd">
+                            <span class="topbar-search-icon"><i class="fas fa-search"></i></span>
+                            <kbd class="topbar-search-kbd">{{ app()->getLocale() == 'ar' ? 'Ctrl+K' : '⌘K' }}</kbd>
+                        </div>
+                    </li>
+
                     <li class="dropdown notification-list topbar-dropdown">
-                        <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light d-flex" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                            <span style='font-size:28px;'><i class="mdi mdi-earth"></i></span> &nbsp;&nbsp;&nbsp; {{ __('app.language') }}
+                        <a class="nav-link topbar-icon-btn" href="{{ route('system.notifications') }}" title="{{ __('app.notifications') }}">
+                            <i class="fas fa-bell"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right profile-dropdown" style='min-width:100%;'>
-                            <a href="{{ LaravelLocalization::getLocalizedURL('en') }}" class="dropdown-item notify-item text-left">
+                    </li>
+
+                    <li class="dropdown notification-list topbar-dropdown">
+                        <a class="nav-link dropdown-toggle topbar-icon-btn" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false" title="{{ __('app.language') }}">
+                            <i class="fas fa-globe"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right topbar-dropdown-menu">
+                            <a href="{{ LaravelLocalization::getLocalizedURL('en') }}" class="dropdown-item {{ app()->getLocale() == 'en' ? 'active' : '' }}">
                                 <span>English</span>
                             </a>
-                            <a href="{{ LaravelLocalization::getLocalizedURL('ar') }}" class="dropdown-item notify-item text-right">
+                            <a href="{{ LaravelLocalization::getLocalizedURL('ar') }}" class="dropdown-item {{ app()->getLocale() == 'ar' ? 'active' : '' }}">
                                 <span>العربية</span>
                             </a>
                         </div>
                     </li>
+
                     <li class="dropdown notification-list topbar-dropdown">
-                        <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light d-flex" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                            <span style='font-size:28px;'><i class="mdi mdi-chevron-down"></i></span> &nbsp;&nbsp;&nbsp; {{ Auth::user()->username }}
+                        <a class="nav-link dropdown-toggle topbar-user-btn" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <div class="topbar-user-avatar"><i class="fas fa-user"></i></div>
+                            <span class="topbar-user-name d-none d-md-inline-block">{{ Auth::user()->username }}</span>
+                            <i class="fas fa-chevron-down topbar-user-arrow"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right profile-dropdown" style='min-width:100%;'>
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                {{ __('app.welcome') }}
-                            </a>
+                        <div class="dropdown-menu dropdown-menu-right topbar-dropdown-menu topbar-user-menu">
+                            <div class="topbar-user-header">
+                                <div class="topbar-user-avatar-lg"><i class="fas fa-user"></i></div>
+                                <div>
+                                    <div class="topbar-user-header-name">{{ Auth::user()->username }}</div>
+                                    <div class="topbar-user-header-role">{{ __('app.administrator') }}</div>
+                                </div>
+                            </div>
                             <div class="dropdown-divider"></div>
-                            <!-- item-->
-                            <a href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-item notify-item">
-                                <form id="logout-form" action="/logout" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                                <i class="fe-log-out"></i>
-                                <span>{{ __('app.logout') }}</span>
+                            <a href="{{ route('system.settings') }}" class="dropdown-item"><i class="fas fa-user-circle"></i> <span>{{ __('app.my_profile') }}</span></a>
+                            <a href="{{ route('system.settings') }}" class="dropdown-item"><i class="fas fa-shield-alt"></i> <span>{{ __('app.security_settings') }}</span></a>
+                            <div class="dropdown-divider"></div>
+                            <a href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form-add').submit();" class="dropdown-item text-danger">
+                                <form id="logout-form-add" action="/logout" method="POST" class="d-none">@csrf</form>
+                                <i class="fas fa-sign-out-alt"></i> <span>{{ __('app.logout') }}</span>
                             </a>
                         </div>
                     </li>
 
                 </ul>
 
-                <!-- LOGO -->
                 <div class="logo-box">
                     <a href="{{ route('dashboard') }}" class="logo logo-dark text-center">
-                        <span class="logo-sm">
-                            <img src="{{ asset('img/logo-bg.png') }}" alt="" height="50">
-                            <!-- <span class="logo-lg-text-light">UBold</span> -->
-                        </span>
-                        <span class="logo-lg">
-                            <img src="{{ asset('img/logo.png') }}" alt="" style="height:50px;">
-                        </span>
+                        <span class="logo-sm"><img src="{{ asset('img/logo-bg.png') }}" alt="" height="36"></span>
+                        <span class="logo-lg"><img src="{{ asset('img/logo.png') }}" alt="" style="height:40px;"></span>
                     </a>
-
                     <a href="{{ route('dashboard') }}" class="logo logo-light text-center">
-                        <span class="logo-sm">
-                            <img src="{{ asset('img/logo-bg.png') }}" alt="" height="50">
-                        </span>
-                        <span class="logo-lg">
-                            <img src="{{ asset('img/logo.png') }}" alt="" style="height:50px;">
-                        </span>
+                        <span class="logo-sm"><img src="{{ asset('img/logo-bg.png') }}" alt="" height="36"></span>
+                        <span class="logo-lg"><img src="{{ asset('img/logo.png') }}" alt="" style="height:40px;"></span>
                     </a>
                 </div>
 
                 <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
                     <li>
-                        <button class="button-menu-mobile waves-effect waves-light">
+                        <button class="button-menu-mobile waves-effect waves-light" aria-label="{{ __('app.toggle_menu') }}">
                             <i class="fe-menu"></i>
                         </button>
                     </li>
-
                     <li>
-                        <!-- Mobile menu toggle (Horizontal Layout)-->
                         <a class="navbar-toggle nav-link" data-toggle="collapse" data-target="#topnav-menu-content">
-                            <div class="lines">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
+                            <div class="lines"><span></span><span></span><span></span></div>
                         </a>
-                        <!-- End mobile menu toggle-->
                     </li>
                 </ul>
                 <div class="clearfix"></div>

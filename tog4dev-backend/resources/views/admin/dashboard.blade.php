@@ -4,17 +4,17 @@
 
 @section('content')
 
-    <div class="row mt-3 mb-2">
+    <div class="row mt-2 mb-2">
         <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center flex-wrap" style="gap:12px;">
                 <div>
-                    <h4 class="page-title mb-1">{{ __('app.dashboard') }}</h4>
-                    <p class="text-muted mb-0" style="font-size:14px;">{{ __('app.welcome') }}, {{ Auth::user()->username }}</p>
+                    <h4 class="page-title mb-0" style="font-size:20px;font-weight:700;">{{ __('app.dashboard') }}</h4>
+                    <p class="text-muted mb-0" style="font-size:13px;margin-top:2px;">{{ __('app.welcome') }}, {{ Auth::user()->username }}</p>
                 </div>
-                <div class="d-flex align-items-center" style="gap:12px;">
-                    <div class="d-flex align-items-center" style="gap:8px; background:#fff; padding:8px 16px; border-radius:var(--admin-radius-sm); border:1px solid var(--admin-gray-200);">
-                        <i class="fas fa-calendar-alt text-muted"></i>
-                        <input type="text" id="range-datepicker" class="border-0 bg-transparent not-readonly" style="width: 200px; font-size:14px;" placeholder="{{ __('app.from - to') }}">
+                <div class="d-flex align-items-center" style="gap:10px;">
+                    <div class="d-flex align-items-center" style="gap:8px; background:#fff; padding:6px 14px; border-radius:var(--admin-radius-sm); border:1px solid var(--admin-gray-200);">
+                        <i class="fas fa-calendar-alt" style="color:var(--admin-gray-400);font-size:13px;"></i>
+                        <input type="text" id="range-datepicker" class="border-0 bg-transparent not-readonly" style="width: 180px; font-size:13px;" placeholder="{{ __('app.from - to') }}">
                     </div>
                 </div>
             </div>

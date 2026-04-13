@@ -85,6 +85,206 @@ h1, h2, h3, h4, h5, h6,
     color: var(--admin-primary) !important;
 }
 
+.topbar-dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.topbar-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 0 8px;
+}
+
+.topbar-search-input {
+    width: 220px !important;
+    height: 36px !important;
+    padding: 0 36px 0 34px !important;
+    border: 1.5px solid var(--admin-gray-200) !important;
+    border-radius: var(--admin-radius-sm) !important;
+    font-size: 13px !important;
+    background: var(--admin-gray-50) !important;
+    color: var(--admin-gray-600) !important;
+    transition: var(--admin-transition) !important;
+}
+
+.topbar-search-input:focus {
+    border-color: var(--admin-primary) !important;
+    background: #fff !important;
+    width: 260px !important;
+    box-shadow: 0 0 0 3px rgba(19, 88, 93, 0.06) !important;
+}
+
+.topbar-search-icon {
+    position: absolute;
+    left: 11px;
+    color: var(--admin-gray-400);
+    font-size: 13px;
+    pointer-events: none;
+}
+
+.topbar-search-kbd {
+    position: absolute;
+    right: 8px;
+    background: var(--admin-gray-100);
+    color: var(--admin-gray-400);
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--admin-gray-200);
+    font-family: var(--admin-font);
+    pointer-events: none;
+}
+
+.topbar-icon-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 36px !important;
+    height: 36px !important;
+    border-radius: var(--admin-radius-sm) !important;
+    color: var(--admin-gray-500) !important;
+    font-size: 16px !important;
+    padding: 0 !important;
+    margin: 0 2px !important;
+    transition: var(--admin-transition) !important;
+}
+
+.topbar-icon-btn:hover {
+    background: var(--admin-gray-100) !important;
+    color: var(--admin-primary) !important;
+}
+
+.topbar-user-btn {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 4px 12px 4px 4px !important;
+    border-radius: 24px !important;
+    transition: var(--admin-transition) !important;
+}
+
+.topbar-user-btn:hover {
+    background: var(--admin-gray-100) !important;
+}
+
+.topbar-user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--admin-primary-bg);
+    color: var(--admin-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.topbar-user-name {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: var(--admin-gray-700) !important;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.topbar-user-arrow {
+    font-size: 9px !important;
+    color: var(--admin-gray-400) !important;
+    transition: var(--admin-transition) !important;
+}
+
+.topbar-dropdown-menu {
+    border: 1px solid var(--admin-gray-200) !important;
+    border-radius: var(--admin-radius) !important;
+    box-shadow: var(--admin-shadow-lg) !important;
+    padding: 6px !important;
+    margin-top: 8px !important;
+    min-width: 160px !important;
+}
+
+.topbar-dropdown-menu .dropdown-item {
+    border-radius: var(--admin-radius-sm) !important;
+    padding: 8px 14px !important;
+    font-size: 13px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    transition: var(--admin-transition) !important;
+    color: var(--admin-gray-600) !important;
+}
+
+.topbar-dropdown-menu .dropdown-item:hover {
+    background: var(--admin-gray-50) !important;
+    color: var(--admin-primary) !important;
+}
+
+.topbar-dropdown-menu .dropdown-item.active {
+    background: var(--admin-primary-bg) !important;
+    color: var(--admin-primary) !important;
+    font-weight: 600 !important;
+}
+
+.topbar-dropdown-menu .dropdown-item.text-danger {
+    color: var(--admin-danger) !important;
+}
+
+.topbar-dropdown-menu .dropdown-item.text-danger:hover {
+    background: rgba(239, 68, 68, 0.05) !important;
+}
+
+.topbar-user-menu {
+    min-width: 220px !important;
+    padding: 0 !important;
+}
+
+.topbar-user-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border-bottom: 1px solid var(--admin-gray-100);
+}
+
+.topbar-user-avatar-lg {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    background: var(--admin-primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.topbar-user-header-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--admin-gray-900);
+}
+
+.topbar-user-header-role {
+    font-size: 12px;
+    color: var(--admin-gray-400);
+    margin-top: 1px;
+}
+
+.topbar-user-menu .dropdown-item {
+    margin: 2px 6px !important;
+    border-radius: var(--admin-radius-sm) !important;
+}
+
+.topbar-user-menu .dropdown-divider {
+    margin: 4px 0 !important;
+    border-color: var(--admin-gray-100) !important;
+}
+
 .navbar-custom .dropdown-menu {
     border: 1px solid var(--admin-gray-200) !important;
     border-radius: var(--admin-radius) !important;
@@ -109,26 +309,28 @@ h1, h2, h3, h4, h5, h6,
     background: linear-gradient(180deg, #0c3d3f 0%, #0a3234 100%) !important;
     width: var(--sidebar-width) !important;
     border-right: none !important;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.1) !important;
-    padding-top: 10px !important;
+    box-shadow: 2px 0 12px rgba(0,0,0,0.12) !important;
+    padding-top: 8px !important;
     z-index: 1001 !important;
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 #sidebar-menu {
-    padding: 0 12px !important;
+    padding: 0 10px !important;
 }
 
 #sidebar-menu > ul > li > a {
-    color: rgba(255,255,255,0.7) !important;
-    padding: 10px 16px !important;
+    color: rgba(255,255,255,0.75) !important;
+    padding: 9px 14px !important;
     border-radius: var(--admin-radius-sm) !important;
-    margin-bottom: 2px;
-    font-size: 14px !important;
+    margin-bottom: 1px;
+    font-size: 13.5px !important;
     font-weight: 500 !important;
     transition: var(--admin-transition) !important;
     display: flex !important;
     align-items: center !important;
-    gap: 12px;
+    gap: 11px;
+    letter-spacing: 0.01em;
 }
 
 #sidebar-menu > ul > li > a:hover {
