@@ -250,6 +250,7 @@
         <script src="{{ asset('js/pages/datatables.init.js?v=1.2') }}"></script>
     @endif
     <script src="{{ asset('js/main.js?v=1.2') }}"></script>
+    <script src="{{ asset('js/admin-components.js?v=1.0') }}"></script>
 
     <script type="text/javascript">
         $(".custom-file-input").on("change", function () {

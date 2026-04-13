@@ -8,6 +8,9 @@ use App\Models\Payment;
 use App\Models\Subscription;
 use App\Models\Item;
 use App\Models\Category;
+use App\Models\User;
+use App\Models\News;
+use App\Models\ContactUs;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -233,16 +236,33 @@ class DashboardController extends Controller
 
         $firstStartDate = Payment::orderBy('created_at', 'asc')->value('created_at');
         $lastEndDate  = Payment::orderBy('created_at', 'desc')->value('created_at');
-	if($firstStartDate){
-		$firstStartDate = $firstStartDate->format('Y-m-d');
-	} else {
-		$firstStartDate = '';
-	}
-	if($lastEndDate){
-		$lastEndDate = $lastEndDate->format('Y-m-d');
-	} else {
-		$lastEndDate = '';
-	}
+        if($firstStartDate){
+                $firstStartDate = $firstStartDate->format('Y-m-d');
+        } else {
+                $firstStartDate = '';
+        }
+        if($lastEndDate){
+                $lastEndDate = $lastEndDate->format('Y-m-d');
+        } else {
+                $lastEndDate = '';
+        }
+
+        $totalUsers = User::count();
+        $newUsersThisWeek = User::where('created_at', '>=', Carbon::now()->startOfWeek(Carbon::SATURDAY))->count();
+        $totalNews = News::count();
+        $activeSubscriptionsCount = Subscription::where('status', 'active')->count();
+        $pendingContacts = ContactUs::where('is_read', 0)->count();
+        $failedPaymentsWeek = Payment::where('status', '!=', 'approved')
+            ->where('created_at', '>=', Carbon::now()->subDays(7))->count();
+
+        $recentPayments = Payment::where('status', 'approved')
+            ->orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get(['id', 'amount', 'payment_type', 'created_at', 'user_id']);
+
+        $recentUsers = User::orderBy('created_at', 'desc')
+            ->limit(5)
+            ->get(['id', 'name', 'email', 'created_at']);
 
         $startDate = $startDate->format('Y-m-d');
         $endDate   = $endDate->format('Y-m-d');
@@ -283,7 +303,16 @@ class DashboardController extends Controller
             'all_payments',
 
             'firstStartDate',
-            'lastEndDate'
+            'lastEndDate',
+
+            'totalUsers',
+            'newUsersThisWeek',
+            'totalNews',
+            'activeSubscriptionsCount',
+            'pendingContacts',
+            'failedPaymentsWeek',
+            'recentPayments',
+            'recentUsers'
         ));
 
     }

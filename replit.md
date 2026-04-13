@@ -130,16 +130,45 @@ Major visual and structural overhaul of the Laravel admin dashboard:
 **Dashboard Home Redesign** (`admin/dashboard.blade.php`):
 - Welcome header with date range picker
 - 4 primary KPI cards (today/week/month/year) with colored icon badges and % change indicators
+- Secondary KPI row: Total Users, Active Subscriptions, News Published, Pending Requests
 - All payments summary card + custom date range card
-- Quick Actions grid (6 shortcut buttons to common tasks)
+- Quick Actions grid (6 shortcut buttons) + Operations Panel (unread messages, failed payments, notifications, system health)
+- Recent Activity Feed with payments and new user registrations (alongside influencer table at 8:4 split)
 - Charts and influencer table with cleaner card layout
+
+**Phase 2: New System Pages** (`resources/views/admin/system/`):
+- Activity Logs (`system/activity-logs.blade.php`) — filterable activity timeline
+- Notifications Center (`system/notifications.blade.php`) — alerts with severity badges
+- Settings Center (`system/settings.blade.php`) — tabbed navigation (General, Appearance, Security)
+- System Health (`system/system-health.blade.php`) — KPIs, environment info, content overview, revenue/user charts, today's snapshot
+- Reports Center (`system/reports.blade.php`) — revenue/transaction/payment method charts with daily/monthly breakdown tables
+- Media Library (`system/media-library.blade.php`) — photo/video grid management
+
+**AdminSystemController** (`app/Http/Controllers/AdminSystemController.php`):
+- 6 methods: activityLogs, notifications, settings, systemHealth, reportsCenter, mediaLibrary
+- Routes: `system.activity-logs`, `system.notifications`, `system.settings`, `system.health`, `system.reports`, `system.media-library` (all under `/system` prefix with `master` middleware)
+
+**Premium UX Components** (`public/js/admin-components.js`):
+- Command Palette (Ctrl+K) — search across pages with keyboard navigation
+- Toast notification system (`window.AdminToast.show()`) — success/error/warning/info variants with auto-dismiss
+- Confirm dialog (`window.AdminConfirm.show()`) — promise-based confirmation modals
+
+**Enhanced CSS Components** (`public/css/admin-modern.css`):
+- Activity timeline (`.activity-timeline`, `.activity-item`, `.activity-icon`)
+- Operations panel (`.operations-list`, `.operation-item`)
+- Settings navigation (`.settings-nav`, `.settings-nav-item`)
+- Media grid (`.media-grid`, `.media-card`, `.media-thumb`)
+- Status chips, action dropdowns, bulk actions bar, column chooser
+- Form enhancements (focus rings, help text, character counters)
+- Skeleton loading animation
+- Sticky table headers
 
 **Page Header Modernization** (`includes/admin/header.blade.php`):
 - Breadcrumb navigation
 - Clean button row with icons
 - Responsive flex layout
 
-**Files changed**: `public/css/admin-modern.css`, `public/css/admin-modern-rtl.css`, `includes/admin/side-bar.blade.php`, `includes/admin/header.blade.php`, `admin/dashboard.blade.php`, `layouts/admin/show.blade.php`, `layouts/admin/add.blade.php`, `resources/lang/en/app.php`, `resources/lang/ar/app.php`
+**Files changed**: `public/css/admin-modern.css`, `public/css/admin-modern-rtl.css`, `public/js/admin-components.js`, `includes/admin/side-bar.blade.php`, `includes/admin/header.blade.php`, `admin/dashboard.blade.php`, `layouts/admin/show.blade.php`, `layouts/admin/add.blade.php`, `app/Http/Controllers/AdminSystemController.php`, `app/Http/Controllers/DashboardController.php`, `resources/views/admin/system/*`, `resources/lang/en/app.php`, `resources/lang/ar/app.php`, `routes/web.php`
 
 ## Notes
 

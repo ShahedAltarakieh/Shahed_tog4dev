@@ -147,10 +147,68 @@
     </div>
 
     <div class="row mb-3">
-        <div class="col-12">
+        <div class="col-xl-3 col-md-6">
+            <div class="card dashboard-kpi-card">
+                <div class="card-body" style="padding:16px 20px !important;">
+                    <div class="d-flex align-items-center" style="gap:12px;">
+                        <div class="kpi-icon primary" style="width:40px;height:40px;font-size:16px;"><i class="fas fa-users"></i></div>
+                        <div>
+                            <div class="kpi-value" style="font-size:22px;">{{ number_format($totalUsers) }}</div>
+                            <div class="kpi-label">{{ __('app.total_users') }}</div>
+                        </div>
+                    </div>
+                    @if($newUsersThisWeek > 0)
+                    <div style="margin-top:8px;font-size:12px;color:var(--admin-success);"><i class="fas fa-arrow-up"></i> +{{ $newUsersThisWeek }} {{ __('app.this week') }}</div>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card dashboard-kpi-card">
+                <div class="card-body" style="padding:16px 20px !important;">
+                    <div class="d-flex align-items-center" style="gap:12px;">
+                        <div class="kpi-icon info" style="width:40px;height:40px;font-size:16px;"><i class="fas fa-sync-alt"></i></div>
+                        <div>
+                            <div class="kpi-value" style="font-size:22px;">{{ number_format($activeSubscriptionsCount) }}</div>
+                            <div class="kpi-label">{{ __('app.active_subscriptions') }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card dashboard-kpi-card">
+                <div class="card-body" style="padding:16px 20px !important;">
+                    <div class="d-flex align-items-center" style="gap:12px;">
+                        <div class="kpi-icon success" style="width:40px;height:40px;font-size:16px;"><i class="fas fa-newspaper"></i></div>
+                        <div>
+                            <div class="kpi-value" style="font-size:22px;">{{ number_format($totalNews) }}</div>
+                            <div class="kpi-label">{{ __('app.news_published') }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card dashboard-kpi-card">
+                <div class="card-body" style="padding:16px 20px !important;">
+                    <div class="d-flex align-items-center" style="gap:12px;">
+                        <div class="kpi-icon {{ $pendingContacts > 0 ? 'warning' : 'success' }}" style="width:40px;height:40px;font-size:16px;"><i class="fas fa-{{ $pendingContacts > 0 ? 'exclamation-triangle' : 'check-circle' }}"></i></div>
+                        <div>
+                            <div class="kpi-value" style="font-size:22px;">{{ $pendingContacts }}</div>
+                            <div class="kpi-label">{{ __('app.pending_requests') }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-xl-8">
             <div class="card">
                 <div class="card-body" style="padding:20px 24px !important;">
-                    <h6 style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--admin-gray-400);margin-bottom:16px;">{{ __('app.quick_actions') ?? 'Quick Actions' }}</h6>
+                    <h6 style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--admin-gray-400);margin-bottom:16px;">{{ __('app.quick_actions') }}</h6>
                     <div class="quick-actions-grid">
                         <a href="{{ route('news-admin.create') }}" class="quick-action-btn">
                             <i class="fas fa-newspaper"></i>
@@ -158,23 +216,64 @@
                         </a>
                         <a href="{{ route('gallery-admin.photos.create') }}" class="quick-action-btn">
                             <i class="fas fa-images"></i>
-                            <span>{{ __('app.add new') }} {{ __('app.photos') }}</span>
+                            <span>{{ __('app.upload_photo') }}</span>
                         </a>
                         <a href="{{ route('gallery-admin.videos.create') }}" class="quick-action-btn">
                             <i class="fas fa-video"></i>
-                            <span>{{ __('app.add new') }} {{ __('app.videos') }}</span>
+                            <span>{{ __('app.upload_video') }}</span>
                         </a>
                         <a href="{{ route('payments.index') }}" class="quick-action-btn">
                             <i class="fas fa-credit-card"></i>
                             <span>{{ __('app.payments') }}</span>
                         </a>
-                        <a href="/users" class="quick-action-btn">
+                        <a href="{{ route('users.index') }}" class="quick-action-btn">
                             <i class="fas fa-users"></i>
                             <span>{{ __('app.users') }}</span>
                         </a>
-                        <a href="{{ route('sliders.index') }}" class="quick-action-btn">
-                            <i class="fas fa-sliders-h"></i>
-                            <span>{{ __('app.sliders') }}</span>
+                        <a href="{{ route('system.reports') }}" class="quick-action-btn">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>{{ __('app.reports_center') }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-body" style="padding:20px 24px !important;">
+                    <h6 style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--admin-gray-400);margin-bottom:16px;">{{ __('app.operations_panel') }}</h6>
+                    <div class="operations-list">
+                        @if($pendingContacts > 0)
+                        <a href="{{ route('contact_us.index', ['type' => 'projects']) }}" class="operation-item warning">
+                            <div class="d-flex align-items-center" style="gap:10px;">
+                                <i class="fas fa-envelope" style="font-size:14px;"></i>
+                                <span>{{ $pendingContacts }} {{ __('app.unread_messages') }}</span>
+                            </div>
+                            <i class="fas fa-chevron-right" style="font-size:10px;color:var(--admin-gray-400);"></i>
+                        </a>
+                        @endif
+                        @if($failedPaymentsWeek > 0)
+                        <a href="{{ route('payments.index') }}" class="operation-item danger">
+                            <div class="d-flex align-items-center" style="gap:10px;">
+                                <i class="fas fa-exclamation-circle" style="font-size:14px;"></i>
+                                <span>{{ $failedPaymentsWeek }} {{ __('app.failed_payments_week') }}</span>
+                            </div>
+                            <i class="fas fa-chevron-right" style="font-size:10px;color:var(--admin-gray-400);"></i>
+                        </a>
+                        @endif
+                        <a href="{{ route('system.notifications') }}" class="operation-item info">
+                            <div class="d-flex align-items-center" style="gap:10px;">
+                                <i class="fas fa-bell" style="font-size:14px;"></i>
+                                <span>{{ __('app.view_notifications') }}</span>
+                            </div>
+                            <i class="fas fa-chevron-right" style="font-size:10px;color:var(--admin-gray-400);"></i>
+                        </a>
+                        <a href="{{ route('system.health') }}" class="operation-item success">
+                            <div class="d-flex align-items-center" style="gap:10px;">
+                                <i class="fas fa-heartbeat" style="font-size:14px;"></i>
+                                <span>{{ __('app.system_health') }}</span>
+                            </div>
+                            <i class="fas fa-chevron-right" style="font-size:10px;color:var(--admin-gray-400);"></i>
                         </a>
                     </div>
                 </div>
@@ -282,7 +381,7 @@
             </div>
         </div>
 
-        <div class="col-xl-12">
+        <div class="col-xl-8">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -326,6 +425,37 @@
                                 @endforeach
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="header-title mb-0">{{ __('app.recent_activity_feed') }}</h5>
+                        <a href="{{ route('system.activity-logs') }}" class="text-primary" style="font-size:13px;">{{ __('app.view_all') }} <i class="fas fa-arrow-right" style="font-size:10px;"></i></a>
+                    </div>
+                    <div class="activity-timeline" style="max-height:400px;overflow-y:auto;">
+                        @foreach($recentPayments as $p)
+                        <div class="activity-item">
+                            <div class="activity-icon success"><i class="fas fa-credit-card"></i></div>
+                            <div class="activity-content">
+                                <h6 class="mb-0" style="font-size:13px;font-weight:600;">{{ number_format($p->amount, 2) }} JOD</h6>
+                                <p class="text-muted mb-0" style="font-size:12px;">{{ $p->payment_type ?? 'Payment' }} &middot; {{ $p->created_at->diffForHumans() }}</p>
+                            </div>
+                        </div>
+                        @endforeach
+                        @foreach($recentUsers as $u)
+                        <div class="activity-item">
+                            <div class="activity-icon primary"><i class="fas fa-user-plus"></i></div>
+                            <div class="activity-content">
+                                <h6 class="mb-0" style="font-size:13px;font-weight:600;">{{ $u->name }}</h6>
+                                <p class="text-muted mb-0" style="font-size:12px;">{{ __('app.new_user_registered') }} &middot; {{ $u->created_at->diffForHumans() }}</p>
+                            </div>
+                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

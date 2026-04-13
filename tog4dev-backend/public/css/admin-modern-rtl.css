@@ -50,6 +50,50 @@ select.form-control {
     margin-left: 4px !important;
 }
 
+.activity-item:hover {
+    padding-right: 8px;
+    padding-left: 8px;
+    margin-right: -8px;
+    margin-left: -8px;
+}
+
+.operation-item:hover {
+    transform: translateX(-4px);
+}
+
+.settings-nav-item {
+    border-left: none;
+    border-right: 3px solid transparent;
+}
+
+.settings-nav-item.active {
+    border-left-color: transparent;
+    border-right-color: var(--admin-primary);
+}
+
+.quick-action-btn i {
+    margin-right: 0;
+    margin-left: 8px;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "\f104" !important;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+.fa-arrow-right::before {
+    content: "\f060" !important;
+}
+
+.fa-chevron-right::before {
+    content: "\f053" !important;
+}
+
+.char-counter {
+    text-align: left;
+}
+
 @media (max-width: 991.98px) {
     .content-page {
         margin-right: 0 !important;

@@ -29,6 +29,7 @@ use App\Http\Controllers\ShortLinkController;
 use App\Http\Controllers\Admin\NewsAdminController;
 use App\Http\Controllers\Admin\NewsCategoryAdminController;
 use App\Http\Controllers\Admin\GalleryAdminController;
+use App\Http\Controllers\AdminSystemController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -245,6 +246,15 @@ Route::group(
             DashboardController::class,
             'index'
         ])->middleware('master')->name('dashboard');
+
+        Route::prefix('system')->middleware('master')->group(function () {
+            Route::get('/activity-logs', [AdminSystemController::class, 'activityLogs'])->name('system.activity-logs');
+            Route::get('/notifications', [AdminSystemController::class, 'notifications'])->name('system.notifications');
+            Route::get('/settings', [AdminSystemController::class, 'settings'])->name('system.settings');
+            Route::get('/health', [AdminSystemController::class, 'systemHealth'])->name('system.health');
+            Route::get('/reports', [AdminSystemController::class, 'reportsCenter'])->name('system.reports');
+            Route::get('/media-library', [AdminSystemController::class, 'mediaLibrary'])->name('system.media-library');
+        });
 
         Route::post('/download-payments-dashboard', [DashboardController::class,'downloadPayments'])->middleware('master')->name('dashboard.download_payments');
 

@@ -6,6 +6,18 @@
         <span>{{ __('app.dashboard') }}</span>
     </a>
 </li>
+<li>
+    <a href="{{ route('system.notifications') }}">
+        <i class="mdi mdi-bell-outline"></i>
+        <span>{{ __('app.notifications') }}</span>
+    </a>
+</li>
+<li>
+    <a href="{{ route('system.reports') }}">
+        <i class="mdi mdi-chart-arc"></i>
+        <span>{{ __('app.reports_center') }}</span>
+    </a>
+</li>
 
 <li class="sidebar-section-title">{{ __('app.content') }}</li>
 
@@ -191,6 +203,12 @@
                     <span>{{ __('app.videos') }}</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('system.media-library') }}">
+                    <i class="fas fa-photo-video"></i>
+                    <span>{{ __('app.media_library') }}</span>
+                </a>
+            </li>
         </ul>
     </div>
 </li>
@@ -263,7 +281,7 @@
     <div class="collapse" id="users">
         <ul class="nav-second-level">
             <li>
-                <a href="/users">
+                <a href="{{ route('users.index') }}">
                     <i class="mdi mdi-account-group"></i>
                     <span>{{ __('app.users') }}</span>
                 </a>
@@ -335,13 +353,31 @@
 <li class="sidebar-section-title">{{ __('app.system') }}</li>
 
 <li>
-    <a href="#settings" data-toggle="collapse">
+    <a href="#systemMenu" data-toggle="collapse">
         <i class="mdi mdi-cog-outline"></i>
-        <span>{{ __('app.settings') }}</span>
+        <span>{{ __('app.system') }}</span>
         <span class="menu-arrow"></span>
     </a>
-    <div class="collapse" id="settings">
+    <div class="collapse" id="systemMenu">
         <ul class="nav-second-level">
+            <li>
+                <a href="{{ route('system.activity-logs') }}">
+                    <i class="fas fa-history"></i>
+                    <span>{{ __('app.activity_logs') }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('system.health') }}">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>{{ __('app.system_health') }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('system.settings') }}">
+                    <i class="fas fa-cog"></i>
+                    <span>{{ __('app.settings') }}</span>
+                </a>
+            </li>
             <li>
                 <a href="{{ route('seo.index') }}">
                     <i class="fas fa-search"></i>
