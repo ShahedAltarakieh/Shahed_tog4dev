@@ -451,7 +451,7 @@
                         <div class="activity-item">
                             <div class="activity-icon primary"><i class="fas fa-user-plus"></i></div>
                             <div class="activity-content">
-                                <h6 class="mb-0" style="font-size:13px;font-weight:600;">{{ $u->name }}</h6>
+                                <h6 class="mb-0" style="font-size:13px;font-weight:600;">{{ $u->first_name }} {{ $u->last_name }}</h6>
                                 <p class="text-muted mb-0" style="font-size:12px;">{{ __('app.new_user_registered') }} &middot; {{ $u->created_at->diffForHumans() }}</p>
                             </div>
                         </div>
