@@ -63,7 +63,7 @@
             </div>
         }
 
-        @if (!loading && !hasError && videos.length === 0) {
+        @if (!loading && !hasError && filteredVideos.length === 0) {
             <div class="state-card empty-state">
                 <div class="state-icon">
                     <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.5">
@@ -74,9 +74,9 @@
             </div>
         }
 
-        @if (!loading && !hasError && videos.length > 0) {
+        @if (!loading && !hasError && filteredVideos.length > 0) {
             <div class="videos-grid">
-                @for (video of videos; track video.id; let idx = $index) {
+                @for (video of filteredVideos; track video.id; let idx = $index) {
                     <div class="video-card" (click)="playVideo(video)" [style.animation-delay]="(idx * 60) + 'ms'">
                         <div class="video-thumbnail">
                             @if (getThumbnailUrl(video)) {

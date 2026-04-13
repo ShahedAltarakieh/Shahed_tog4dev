@@ -16,9 +16,11 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>{{ __('app.thumbnail') }}</th>
                                 <th>{{ __('app.title') }} (AR)</th>
                                 <th>{{ __('app.title') }} (EN)</th>
                                 <th>{{ __('app.video url') }}</th>
+                                <th>{{ __('app.display for') ?? 'Display For' }}</th>
                                 <th>{{ __('app.category') }}</th>
                                 <th>{{ __('app.status') }}</th>
                                 <th>{{ __('app.action') }}</th>
@@ -28,6 +30,16 @@
                             @foreach ($data as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
+                                    <td>
+                                        @if($item->thumbnail)
+                                            <img src="{{ $item->thumbnail }}" alt="{{ $item->title }}"
+                                                 style="width: 80px; height: 50px; object-fit: cover; border-radius: 4px; border: 1px solid #e2e8f0;" />
+                                        @else
+                                            <span class="badge badge-light" style="font-size: 11px;">
+                                                <i class="fas fa-image text-muted mr-1"></i>{{ __('app.no image') ?? 'No Image' }}
+                                            </span>
+                                        @endif
+                                    </td>
                                     <td>{{ Str::limit($item->title, 40) }}</td>
                                     <td>{{ Str::limit($item->title_en, 40) }}</td>
                                     <td>
@@ -37,6 +49,16 @@
                                             </a>
                                         @else
                                             -
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @php $target = $item->display_target ?? 'both'; @endphp
+                                        @if($target === 'mobile')
+                                            <span class="badge badge-info"><i class="fas fa-mobile-alt mr-1"></i>{{ __('app.mobile only') ?? 'Mobile' }}</span>
+                                        @elseif($target === 'desktop')
+                                            <span class="badge badge-secondary"><i class="fas fa-desktop mr-1"></i>{{ __('app.desktop only') ?? 'Desktop' }}</span>
+                                        @else
+                                            <span class="badge badge-success"><i class="fas fa-globe mr-1"></i>{{ __('app.both') ?? 'Both' }}</span>
                                         @endif
                                     </td>
                                     <td>{{ $item->category->name ?? '-' }}</td>

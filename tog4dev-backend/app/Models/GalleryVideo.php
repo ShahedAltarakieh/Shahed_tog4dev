@@ -23,6 +23,7 @@ class GalleryVideo extends Model implements HasMedia
         'slug_en',
         'video_url',
         'thumbnail_url',
+        'display_target',
         'news_category_id',
         'status',
         'position',

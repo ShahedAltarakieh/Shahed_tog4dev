@@ -44,6 +44,7 @@ export interface GalleryVideo {
   slug_en: string;
   video_url: string;
   thumbnail: string | null;
+  display_target: 'mobile' | 'desktop' | 'both';
   category: NewsCategory | null;
 }
 

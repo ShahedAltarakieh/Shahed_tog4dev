@@ -141,6 +141,7 @@ class GalleryAdminController extends Controller
             'description_en' => 'nullable|string',
             'video_url' => ['required', 'string', 'url', 'regex:/^https?:\/\/(www\.)?(youtube\.com|youtu\.be|vimeo\.com)\//i'],
             'thumbnail_url' => 'nullable|url',
+            'display_target' => 'required|in:mobile,desktop,both',
             'news_category_id' => 'required|exists:news_categories,id',
             'position' => 'nullable|integer',
             'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
@@ -148,6 +149,7 @@ class GalleryAdminController extends Controller
 
         $validated['status'] = $request->has('status') ? 1 : 0;
         $validated['position'] = $validated['position'] ?? 0;
+        $validated['display_target'] = $validated['display_target'] ?? 'both';
         unset($validated['thumbnail']);
 
         $video = GalleryVideo::create($validated);
@@ -177,12 +179,14 @@ class GalleryAdminController extends Controller
             'description_en' => 'nullable|string',
             'video_url' => ['required', 'string', 'url', 'regex:/^https?:\/\/(www\.)?(youtube\.com|youtu\.be|vimeo\.com)\//i'],
             'thumbnail_url' => 'nullable|url',
+            'display_target' => 'required|in:mobile,desktop,both',
             'news_category_id' => 'required|exists:news_categories,id',
             'position' => 'nullable|integer',
             'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
         ]);
 
         $validated['status'] = $request->has('status') ? 1 : 0;
+        $validated['display_target'] = $validated['display_target'] ?? 'both';
         unset($validated['thumbnail']);
 
         $video->update($validated);

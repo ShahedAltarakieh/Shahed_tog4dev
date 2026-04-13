@@ -55,9 +55,40 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="thumbnail">{{ __('app.thumbnail') }}</label>
-                                <input type="file" id="thumbnail" name="thumbnail" data-plugins="dropify" data-height="150"
-                                    data-allowed-file-extensions="png jpg jpeg webp" />
+                                <label for="display_target">{{ __('app.display for') ?? 'Display For' }} <span class="text-danger">*</span></label>
+                                <select name="display_target" id="display_target" class="form-control" required>
+                                    <option value="both" {{ old('display_target', 'both') === 'both' ? 'selected' : '' }}>
+                                        {{ __('app.both') ?? 'Both (Mobile & Desktop)' }}
+                                    </option>
+                                    <option value="mobile" {{ old('display_target') === 'mobile' ? 'selected' : '' }}>
+                                        {{ __('app.mobile only') ?? 'Mobile Only' }}
+                                    </option>
+                                    <option value="desktop" {{ old('display_target') === 'desktop' ? 'selected' : '' }}>
+                                        {{ __('app.desktop only') ?? 'Desktop Only' }}
+                                    </option>
+                                </select>
+                                <small class="form-text text-muted">
+                                    <i class="fas fa-eye mr-1"></i>{{ __('app.display target help') ?? 'Choose which devices this video will be visible on' }}
+                                </small>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="thumbnail">{{ __('app.cover image') ?? 'Cover Image' }}</label>
+                                <input type="file" id="thumbnail" name="thumbnail" data-plugins="dropify" data-height="200"
+                                    data-allowed-file-extensions="png jpg jpeg webp"
+                                    accept=".png,.jpg,.jpeg,.webp" />
+                                @include('includes.admin.image-upload-notes', [
+                                    'recommendedSize' => '1280 x 720 px (16:9)',
+                                    'maxSize' => '5 MB',
+                                    'extensions' => 'png,jpg,jpeg,webp'
+                                ])
+                            </div>
+
+                            <div class="form-group col-md-6 d-flex align-items-center">
+                                <div id="thumbnail-preview-wrapper" style="display:none; width: 100%; text-align: center;">
+                                    <p class="text-muted mb-2" style="font-size: 13px;"><i class="fas fa-image mr-1"></i>{{ __('app.cover preview') ?? 'Cover Preview' }}</p>
+                                    <img id="thumbnail-preview" src="" alt="Cover preview" style="max-width: 100%; max-height: 200px; border-radius: 8px; border: 2px solid #e2e8f0; object-fit: cover;" />
+                                </div>
                             </div>
 
                             <div class="form-group col-md-4">
@@ -93,4 +124,24 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('jsCode')
+<script>
+document.getElementById('thumbnail').addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    var wrapper = document.getElementById('thumbnail-preview-wrapper');
+    var preview = document.getElementById('thumbnail-preview');
+    if (file && file.type.startsWith('image/')) {
+        var reader = new FileReader();
+        reader.onload = function(ev) {
+            preview.src = ev.target.result;
+            wrapper.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    } else {
+        wrapper.style.display = 'none';
+    }
+});
+</script>
 @endsection

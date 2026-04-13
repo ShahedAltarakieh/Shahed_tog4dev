@@ -17,6 +17,7 @@ class GalleryVideoResource extends JsonResource
             'slug_en' => $this->slug_en,
             'video_url' => $this->video_url,
             'thumbnail' => $this->thumbnail,
+            'display_target' => $this->display_target ?? 'both',
             'category' => $this->category ? new NewsCategoryResource($this->category) : null,
         ];
     }

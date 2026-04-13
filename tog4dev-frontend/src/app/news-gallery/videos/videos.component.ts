@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
@@ -19,6 +20,7 @@ import { GalleryVideo, NewsCategory } from '../types/news-gallery.types';
 })
 export class VideosComponent implements OnInit, OnDestroy {
     videos: GalleryVideo[] = [];
+    filteredVideos: GalleryVideo[] = [];
     categories: NewsCategory[] = [];
     selectedCategory: string = '';
     searchQuery: string = '';
@@ -30,13 +32,19 @@ export class VideosComponent implements OnInit, OnDestroy {
     activeVideoUrl: SafeResourceUrl | null = null;
     destroy$ = new Subject<void>();
     searchSubject$ = new Subject<string>();
+    private isMobile: boolean = false;
 
     constructor(
         public storageService: StorageService,
         private galleryService: GalleryService,
         private newsService: NewsService,
-        private sanitizer: DomSanitizer
-    ) {}
+        private sanitizer: DomSanitizer,
+        @Inject(PLATFORM_ID) private platformId: Object
+    ) {
+        if (isPlatformBrowser(this.platformId)) {
+            this.isMobile = window.innerWidth < 768;
+        }
+    }
 
     ngOnInit(): void {
         this.searchSubject$.pipe(
@@ -69,15 +77,20 @@ export class VideosComponent implements OnInit, OnDestroy {
         this.loading = true;
         this.hasError = false;
         const lang = this.storageService.siteLanguage$.value as 'ar' | 'en';
+        const displayTarget = isPlatformBrowser(this.platformId)
+            ? (this.isMobile ? 'mobile' : 'desktop')
+            : undefined;
         this.galleryService.getVideos(lang, {
             category: this.selectedCategory || undefined,
             search: this.searchQuery || undefined,
             page: this.currentPage,
             perPage: 12,
+            display_target: displayTarget,
         }).subscribe({
             next: (res) => {
                 if (res) {
                     this.videos = res.data;
+                    this.filteredVideos = this.filterByDisplayTarget(res.data);
                     this.totalPages = res.meta.last_page;
                 }
                 this.loading = false;
@@ -86,6 +99,17 @@ export class VideosComponent implements OnInit, OnDestroy {
                 this.hasError = true;
                 this.loading = false;
             }
+        });
+    }
+
+    private filterByDisplayTarget(videos: GalleryVideo[]): GalleryVideo[] {
+        if (!isPlatformBrowser(this.platformId)) return videos;
+        return videos.filter(v => {
+            const target = v.display_target || 'both';
+            if (target === 'both') return true;
+            if (target === 'mobile' && this.isMobile) return true;
+            if (target === 'desktop' && !this.isMobile) return true;
+            return false;
         });
     }
 

@@ -57,11 +57,19 @@ class GalleryController extends Controller
             $perPage = $request->query('per-page', 12);
             $categorySlug = $request->query('category');
             $search = $request->query('search');
+            $displayTarget = $request->query('display_target');
 
             $query = GalleryVideo::getActive()
                 ->with(['category', 'media'])
                 ->orderBy('position', 'ASC')
                 ->orderBy('created_at', 'DESC');
+
+            if ($displayTarget && in_array($displayTarget, ['mobile', 'desktop'])) {
+                $query->where(function ($q) use ($displayTarget) {
+                    $q->where('display_target', $displayTarget)
+                      ->orWhere('display_target', 'both');
+                });
+            }
 
             if ($categorySlug) {
                 $locale = app()->getLocale();

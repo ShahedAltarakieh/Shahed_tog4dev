@@ -69,19 +69,37 @@
                                 <label for="image">{{ __('app.image') }} (Web)</label>
                                 <input type="file" id="image" name="image" data-plugins="dropify"
                                     data-default-file="{{ $data->image }}" data-height="200"
-                                    data-allowed-file-extensions="png jpg jpeg webp" />
+                                    data-allowed-file-extensions="png jpg jpeg webp"
+                                    accept=".png,.jpg,.jpeg,.webp" />
+                                @include('includes.admin.image-upload-notes', [
+                                    'recommendedSize' => '1200 x 800 px',
+                                    'maxSize' => '5 MB',
+                                    'extensions' => 'png,jpg,jpeg,webp'
+                                ])
                             </div>
                             <div class="form-group col-4">
                                 <label for="image_tablet">{{ __('app.image') }} (Tablet)</label>
                                 <input type="file" id="image_tablet" name="image_tablet" data-plugins="dropify"
                                     data-default-file="{{ $data->image_tablet }}" data-height="200"
-                                    data-allowed-file-extensions="png jpg jpeg webp" />
+                                    data-allowed-file-extensions="png jpg jpeg webp"
+                                    accept=".png,.jpg,.jpeg,.webp" />
+                                @include('includes.admin.image-upload-notes', [
+                                    'recommendedSize' => '800 x 600 px',
+                                    'maxSize' => '5 MB',
+                                    'extensions' => 'png,jpg,jpeg,webp'
+                                ])
                             </div>
                             <div class="form-group col-4">
                                 <label for="image_mobile">{{ __('app.image') }} (Mobile)</label>
                                 <input type="file" id="image_mobile" name="image_mobile" data-plugins="dropify"
                                     data-default-file="{{ $data->image_mobile }}" data-height="200"
-                                    data-allowed-file-extensions="png jpg jpeg webp" />
+                                    data-allowed-file-extensions="png jpg jpeg webp"
+                                    accept=".png,.jpg,.jpeg,.webp" />
+                                @include('includes.admin.image-upload-notes', [
+                                    'recommendedSize' => '600 x 400 px',
+                                    'maxSize' => '5 MB',
+                                    'extensions' => 'png,jpg,jpeg,webp'
+                                ])
                             </div>
 
                             <div class="form-group col-md-4">
