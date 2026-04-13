@@ -262,7 +262,7 @@ class DashboardController extends Controller
 
         $recentUsers = User::orderBy('created_at', 'desc')
             ->limit(5)
-            ->get(['id', 'name', 'email', 'created_at']);
+            ->get(['id', 'first_name', 'last_name', 'email', 'created_at']);
 
         $startDate = $startDate->format('Y-m-d');
         $endDate   = $endDate->format('Y-m-d');
