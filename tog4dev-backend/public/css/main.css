@@ -1,25 +1,9 @@
 
 .cursor-pointer{
     cursor: pointer;
-}
-
-.card.active{
+  }
+  
+  .card.active{
     border: 2px solid #13585D;
     background-color: #f9f9f9;
-}
-
-body {
-    background: #f5f7fa;
-}
-
-.content-page .content {
-    padding-top: 20px;
-}
-
-.navbar-custom {
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-}
-
-.left-side-menu {
-    box-shadow: 2px 0 8px rgba(0,0,0,0.04);
-}
+  }
