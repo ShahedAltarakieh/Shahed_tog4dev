@@ -55,7 +55,7 @@ class AdminSystemController extends Controller
                 'icon' => 'fas fa-user-plus',
                 'color' => 'primary',
                 'title' => __('app.new_user_registered'),
-                'description' => $u->name . ' (' . $u->email . ')',
+                'description' => $u->first_name . ' ' . $u->last_name . ' (' . $u->email . ')',
                 'time' => $u->created_at,
                 'id' => $u->id,
             ]);

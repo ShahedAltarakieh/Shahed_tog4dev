@@ -164,8 +164,17 @@
 <script>
 document.querySelectorAll('.settings-nav-item').forEach(function(item) {
     item.addEventListener('click', function(e) {
+        e.preventDefault();
         document.querySelectorAll('.settings-nav-item').forEach(function(el) { el.classList.remove('active'); });
         this.classList.add('active');
+        var target = this.getAttribute('href');
+        document.querySelectorAll('.tab-pane').forEach(function(pane) {
+            pane.classList.remove('show', 'active');
+        });
+        var targetPane = document.querySelector(target);
+        if (targetPane) {
+            targetPane.classList.add('show', 'active');
+        }
     });
 });
 </script>

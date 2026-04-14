@@ -98,7 +98,6 @@
 
         .brand-logo img {
             height: 72px;
-            filter: brightness(0) invert(1);
         }
 
         .brand-title {
