@@ -69,11 +69,13 @@
                 { title: 'Videos Gallery', icon: 'fas fa-video', url: prefix + '/gallery-management/videos', category: 'Content' },
                 { title: 'Sliders', icon: 'fas fa-sliders-h', url: prefix + '/sliders', category: 'Content' },
                 { title: 'Announcements', icon: 'fas fa-bullhorn', url: prefix + '/announcements', category: 'Content' },
-                { title: 'Newsletter', icon: 'fas fa-envelope', url: prefix + '/newsletter', category: 'Communications' },
-                { title: 'SEO', icon: 'fas fa-search', url: prefix + '/seo', category: 'System' },
-                { title: 'Short Links', icon: 'fas fa-link', url: prefix + '/shortlinks', category: 'System' },
+                { title: 'SEO', icon: 'fas fa-search', url: prefix + '/seo', category: 'Content' },
+                { title: 'Short Links', icon: 'fas fa-link', url: prefix + '/shortlinks', category: 'Content' },
+                { title: 'Newsletter', icon: 'fas fa-paper-plane', url: prefix + '/newsletter', category: 'Communications' },
+                { title: 'User Requests', icon: 'fas fa-inbox', url: prefix + '/contact_us?type=projects', category: 'Communications' },
+                { title: 'Organization Requests', icon: 'fas fa-building', url: prefix + '/contact_us?type=organization', category: 'Communications' },
+                { title: 'Notifications', icon: 'fas fa-bell', url: prefix + '/system/notifications', category: 'Communications' },
                 { title: 'Activity Logs', icon: 'fas fa-history', url: prefix + '/system/activity-logs', category: 'System' },
-                { title: 'Notifications', icon: 'fas fa-bell', url: prefix + '/system/notifications', category: 'System' },
                 { title: 'Settings', icon: 'fas fa-cog', url: prefix + '/system/settings', category: 'System' },
                 { title: 'System Health', icon: 'fas fa-heartbeat', url: prefix + '/system/health', category: 'System' },
                 { title: 'Reports Center', icon: 'fas fa-chart-pie', url: prefix + '/system/reports', category: 'System' },
@@ -296,37 +298,21 @@
         });
     }
 
-    function addKeyboardShortcutHints() {
-        var sidebar = document.querySelector('#side-menu');
-        if (!sidebar) return;
-
-        var shortcutHint = document.createElement('div');
-        shortcutHint.style.cssText = 'padding:12px 16px;border-top:1px solid rgba(255,255,255,0.08);margin-top:8px;';
-        shortcutHint.innerHTML = '<div style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.04);transition:background 0.2s;" onmouseenter="this.style.background=\'rgba(255,255,255,0.08)\'" onmouseleave="this.style.background=\'rgba(255,255,255,0.04)\'" onclick="if(window.CommandPalette)CommandPalette.open()"><i class="fas fa-search" style="color:rgba(255,255,255,0.4);font-size:12px;"></i><span style="color:rgba(255,255,255,0.4);font-size:12px;">Search</span><kbd style="margin-left:auto;font-size:10px;padding:1px 5px;border:1px solid rgba(255,255,255,0.15);border-radius:3px;color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.05);">Ctrl+K</kbd></div>';
-
-        var sidebarContainer = sidebar.closest('.left-side-menu');
-        if (sidebarContainer) {
-            var simplebar = sidebarContainer.querySelector('[data-simplebar]');
-            if (simplebar) simplebar.appendChild(shortcutHint);
-        }
-    }
-
-    var style = document.createElement('style');
-    style.textContent = '@keyframes cmdPaletteIn{from{opacity:0;transform:scale(0.95) translateY(-10px)}to{opacity:1;transform:scale(1) translateY(0)}}.cmd-item.active{background:#f3f4f6 !important;}#side-menu [aria-expanded="true"]>.menu-arrow i{transform:rotate(180deg);}#side-menu .collapse.show~.menu-arrow i{transform:rotate(180deg);}';
-    document.head.appendChild(style);
-
     function initSidebarActiveState() {
         var currentPath = window.location.pathname;
+        var currentSearch = window.location.search;
         var links = document.querySelectorAll('#sidebar-menu a[href]');
         links.forEach(function(link) {
             try {
                 var url = new URL(link.href, window.location.origin);
-                if (url.pathname === currentPath && !link.getAttribute('data-toggle')) {
+                var pathMatch = url.pathname === currentPath;
+                var searchMatch = !url.search || url.search === currentSearch;
+                if (pathMatch && searchMatch && !link.getAttribute('data-toggle')) {
                     link.classList.add('active-menu');
                     var parentCollapse = link.closest('.collapse');
                     while (parentCollapse) {
                         parentCollapse.classList.add('show');
-                        var toggler = document.querySelector('[href="#' + parentCollapse.id + '"], [data-toggle="collapse"][href="#' + parentCollapse.id + '"]');
+                        var toggler = document.querySelector('[href="#' + parentCollapse.id + '"]');
                         if (toggler) toggler.setAttribute('aria-expanded', 'true');
                         parentCollapse = parentCollapse.parentElement ? parentCollapse.parentElement.closest('.collapse') : null;
                     }
@@ -335,22 +321,36 @@
         });
     }
 
+    function initCollapsedSidebarTooltips() {
+        var items = document.querySelectorAll('#sidebar-menu > ul > li > a');
+        items.forEach(function(link) {
+            var span = link.querySelector('span:not(.menu-arrow)');
+            if (span) {
+                link.setAttribute('data-tooltip', span.textContent.trim());
+            }
+        });
+    }
+
+    var style = document.createElement('style');
+    style.textContent = '@keyframes cmdPaletteIn{from{opacity:0;transform:scale(0.95) translateY(-10px)}to{opacity:1;transform:scale(1) translateY(0)}}.cmd-item.active{background:#f3f4f6 !important;}#side-menu [aria-expanded="true"]>.menu-arrow i{transform:rotate(180deg);}body[data-sidebar-size="condensed"] #sidebar-menu > ul > li > a[data-tooltip]{position:relative;}body[data-sidebar-size="condensed"] #sidebar-menu > ul > li > a[data-tooltip]:hover::after{content:attr(data-tooltip);position:absolute;left:calc(var(--sidebar-collapsed-width) + 4px);top:50%;transform:translateY(-50%);background:#1f2937;color:#fff;padding:5px 10px;border-radius:6px;font-size:12px;white-space:nowrap;z-index:1003;pointer-events:none;box-shadow:0 4px 12px rgba(0,0,0,0.15);}[dir="rtl"] body[data-sidebar-size="condensed"] #sidebar-menu > ul > li > a[data-tooltip]:hover::after{left:auto;right:calc(var(--sidebar-collapsed-width) + 4px);}';
+    document.head.appendChild(style);
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             CommandPalette.init();
             window.CommandPalette = CommandPalette;
             enhanceDeleteButtons();
-            addKeyboardShortcutHints();
             initSidebarMenuArrows();
             initSidebarActiveState();
+            initCollapsedSidebarTooltips();
         });
     } else {
         CommandPalette.init();
         window.CommandPalette = CommandPalette;
         enhanceDeleteButtons();
-        addKeyboardShortcutHints();
         initSidebarMenuArrows();
         initSidebarActiveState();
+        initCollapsedSidebarTooltips();
     }
 
 })();

@@ -32,11 +32,6 @@ select.form-control {
     padding: 7px 49px 7px 16px !important;
 }
 
-.nav-third-level > li > a {
-    padding-right: 64px !important;
-    padding-left: 16px !important;
-}
-
 .nav-second-level .nav-second-level > li > a {
     padding-right: 68px !important;
     padding-left: 16px !important;
@@ -106,11 +101,6 @@ select.form-control {
     border-right-color: var(--admin-primary);
 }
 
-.quick-action-btn i {
-    margin-right: 0;
-    margin-left: 8px;
-}
-
 .breadcrumb-modern .breadcrumb-item + .breadcrumb-item::before {
     content: "\f104" !important;
     font-family: "Font Awesome 5 Free";
@@ -144,15 +134,20 @@ select.form-control {
     flex-direction: row-reverse;
 }
 
-body.sidebar-enable .content-page {
+body[data-sidebar-size="condensed"] .content-page {
     margin-right: var(--sidebar-collapsed-width) !important;
     margin-left: 0 !important;
 }
 
-body.sidebar-enable .left-side-menu #sidebar-menu > ul > li:hover > a + .collapse {
+body[data-sidebar-size="condensed"] .left-side-menu #sidebar-menu > ul > li:hover > a + .collapse {
     left: auto;
     right: var(--sidebar-collapsed-width);
     border-radius: var(--admin-radius-sm) 0 0 var(--admin-radius-sm);
+}
+
+body[data-sidebar-size="condensed"] .left-side-menu #sidebar-menu > ul > li:hover > a + .collapse .nav-second-level > li > a {
+    padding-right: 16px !important;
+    padding-left: 16px !important;
 }
 
 @media (max-width: 991.98px) {
@@ -162,5 +157,15 @@ body.sidebar-enable .left-side-menu #sidebar-menu > ul > li:hover > a + .collaps
 
     body.sidebar-enable .content-page {
         margin-right: 0 !important;
+    }
+
+    .left-side-menu {
+        transform: translateX(100%);
+        left: auto !important;
+        right: 0 !important;
+    }
+
+    body.sidebar-enable .left-side-menu {
+        transform: translateX(0);
     }
 }

@@ -50,9 +50,9 @@
     <link href="{{ asset('libs/dropzone/min/dropzone.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('libs/dropify/css/dropify.min.css') }}" rel="stylesheet" type="text/css" />
 
-    <link href="{{ asset('css/admin-modern.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/admin-modern.css?v=1.4') }}" rel="stylesheet" type="text/css" />
     @if(App::getLocale() == "ar")
-        <link href="{{ asset('css/admin-modern-rtl.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/admin-modern-rtl.css?v=1.4') }}" rel="stylesheet" type="text/css" />
     @endif
 
     @yield('cssCode')
@@ -77,6 +77,12 @@
                             <span class="topbar-search-icon"><i class="fas fa-search"></i></span>
                             <kbd class="topbar-search-kbd">{{ app()->getLocale() == 'ar' ? 'Ctrl+K' : '⌘K' }}</kbd>
                         </div>
+                    </li>
+
+                    <li class="dropdown notification-list topbar-dropdown d-md-none">
+                        <a class="nav-link topbar-icon-btn" href="javascript:void(0)" onclick="if(window.CommandPalette) window.CommandPalette.open();" title="{{ __('app.search_placeholder') }}">
+                            <i class="fas fa-search"></i>
+                        </a>
                     </li>
 
                     <li class="dropdown notification-list topbar-dropdown">
@@ -250,7 +256,7 @@
     <!-- <script src="{{ asset('js/pages/form-quilljs.init.js') }}"></script> -->
 
     <script src="{{ asset('js/main.js?v=1.2') }}"></script>
-    <script src="{{ asset('js/admin-components.js?v=1.3') }}"></script>
+    <script src="{{ asset('js/admin-components.js?v=1.4') }}"></script>
 
     <script type="text/javascript">
         $(".custom-file-input").on("change", function() {

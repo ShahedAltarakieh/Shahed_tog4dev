@@ -122,15 +122,15 @@ Major visual and structural overhaul of the Laravel admin dashboard:
 - Full RTL support via `admin-modern-rtl.css`
 
 **Sidebar IA Overhaul** (`includes/admin/side-bar.blade.php`):
-- Restructured into cleaner sections: MAIN, CONTENT CENTER, BUSINESS, CUSTOMERS, COMMUNICATIONS, SYSTEM
-- Flattened Business section: Payments, Subscriptions, Collection Team, Upload Sheets at top level
-- Flattened Customers section: All Customers and Influencers at top level
-- Settings moved to top-level under System; Activity Logs/Health/SEO/Short Links grouped under "System Tools" submenu
+- Restructured into 6 sections: MAIN (Dashboard, Reports), CONTENT (Sliders, Contributions, Categories†, Testimonials†, Stories†, Partners†, Facts†, Items†, Announcements, News & Media†, SEO, Short Links), BUSINESS (Payments, Subscriptions†, Collection Team, Upload Sheets), CUSTOMERS (All Customers, Influencers, Admin Team†), COMMUNICATIONS (User Requests, Org Requests, Newsletter, Notifications), SYSTEM (Settings, Activity Logs, System Health) [† = has submenu]
+- Content section flattened: items are standalone links or collapsed submenus, no nested wrapper
+- Communications flattened: direct links to User Requests, Org Requests, Newsletter, Notifications
+- SEO and Short Links moved from System to Content section
 - Active menu indicator: yellow accent bar on left side via `active-menu` class with `request()->routeIs()` detection
 - Chevron rotation animation for expand/collapse (uses Font Awesome `fa-chevron-down` + CSS rotate)
-- Submenu dots: `.submenu-dot` circles instead of `fa-dot-circle` icons for cleaner 3rd-level items
+- Submenu dots: `.submenu-dot` circles for cleaner sub-items
 - `aria-expanded` attributes on all collapse toggles for accessibility
-- Collapsed sidebar (`body.sidebar-enable`): icons only, labels hidden, flyout submenus on hover
+- Collapsed sidebar (`body[data-sidebar-size="condensed"]`): icons only, labels hidden, flyout submenus on hover, CSS tooltips on icon hover
 - Section headers styled as uppercase labels (`sidebar-section-title`)
 - Dark gradient sidebar background with hover states
 
@@ -186,7 +186,7 @@ Major visual and structural overhaul of the Laravel admin dashboard:
 - Improved breadcrumb component (`.breadcrumb-modern`) with FA separator icons
 - Dashboard KPI cards: conditional top-bar (only on hover/active), active card border highlight
 - Quick actions grid: fixed 3-column on desktop, 2-column on mobile
-- Collapsed sidebar styles: icon-only mode, flyout submenus on hover
+- Collapsed sidebar styles: icon-only mode, flyout submenus on hover (targets `body[data-sidebar-size="condensed"]`)
 - Responsive breakpoints: 991px tablet, 767px mobile, 575px small mobile
 - content-page transition for smooth sidebar collapse/expand
 

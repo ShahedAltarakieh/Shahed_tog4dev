@@ -13,125 +13,112 @@
     </a>
 </li>
 
-<li class="sidebar-section-title">{{ __('app.content_center') }}</li>
+<li class="sidebar-section-title">{{ __('app.content') }}</li>
 
 <li>
-    <a href="#contentMenu" data-toggle="collapse" aria-expanded="false">
-        <i class="fas fa-layer-group"></i>
-        <span>{{ __('app.content_management') }}</span>
+    <a href="{{ route('sliders.index') }}" class="{{ request()->routeIs('sliders.*') ? 'active-menu' : '' }}">
+        <i class="fas fa-images"></i>
+        <span>{{ __('app.sliders') }}</span>
+    </a>
+</li>
+<li>
+    <a href="{{ route('quick-contributions.index') }}" class="{{ request()->routeIs('quick-contributions.*') ? 'active-menu' : '' }}">
+        <i class="fas fa-hand-holding-heart"></i>
+        <span>{{ __('app.contributions') }}</span>
+    </a>
+</li>
+<li>
+    <a href="#categories" data-toggle="collapse" aria-expanded="false">
+        <i class="fas fa-folder-open"></i>
+        <span>{{ __('app.categories') }}</span>
         <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
     </a>
-    <div class="collapse" id="contentMenu">
+    <div class="collapse" id="categories">
         <ul class="nav-second-level">
-            <li>
-                <a href="{{ route('sliders.index') }}">
-                    <i class="fas fa-images"></i>
-                    <span>{{ __('app.sliders') }}</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('quick-contributions.index') }}">
-                    <i class="fas fa-hand-holding-heart"></i>
-                    <span>{{ __('app.contributions') }}</span>
-                </a>
-            </li>
-            <li>
-                <a href="#categories" data-toggle="collapse" aria-expanded="false">
-                    <i class="fas fa-folder-open"></i>
-                    <span>{{ __('app.categories') }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
-                </a>
-                <div class="collapse" id="categories">
-                    <ul class="nav-second-level nav-third-level">
-                        <li><a href="{{ route('categories.index', ["type" => "projects"]) }}"><span class="submenu-dot"></span> {{ __('app.projects') }}</a></li>
-                        <li><a href="{{ route('categories.index', ["type" => "organization"]) }}"><span class="submenu-dot"></span> {{ __('app.organization') }}</a></li>
-                        <li><a href="{{ route('categories.index', ["type" => "crowdfunding"]) }}"><span class="submenu-dot"></span> {{ __('app.crowdfunding') }}</a></li>
-                        <li><a href="{{ route('categories.index', ["type" => "home"]) }}"><span class="submenu-dot"></span> {{ __('app.home') }}</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <a href="#testimonials" data-toggle="collapse" aria-expanded="false">
-                    <i class="fas fa-quote-right"></i>
-                    <span>{{ __('app.testimonials') }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
-                </a>
-                <div class="collapse" id="testimonials">
-                    <ul class="nav-second-level nav-third-level">
-                        <li><a href="{{ route('testimonials.index', ["type" => "projects"]) }}"><span class="submenu-dot"></span> {{ __('app.projects') }}</a></li>
-                        <li><a href="{{ route('testimonials.index', ["type" => "organization"]) }}"><span class="submenu-dot"></span> {{ __('app.organization') }}</a></li>
-                        <li><a href="{{ route('testimonials.index', ["type" => "crowdfunding"]) }}"><span class="submenu-dot"></span> {{ __('app.crowdfunding') }}</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <a href="#stories" data-toggle="collapse" aria-expanded="false">
-                    <i class="fas fa-book-open"></i>
-                    <span>{{ __('app.stories') }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
-                </a>
-                <div class="collapse" id="stories">
-                    <ul class="nav-second-level nav-third-level">
-                        <li><a href="{{ route('stories.index', ["type" => "projects"]) }}"><span class="submenu-dot"></span> {{ __('app.projects') }}</a></li>
-                        <li><a href="{{ route('stories.index', ["type" => "organization"]) }}"><span class="submenu-dot"></span> {{ __('app.organization') }}</a></li>
-                        <li><a href="{{ route('stories.index', ["type" => "crowdfunding"]) }}"><span class="submenu-dot"></span> {{ __('app.crowdfunding') }}</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <a href="#partners" data-toggle="collapse" aria-expanded="false">
-                    <i class="fas fa-handshake"></i>
-                    <span>{{ __('app.partners') }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
-                </a>
-                <div class="collapse" id="partners">
-                    <ul class="nav-second-level nav-third-level">
-                        <li><a href="{{ route('partners.index', ["type" => "projects"]) }}"><span class="submenu-dot"></span> {{ __('app.projects') }}</a></li>
-                        <li><a href="{{ route('partners.index', ["type" => "organization"]) }}"><span class="submenu-dot"></span> {{ __('app.organization') }}</a></li>
-                        <li><a href="{{ route('partners.index', ["type" => "crowdfunding"]) }}"><span class="submenu-dot"></span> {{ __('app.crowdfunding') }}</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <a href="#facts" data-toggle="collapse" aria-expanded="false">
-                    <i class="fas fa-chart-pie"></i>
-                    <span>{{ __('app.facts') }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
-                </a>
-                <div class="collapse" id="facts">
-                    <ul class="nav-second-level nav-third-level">
-                        <li><a href="{{ route('facts.index', ["type" => "projects"]) }}"><span class="submenu-dot"></span> {{ __('app.projects') }}</a></li>
-                        <li><a href="{{ route('facts.index', ["type" => "organization"]) }}"><span class="submenu-dot"></span> {{ __('app.organization') }}</a></li>
-                        <li><a href="{{ route('facts.index', ["type" => "crowdfunding"]) }}"><span class="submenu-dot"></span> {{ __('app.crowdfunding') }}</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li>
-                <a href="#items" data-toggle="collapse" aria-expanded="false">
-                    <i class="fas fa-box"></i>
-                    <span>{{ __('app.items') }}</span>
-                    <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
-                </a>
-                <div class="collapse" id="items">
-                    <ul class="nav-second-level nav-third-level">
-                        <li><a href="{{ route('items.index', ["type" => "home"]) }}"><span class="submenu-dot"></span> {{ __('app.home') }}</a></li>
-                        <li><a href="{{ route('items.index', ["type" => "projects"]) }}"><span class="submenu-dot"></span> {{ __('app.projects') }}</a></li>
-                        <li><a href="{{ route('items.index', ["type" => "organization"]) }}"><span class="submenu-dot"></span> {{ __('app.organization') }}</a></li>
-                        <li><a href="{{ route('items.index', ["type" => "crowdfunding"]) }}"><span class="submenu-dot"></span> {{ __('app.crowdfunding') }}</a></li>
-                    </ul>
-                </div>
-            </li>
+            <li><a href="{{ route('categories.index', ["type" => "projects"]) }}"><span class="submenu-dot"></span> {{ __('app.projects') }}</a></li>
+            <li><a href="{{ route('categories.index', ["type" => "organization"]) }}"><span class="submenu-dot"></span> {{ __('app.organization') }}</a></li>
+            <li><a href="{{ route('categories.index', ["type" => "crowdfunding"]) }}"><span class="submenu-dot"></span> {{ __('app.crowdfunding') }}</a></li>
+            <li><a href="{{ route('categories.index', ["type" => "home"]) }}"><span class="submenu-dot"></span> {{ __('app.home') }}</a></li>
         </ul>
     </div>
 </li>
-
+<li>
+    <a href="#testimonials" data-toggle="collapse" aria-expanded="false">
+        <i class="fas fa-quote-right"></i>
+        <span>{{ __('app.testimonials') }}</span>
+        <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
+    </a>
+    <div class="collapse" id="testimonials">
+        <ul class="nav-second-level">
+            <li><a href="{{ route('testimonials.index', ["type" => "projects"]) }}"><span class="submenu-dot"></span> {{ __('app.projects') }}</a></li>
+            <li><a href="{{ route('testimonials.index', ["type" => "organization"]) }}"><span class="submenu-dot"></span> {{ __('app.organization') }}</a></li>
+            <li><a href="{{ route('testimonials.index', ["type" => "crowdfunding"]) }}"><span class="submenu-dot"></span> {{ __('app.crowdfunding') }}</a></li>
+        </ul>
+    </div>
+</li>
+<li>
+    <a href="#stories" data-toggle="collapse" aria-expanded="false">
+        <i class="fas fa-book-open"></i>
+        <span>{{ __('app.stories') }}</span>
+        <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
+    </a>
+    <div class="collapse" id="stories">
+        <ul class="nav-second-level">
+            <li><a href="{{ route('stories.index', ["type" => "projects"]) }}"><span class="submenu-dot"></span> {{ __('app.projects') }}</a></li>
+            <li><a href="{{ route('stories.index', ["type" => "organization"]) }}"><span class="submenu-dot"></span> {{ __('app.organization') }}</a></li>
+            <li><a href="{{ route('stories.index', ["type" => "crowdfunding"]) }}"><span class="submenu-dot"></span> {{ __('app.crowdfunding') }}</a></li>
+        </ul>
+    </div>
+</li>
+<li>
+    <a href="#partners" data-toggle="collapse" aria-expanded="false">
+        <i class="fas fa-handshake"></i>
+        <span>{{ __('app.partners') }}</span>
+        <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
+    </a>
+    <div class="collapse" id="partners">
+        <ul class="nav-second-level">
+            <li><a href="{{ route('partners.index', ["type" => "projects"]) }}"><span class="submenu-dot"></span> {{ __('app.projects') }}</a></li>
+            <li><a href="{{ route('partners.index', ["type" => "organization"]) }}"><span class="submenu-dot"></span> {{ __('app.organization') }}</a></li>
+            <li><a href="{{ route('partners.index', ["type" => "crowdfunding"]) }}"><span class="submenu-dot"></span> {{ __('app.crowdfunding') }}</a></li>
+        </ul>
+    </div>
+</li>
+<li>
+    <a href="#facts" data-toggle="collapse" aria-expanded="false">
+        <i class="fas fa-chart-pie"></i>
+        <span>{{ __('app.facts') }}</span>
+        <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
+    </a>
+    <div class="collapse" id="facts">
+        <ul class="nav-second-level">
+            <li><a href="{{ route('facts.index', ["type" => "projects"]) }}"><span class="submenu-dot"></span> {{ __('app.projects') }}</a></li>
+            <li><a href="{{ route('facts.index', ["type" => "organization"]) }}"><span class="submenu-dot"></span> {{ __('app.organization') }}</a></li>
+            <li><a href="{{ route('facts.index', ["type" => "crowdfunding"]) }}"><span class="submenu-dot"></span> {{ __('app.crowdfunding') }}</a></li>
+        </ul>
+    </div>
+</li>
+<li>
+    <a href="#items" data-toggle="collapse" aria-expanded="false">
+        <i class="fas fa-box"></i>
+        <span>{{ __('app.items') }}</span>
+        <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
+    </a>
+    <div class="collapse" id="items">
+        <ul class="nav-second-level">
+            <li><a href="{{ route('items.index', ["type" => "home"]) }}"><span class="submenu-dot"></span> {{ __('app.home') }}</a></li>
+            <li><a href="{{ route('items.index', ["type" => "projects"]) }}"><span class="submenu-dot"></span> {{ __('app.projects') }}</a></li>
+            <li><a href="{{ route('items.index', ["type" => "organization"]) }}"><span class="submenu-dot"></span> {{ __('app.organization') }}</a></li>
+            <li><a href="{{ route('items.index', ["type" => "crowdfunding"]) }}"><span class="submenu-dot"></span> {{ __('app.crowdfunding') }}</a></li>
+        </ul>
+    </div>
+</li>
 <li>
     <a href="{{ route('announcements.index') }}" class="{{ request()->routeIs('announcements.*') ? 'active-menu' : '' }}">
         <i class="fas fa-bullhorn"></i>
         <span>{{ __('app.announcements') }}</span>
     </a>
 </li>
-
 <li>
     <a href="#newsGallery" data-toggle="collapse" aria-expanded="false">
         <i class="fas fa-newspaper"></i>
@@ -172,6 +159,18 @@
             </li>
         </ul>
     </div>
+</li>
+<li>
+    <a href="{{ route('seo.index') }}" class="{{ request()->routeIs('seo.*') ? 'active-menu' : '' }}">
+        <i class="fas fa-search"></i>
+        <span>{{ __('app.seo') }}</span>
+    </a>
+</li>
+<li>
+    <a href="{{ route('shortlinks.index') }}" class="{{ request()->routeIs('shortlinks.*') ? 'active-menu' : '' }}">
+        <i class="fas fa-link"></i>
+        <span>{{ __('app.short links') }}</span>
+    </a>
 </li>
 
 <li class="sidebar-section-title">{{ __('app.business') }}</li>
@@ -253,39 +252,28 @@
 <li class="sidebar-section-title">{{ __('app.communications') }}</li>
 
 <li>
-    <a href="#commsMenu" data-toggle="collapse" aria-expanded="false">
-        <i class="fas fa-envelope"></i>
-        <span>{{ __('app.messages') }}</span>
-        <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
+    <a href="{{ route('contact_us.index', ["type" => "projects"]) }}" class="{{ request()->is('*/contact_us*') && request()->type == 'projects' ? 'active-menu' : '' }}">
+        <i class="fas fa-inbox"></i>
+        <span>{{ __('app.user requests') }}</span>
     </a>
-    <div class="collapse" id="commsMenu">
-        <ul class="nav-second-level">
-            <li>
-                <a href="{{ route('contact_us.index', ["type" => "projects"]) }}">
-                    <i class="fas fa-inbox"></i>
-                    <span>{{ __('app.user requests') }}</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('contact_us.index', ["type" => "organization"]) }}">
-                    <i class="fas fa-building"></i>
-                    <span>{{ __('app.organization requests') }}</span>
-                </a>
-            </li>
-            <li>
-                <a href="/newsletter">
-                    <i class="fas fa-paper-plane"></i>
-                    <span>{{ __('app.newsletter') }}</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('system.notifications') }}">
-                    <i class="fas fa-bell"></i>
-                    <span>{{ __('app.notifications') }}</span>
-                </a>
-            </li>
-        </ul>
-    </div>
+</li>
+<li>
+    <a href="{{ route('contact_us.index', ["type" => "organization"]) }}" class="{{ request()->is('*/contact_us*') && request()->type == 'organization' ? 'active-menu' : '' }}">
+        <i class="fas fa-building"></i>
+        <span>{{ __('app.organization requests') }}</span>
+    </a>
+</li>
+<li>
+    <a href="/newsletter" class="{{ request()->is('*/newsletter*') ? 'active-menu' : '' }}">
+        <i class="fas fa-paper-plane"></i>
+        <span>{{ __('app.newsletter') }}</span>
+    </a>
+</li>
+<li>
+    <a href="{{ route('system.notifications') }}" class="{{ request()->routeIs('system.notifications') ? 'active-menu' : '' }}">
+        <i class="fas fa-bell"></i>
+        <span>{{ __('app.notifications') }}</span>
+    </a>
 </li>
 
 <li class="sidebar-section-title">{{ __('app.system') }}</li>
@@ -296,39 +284,15 @@
         <span>{{ __('app.general_settings') }}</span>
     </a>
 </li>
-
 <li>
-    <a href="#systemMenu" data-toggle="collapse" aria-expanded="false">
-        <i class="fas fa-tools"></i>
-        <span>{{ __('app.system_tools') }}</span>
-        <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
+    <a href="{{ route('system.activity-logs') }}" class="{{ request()->routeIs('system.activity-logs') ? 'active-menu' : '' }}">
+        <i class="fas fa-history"></i>
+        <span>{{ __('app.activity_logs') }}</span>
     </a>
-    <div class="collapse" id="systemMenu">
-        <ul class="nav-second-level">
-            <li>
-                <a href="{{ route('system.activity-logs') }}">
-                    <i class="fas fa-history"></i>
-                    <span>{{ __('app.activity_logs') }}</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('system.health') }}">
-                    <i class="fas fa-heartbeat"></i>
-                    <span>{{ __('app.system_health') }}</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('seo.index') }}">
-                    <i class="fas fa-search"></i>
-                    <span>{{ __('app.seo') }}</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('shortlinks.index') }}">
-                    <i class="fas fa-link"></i>
-                    <span>{{ __('app.short links') }}</span>
-                </a>
-            </li>
-        </ul>
-    </div>
+</li>
+<li>
+    <a href="{{ route('system.health') }}" class="{{ request()->routeIs('system.health') ? 'active-menu' : '' }}">
+        <i class="fas fa-heartbeat"></i>
+        <span>{{ __('app.system_health') }}</span>
+    </a>
 </li>
