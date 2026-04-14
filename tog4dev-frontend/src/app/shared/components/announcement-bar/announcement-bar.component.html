@@ -1,5 +1,6 @@
 @if (current) {
 <div class="announcement-bar"
+     [class.scrolled-active]="isHeaderScrolled"
      (mouseenter)="onMouseEnter()"
      (mouseleave)="onMouseLeave()"
      (touchstart)="onTouchStart($event)"

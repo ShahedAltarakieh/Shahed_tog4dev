@@ -18,6 +18,7 @@ export class AnnouncementBarComponent implements OnInit, AfterViewInit, OnDestro
   isBrowser = false;
   transitioning = false;
   stickyTop = 0;
+  isHeaderScrolled = false;
 
   @HostBinding('style.top.px')
   get hostStickyTop(): number {
@@ -193,9 +194,10 @@ export class AnnouncementBarComponent implements OnInit, AfterViewInit, OnDestro
         : headerMobile;
       const isHeaderSticky = activeHeader?.classList.contains('scrolled') ?? false;
       const newTop = isHeaderSticky ? this.headerHeight : 0;
-      if (newTop !== this.stickyTop) {
+      if (newTop !== this.stickyTop || isHeaderSticky !== this.isHeaderScrolled) {
         this.ngZone.run(() => {
           this.stickyTop = newTop;
+          this.isHeaderScrolled = isHeaderSticky;
         });
       }
     };
