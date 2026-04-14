@@ -426,4 +426,8 @@ return [
     'created_successfully' => 'Created Successfully',
     'updated_successfully' => 'Updated Successfully',
     'duplicated successfully' => 'Duplicated Successfully',
+    'image guidelines' => 'Image Guidelines',
+    'recommended size' => 'Recommended Size',
+    'max file size' => 'Max File Size',
+    'allowed extensions' => 'Allowed Extensions',
 ];

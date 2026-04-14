@@ -426,4 +426,8 @@ return [
     'created_successfully' => 'تم الإنشاء بنجاح',
     'updated_successfully' => 'تم التحديث بنجاح',
     'duplicated successfully' => 'تم النسخ بنجاح',
+    'image guidelines' => 'إرشادات الصورة',
+    'recommended size' => 'الحجم الموصى به',
+    'max file size' => 'الحد الأقصى لحجم الملف',
+    'allowed extensions' => 'الامتدادات المسموحة',
 ];

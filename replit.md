@@ -186,9 +186,14 @@ Major visual and structural overhaul of the Laravel admin dashboard:
 - Improved breadcrumb component (`.breadcrumb-modern`) with FA separator icons
 - Dashboard KPI cards: conditional top-bar (only on hover/active), active card border highlight
 - Quick actions grid: fixed 3-column on desktop, 2-column on mobile
-- Collapsed sidebar styles: icon-only mode, flyout submenus on hover (targets `body[data-sidebar-size="condensed"]`)
+- Collapsed sidebar styles: icon-only mode, flyout submenus on hover, CSS `::after` tooltips on icon hover (targets `body[data-sidebar-size="condensed"]`)
+- Navbar layout: CSS flexbox `order` properties fix float-right conflict (logo=1, hamburger=2, menu=3 with `margin-left:auto`); uses `:not(.topnav-menu-left)` selector to prevent specificity clash
+- Pagination: stronger borders (1.5px), min 40px buttons, active state with teal shadow + scale, hover lift effect, disabled state opacity
+- Image upload guidelines partial (`includes/admin/image-upload-notes.blade.php`): gradient background, icon rows, extension badges
+- Translation keys added: `image guidelines`, `recommended size`, `max file size`, `allowed extensions` (both EN and AR)
 - Responsive breakpoints: 991px tablet, 767px mobile, 575px small mobile
 - content-page transition for smooth sidebar collapse/expand
+- **Asset versions**: CSS/JS cache-busted to `?v=1.5`
 
 **Page Header Modernization** (`includes/admin/header.blade.php`):
 - Breadcrumb navigation
