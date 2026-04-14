@@ -203,6 +203,7 @@ Full-stack announcement bar for displaying rotating announcements below the site
 - Service: `AnnouncementService` (`shared/services/announcement/`) with per-target caching via `shareReplay`, error-resilient (clears cache on failure, doesn't permanently cache errors)
 - Component: `AnnouncementBarComponent` (`shared/components/announcement-bar/`) — standalone Angular component
 - Features: auto-rotate (4.5s) with smooth fade transitions, pause on hover, swipe navigation, clickable messages when link exists, responsive (short_text for mobile), RTL support
+- **Sticky behavior**: Bar stays visible below navbar while scrolling using CSS `position: sticky` on `:host`. Dynamic `top` offset via `@HostBinding('style.top.px')` tracks header height using `ResizeObserver` + scroll listener. Syncs with header's `.scrolled` class (scroll > 50px threshold). z-index: 9 (below header's 10, above content). Subtle box-shadow for visual separation.
 - Admin-only visibility control: no close/dismiss button, no sessionStorage hide — bar always visible when active announcements exist, controlled exclusively from Admin Dashboard
 - Badge types: LIVE (red), INFO (blue), ALERT (amber), NEW (green)
 - Target views: desktop, mobile, both — API filters by target param

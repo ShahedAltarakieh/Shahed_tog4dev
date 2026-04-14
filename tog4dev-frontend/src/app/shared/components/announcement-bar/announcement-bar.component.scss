@@ -1,14 +1,19 @@
 $bar-bg: #13585D;
 $bar-accent: #FECD0F;
 
+:host {
+  display: block;
+  position: sticky;
+  z-index: 9;
+}
+
 .announcement-bar {
   background: $bar-bg;
   color: #fff;
-  position: relative;
-  z-index: 999;
   user-select: none;
   overflow: hidden;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
 .announcement-bar-inner {

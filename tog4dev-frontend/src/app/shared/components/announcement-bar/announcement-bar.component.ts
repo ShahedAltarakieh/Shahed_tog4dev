@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, Inject, PLATFORM_ID, NgZone, HostBinding } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AnnouncementService, Announcement } from 'app/shared/services/announcement/announcement.service';
@@ -11,16 +11,25 @@ import { StorageService } from 'app/core/storage/storage.service';
   templateUrl: './announcement-bar.component.html',
   styleUrl: './announcement-bar.component.scss'
 })
-export class AnnouncementBarComponent implements OnInit, OnDestroy {
+export class AnnouncementBarComponent implements OnInit, AfterViewInit, OnDestroy {
   announcements: Announcement[] = [];
   currentIndex = 0;
   isPaused = false;
   isBrowser = false;
   transitioning = false;
+  stickyTop = 0;
+
+  @HostBinding('style.top.px')
+  get hostStickyTop(): number {
+    return this.stickyTop;
+  }
 
   private rotateInterval: any;
   private touchStartX = 0;
   private touchEndX = 0;
+  private headerObserver: ResizeObserver | null = null;
+  private scrollHandler: (() => void) | null = null;
+  private headerHeight = 0;
 
   readonly badgeColors: Record<string, string> = {
     'LIVE': '#ef4444',
@@ -32,6 +41,7 @@ export class AnnouncementBarComponent implements OnInit, OnDestroy {
   constructor(
     private announcementService: AnnouncementService,
     public storageService: StorageService,
+    private ngZone: NgZone,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
@@ -51,8 +61,21 @@ export class AnnouncementBarComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngAfterViewInit(): void {
+    if (!this.isBrowser) return;
+    this.observeHeaderHeight();
+  }
+
   ngOnDestroy(): void {
     this.stopAutoRotate();
+    if (this.headerObserver) {
+      this.headerObserver.disconnect();
+      this.headerObserver = null;
+    }
+    if (this.scrollHandler) {
+      window.removeEventListener('scroll', this.scrollHandler);
+      this.scrollHandler = null;
+    }
   }
 
   get current(): Announcement | null {
@@ -148,5 +171,53 @@ export class AnnouncementBarComponent implements OnInit, OnDestroy {
       clearInterval(this.rotateInterval);
       this.rotateInterval = null;
     }
+  }
+
+  private observeHeaderHeight(): void {
+    const headerDesktop = document.querySelector('header.header') as HTMLElement;
+    const headerMobile = document.querySelector('header.header-mobile') as HTMLElement;
+
+    const measureHeaderHeight = () => {
+      let height = 0;
+      if (headerDesktop && window.getComputedStyle(headerDesktop).display !== 'none') {
+        height = headerDesktop.getBoundingClientRect().height;
+      } else if (headerMobile && window.getComputedStyle(headerMobile).display !== 'none') {
+        height = headerMobile.getBoundingClientRect().height;
+      }
+      this.headerHeight = height;
+    };
+
+    const updateStickyTop = () => {
+      const activeHeader = (headerDesktop && window.getComputedStyle(headerDesktop).display !== 'none')
+        ? headerDesktop
+        : headerMobile;
+      const isHeaderSticky = activeHeader?.classList.contains('scrolled') ?? false;
+      const newTop = isHeaderSticky ? this.headerHeight : 0;
+      if (newTop !== this.stickyTop) {
+        this.ngZone.run(() => {
+          this.stickyTop = newTop;
+        });
+      }
+    };
+
+    measureHeaderHeight();
+    updateStickyTop();
+
+    this.ngZone.runOutsideAngular(() => {
+      const targets = [headerDesktop, headerMobile].filter(Boolean) as HTMLElement[];
+      if (targets.length > 0) {
+        this.headerObserver = new ResizeObserver(() => {
+          measureHeaderHeight();
+          updateStickyTop();
+        });
+        targets.forEach(t => this.headerObserver!.observe(t));
+      }
+
+      this.scrollHandler = () => {
+        measureHeaderHeight();
+        updateStickyTop();
+      };
+      window.addEventListener('scroll', this.scrollHandler, { passive: true });
+    });
   }
 }
