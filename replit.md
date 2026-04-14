@@ -202,7 +202,8 @@ Full-stack announcement bar for displaying rotating announcements below the site
 **Frontend** (`tog4dev-frontend/`):
 - Service: `AnnouncementService` (`shared/services/announcement/`) with per-target caching via `shareReplay`, error-resilient (clears cache on failure, doesn't permanently cache errors)
 - Component: `AnnouncementBarComponent` (`shared/components/announcement-bar/`) — standalone Angular component
-- Features: auto-rotate (5s), pause on hover, swipe navigation, close/dismiss (sessionStorage), responsive (short_text for mobile), RTL support
+- Features: auto-rotate (4.5s) with smooth fade transitions, pause on hover, swipe navigation, clickable messages when link exists, responsive (short_text for mobile), RTL support
+- Admin-only visibility control: no close/dismiss button, no sessionStorage hide — bar always visible when active announcements exist, controlled exclusively from Admin Dashboard
 - Badge types: LIVE (red), INFO (blue), ALERT (amber), NEW (green)
 - Target views: desktop, mobile, both — API filters by target param
 - Integration: Added to `app.component.html` below `<app-header>`

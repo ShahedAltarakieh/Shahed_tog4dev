@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AnnouncementService, Announcement } from 'app/shared/services/announcement/announcement.service';
@@ -14,9 +14,9 @@ import { StorageService } from 'app/core/storage/storage.service';
 export class AnnouncementBarComponent implements OnInit, OnDestroy {
   announcements: Announcement[] = [];
   currentIndex = 0;
-  isVisible = true;
   isPaused = false;
   isBrowser = false;
+  transitioning = false;
 
   private rotateInterval: any;
   private touchStartX = 0;
@@ -39,12 +39,6 @@ export class AnnouncementBarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (!this.isBrowser) return;
-
-    const dismissed = sessionStorage.getItem('announcement_bar_dismissed');
-    if (dismissed === 'true') {
-      this.isVisible = false;
-      return;
-    }
 
     const target = window.innerWidth < 768 ? 'mobile' : 'desktop';
     this.announcementService.getAnnouncements(target).subscribe({
@@ -74,25 +68,24 @@ export class AnnouncementBarComponent implements OnInit, OnDestroy {
   }
 
   next(): void {
-    if (this.announcements.length <= 1) return;
-    this.currentIndex = (this.currentIndex + 1) % this.announcements.length;
+    if (this.announcements.length <= 1 || this.transitioning) return;
+    this.transition(() => {
+      this.currentIndex = (this.currentIndex + 1) % this.announcements.length;
+    });
   }
 
   prev(): void {
-    if (this.announcements.length <= 1) return;
-    this.currentIndex = (this.currentIndex - 1 + this.announcements.length) % this.announcements.length;
+    if (this.announcements.length <= 1 || this.transitioning) return;
+    this.transition(() => {
+      this.currentIndex = (this.currentIndex - 1 + this.announcements.length) % this.announcements.length;
+    });
   }
 
   goTo(index: number): void {
-    this.currentIndex = index;
-  }
-
-  close(): void {
-    this.isVisible = false;
-    if (this.isBrowser) {
-      sessionStorage.setItem('announcement_bar_dismissed', 'true');
-    }
-    this.stopAutoRotate();
+    if (index === this.currentIndex || this.transitioning) return;
+    this.transition(() => {
+      this.currentIndex = index;
+    });
   }
 
   onMouseEnter(): void {
@@ -121,6 +114,16 @@ export class AnnouncementBarComponent implements OnInit, OnDestroy {
     return link.startsWith('http://') || link.startsWith('https://');
   }
 
+  private transition(changeFn: () => void): void {
+    this.transitioning = true;
+    setTimeout(() => {
+      changeFn();
+      setTimeout(() => {
+        this.transitioning = false;
+      }, 50);
+    }, 200);
+  }
+
   private handleSwipe(): void {
     const diff = this.touchStartX - this.touchEndX;
     const isRtl = this.storageService.siteLanguage$.value === 'ar';
@@ -137,7 +140,7 @@ export class AnnouncementBarComponent implements OnInit, OnDestroy {
     this.stopAutoRotate();
     this.rotateInterval = setInterval(() => {
       this.next();
-    }, 5000);
+    }, 4500);
   }
 
   private stopAutoRotate(): void {
