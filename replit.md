@@ -179,6 +179,29 @@ Major visual and structural overhaul of the Laravel admin dashboard:
 
 **Files changed**: `public/css/admin-modern.css`, `public/css/admin-modern-rtl.css`, `public/js/admin-components.js`, `includes/admin/side-bar.blade.php`, `includes/admin/header.blade.php`, `admin/dashboard.blade.php`, `layouts/admin/show.blade.php`, `layouts/admin/add.blade.php`, `app/Http/Controllers/AdminSystemController.php`, `app/Http/Controllers/DashboardController.php`, `resources/views/admin/system/*`, `resources/lang/en/app.php`, `resources/lang/ar/app.php`, `routes/web.php`
 
+## Announcement Bar Module
+
+Full-stack announcement bar for displaying rotating announcements below the site header.
+
+**Backend** (`tog4dev-backend/`):
+- Model: `Announcement` with scopes `active()`, `inDate()`, `forTarget($target)`
+- Migration: `announcements` table (id, title, text, short_text, link, cta_text, badge_type, target_view, source_type, news_id, is_active, order_no, start_date, end_date)
+- News integration: 6 announcement fields added to `news` table (announcement_visibility, announcement_text, announcement_cta, announcement_badge, announcement_start, announcement_end)
+- Admin Controller: `AnnouncementAdminController` (CRUD, toggle status, reorder)
+- API Controller: `AnnouncementApiController` — `GET /api/v1/announcements?target=desktop|mobile`
+- Admin Views: `admin/announcements/` (index, create, edit) with live preview, drag reorder, status toggles
+- News form integration: announcement visibility/badge/text/CTA/dates fields in news create/edit, auto-sync via `syncNewsAnnouncement()`
+- Sidebar: Standalone "Announcements" link with bullhorn icon above News & Media section
+- Translation keys: 35+ announcement-related keys in both EN and AR
+
+**Frontend** (`tog4dev-frontend/`):
+- Service: `AnnouncementService` (`shared/services/announcement/`) with caching via `shareReplay`
+- Component: `AnnouncementBarComponent` (`shared/components/announcement-bar/`) — standalone Angular component
+- Features: auto-rotate (5s), pause on hover, swipe navigation, close/dismiss (sessionStorage), responsive (short_text for mobile), RTL support
+- Badge types: LIVE (red), INFO (blue), ALERT (amber), NEW (green)
+- Target views: desktop, mobile, both — API filters by target param
+- Integration: Added to `app.component.html` below `<app-header>`
+
 ## Notes
 
 - The migration `2024_06_21` was renamed to `2024_12_03_000312` to fix ordering (it references `payments` table created later)

@@ -126,6 +126,13 @@
 </li>
 
 <li>
+    <a href="{{ route('announcements.index') }}">
+        <i class="fas fa-bullhorn"></i>
+        <span>{{ __('app.announcements') }}</span>
+    </a>
+</li>
+
+<li>
     <a href="#newsGallery" data-toggle="collapse">
         <i class="fas fa-newspaper"></i>
         <span>{{ __('app.news_media') }}</span>

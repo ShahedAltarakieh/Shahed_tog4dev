@@ -25,6 +25,7 @@ use App\Http\Controllers\Api\V1\ShortLinkController;
 use App\Http\Controllers\Api\V1\NewsController;
 use App\Http\Controllers\Api\V1\GalleryController;
 use App\Http\Controllers\Api\V1\SearchController;
+use App\Http\Controllers\Api\V1\AnnouncementApiController;
 
 Route::prefix('v1')->group(function () {
     // Authentication routes
@@ -68,6 +69,8 @@ Route::prefix('v1')->group(function () {
     Route::get('/gallery/videos', [GalleryController::class, 'videos'])->name('gallery.videos');
 
     Route::get('/search', [SearchController::class, 'search'])->name('search');
+
+    Route::get('/announcements', [AnnouncementApiController::class, 'index'])->name('announcements.api');
 
     Route::get('/quick-contributions', [QuickContributionController::class, 'index']);
 

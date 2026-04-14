@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { FooterComponent } from './layouts/footer/footer.component';
 import { HeaderComponent } from './layouts/header/header.component';
+import { AnnouncementBarComponent } from './shared/components/announcement-bar/announcement-bar.component';
 
 import { routeTranslations } from 'app/route-translations';
 import { ApiService } from 'app/core/api/api.service';
@@ -23,7 +24,7 @@ import { environment } from 'environments/environment';
 import { GoogleTagManagerService } from './shared/services/google-tag-manager-service/google-tag-manager-service.service';
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet, HeaderComponent, FooterComponent, LoaderComponent, NgIf],
+    imports: [RouterOutlet, HeaderComponent, FooterComponent, LoaderComponent, NgIf, AnnouncementBarComponent],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })

@@ -29,6 +29,7 @@ use App\Http\Controllers\ShortLinkController;
 use App\Http\Controllers\Admin\NewsAdminController;
 use App\Http\Controllers\Admin\NewsCategoryAdminController;
 use App\Http\Controllers\Admin\GalleryAdminController;
+use App\Http\Controllers\Admin\AnnouncementAdminController;
 use App\Http\Controllers\AdminSystemController;
 /*
 |--------------------------------------------------------------------------
@@ -220,6 +221,17 @@ Route::group(
             Route::put('/{id}', [NewsCategoryAdminController::class, 'update'])->name('news-categories-admin.update');
             Route::delete('/{id}', [NewsCategoryAdminController::class, 'destroy'])->name('news-categories-admin.destroy');
             Route::post('/change-status/{id}', [NewsCategoryAdminController::class, 'change_status'])->name('news-categories-admin.change_status');
+        });
+
+        Route::prefix('announcements')->middleware('master')->group(function () {
+            Route::get('/', [AnnouncementAdminController::class, 'index'])->name('announcements.index');
+            Route::get('/create', [AnnouncementAdminController::class, 'create'])->name('announcements.create');
+            Route::post('/', [AnnouncementAdminController::class, 'store'])->name('announcements.store');
+            Route::get('/{id}/edit', [AnnouncementAdminController::class, 'edit'])->name('announcements.edit');
+            Route::put('/{id}', [AnnouncementAdminController::class, 'update'])->name('announcements.update');
+            Route::delete('/{id}', [AnnouncementAdminController::class, 'destroy'])->name('announcements.destroy');
+            Route::post('/change-status/{id}', [AnnouncementAdminController::class, 'changeStatus'])->name('announcements.change_status');
+            Route::post('/reorder', [AnnouncementAdminController::class, 'reorder'])->name('announcements.reorder');
         });
 
         Route::prefix('gallery-management')->middleware('master')->group(function () {
