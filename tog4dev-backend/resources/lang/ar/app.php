@@ -417,4 +417,12 @@ return [
     'mobile' => 'الجوال',
     'all' => 'الكل',
     'text' => 'النص',
+    'manual_announcement' => 'إعلان يدوي',
+    'select_news_article' => 'اختر مقال خبري',
+    'live_preview' => 'معاينة مباشرة',
+    'auto_generated_hint' => 'يتم توليده تلقائياً من المحتوى',
+    'auto_generated_from_content' => 'اتركه فارغاً للتوليد التلقائي من المحتوى',
+    'created_successfully' => 'تم الإنشاء بنجاح',
+    'updated_successfully' => 'تم التحديث بنجاح',
+    'duplicated successfully' => 'تم النسخ بنجاح',
 ];

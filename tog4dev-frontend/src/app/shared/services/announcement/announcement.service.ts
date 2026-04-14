@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from 'app/core/api/api.service';
 import { environment } from 'environments/environment';
-import { map, Observable, shareReplay } from 'rxjs';
+import { map, Observable, of, shareReplay, catchError } from 'rxjs';
 
 export interface Announcement {
   id: number;
@@ -22,23 +22,31 @@ export interface Announcement {
 })
 export class AnnouncementService {
   private apiUrl = environment.apiUrl;
-  private cache$: Observable<Announcement[]> | null = null;
+  private cacheMap = new Map<string, Observable<Announcement[]>>();
 
   constructor(private apiService: ApiService) {}
 
   getAnnouncements(target?: 'desktop' | 'mobile'): Observable<Announcement[]> {
-    if (!this.cache$) {
+    const cacheKey = target || 'all';
+
+    if (!this.cacheMap.has(cacheKey)) {
       const url = this.apiUrl + 'api/v1/announcements' + (target ? '?target=' + target : '');
-      this.cache$ = this.apiService.get<any>(url).pipe(
+      const request$ = this.apiService.get<any>(url).pipe(
         map(this.apiService.extractTypeFromMessage),
         map((res: any) => res?.data || res || []),
+        catchError(() => {
+          this.cacheMap.delete(cacheKey);
+          return of([]);
+        }),
         shareReplay(1)
       );
+      this.cacheMap.set(cacheKey, request$);
     }
-    return this.cache$;
+
+    return this.cacheMap.get(cacheKey)!;
   }
 
   clearCache(): void {
-    this.cache$ = null;
+    this.cacheMap.clear();
   }
 }

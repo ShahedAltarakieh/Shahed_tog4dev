@@ -417,4 +417,12 @@ return [
     'mobile' => 'Mobile',
     'all' => 'All',
     'text' => 'Text',
+    'manual_announcement' => 'Manual Announcement',
+    'select_news_article' => 'Select News Article',
+    'live_preview' => 'Live Preview',
+    'auto_generated_hint' => 'Auto-generated from content',
+    'auto_generated_from_content' => 'Leave empty to auto-generate from body content',
+    'created_successfully' => 'Created Successfully',
+    'updated_successfully' => 'Updated Successfully',
+    'duplicated successfully' => 'Duplicated Successfully',
 ];

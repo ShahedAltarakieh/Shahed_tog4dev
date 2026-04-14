@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Announcement;
 use App\Models\News;
 use App\Models\NewsCategory;
 use Illuminate\Http\Request;
@@ -47,17 +46,12 @@ class NewsAdminController extends Controller
         $validated['position'] = $validated['position'] ?? 0;
         unset($validated['image'], $validated['image_tablet'], $validated['image_mobile']);
 
-        $announcementData = $request->validate([
-            'announcement_visibility' => 'nullable|in:news_only,announcement_only,both',
-            'announcement_text' => 'nullable|string|max:255',
-            'announcement_cta' => 'nullable|string|max:100',
-            'announcement_badge' => 'nullable|in:LIVE,INFO,ALERT,NEW',
-            'announcement_start' => 'nullable|date',
-            'announcement_end' => 'nullable|date|after_or_equal:announcement_start',
-        ]);
-
-        $validated = array_merge($validated, $announcementData);
-        $validated['announcement_visibility'] = $validated['announcement_visibility'] ?? 'news_only';
+        if (empty($validated['excerpt']) && !empty($validated['body'])) {
+            $validated['excerpt'] = $this->generateExcerpt($validated['body']);
+        }
+        if (empty($validated['excerpt_en']) && !empty($validated['body_en'])) {
+            $validated['excerpt_en'] = $this->generateExcerpt($validated['body_en']);
+        }
 
         $news = News::create($validated);
 
@@ -70,8 +64,6 @@ class NewsAdminController extends Controller
         if ($request->hasFile('image_mobile')) {
             $news->addMediaFromRequest('image_mobile')->toMediaCollection('news_mobile');
         }
-
-        $this->syncNewsAnnouncement($news);
 
         return redirect()->route('news-admin.index')->with('success', __('app.created successfully'));
     }
@@ -106,17 +98,12 @@ class NewsAdminController extends Controller
         $validated['is_featured'] = $request->has('is_featured') ? 1 : 0;
         unset($validated['image'], $validated['image_tablet'], $validated['image_mobile']);
 
-        $announcementData = $request->validate([
-            'announcement_visibility' => 'nullable|in:news_only,announcement_only,both',
-            'announcement_text' => 'nullable|string|max:255',
-            'announcement_cta' => 'nullable|string|max:100',
-            'announcement_badge' => 'nullable|in:LIVE,INFO,ALERT,NEW',
-            'announcement_start' => 'nullable|date',
-            'announcement_end' => 'nullable|date|after_or_equal:announcement_start',
-        ]);
-
-        $validated = array_merge($validated, $announcementData);
-        $validated['announcement_visibility'] = $validated['announcement_visibility'] ?? 'news_only';
+        if (empty($validated['excerpt']) && !empty($validated['body'])) {
+            $validated['excerpt'] = $this->generateExcerpt($validated['body']);
+        }
+        if (empty($validated['excerpt_en']) && !empty($validated['body_en'])) {
+            $validated['excerpt_en'] = $this->generateExcerpt($validated['body_en']);
+        }
 
         $news->update($validated);
 
@@ -132,8 +119,6 @@ class NewsAdminController extends Controller
             $news->clearMediaCollection('news_mobile');
             $news->addMediaFromRequest('image_mobile')->toMediaCollection('news_mobile');
         }
-
-        $this->syncNewsAnnouncement($news);
 
         return redirect()->route('news-admin.index')->with('success', __('app.updated successfully'));
     }
@@ -175,38 +160,32 @@ class NewsAdminController extends Controller
         return redirect()->route('news-admin.index')->with('success', __('app.duplicated successfully'));
     }
 
-    private function syncNewsAnnouncement(News $news)
+    private function generateExcerpt(string $html): string
     {
-        $visibility = $news->announcement_visibility ?? 'news_only';
+        $text = trim(strip_tags($html));
+        if (empty($text)) return '';
 
-        if ($visibility === 'news_only') {
-            Announcement::where('news_id', $news->id)->where('source_type', 'news')->delete();
-            return;
+        preg_match_all('/[^.!?。]+[.!?。]+/', $text, $matches);
+        $sentences = $matches[0] ?? [];
+
+        $excerpt = '';
+        if (!empty($sentences)) {
+            foreach ($sentences as $sentence) {
+                if (mb_strlen($excerpt) >= 150) break;
+                $excerpt .= trim($sentence) . ' ';
+            }
+            $excerpt = trim($excerpt);
+        } else {
+            $excerpt = $text;
         }
 
-        $announcementText = $news->announcement_text ?: $news->getLocalizationTitle();
+        if (mb_strlen($excerpt) > 200) {
+            $excerpt = mb_substr($excerpt, 0, 197);
+            $excerpt = preg_replace('/\s+\S*$/', '', $excerpt) . '...';
+        } elseif (mb_strlen($text) > mb_strlen($excerpt)) {
+            $excerpt = preg_replace('/[.!?。]+$/', '', $excerpt) . '...';
+        }
 
-        $slug = $news->slug ?? $news->id;
-        $newsLink = '/en/news/' . $slug;
-
-        $badgeType = in_array($news->announcement_badge, ['LIVE', 'INFO', 'ALERT', 'NEW'])
-            ? $news->announcement_badge
-            : 'NEW';
-
-        Announcement::updateOrCreate(
-            ['news_id' => $news->id, 'source_type' => 'news'],
-            [
-                'title' => $news->getLocalizationTitle(),
-                'text' => $announcementText,
-                'badge_type' => $badgeType,
-                'cta_text' => $news->announcement_cta,
-                'link' => $newsLink,
-                'target_view' => 'both',
-                'is_active' => (bool) $news->status,
-                'start_date' => $news->announcement_start,
-                'end_date' => $news->announcement_end,
-                'order_no' => Announcement::max('order_no') + 1,
-            ]
-        );
+        return $excerpt;
     }
 }

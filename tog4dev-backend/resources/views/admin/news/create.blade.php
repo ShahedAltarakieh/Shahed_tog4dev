@@ -37,14 +37,14 @@
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label for="excerpt">{{ __('app.short description') }} (AR)</label>
-                                <textarea id="excerpt" name="excerpt" placeholder="{{ __('app.short description') }}"
+                                <label for="excerpt">{{ __('app.short description') }} (AR) <small class="text-muted">— {{ __('app.auto_generated_hint') }}</small></label>
+                                <textarea id="excerpt" name="excerpt" placeholder="{{ __('app.auto_generated_from_content') }}"
                                     class="form-control" rows="3">{{ old('excerpt') }}</textarea>
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label for="excerpt_en">{{ __('app.short description') }} (EN)</label>
-                                <textarea id="excerpt_en" name="excerpt_en" placeholder="{{ __('app.short description') }}"
+                                <label for="excerpt_en">{{ __('app.short description') }} (EN) <small class="text-muted">— {{ __('app.auto_generated_hint') }}</small></label>
+                                <textarea id="excerpt_en" name="excerpt_en" placeholder="{{ __('app.auto_generated_from_content') }}"
                                     class="form-control" rows="3">{{ old('excerpt_en') }}</textarea>
                             </div>
 
@@ -128,50 +128,6 @@
                                 <input type="checkbox" data-plugin="switchery" data-color="#3bafda" name="is_featured" value="1" {{ old('is_featured') ? 'checked' : '' }} />
                             </div>
 
-                            <div class="col-md-12 mt-3">
-                                <hr>
-                                <h5 class="header-title mb-3"><i class="fas fa-bullhorn me-1"></i> {{ __('app.announcement_settings') }}</h5>
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                <label>{{ __('app.announcement_visibility') }}</label>
-                                <select name="announcement_visibility" class="form-control" id="announcement_visibility">
-                                    <option value="news_only" {{ old('announcement_visibility', 'news_only') == 'news_only' ? 'selected' : '' }}>{{ __('app.news_page_only') }}</option>
-                                    <option value="announcement_only" {{ old('announcement_visibility') == 'announcement_only' ? 'selected' : '' }}>{{ __('app.announcement_bar_only') }}</option>
-                                    <option value="both" {{ old('announcement_visibility') == 'both' ? 'selected' : '' }}>{{ __('app.both') }}</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group col-md-6 announcement-fields" style="display:none;">
-                                <label>{{ __('app.announcement_badge') }}</label>
-                                <select name="announcement_badge" class="form-control">
-                                    <option value="NEW">✨ NEW</option>
-                                    <option value="LIVE">🔴 LIVE</option>
-                                    <option value="INFO">ℹ️ INFO</option>
-                                    <option value="ALERT">⚠️ ALERT</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group col-md-12 announcement-fields" style="display:none;">
-                                <label>{{ __('app.announcement_short_text') }}</label>
-                                <input type="text" name="announcement_text" class="form-control" value="{{ old('announcement_text') }}" placeholder="{{ __('app.announcement_text_placeholder') }}" maxlength="255">
-                            </div>
-
-                            <div class="form-group col-md-6 announcement-fields" style="display:none;">
-                                <label>{{ __('app.cta_text') }}</label>
-                                <input type="text" name="announcement_cta" class="form-control" value="{{ old('announcement_cta') }}" placeholder="{{ __('app.explore_now') }}">
-                            </div>
-
-                            <div class="form-group col-md-3 announcement-fields" style="display:none;">
-                                <label>{{ __('app.start_date') }}</label>
-                                <input type="datetime-local" name="announcement_start" class="form-control" value="{{ old('announcement_start') }}">
-                            </div>
-
-                            <div class="form-group col-md-3 announcement-fields" style="display:none;">
-                                <label>{{ __('app.end_date') }}</label>
-                                <input type="datetime-local" name="announcement_end" class="form-control" value="{{ old('announcement_end') }}">
-                            </div>
-
                             <div class="form-group col-md-12 text-center mt-3">
                                 <button type="submit" class="btn btn-primary px-5">{{ __('app.save') }}</button>
                             </div>
@@ -211,10 +167,12 @@ var quillBodyEn = new Quill('#editor-body-en', {
 
 quillBody.on('text-change', function() {
     document.getElementById('body').value = quillBody.root.innerHTML;
+    autoGenerateExcerpt('body', 'excerpt');
 });
 
 quillBodyEn.on('text-change', function() {
     document.getElementById('body_en').value = quillBodyEn.root.innerHTML;
+    autoGenerateExcerpt('body_en', 'excerpt_en');
 });
 
 document.querySelector('form').addEventListener('submit', function() {
@@ -222,14 +180,42 @@ document.querySelector('form').addEventListener('submit', function() {
     document.getElementById('body_en').value = quillBodyEn.root.innerHTML;
 });
 
-var visSelect = document.getElementById('announcement_visibility');
-function toggleAnnouncementFields() {
-    var show = visSelect.value !== 'news_only';
-    document.querySelectorAll('.announcement-fields').forEach(function(el) {
-        el.style.display = show ? '' : 'none';
-    });
+function autoGenerateExcerpt(bodyId, excerptId) {
+    var excerptField = document.getElementById(excerptId);
+    if (excerptField.dataset.manuallyEdited === 'true') return;
+
+    var html = document.getElementById(bodyId).value;
+    var tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    var text = (tmp.textContent || tmp.innerText || '').trim();
+
+    if (!text) { excerptField.value = ''; return; }
+
+    var sentences = text.match(/[^.!?。]+[.!?。]+/g);
+    var excerpt = '';
+    if (sentences && sentences.length > 0) {
+        for (var i = 0; i < sentences.length && excerpt.length < 150; i++) {
+            excerpt += sentences[i].trim() + ' ';
+        }
+        excerpt = excerpt.trim();
+    } else {
+        excerpt = text;
+    }
+
+    if (excerpt.length > 200) {
+        excerpt = excerpt.substring(0, 197).replace(/\s+\S*$/, '') + '...';
+    } else if (text.length > excerpt.length) {
+        excerpt = excerpt.replace(/[.!?。]+$/, '') + '...';
+    }
+
+    excerptField.value = excerpt;
 }
-visSelect.addEventListener('change', toggleAnnouncementFields);
-toggleAnnouncementFields();
+
+document.getElementById('excerpt').addEventListener('input', function() {
+    this.dataset.manuallyEdited = 'true';
+});
+document.getElementById('excerpt_en').addEventListener('input', function() {
+    this.dataset.manuallyEdited = 'true';
+});
 </script>
 @endsection

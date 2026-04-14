@@ -186,16 +186,21 @@ Full-stack announcement bar for displaying rotating announcements below the site
 **Backend** (`tog4dev-backend/`):
 - Model: `Announcement` with scopes `active()`, `inDate()`, `forTarget($target)`
 - Migration: `announcements` table (id, title, text, short_text, link, cta_text, badge_type, target_view, source_type, news_id, is_active, order_no, start_date, end_date)
-- News integration: 6 announcement fields added to `news` table (announcement_visibility, announcement_text, announcement_cta, announcement_badge, announcement_start, announcement_end)
-- Admin Controller: `AnnouncementAdminController` (CRUD, toggle status, reorder)
+- Admin Controller: `AnnouncementAdminController` (CRUD, toggle status, reorder) with strict validation for `source_type` (manual/news) and `news_id` (required when source is news)
 - API Controller: `AnnouncementApiController` — `GET /api/v1/announcements?target=desktop|mobile`
-- Admin Views: `admin/announcements/` (index, create, edit) with live preview, drag reorder, status toggles
-- News form integration: announcement visibility/badge/text/CTA/dates fields in news create/edit, auto-sync via `syncNewsAnnouncement()`
+- Admin Views: `admin/announcements/` (index, create, edit) with:
+  - Source type selector (Manual vs Linked News) with auto-fill from news articles
+  - Interactive live preview showing how announcements appear on the frontend
+  - Desktop/mobile preview toggle
+  - Locale-aware news URL generation (EN/AR slugs)
+  - Drag reorder, status toggles, SweetAlert2 delete confirmation
+- Announcement management is centralized in Admin → Announcements (removed from News forms)
+- News forms retain auto-excerpt generation from body content (server-side + client-side)
 - Sidebar: Standalone "Announcements" link with bullhorn icon above News & Media section
-- Translation keys: 35+ announcement-related keys in both EN and AR
+- Translation keys: 45+ announcement-related keys in both EN and AR
 
 **Frontend** (`tog4dev-frontend/`):
-- Service: `AnnouncementService` (`shared/services/announcement/`) with caching via `shareReplay`
+- Service: `AnnouncementService` (`shared/services/announcement/`) with per-target caching via `shareReplay`, error-resilient (clears cache on failure, doesn't permanently cache errors)
 - Component: `AnnouncementBarComponent` (`shared/components/announcement-bar/`) — standalone Angular component
 - Features: auto-rotate (5s), pause on hover, swipe navigation, close/dismiss (sessionStorage), responsive (short_text for mobile), RTL support
 - Badge types: LIVE (red), INFO (blue), ALERT (amber), NEW (green)
