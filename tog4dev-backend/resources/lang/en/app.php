@@ -373,6 +373,7 @@ return [
     'admin_team' => 'Admin Team',
     'messages' => 'Messages',
     'system_settings' => 'System Settings',
+    'system_tools' => 'System Tools',
 
     'announcements' => 'Announcements',
     'announcement_management' => 'Announcement Management',

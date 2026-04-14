@@ -121,10 +121,17 @@ Major visual and structural overhaul of the Laravel admin dashboard:
 - Empty state and breadcrumb components
 - Full RTL support via `admin-modern-rtl.css`
 
-**Sidebar Reorganization** (`includes/admin/side-bar.blade.php`):
-- Grouped into labeled sections: MAIN, CONTENT, BUSINESS, USERS, COMMUNICATION, SYSTEM
+**Sidebar IA Overhaul** (`includes/admin/side-bar.blade.php`):
+- Restructured into cleaner sections: MAIN, CONTENT CENTER, BUSINESS, CUSTOMERS, COMMUNICATIONS, SYSTEM
+- Flattened Business section: Payments, Subscriptions, Collection Team, Upload Sheets at top level
+- Flattened Customers section: All Customers and Influencers at top level
+- Settings moved to top-level under System; Activity Logs/Health/SEO/Short Links grouped under "System Tools" submenu
+- Active menu indicator: yellow accent bar on left side via `active-menu` class with `request()->routeIs()` detection
+- Chevron rotation animation for expand/collapse (uses Font Awesome `fa-chevron-down` + CSS rotate)
+- Submenu dots: `.submenu-dot` circles instead of `fa-dot-circle` icons for cleaner 3rd-level items
+- `aria-expanded` attributes on all collapse toggles for accessibility
+- Collapsed sidebar (`body.sidebar-enable`): icons only, labels hidden, flyout submenus on hover
 - Section headers styled as uppercase labels (`sidebar-section-title`)
-- Updated icons for better visual consistency
 - Dark gradient sidebar background with hover states
 
 **Dashboard Home Redesign** (`admin/dashboard.blade.php`):
@@ -158,19 +165,30 @@ Major visual and structural overhaul of the Laravel admin dashboard:
 - Routes: `system.activity-logs`, `system.notifications`, `system.settings`, `system.health`, `system.reports`, `system.media-library` (all under `/system` prefix with `master` middleware)
 
 **Premium UX Components** (`public/js/admin-components.js`):
-- Command Palette (Ctrl+K) — search across pages with keyboard navigation
+- Command Palette (Ctrl+K) — search across pages with keyboard navigation, improved result icons with teal icon boxes, better empty state
 - Toast notification system (`window.AdminToast.show()`) — success/error/warning/info variants with auto-dismiss
 - Confirm dialog (`window.AdminConfirm.show()`) — promise-based confirmation modals
+- Sidebar menu arrow init: auto-rotates chevrons based on collapse state via Bootstrap collapse events
+- Sidebar memory: persists open/closed state across page loads via localStorage
 
 **Enhanced CSS Components** (`public/css/admin-modern.css`):
 - Activity timeline (`.activity-timeline`, `.activity-item`, `.activity-icon`)
 - Operations panel (`.operations-list`, `.operation-item`)
-- Settings navigation (`.settings-nav`, `.settings-nav-item`)
+- Settings navigation (`.settings-nav`, `.settings-nav-item`) with rounded border-radius
 - Media grid (`.media-grid`, `.media-card`, `.media-thumb`)
 - Status chips, action dropdowns, bulk actions bar, column chooser
 - Form enhancements (focus rings, help text, character counters)
 - Skeleton loading animation
 - Sticky table headers
+- Page header box (`.page-header-box`) for consistent page title layout
+- Back button (`.page-back-btn`) for sub-page navigation
+- Custom date card (`.custom-date-card`) with dashed border style
+- Improved breadcrumb component (`.breadcrumb-modern`) with FA separator icons
+- Dashboard KPI cards: conditional top-bar (only on hover/active), active card border highlight
+- Quick actions grid: fixed 3-column on desktop, 2-column on mobile
+- Collapsed sidebar styles: icon-only mode, flyout submenus on hover
+- Responsive breakpoints: 991px tablet, 767px mobile, 575px small mobile
+- content-page transition for smooth sidebar collapse/expand
 
 **Page Header Modernization** (`includes/admin/header.blade.php`):
 - Breadcrumb navigation

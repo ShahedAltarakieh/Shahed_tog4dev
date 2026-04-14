@@ -2,9 +2,17 @@
 
 @section('title') {{ __('app.home_page') }} @endsection
 
+@section('breadcrumb')
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb-modern">
+        <li class="breadcrumb-item active">{{ __('app.dashboard') }}</li>
+    </ol>
+</nav>
+@endsection
+
 @section('content')
 
-    <div class="row mt-2 mb-2">
+    <div class="row mb-3">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center flex-wrap" style="gap:12px;">
                 <div>
@@ -129,7 +137,7 @@
         </div>
 
         <div class="col-md-6 col-xl-9">
-            <div class="card" style="border:1px dashed var(--admin-gray-300) !important;">
+            <div class="card custom-date-card">
                 <div class="card-body" style="padding:16px 24px !important;">
                     <div class="d-flex align-items-center justify-content-between flex-wrap" style="gap:12px;">
                         <span class="kpi-label" style="margin-bottom:0;">{{ __('app.custom date') }}</span>

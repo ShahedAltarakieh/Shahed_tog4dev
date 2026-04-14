@@ -373,6 +373,7 @@ return [
     'admin_team' => 'فريق الإدارة',
     'messages' => 'الرسائل',
     'system_settings' => 'إعدادات النظام',
+    'system_tools' => 'أدوات النظام',
 
     'announcements' => 'الإعلانات',
     'announcement_management' => 'إدارة الإعلانات',

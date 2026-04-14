@@ -1,6 +1,7 @@
 .content-page {
     margin-left: 0 !important;
     margin-right: var(--sidebar-width) !important;
+    transition: margin-right 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .left-side-menu {
@@ -28,7 +29,12 @@ select.form-control {
 }
 
 .nav-second-level > li > a {
-    padding: 8px 52px 8px 16px !important;
+    padding: 7px 49px 7px 16px !important;
+}
+
+.nav-third-level > li > a {
+    padding-right: 64px !important;
+    padding-left: 16px !important;
 }
 
 .nav-second-level .nav-second-level > li > a {
@@ -37,6 +43,11 @@ select.form-control {
 }
 
 .status-dot {
+    margin-right: 0;
+    margin-left: 6px;
+}
+
+.submenu-dot {
     margin-right: 0;
     margin-left: 6px;
 }
@@ -87,6 +98,7 @@ select.form-control {
 .settings-nav-item {
     border-left: none;
     border-right: 3px solid transparent;
+    border-radius: var(--admin-radius-sm) 0 0 var(--admin-radius-sm);
 }
 
 .settings-nav-item.active {
@@ -99,7 +111,7 @@ select.form-control {
     margin-left: 8px;
 }
 
-.breadcrumb-item + .breadcrumb-item::before {
+.breadcrumb-modern .breadcrumb-item + .breadcrumb-item::before {
     content: "\f104" !important;
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
@@ -117,8 +129,38 @@ select.form-control {
     text-align: left;
 }
 
+#sidebar-menu > ul > li > a .menu-arrow {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+#sidebar-menu > ul > li > a.active-menu::before {
+    left: auto;
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.page-back-btn {
+    flex-direction: row-reverse;
+}
+
+body.sidebar-enable .content-page {
+    margin-right: var(--sidebar-collapsed-width) !important;
+    margin-left: 0 !important;
+}
+
+body.sidebar-enable .left-side-menu #sidebar-menu > ul > li:hover > a + .collapse {
+    left: auto;
+    right: var(--sidebar-collapsed-width);
+    border-radius: var(--admin-radius-sm) 0 0 var(--admin-radius-sm);
+}
+
 @media (max-width: 991.98px) {
     .content-page {
+        margin-right: 0 !important;
+    }
+
+    body.sidebar-enable .content-page {
         margin-right: 0 !important;
     }
 }

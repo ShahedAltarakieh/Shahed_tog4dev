@@ -174,6 +174,15 @@
         <div class="content-page">
             <div class="content">
                 <div class="container-fluid">
+
+                    @hasSection('breadcrumb')
+                    <div class="row mt-2 mb-1">
+                        <div class="col-12">
+                            @yield('breadcrumb')
+                        </div>
+                    </div>
+                    @endif
+
                     @yield('content')
                     @include('includes.admin.loader')
                 </div>
@@ -215,7 +224,7 @@
         <script src="{{ asset('js/pages/datatables.init.js?v=1.2') }}"></script>
     @endif
     <script src="{{ asset('js/main.js?v=1.2') }}"></script>
-    <script src="{{ asset('js/admin-components.js?v=1.1') }}"></script>
+    <script src="{{ asset('js/admin-components.js?v=1.3') }}"></script>
 
     <script type="text/javascript">
         $(".custom-file-input").on("change", function () {
@@ -245,18 +254,9 @@
                 }
             });
 
-            // Topbar search focus on Ctrl+K
-            $(document).on('keydown', function(e) {
-                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-                    e.preventDefault();
-                    $('#topbarSearch').focus();
-                    if (window.CommandPalette) window.CommandPalette.toggle();
-                }
-            });
-
             $('#topbarSearch').on('focus', function() {
                 if (window.CommandPalette) {
-                    window.CommandPalette.toggle();
+                    window.CommandPalette.open();
                     $(this).blur();
                 }
             });

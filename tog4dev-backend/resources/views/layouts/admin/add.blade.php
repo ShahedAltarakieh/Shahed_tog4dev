@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ app()->getLocale() }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
 
@@ -184,6 +184,14 @@
                 <!-- Start Content-->
                 <div class="container-fluid">
 
+                    @hasSection('breadcrumb')
+                    <div class="row mt-2 mb-2">
+                        <div class="col-12">
+                            @yield('breadcrumb')
+                        </div>
+                    </div>
+                    @endif
+
                     @yield('content')
 
                 </div> <!-- container -->
@@ -242,7 +250,7 @@
     <!-- <script src="{{ asset('js/pages/form-quilljs.init.js') }}"></script> -->
 
     <script src="{{ asset('js/main.js?v=1.2') }}"></script>
-    <script src="{{ asset('js/admin-components.js?v=1.0') }}"></script>
+    <script src="{{ asset('js/admin-components.js?v=1.3') }}"></script>
 
     <script type="text/javascript">
         $(".custom-file-input").on("change", function() {
@@ -250,90 +258,77 @@
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
 
-        $(document).on('click', '.btn-delete', function (e) {
-            e.preventDefault();
-            var id = $(this).data("id");
-            var table = $(this).data("table");
-            var url = '';
-            if(table){
-                url = '/'+ table +'/' + id;
-            }
+        $(document).ready(function () {
+            var openMenus = JSON.parse(localStorage.getItem('sidebarOpenMenus') || '[]');
+            openMenus.forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) { $(el).addClass('show'); }
+            });
 
-            Swal.fire({
-                title: "",
-                text: "{{ __('app.are you sure you want delete this record!') }}",
-                type: "warning",
-                showCancelButton: !0,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "{{ __('app.yes delete it') }}",
-                cancelButtonText: "{{ __('app.no close') }}",
-                confirmButtonClass: "btn btn-success mt-2",
-                cancelButtonClass: "btn btn-danger ml-2 mt-2",
-                buttonsStyling: !1
-            })
-                .then((result) => {
+            $('#side-menu [data-toggle="collapse"]').on('click', function() {
+                var target = $(this).attr('href') || $(this).data('target');
+                if (target) {
+                    setTimeout(function() {
+                        var menus = [];
+                        $('#side-menu .collapse.show').each(function() { menus.push(this.id); });
+                        localStorage.setItem('sidebarOpenMenus', JSON.stringify(menus));
+                    }, 350);
+                }
+            });
+
+            $('#topbarSearchAdd').on('focus', function() {
+                if (window.CommandPalette) {
+                    window.CommandPalette.open();
+                    $(this).blur();
+                }
+            });
+
+            $(document).on('click', '.btn-delete', function (e) {
+                e.preventDefault();
+                var id = $(this).data("id");
+                var table = $(this).data("table");
+                var url = '';
+                if (table) { url = '/' + table + '/' + id; }
+                Swal.fire({
+                    title: "",
+                    text: "{{ __('app.are you sure you want delete this record!') }}",
+                    type: "warning",
+                    showCancelButton: !0,
+                    confirmButtonColor: "#13585D",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "{{ __('app.yes delete it') }}",
+                    cancelButtonText: "{{ __('app.no close') }}",
+                    confirmButtonClass: "btn btn-success mt-2",
+                    cancelButtonClass: "btn btn-danger ml-2 mt-2",
+                    buttonsStyling: !1
+                }).then((result) => {
                     if (result.value) {
-                        console.log("test",url)
                         $.ajax({
-                            type: "DELETE",
-                            url: url,
-                            data: {
-
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
+                            type: "DELETE", url: url, data: {},
+                            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                             success: function (response) {
-                                console.log(data)
                                 var data = JSON.parse(response);
                                 if (data.status == "success") {
-                                    Swal.fire({
-                                        title: "",
-                                        text: "{{ __('app.deleted successfully') }}",
-                                        type: "success",
-                                        confirmButtonText: "{{ __('app.ok') }}"
-                                    }).then(
-                                        (result) => {
-                                            location.reload();
-                                        });
+                                    Swal.fire({ title: "", text: "{{ __('app.deleted successfully') }}", type: "success", confirmButtonText: "{{ __('app.ok') }}" }).then((result) => { location.reload(); });
                                 } else {
-                                    Swal.fire({
-                                        title: "",
-                                        text: "{{ __("app.ops there are problem, try again") }}",
-                                        type: "error",
-                                        confirmButtonText: "{{ __('app.ok') }}"
-                                    }).then(
-                                        (result) => {
-                                            location.reload();
-                                        });
+                                    Swal.fire({ title: "", text: "{{ __("app.ops there are problem, try again") }}", type: "error", confirmButtonText: "{{ __('app.ok') }}" }).then((result) => { location.reload(); });
                                 }
-
                             },
                             error: function (err) {
-                                Swal.fire({
-                                    title: "",
-                                    text: "حدث خطأ, يرجى المحاولة لاحقاً",
-                                    type: "error",
-                                    confirmButtonText: "موافق"
-                                }).then(
-                                    (result) => {
-                                        location.reload();
-                                    });
+                                Swal.fire({ title: "", text: "{{ __("app.ops there are problem, try again") }}", type: "error", confirmButtonText: "{{ __('app.ok') }}" }).then((result) => { location.reload(); });
                             }
                         });
                     }
                 });
-
+            });
         });
     </script>
     <script>
         function refreshToken(){
             $.get('/refresh-csrf').done(function(data){
-                $("[name=_token]").val(data); // the new token
+                $("[name=_token]").val(data);
             });
         }
-
         setInterval(refreshToken, 300000);
     </script>
     @yield('jsCode')
