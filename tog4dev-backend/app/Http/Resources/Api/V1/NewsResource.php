@@ -10,7 +10,7 @@ class NewsResource extends JsonResource
     {
         $body = $this->getLocalizationBody();
         $readingTime = calculateReadingTime($body);
-        $isRecent = $this->created_at && $this->created_at->greaterThanOrEqualTo(now()->subDays(7));
+        $isRecent = $this->published_at && $this->published_at->greaterThanOrEqualTo(now()->subDays(7));
 
         return [
             'id' => $this->id,

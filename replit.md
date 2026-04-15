@@ -95,7 +95,7 @@ Full-stack module for news articles and media gallery (photos/videos).
 - Navigation: "News & Gallery" dropdown in header with SVG icons (News/Photos/Videos), click+hover toggle, rotating arrow indicator, closes on outside click
 - Features: debounced search, category filtering, pagination (7 items/page: 1 featured + 6 small cards), share (Facebook/WhatsApp/Copy link), breadcrumbs, loading/empty/error states, "Read More" buttons
 - Pagination layout: every page shows 1 large featured card (first item) + up to 6 small cards (3-column grid); consistent across all pages including search/filter results
-- Recent badge: automatic "NEW" badge on news created within 7 days (replaces old "Featured" toggle); positioned top-right on image for both featured and small cards
+- Recent badge: automatic "NEW" badge on news published within 7 days (`published_at >= now - 7 days`); positioned top-right on image for both featured and small cards
 - Card layout: category LEFT + date RIGHT in same row; "Read More" button at bottom of card content
 - Mobile UX: overflow-x hidden, category pills wrap on mobile, article-body word-break, responsive images
 - Announcement bar: text-length-based rotation timing (6s short / 10s medium / 14s long); mobile uses marquee ticker scroll (no clipping/truncation); isMobile flag with window resize listener

@@ -46,7 +46,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        @if($item->created_at && $item->created_at->greaterThanOrEqualTo(now()->subDays(7)))
+                                        @if($item->published_at && $item->published_at->greaterThanOrEqualTo(now()->subDays(7)))
                                             <span class="badge badge-danger">{{ __('app.new') }}</span>
                                         @else
                                             <span class="badge badge-light">-</span>
