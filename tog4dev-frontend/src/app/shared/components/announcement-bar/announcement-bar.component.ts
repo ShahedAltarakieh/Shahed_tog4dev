@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, Inject, PLATFORM_ID, NgZone, HostBinding } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, Inject, PLATFORM_ID, NgZone, HostBinding, HostListener } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AnnouncementService, Announcement } from 'app/shared/services/announcement/announcement.service';
@@ -19,6 +19,7 @@ export class AnnouncementBarComponent implements OnInit, AfterViewInit, OnDestro
   transitioning = false;
   stickyTop = 0;
   isHeaderScrolled = false;
+  isMobile = false;
 
   @HostBinding('style.top.px')
   get hostStickyTop(): number {
@@ -48,10 +49,18 @@ export class AnnouncementBarComponent implements OnInit, AfterViewInit, OnDestro
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
+  @HostListener('window:resize')
+  onResize(): void {
+    if (this.isBrowser) {
+      this.isMobile = window.innerWidth < 768;
+    }
+  }
+
   ngOnInit(): void {
     if (!this.isBrowser) return;
 
-    const target = window.innerWidth < 768 ? 'mobile' : 'desktop';
+    this.isMobile = window.innerWidth < 768;
+    const target = this.isMobile ? 'mobile' : 'desktop';
     this.announcementService.getAnnouncements(target).subscribe({
       next: (items) => {
         this.announcements = items;

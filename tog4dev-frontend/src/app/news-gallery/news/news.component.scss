@@ -180,6 +180,27 @@ $radius: 14px;
             img { width: 80px; opacity: 0.4; object-fit: contain; }
         }
 
+        .featured-recent-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #e74c3c;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(#e74c3c, 0.35);
+            z-index: 2;
+
+            [dir="rtl"] & {
+                right: auto;
+                left: 12px;
+            }
+        }
+
         .featured-gradient {
             position: absolute;
             inset: 0;
@@ -192,40 +213,12 @@ $radius: 14px;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        position: relative;
-
-        .featured-recent-badge {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: #e74c3c;
-            color: #fff;
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 8px rgba(#e74c3c, 0.35);
-            z-index: 2;
-
-            [dir="rtl"] & {
-                right: auto;
-                left: 16px;
-            }
-        }
 
         .featured-top-meta {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 14px;
-            padding-right: 80px;
-
-            [dir="rtl"] & {
-                padding-right: 0;
-                padding-left: 80px;
-            }
         }
 
         .featured-category {
@@ -448,6 +441,13 @@ $radius: 14px;
     padding: 20px 0;
 }
 
+.skeleton-featured {
+    height: 280px;
+    border-radius: $radius;
+    background: #eee;
+    margin-bottom: 30px;
+}
+
 .skeleton-card {
     border-radius: $radius;
     overflow: hidden;
@@ -584,12 +584,6 @@ $radius: 14px;
             padding: 20px;
 
             .featured-title { font-size: 1.25rem; }
-            .featured-top-meta { padding-right: 60px; }
-
-            [dir="rtl"] & .featured-top-meta {
-                padding-right: 0;
-                padding-left: 60px;
-            }
         }
     }
 

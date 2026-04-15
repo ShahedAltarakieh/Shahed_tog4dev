@@ -93,11 +93,12 @@ Full-stack module for news articles and media gallery (photos/videos).
 - Pages: `NewsComponent`, `NewsDetailComponent` (modernized card layout with gradient hero, skeleton loaders, icon-only share buttons, enhanced related cards), `PhotosComponent` (uniform 4:3 grid, lightbox with prev/next navigation + keyboard support), `VideosComponent` (embedded player)
 - Routes: `/en/news`, `/en/news/:slug`, `/en/photos`, `/en/videos` + Arabic equivalents (landing page removed; `/en/news-gallery` redirects to `/en/news`)
 - Navigation: "News & Gallery" dropdown in header with SVG icons (News/Photos/Videos), click+hover toggle, rotating arrow indicator, closes on outside click
-- Features: debounced search, category filtering, pagination (9 items/page, 3x3 grid), share (Facebook/WhatsApp/Copy link), breadcrumbs, loading/empty/error states, "Read More" buttons
-- Recent badge: automatic "NEW" badge on news created within 7 days (replaces old "Featured" toggle); positioned top-right on featured card, overlaid on image for small cards
+- Features: debounced search, category filtering, pagination (7 items/page: 1 featured + 6 small cards), share (Facebook/WhatsApp/Copy link), breadcrumbs, loading/empty/error states, "Read More" buttons
+- Pagination layout: every page shows 1 large featured card (first item) + up to 6 small cards (3-column grid); consistent across all pages including search/filter results
+- Recent badge: automatic "NEW" badge on news created within 7 days (replaces old "Featured" toggle); positioned top-right on image for both featured and small cards
 - Card layout: category LEFT + date RIGHT in same row; "Read More" button at bottom of card content
 - Mobile UX: overflow-x hidden, category pills wrap on mobile, article-body word-break, responsive images
-- Announcement bar: text-length-based rotation timing (6s short / 10s medium / 14s long); mobile text fully readable (no clipping/truncation)
+- Announcement bar: text-length-based rotation timing (6s short / 10s medium / 14s long); mobile uses marquee ticker scroll (no clipping/truncation); isMobile flag with window resize listener
 - Translation keys: `min read`, `new` in both en.json and ar.json
 
 ## Footer
