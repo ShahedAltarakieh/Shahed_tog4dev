@@ -73,7 +73,7 @@
 
                     <li class="dropdown notification-list topbar-dropdown d-none d-md-block">
                         <div class="topbar-search">
-                            <input type="text" class="form-control topbar-search-input" placeholder="{{ __('app.search_placeholder') }}" id="topbarSearchAdd">
+                            <input type="text" class="topbar-search-input" placeholder="{{ __('app.search_placeholder') }}" id="topbarSearchAdd">
                             <span class="topbar-search-icon"><i class="fas fa-search"></i></span>
                             <kbd class="topbar-search-kbd">{{ app()->getLocale() == 'ar' ? 'Ctrl+K' : '⌘K' }}</kbd>
                         </div>
