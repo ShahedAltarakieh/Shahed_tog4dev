@@ -19,8 +19,13 @@ class AnnouncementApiController extends Controller
             ->orderBy('created_at', 'desc')
             ->get([
                 'id', 'title', 'text', 'short_text', 'link', 'cta_text',
-                'badge_type', 'target_view', 'source_type',
+                'badge_type', 'target_view', 'source_type', 'created_at',
             ]);
+
+        $announcements->transform(function ($item) {
+            $item->reading_time = calculateReadingTime($item->text);
+            return $item;
+        });
 
         return response()->json([
             'data' => $announcements,

@@ -42,7 +42,6 @@ class NewsAdminController extends Controller
         ]);
 
         $validated['status'] = $request->has('status') ? 1 : 0;
-        $validated['is_featured'] = $request->has('is_featured') ? 1 : 0;
         $validated['position'] = $validated['position'] ?? 0;
         unset($validated['image'], $validated['image_tablet'], $validated['image_mobile']);
 
@@ -95,7 +94,6 @@ class NewsAdminController extends Controller
         ]);
 
         $validated['status'] = $request->has('status') ? 1 : 0;
-        $validated['is_featured'] = $request->has('is_featured') ? 1 : 0;
         unset($validated['image'], $validated['image_tablet'], $validated['image_mobile']);
 
         if (empty($validated['excerpt']) && !empty($validated['body'])) {

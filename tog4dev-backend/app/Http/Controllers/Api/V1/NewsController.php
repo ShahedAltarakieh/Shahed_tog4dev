@@ -14,10 +14,9 @@ class NewsController extends Controller
     public function index(Request $request)
     {
         try {
-            $perPage = $request->query('per-page', 12);
+            $perPage = $request->query('per-page', 9);
             $categorySlug = $request->query('category');
             $search = $request->query('search');
-            $featured = $request->query('featured');
 
             $query = News::published()
                 ->with(['category', 'media'])
@@ -41,10 +40,6 @@ class NewsController extends Controller
                       ->orWhereRaw('LOWER(body) LIKE ?', [$searchTerm])
                       ->orWhereRaw('LOWER(body_en) LIKE ?', [$searchTerm]);
                 });
-            }
-
-            if ($featured) {
-                $query->where('is_featured', true);
             }
 
             $news = $query->paginate($perPage);

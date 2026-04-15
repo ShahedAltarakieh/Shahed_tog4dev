@@ -75,7 +75,7 @@ export class NewsComponent implements OnInit, OnDestroy {
             category: this.selectedCategory || undefined,
             search: this.searchQuery || undefined,
             page: this.currentPage,
-            perPage: 12,
+            perPage: 9,
         }).subscribe({
             next: (res) => {
                 if (res) {

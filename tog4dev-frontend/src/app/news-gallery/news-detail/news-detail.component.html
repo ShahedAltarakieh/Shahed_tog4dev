@@ -149,6 +149,15 @@
                                     {{ formatDate(article.published_at) }}
                                 </span>
                             }
+                            @if (article.reading_time) {
+                                <span class="article-reading-time">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                    {{ article.reading_time }} {{ "min read" | translate }}
+                                </span>
+                            }
+                            @if (article.is_recent) {
+                                <span class="article-recent-badge">{{ "new" | translate }}</span>
+                            }
                         </div>
                     </div>
 

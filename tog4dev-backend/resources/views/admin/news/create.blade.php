@@ -123,11 +123,6 @@
                                 <input type="checkbox" data-plugin="switchery" data-color="#1bb99a" name="status" value="1" {{ old('status', 1) ? 'checked' : '' }} />
                             </div>
 
-                            <div class="form-group col-md-6">
-                                <label for="is_featured" class="d-block">{{ __('app.featured') }}</label>
-                                <input type="checkbox" data-plugin="switchery" data-color="#3bafda" name="is_featured" value="1" {{ old('is_featured') ? 'checked' : '' }} />
-                            </div>
-
                             <div class="form-group col-md-12 text-center mt-3">
                                 <button type="submit" class="btn btn-primary px-5">{{ __('app.save') }}</button>
                             </div>
