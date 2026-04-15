@@ -120,6 +120,12 @@
     </a>
 </li>
 <li>
+    <a href="{{ route('about-admin.index') }}" data-tooltip="{{ __('app.about us') }} CMS" class="{{ request()->routeIs('about-admin.*') ? 'active-menu' : '' }}">
+        <i class="fas fa-info-circle"></i>
+        <span>{{ __('app.about us') }} CMS</span>
+    </a>
+</li>
+<li>
     <a href="#newsGallery" data-tooltip="{{ __('app.news_media') }}" data-toggle="collapse" aria-expanded="false">
         <i class="fas fa-newspaper"></i>
         <span>{{ __('app.news_media') }}</span>

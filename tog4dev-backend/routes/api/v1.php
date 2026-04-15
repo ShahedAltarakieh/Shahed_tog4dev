@@ -72,6 +72,9 @@ Route::prefix('v1')->group(function () {
 
     Route::get('/announcements', [AnnouncementApiController::class, 'index'])->name('announcements.api');
 
+    Route::get('/about', [\App\Http\Controllers\Api\V1\AboutPageController::class, 'show'])->name('about.show');
+    Route::post('/about/track', [\App\Http\Controllers\Api\V1\AboutPageController::class, 'trackEvent'])->name('about.track');
+
     Route::get('/quick-contributions', [QuickContributionController::class, 'index']);
 
     Route::get('/payment-redirect/{id}', [PaymentController::class, 'paymentRedirect']);

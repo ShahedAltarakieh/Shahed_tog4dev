@@ -1,12 +1,323 @@
 <div class="about-page">
-    <div class="hero-section">
-        <div class="hero-pattern"></div>
-        <div class="container position-relative">
-            <div class="hero-content text-center">
-                <span class="hero-badge">{{ "about us" | translate }}</span>
-                <h1 class="page-title text-white">{{ "who we are?" | translate }}</h1>
-                <p class="hero-subtitle text-white">{{ "together for development" | translate }}</p>
-            </div>
-        </div>
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-pattern"></div>
+    <div class="container position-relative">
+      <div class="hero-content text-center">
+        <span class="hero-badge">{{ "about us" | translate }}</span>
+        @if (getSectionByKey('hero'); as hero) {
+          <h1 class="page-title text-white">{{ hero.title }}</h1>
+          <p class="hero-subtitle text-white">{{ hero.subtitle }}</p>
+          @if (hero.cta_text && hero.cta_link) {
+            <a [href]="hero.cta_link" class="hero-cta-btn">{{ hero.cta_text }}</a>
+          }
+        } @else {
+          <h1 class="page-title text-white">{{ "who we are?" | translate }}</h1>
+          <p class="hero-subtitle text-white">{{ "together for development" | translate }}</p>
+        }
+      </div>
     </div>
+  </div>
+
+  @if (loading) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+    </div>
+  }
+
+  @if (!loading && !error) {
+    @for (section of sections; track section.id) {
+      @if (section.section_key !== 'hero' && section.is_visible) {
+        <!-- Intro Section -->
+        @if (section.section_key === 'intro') {
+          <section class="about-section intro-section">
+            <div class="container">
+              @if (section.title) {
+                <h2 class="section-title">{{ section.title }}</h2>
+              }
+              @if (section.subtitle) {
+                <p class="section-subtitle">{{ section.subtitle }}</p>
+              }
+              @if (section.body) {
+                <div class="intro-body" [innerHTML]="section.body"></div>
+              }
+            </div>
+          </section>
+        }
+
+        <!-- Highlights Section -->
+        @if (section.section_key === 'highlights') {
+          <section class="about-section highlights-section">
+            <div class="container">
+              @if (section.title) {
+                <h2 class="section-title">{{ section.title }}</h2>
+              }
+              <div class="highlights-grid">
+                @for (item of section.items; track item.id) {
+                  <div class="highlight-card">
+                    @if (item.icon) {
+                      <div class="highlight-icon"><i [class]="item.icon"></i></div>
+                    }
+                    @if (item.title) {
+                      <h3>{{ item.title }}</h3>
+                    }
+                    @if (item.description) {
+                      <p>{{ item.description }}</p>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </section>
+        }
+
+        <!-- Statement Section -->
+        @if (section.section_key === 'statement') {
+          <section class="about-section statement-section">
+            <div class="container">
+              <div class="statement-box">
+                @if (section.title) {
+                  <h2>{{ section.title }}</h2>
+                }
+                @if (section.body) {
+                  <div class="statement-body" [innerHTML]="section.body"></div>
+                }
+              </div>
+            </div>
+          </section>
+        }
+
+        <!-- Vision & Mission Section -->
+        @if (section.section_key === 'visionMission') {
+          <section class="about-section vision-mission-section">
+            <div class="container">
+              @if (section.title) {
+                <h2 class="section-title">{{ section.title }}</h2>
+              }
+              <div class="vm-grid">
+                @for (item of section.items; track item.id) {
+                  <div class="vm-card">
+                    @if (item.icon) {
+                      <div class="vm-icon"><i [class]="item.icon"></i></div>
+                    }
+                    @if (item.title) {
+                      <h3>{{ item.title }}</h3>
+                    }
+                    @if (item.description) {
+                      <p>{{ item.description }}</p>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </section>
+        }
+
+        <!-- Core Values Section -->
+        @if (section.section_key === 'coreValues') {
+          <section class="about-section core-values-section">
+            <div class="container">
+              @if (section.title) {
+                <h2 class="section-title">{{ section.title }}</h2>
+              }
+              @if (section.subtitle) {
+                <p class="section-subtitle">{{ section.subtitle }}</p>
+              }
+              <div class="values-grid">
+                @for (item of section.items; track item.id) {
+                  <div class="value-card">
+                    @if (item.icon) {
+                      <div class="value-icon"><i [class]="item.icon"></i></div>
+                    }
+                    @if (item.title) {
+                      <h4>{{ item.title }}</h4>
+                    }
+                    @if (item.description) {
+                      <p>{{ item.description }}</p>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </section>
+        }
+
+        <!-- Founders Section -->
+        @if (section.section_key === 'founders') {
+          <section class="about-section founders-section">
+            <div class="container">
+              @if (section.title) {
+                <h2 class="section-title">{{ section.title }}</h2>
+              }
+              <div class="founders-grid">
+                @for (item of section.items; track item.id) {
+                  <div class="founder-card">
+                    @if (item.image) {
+                      <div class="founder-image">
+                        <img [src]="item.image" [alt]="item.title" loading="lazy">
+                      </div>
+                    }
+                    @if (item.title) {
+                      <h4>{{ item.title }}</h4>
+                    }
+                    @if (item.label) {
+                      <span class="founder-role">{{ item.label }}</span>
+                    }
+                    @if (item.description) {
+                      <p>{{ item.description }}</p>
+                    }
+                    @if (item.social_links && (item.social_links | keyvalue).length) {
+                      <div class="founder-socials">
+                        @for (link of item.social_links | keyvalue; track link.key) {
+                          <a [href]="link.value" target="_blank" rel="noopener">
+                            <i [class]="'fab fa-' + link.key"></i>
+                          </a>
+                        }
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </section>
+        }
+
+        <!-- Beliefs Section -->
+        @if (section.section_key === 'beliefs') {
+          <section class="about-section beliefs-section">
+            <div class="container">
+              @if (section.title) {
+                <h2 class="section-title">{{ section.title }}</h2>
+              }
+              <div class="beliefs-grid">
+                @for (item of section.items; track item.id) {
+                  <div class="belief-card">
+                    @if (item.icon) {
+                      <div class="belief-icon"><i [class]="item.icon"></i></div>
+                    }
+                    @if (item.title) {
+                      <h4>{{ item.title }}</h4>
+                    }
+                    @if (item.description) {
+                      <p>{{ item.description }}</p>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </section>
+        }
+
+        <!-- Stats Section -->
+        @if (section.section_key === 'stats') {
+          <section class="about-section stats-section">
+            <div class="container">
+              @if (section.title) {
+                <h2 class="section-title text-white">{{ section.title }}</h2>
+              }
+              <div class="stats-grid">
+                @for (item of section.items; track item.id) {
+                  <div class="stat-card">
+                    @if (item.icon) {
+                      <div class="stat-icon"><i [class]="item.icon"></i></div>
+                    }
+                    @if (item.value) {
+                      <div class="stat-value">{{ item.value }}</div>
+                    }
+                    @if (item.label) {
+                      <div class="stat-label">{{ item.label }}</div>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </section>
+        }
+
+        <!-- Slogan Section -->
+        @if (section.section_key === 'slogan') {
+          <section class="about-section slogan-section">
+            <div class="container text-center">
+              @if (section.title) {
+                <h2 class="slogan-text">{{ section.title }}</h2>
+              }
+              @if (section.body) {
+                <p class="slogan-body">{{ section.body }}</p>
+              }
+              @if (section.cta_text && section.cta_link) {
+                <a [href]="section.cta_link" class="slogan-btn">{{ section.cta_text }}</a>
+              }
+            </div>
+          </section>
+        }
+
+        <!-- Contact Section -->
+        @if (section.section_key === 'contact') {
+          <section class="about-section contact-section">
+            <div class="container">
+              @if (section.title) {
+                <h2 class="section-title">{{ section.title }}</h2>
+              }
+              @if (section.body) {
+                <div class="contact-body" [innerHTML]="section.body"></div>
+              }
+              <div class="contact-items">
+                @for (item of section.items; track item.id) {
+                  <div class="contact-item">
+                    @if (item.icon) {
+                      <i [class]="item.icon"></i>
+                    }
+                    @if (item.title) {
+                      <span>{{ item.title }}</span>
+                    }
+                    @if (item.value) {
+                      <a [href]="item.link || '#'">{{ item.value }}</a>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </section>
+        }
+
+        <!-- Partners Section -->
+        @if (section.section_key === 'partners') {
+          <section class="about-section partners-section">
+            <div class="container">
+              @if (section.title) {
+                <h2 class="section-title">{{ section.title }}</h2>
+              }
+              <div class="partners-grid">
+                @for (item of section.items; track item.id) {
+                  <div class="partner-logo">
+                    @if (item.link) {
+                      <a [href]="item.link" target="_blank" rel="noopener">
+                        @if (item.image) {
+                          <img [src]="item.image" [alt]="item.title" loading="lazy">
+                        } @else if (item.title) {
+                          <span>{{ item.title }}</span>
+                        }
+                      </a>
+                    } @else {
+                      @if (item.image) {
+                        <img [src]="item.image" [alt]="item.title" loading="lazy">
+                      } @else if (item.title) {
+                        <span>{{ item.title }}</span>
+                      }
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </section>
+        }
+      }
+    }
+  }
+
+  @if (error) {
+    <div class="error-container">
+      <p>{{ "something went wrong" | translate }}</p>
+    </div>
+  }
 </div>

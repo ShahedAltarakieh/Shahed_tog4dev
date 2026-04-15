@@ -238,6 +238,32 @@ Full-stack announcement bar for displaying rotating announcements below the site
 - Target views: desktop, mobile, both — API filters by target param
 - Integration: Added to `app.component.html` below `<app-header>`
 
+## About Us CMS Module
+
+Full-stack dynamic CMS for the About Us page with multi-country support, multi-language (AR/EN), admin management, and version control.
+
+**Backend** (`tog4dev-backend/`):
+- Models: `AboutPage`, `AboutSection`, `AboutSectionItem`, `AboutPageVersion` (with SoftDeletes, scopes: published, forCountry, global, visible)
+- Migrations: `about_pages`, `about_sections`, `about_section_items`, `about_page_versions`
+- 12 section types: hero, intro, highlights, statement, visionMission, coreValues, founders, beliefs, stats, slogan, contact, partners
+- API Controller: `AboutPageController` — `GET /api/v1/about?country=JO` with country→global fallback logic (country-specific page first, falls back to global, merges missing section keys from global)
+- API Resources: `AboutPageResource`, `AboutSectionResource`, `AboutSectionItemResource` (language-aware via Accept-Language header)
+- Admin Controller: `AboutPageAdminController` — full CRUD, publish/draft/unpublish, version rollback, section reorder (drag/drop), item CRUD, visibility toggle
+- Admin Views: `admin/about/` (index, create, edit) with SortableJS drag/drop, collapsible section editors, item modal (CRUD), version history panel
+- Admin Routes: `/about-management/*` under `master` middleware
+- Sidebar: "About Us CMS" link with info-circle icon
+- Content Seeder: `AboutPageSeeder` seeds Jordan page with all 12 sections + sample items
+- Versioning: publish creates snapshot in `about_page_versions`, rollback restores from snapshot
+
+**Frontend** (`tog4dev-frontend/src/app/static-pages/about-us/`):
+- Service: `AboutService` (`services/about.service.ts`) with typed interfaces (AboutPageData, AboutSection, AboutSectionItem)
+- Component: `AboutUsComponent` — fully dynamic rendering from API data, no hardcoded content
+- Renders all 12 section types with dedicated styling per section
+- Hero section with dark teal gradient (matching News hero style)
+- Loading spinner + error state handling
+- SEO: dynamic meta tags from API (title, description, og:image)
+- Responsive: grid layouts adapt for mobile/tablet/desktop
+
 ## Notes
 
 - The migration `2024_06_21` was renamed to `2024_12_03_000312` to fix ordering (it references `payments` table created later)

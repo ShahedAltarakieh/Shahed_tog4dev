@@ -223,6 +223,26 @@ Route::group(
             Route::post('/change-status/{id}', [NewsCategoryAdminController::class, 'change_status'])->name('news-categories-admin.change_status');
         });
 
+        Route::prefix('about-management')->middleware('master')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'index'])->name('about-admin.index');
+            Route::get('/create', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'create'])->name('about-admin.create');
+            Route::post('/', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'store'])->name('about-admin.store');
+            Route::get('/{id}/edit', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'edit'])->name('about-admin.edit');
+            Route::put('/{id}', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'update'])->name('about-admin.update');
+            Route::delete('/{id}', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'destroy'])->name('about-admin.destroy');
+            Route::post('/{id}/publish', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'publish'])->name('about-admin.publish');
+            Route::post('/{id}/unpublish', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'unpublish'])->name('about-admin.unpublish');
+            Route::post('/{id}/rollback/{versionId}', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'rollback'])->name('about-admin.rollback');
+            Route::get('/{id}/preview', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'preview'])->name('about-admin.preview');
+            Route::post('/{pageId}/sections/reorder', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'reorderSections'])->name('about-admin.sections.reorder');
+            Route::post('/{pageId}/sections/{sectionId}', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'updateSection'])->name('about-admin.sections.update');
+            Route::post('/{pageId}/sections/{sectionId}/toggle', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'toggleVisibility'])->name('about-admin.sections.toggle');
+            Route::post('/{pageId}/sections/{sectionId}/items', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'storeItem'])->name('about-admin.items.store');
+            Route::post('/{pageId}/sections/{sectionId}/items/reorder', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'reorderItems'])->name('about-admin.items.reorder');
+            Route::post('/{pageId}/sections/{sectionId}/items/{itemId}', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'updateItem'])->name('about-admin.items.update');
+            Route::delete('/{pageId}/sections/{sectionId}/items/{itemId}', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'deleteItem'])->name('about-admin.items.delete');
+        });
+
         Route::prefix('announcements')->middleware('master')->group(function () {
             Route::get('/', [AnnouncementAdminController::class, 'index'])->name('announcements.index');
             Route::get('/create', [AnnouncementAdminController::class, 'create'])->name('announcements.create');
