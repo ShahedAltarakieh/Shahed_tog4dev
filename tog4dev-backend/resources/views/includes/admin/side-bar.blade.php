@@ -151,12 +151,6 @@
                     <span>{{ __('app.videos') }}</span>
                 </a>
             </li>
-            <li>
-                <a href="{{ route('system.media-library') }}">
-                    <i class="fas fa-photo-video"></i>
-                    <span>{{ __('app.media_library') }}</span>
-                </a>
-            </li>
         </ul>
     </div>
 </li>

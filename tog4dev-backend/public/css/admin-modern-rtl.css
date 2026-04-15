@@ -136,6 +136,10 @@ select.form-control {
     flex-direction: row-reverse;
 }
 
+.page-back-btn i.fa-arrow-left::before {
+    content: "\f061";
+}
+
 body[data-sidebar-size="condensed"] .content-page {
     margin-right: var(--sidebar-collapsed-width) !important;
     margin-left: 0 !important;

@@ -19,12 +19,6 @@
                     <h4 class="page-title mb-0" style="font-size:20px;font-weight:700;">{{ __('app.dashboard') }}</h4>
                     <p class="text-muted mb-0" style="font-size:13px;margin-top:2px;">{{ __('app.welcome') }}, {{ Auth::user()->username }}</p>
                 </div>
-                <div class="d-flex align-items-center" style="gap:10px;">
-                    <div class="d-flex align-items-center" style="gap:8px; background:#fff; padding:6px 14px; border-radius:var(--admin-radius-sm); border:1px solid var(--admin-gray-200);">
-                        <i class="fas fa-calendar-alt" style="color:var(--admin-gray-400);font-size:13px;"></i>
-                        <input type="text" id="range-datepicker" class="border-0 bg-transparent not-readonly" style="width: 180px; font-size:13px;" placeholder="{{ __('app.from - to') }}">
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -140,14 +134,28 @@
             <div class="card custom-date-card">
                 <div class="card-body" style="padding:16px 24px !important;">
                     <div class="d-flex align-items-center justify-content-between flex-wrap" style="gap:12px;">
-                        <span class="kpi-label" style="margin-bottom:0;">{{ __('app.custom date') }}</span>
-                        <div class="d-flex align-items-center flex-grow-1 justify-content-center" style="gap:16px;">
-                            <h3 class="mb-0" style="color:var(--admin-primary);font-weight:700;">
+                        <span class="kpi-label" style="margin-bottom:0;flex-shrink:0;">{{ __('app.custom date') }}</span>
+                        <div class="d-flex align-items-center flex-wrap" style="gap:8px;">
+                            <div class="custom-date-input-group">
+                                <i class="fas fa-calendar-alt"></i>
+                                <input type="text" id="custom-date-from" class="custom-date-input" placeholder="{{ __('app.from') }}" value="{{ $startDate }}">
+                            </div>
+                            <span style="color:var(--admin-gray-400);font-size:12px;">—</span>
+                            <div class="custom-date-input-group">
+                                <i class="fas fa-calendar-alt"></i>
+                                <input type="text" id="custom-date-to" class="custom-date-input" placeholder="{{ __('app.to') }}" value="{{ $endDate }}">
+                            </div>
+                            <button class="btn btn-primary btn-sm custom-date-apply-btn" id="applyCustomDate">
+                                <i class="fas fa-check"></i> {{ __('app.apply') }}
+                            </button>
+                        </div>
+                        <div class="d-flex align-items-center" style="gap:12px;">
+                            <h3 class="mb-0" style="color:var(--admin-primary);font-weight:700;white-space:nowrap;">
                                 <span data-plugin="counterup">{{ number_format($payments_custom_range, 0) }}</span>
                                 <small style="font-size:14px;font-weight:500;color:var(--admin-gray-500);">{{ __('app.currency')}}</small>
                             </h3>
+                            <button class="btn btn-download-dashboard" data-type="payments" data-start="{{ $startDate }}" data-end="{{ $endDate }}"><i class="fas fa-download"></i></button>
                         </div>
-                        <button class="btn btn-download-dashboard" data-type="payments" data-start="{{ $startDate }}" data-end="{{ $endDate }}"><i class="fas fa-download"></i></button>
                     </div>
                 </div>
             </div>
@@ -212,9 +220,9 @@
         </div>
     </div>
 
-    <div class="row mb-3">
-        <div class="col-xl-8">
-            <div class="card">
+    <div class="row mb-3 dashboard-matched-row">
+        <div class="col-xl-8 d-flex">
+            <div class="card flex-fill">
                 <div class="card-body" style="padding:20px 24px !important;">
                     <h6 style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--admin-gray-400);margin-bottom:16px;">{{ __('app.quick_actions') }}</h6>
                     <div class="quick-actions-grid">
@@ -246,8 +254,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4">
-            <div class="card">
+        <div class="col-xl-4 d-flex">
+            <div class="card flex-fill">
                 <div class="card-body" style="padding:20px 24px !important;">
                     <h6 style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--admin-gray-400);margin-bottom:16px;">{{ __('app.operations_panel') }}</h6>
                     <div class="operations-list">
@@ -289,9 +297,9 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xl-6">
-            <div class="card">
+    <div class="row dashboard-matched-row">
+        <div class="col-xl-6 d-flex">
+            <div class="card flex-fill">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="header-title mb-0">{{ __('app.subscription_status') }}</h5>
@@ -302,8 +310,8 @@
             </div>
         </div>
 
-        <div class="col-xl-6">
-            <div class="card">
+        <div class="col-xl-6 d-flex">
+            <div class="card flex-fill">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h5 class="header-title mb-0">{{ __('app.payment_methods') }}</h5>
@@ -576,19 +584,24 @@
 @endforeach
 
     <script>
-        $("#range-datepicker").flatpickr({
+        $("#custom-date-from").flatpickr({
             "locale": "{{ app()->getLocale() }}",
-            mode: "range",
             allowInput: true,
             dateFormat: "Y-m-d",
-            defaultDate: ["{{ $startDate }}", "{{ $endDate }}"],
-            onChange: function(selectedDates, dateStr, instance) {
-                if (selectedDates.length === 2) {
-                    const startDate = instance.formatDate(selectedDates[0], "Y-m-d");
-                    const endDate = instance.formatDate(selectedDates[1], "Y-m-d");
-                    var baseUrl = '{{ route('dashboard') }}';
-                    window.location.href = baseUrl + '?type=-1&start_date=' + startDate + '&end_date=' + endDate;
-                }
+            defaultDate: "{{ $startDate }}"
+        });
+        $("#custom-date-to").flatpickr({
+            "locale": "{{ app()->getLocale() }}",
+            allowInput: true,
+            dateFormat: "Y-m-d",
+            defaultDate: "{{ $endDate }}"
+        });
+        document.getElementById('applyCustomDate').addEventListener('click', function() {
+            var fromDate = document.getElementById('custom-date-from').value;
+            var toDate = document.getElementById('custom-date-to').value;
+            if (fromDate && toDate) {
+                var baseUrl = '{{ route('dashboard') }}';
+                window.location.href = baseUrl + '?type=-1&start_date=' + fromDate + '&end_date=' + toDate;
             }
         });
 

@@ -265,7 +265,6 @@ Route::group(
             Route::get('/settings', [AdminSystemController::class, 'settings'])->name('system.settings');
             Route::get('/health', [AdminSystemController::class, 'systemHealth'])->name('system.health');
             Route::get('/reports', [AdminSystemController::class, 'reportsCenter'])->name('system.reports');
-            Route::get('/media-library', [AdminSystemController::class, 'mediaLibrary'])->name('system.media-library');
         });
 
         Route::post('/download-payments-dashboard', [DashboardController::class,'downloadPayments'])->middleware('master')->name('dashboard.download_payments');

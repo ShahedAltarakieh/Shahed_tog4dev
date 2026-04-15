@@ -79,7 +79,6 @@
                 { title: 'Settings', icon: 'fas fa-cog', url: prefix + '/system/settings', category: 'System' },
                 { title: 'System Health', icon: 'fas fa-heartbeat', url: prefix + '/system/health', category: 'System' },
                 { title: 'Reports Center', icon: 'fas fa-chart-pie', url: prefix + '/system/reports', category: 'System' },
-                { title: 'Media Library', icon: 'fas fa-photo-video', url: prefix + '/system/media-library', category: 'System' },
                 { title: 'Add News', icon: 'fas fa-plus-circle', url: prefix + '/news-management/create', category: 'Quick Actions' },
                 { title: 'Add Photo', icon: 'fas fa-plus-circle', url: prefix + '/gallery-management/photos/create', category: 'Quick Actions' },
                 { title: 'Add Video', icon: 'fas fa-plus-circle', url: prefix + '/gallery-management/videos/create', category: 'Quick Actions' },

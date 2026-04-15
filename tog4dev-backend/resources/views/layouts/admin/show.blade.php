@@ -35,9 +35,9 @@
     <link href="{{ asset('libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('libs/datatables.net-select-bs4/css//select.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 
-    <link href="{{ asset('css/admin-modern.css?v=1.5') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/admin-modern.css?v=1.6') }}" rel="stylesheet" type="text/css" />
     @if(App::getLocale() == "ar")
-        <link href="{{ asset('css/admin-modern-rtl.css?v=1.5') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/admin-modern-rtl.css?v=1.6') }}" rel="stylesheet" type="text/css" />
     @endif
 
     @yield('cssCode')
@@ -230,7 +230,7 @@
         <script src="{{ asset('js/pages/datatables.init.js?v=1.2') }}"></script>
     @endif
     <script src="{{ asset('js/main.js?v=1.2') }}"></script>
-    <script src="{{ asset('js/admin-components.js?v=1.5') }}"></script>
+    <script src="{{ asset('js/admin-components.js?v=1.6') }}"></script>
 
     <script type="text/javascript">
         $(".custom-file-input").on("change", function () {

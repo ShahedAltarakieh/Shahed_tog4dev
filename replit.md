@@ -135,7 +135,7 @@ Major visual and structural overhaul of the Laravel admin dashboard:
 - Dark gradient sidebar background with hover states
 
 **Dashboard Home Redesign** (`admin/dashboard.blade.php`):
-- Welcome header with date range picker
+- Welcome header with custom date card (from/to flatpickr inputs + apply button, replacing floating range picker)
 - 4 primary KPI cards (today/week/month/year) with colored icon badges and % change indicators
 - Secondary KPI row: Total Users, Active Subscriptions, News Published, Pending Requests
 - All payments summary card + custom date range card
@@ -149,7 +149,7 @@ Major visual and structural overhaul of the Laravel admin dashboard:
 - Settings Center (`system/settings.blade.php`) — tabbed navigation (General, Appearance, Security, Profile) with custom JS tab switching
 - System Health (`system/system-health.blade.php`) — KPIs, environment info, content overview, revenue/user charts, today's snapshot
 - Reports Center (`system/reports.blade.php`) — revenue/transaction/payment method charts with daily/monthly breakdown tables
-- Media Library (`system/media-library.blade.php`) — photo/video grid management
+- Media Library — REMOVED (photo/video managed via Gallery section)
 
 **Phase 3: Premium Admin Dashboard Rebuild**:
 - Login Page: Split-layout with brand panel (logo in original colors, feature list) + clean form (password toggle, error display, language switcher, mobile responsive)
@@ -161,8 +161,8 @@ Major visual and structural overhaul of the Laravel admin dashboard:
 - Duplicate translation keys cleaned up across both locale files
 
 **AdminSystemController** (`app/Http/Controllers/AdminSystemController.php`):
-- 6 methods: activityLogs, notifications, settings, systemHealth, reportsCenter, mediaLibrary
-- Routes: `system.activity-logs`, `system.notifications`, `system.settings`, `system.health`, `system.reports`, `system.media-library` (all under `/system` prefix with `master` middleware)
+- 5 methods: activityLogs, notifications, settings, systemHealth, reportsCenter
+- Routes: `system.activity-logs`, `system.notifications`, `system.settings`, `system.health`, `system.reports` (all under `/system` prefix with `master` middleware)
 
 **Premium UX Components** (`public/js/admin-components.js`):
 - Command Palette (Ctrl+K) — search across pages with keyboard navigation, improved result icons with teal icon boxes, better empty state
@@ -188,12 +188,12 @@ Major visual and structural overhaul of the Laravel admin dashboard:
 - Quick actions grid: fixed 3-column on desktop, 2-column on mobile
 - Collapsed sidebar styles: icon-only mode, flyout submenus on hover, CSS `::after` tooltips on icon hover (targets `body[data-sidebar-size="condensed"]`)
 - Navbar layout: CSS flexbox `order` properties fix float-right conflict (logo=1, hamburger=2, menu=3 with `margin-left:auto`); uses `:not(.topnav-menu-left)` selector to prevent specificity clash
-- Pagination: stronger borders (1.5px), min 40px buttons, active state with teal shadow + scale, hover lift effect, disabled state opacity
+- Pagination: compact style (32px min-width, 5px padding), no shadows/scale, clean borders, unified for Bootstrap + DataTables
 - Image upload guidelines partial (`includes/admin/image-upload-notes.blade.php`): gradient background, icon rows, extension badges
 - Translation keys added: `image guidelines`, `recommended size`, `max file size`, `allowed extensions` (both EN and AR)
 - Responsive breakpoints: 991px tablet, 767px mobile, 575px small mobile
 - content-page transition for smooth sidebar collapse/expand
-- **Asset versions**: CSS/JS cache-busted to `?v=1.5`
+- **Asset versions**: CSS/JS cache-busted to `?v=1.6`
 
 **Page Header Modernization** (`includes/admin/header.blade.php`):
 - Breadcrumb navigation

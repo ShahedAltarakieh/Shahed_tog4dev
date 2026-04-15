@@ -841,38 +841,6 @@ body[data-sidebar-size="condensed"] .left-side-menu #sidebar-menu>ul>li:hover>a+
     border-spacing: 0 !important;
 }
 
-.table thead th {
-    background-color: var(--admin-gray-50) !important;
-    border-bottom: 2px solid var(--admin-gray-200) !important;
-    border-top: none !important;
-    color: var(--admin-gray-500) !important;
-    font-weight: 600 !important;
-    font-size: 12px !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-    padding: 12px 16px !important;
-    white-space: nowrap;
-    position: sticky !important;
-    top: 0;
-    z-index: 1;
-}
-
-.table tbody td {
-    padding: 12px 16px !important;
-    font-size: 14px !important;
-    color: var(--admin-gray-700) !important;
-    border-bottom: 1px solid var(--admin-gray-100) !important;
-    border-top: none !important;
-    vertical-align: middle !important;
-}
-
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: transparent !important;
-}
-
-.table tbody tr:hover {
-    background-color: var(--admin-primary-bg) !important;
-}
 
 table.dataTable {
     border-collapse: separate !important;
@@ -911,22 +879,22 @@ table.dataTable {
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button {
-    border-radius: var(--admin-radius-sm) !important;
-    border: 1.5px solid var(--admin-gray-300) !important;
-    margin: 0 3px !important;
-    padding: 7px 14px !important;
+    border-radius: 6px !important;
+    border: 1px solid var(--admin-gray-200) !important;
+    margin: 0 2px !important;
+    padding: 5px 10px !important;
     font-size: 13px !important;
     font-weight: 500 !important;
     transition: var(--admin-transition);
-    min-width: 38px;
-    min-height: 38px;
+    min-width: 32px;
+    min-height: 32px;
     text-align: center;
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
     background: #fff !important;
-    color: var(--admin-gray-700) !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    color: var(--admin-gray-600) !important;
+    box-shadow: none;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.current,
@@ -934,28 +902,22 @@ table.dataTable {
     background: var(--admin-primary) !important;
     border-color: var(--admin-primary) !important;
     color: #fff !important;
-    font-weight: 700 !important;
-    box-shadow: 0 2px 8px rgba(19, 88, 93, 0.3) !important;
-    transform: scale(1.05);
+    font-weight: 600 !important;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover:not(.current):not(.disabled) {
     background: var(--admin-primary-bg) !important;
     border-color: var(--admin-primary) !important;
     color: var(--admin-primary) !important;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(19, 88, 93, 0.15);
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
-    opacity: 0.45;
+    opacity: 0.4;
     cursor: not-allowed;
-    background: var(--admin-gray-100) !important;
+    background: var(--admin-gray-50) !important;
     border-color: var(--admin-gray-200) !important;
     color: var(--admin-gray-400) !important;
-    box-shadow: none !important;
-    transform: none !important;
 }
 
 .dataTables_wrapper .dataTables_info {
@@ -1405,6 +1367,66 @@ textarea.form-control {
     width: 100%;
 }
 
+.custom-date-input-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #fff;
+    border: 1.5px solid var(--admin-gray-200);
+    border-radius: var(--admin-radius-sm);
+    padding: 4px 10px;
+    transition: var(--admin-transition);
+}
+
+.custom-date-input-group:focus-within {
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 3px rgba(19, 88, 93, 0.08);
+}
+
+.custom-date-input-group i {
+    color: var(--admin-gray-400);
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.custom-date-input {
+    border: none !important;
+    background: transparent !important;
+    font-size: 13px !important;
+    width: 110px;
+    padding: 4px 0 !important;
+    outline: none !important;
+    color: var(--admin-gray-700);
+    font-family: var(--admin-font);
+}
+
+.custom-date-input:focus {
+    box-shadow: none !important;
+}
+
+.custom-date-apply-btn {
+    background: var(--admin-primary) !important;
+    border-color: var(--admin-primary) !important;
+    color: #fff !important;
+    border-radius: var(--admin-radius-sm) !important;
+    padding: 6px 16px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    white-space: nowrap;
+    transition: var(--admin-transition);
+}
+
+.custom-date-apply-btn:hover {
+    background: var(--admin-primary-dark) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(19, 88, 93, 0.25);
+}
+
+.dashboard-matched-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 /* ===== QUICK ACTIONS ===== */
 .quick-actions-grid {
     display: grid;
@@ -1543,27 +1565,27 @@ textarea.form-control {
 
 /* ===== PAGINATION ===== */
 .pagination {
-    gap: 6px;
+    gap: 4px;
     flex-wrap: wrap;
-    margin: 16px 0;
+    margin: 12px 0;
 }
 
 .page-item .page-link {
-    border-radius: var(--admin-radius-sm) !important;
-    border: 1.5px solid var(--admin-gray-300) !important;
-    color: var(--admin-gray-700) !important;
-    padding: 8px 14px !important;
-    font-size: 14px !important;
+    border-radius: 6px !important;
+    border: 1px solid var(--admin-gray-200) !important;
+    color: var(--admin-gray-600) !important;
+    padding: 5px 10px !important;
+    font-size: 13px !important;
     font-weight: 500 !important;
     transition: var(--admin-transition);
-    min-width: 40px;
-    min-height: 40px;
+    min-width: 32px;
+    min-height: 32px;
     text-align: center;
     display: inline-flex !important;
     align-items: center;
     justify-content: center;
     background: #fff !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
     line-height: 1;
 }
 
@@ -1571,31 +1593,26 @@ textarea.form-control {
     background-color: var(--admin-primary) !important;
     border-color: var(--admin-primary) !important;
     color: #fff !important;
-    font-weight: 700 !important;
-    box-shadow: 0 2px 8px rgba(19, 88, 93, 0.3) !important;
-    transform: scale(1.05);
+    font-weight: 600 !important;
 }
 
 .page-item .page-link:hover {
     background-color: var(--admin-primary-bg) !important;
     color: var(--admin-primary) !important;
     border-color: var(--admin-primary) !important;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(19, 88, 93, 0.15);
 }
 
 .page-item.active .page-link:hover {
-    transform: scale(1.05);
+    background-color: var(--admin-primary) !important;
+    color: #fff !important;
 }
 
 .page-item.disabled .page-link {
-    opacity: 0.45;
-    background: var(--admin-gray-100) !important;
+    opacity: 0.4;
+    background: var(--admin-gray-50) !important;
     border-color: var(--admin-gray-200) !important;
     color: var(--admin-gray-400) !important;
-    box-shadow: none !important;
     cursor: not-allowed;
-    transform: none !important;
 }
 
 /* ===== BREADCRUMBS ===== */
@@ -2048,6 +2065,78 @@ textarea.form-control {
     border-color: var(--admin-primary);
 }
 
+/* ===== SIDEBAR ARROW FIX ===== */
+#sidebar-menu .menu-arrow::before,
+.left-side-menu .menu-arrow::before {
+    content: none !important;
+    display: none !important;
+}
+
+/* ===== TABLE ENHANCEMENTS ===== */
+.table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--admin-gray-50) !important;
+    border-bottom: 2px solid var(--admin-gray-200) !important;
+    border-top: none !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--admin-gray-500) !important;
+    padding: 12px 16px !important;
+    white-space: nowrap;
+}
+
+.table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.015);
+}
+
+.table tbody tr:hover {
+    background-color: var(--admin-primary-bg) !important;
+}
+
+.table tbody td {
+    padding: 10px 16px !important;
+    font-size: 13px !important;
+    color: var(--admin-gray-700);
+    border-bottom: 1px solid var(--admin-gray-100) !important;
+    border-top: none !important;
+    vertical-align: middle !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: transparent !important;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ===== TABLE IMAGE THUMBNAILS ===== */
+.table img,
+.dataTables_wrapper img {
+    width: 44px !important;
+    height: 44px !important;
+    object-fit: cover !important;
+    border-radius: var(--admin-radius-sm) !important;
+    border: 1.5px solid var(--admin-gray-200);
+    background: var(--admin-gray-50);
+}
+
+.table img[src*="logo"],
+.table img[src*="avatar"],
+.dataTables_wrapper img[src*="logo"],
+.dataTables_wrapper img[src*="avatar"] {
+    border-radius: 50% !important;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 991.98px) {
     .content-page {
@@ -2101,6 +2190,20 @@ textarea.form-control {
     .table-responsive {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+    }
+
+    .custom-date-card .card-body > .d-flex {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 10px !important;
+    }
+
+    .custom-date-input-group {
+        flex: 1;
+    }
+
+    .custom-date-input {
+        width: 100% !important;
     }
 }
 
