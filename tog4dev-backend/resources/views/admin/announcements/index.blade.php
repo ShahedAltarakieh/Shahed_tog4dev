@@ -3,24 +3,10 @@
 @section('title') {{ __('app.announcements') }} @endsection
 
 @section('content')
-<div class="row mt-3 mb-3">
-    <div class="col-12">
-        <div class="d-flex justify-content-between align-items-center flex-wrap" style="gap:12px;">
-            <div>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-1" style="background:none;padding:0;">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('app.dashboard') }}</a></li>
-                        <li class="breadcrumb-item active">{{ __('app.announcements') }}</li>
-                    </ol>
-                </nav>
-                <h4 class="page-title mb-0">{{ __('app.announcement_management') }}</h4>
-            </div>
-            <a href="{{ route('announcements.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus me-1"></i> {{ __('app.add_announcement') }}
-            </a>
-        </div>
-    </div>
-</div>
+@include('includes.admin.header', [
+    'label_name' => __('app.announcement_management'),
+    'add_button' => route('announcements.create')
+])
 
 <div class="row">
     <div class="col-12">

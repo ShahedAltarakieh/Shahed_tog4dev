@@ -2,14 +2,6 @@
 
 @section('title') {{ __('app.home_page') }} @endsection
 
-@section('breadcrumb')
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb-modern">
-        <li class="breadcrumb-item active">{{ __('app.dashboard') }}</li>
-    </ol>
-</nav>
-@endsection
-
 @section('content')
 
     <div class="row mb-3">
@@ -113,7 +105,7 @@
         </div>
     </div>
 
-    <div class="row mb-2">
+    <div class="row mb-2 dashboard-custom-date-row">
         <div class="col-md-6 col-xl-3">
             <a href="{{ route('dashboard', ['type' => 9, 'start_date' => $firstStartDate, 'end_date' => $lastEndDate ]) }}" class="card dashboard-kpi-card {{ ($type == 9) ? 'active' : '' }}" style="text-decoration:none;display:block;">
                 <div class="card-body" style="padding:20px 24px !important;">
@@ -130,12 +122,12 @@
             </a>
         </div>
 
-        <div class="col-md-6 col-xl-9">
-            <div class="card custom-date-card">
-                <div class="card-body" style="padding:16px 24px !important;">
-                    <div class="d-flex align-items-center justify-content-between flex-wrap" style="gap:12px;">
-                        <span class="kpi-label" style="margin-bottom:0;flex-shrink:0;">{{ __('app.custom date') }}</span>
-                        <div class="d-flex align-items-center flex-wrap" style="gap:8px;">
+        <div class="col-md-6 col-xl-9 d-flex">
+            <div class="card custom-date-card flex-fill">
+                <div class="card-body custom-date-card-body" style="padding:16px 24px !important;">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap custom-date-line" style="gap:12px;min-height:56px;">
+                        <div class="d-flex align-items-center flex-wrap custom-date-controls" style="gap:10px;">
+                            <span class="kpi-label" style="margin-bottom:0;flex-shrink:0;">{{ __('app.custom date') }}</span>
                             <div class="custom-date-input-group">
                                 <i class="fas fa-calendar-alt"></i>
                                 <input type="text" id="custom-date-from" class="custom-date-input" placeholder="{{ __('app.from') }}" value="{{ $startDate }}">
@@ -149,8 +141,8 @@
                                 <i class="fas fa-check"></i> {{ __('app.apply') }}
                             </button>
                         </div>
-                        <div class="d-flex align-items-center" style="gap:12px;">
-                            <h3 class="mb-0" style="color:var(--admin-primary);font-weight:700;white-space:nowrap;">
+                        <div class="d-flex align-items-center custom-date-total" style="gap:12px;">
+                            <h3 class="mb-0" style="color:var(--admin-primary);font-weight:800;white-space:nowrap;">
                                 <span data-plugin="counterup">{{ number_format($payments_custom_range, 0) }}</span>
                                 <small style="font-size:14px;font-weight:500;color:var(--admin-gray-500);">{{ __('app.currency')}}</small>
                             </h3>

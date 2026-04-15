@@ -4,6 +4,19 @@
     transition: margin-right 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Keep page spacing consistent with LTR */
+.content-page .container-fluid > .row.mt-3,
+.content-page .container-fluid > .row.mt-3.mb-3,
+.content-page .container-fluid > .row.mt-3.mb-2,
+.content-page .container-fluid > .row.mt-2.mb-2,
+.content-page .container-fluid > .row.mt-2.mb-1 {
+    margin-top: 0 !important;
+}
+
+.content-page .container-fluid > .row.mb-3 {
+    margin-bottom: 16px !important;
+}
+
 .left-side-menu {
     left: auto !important;
     right: 0 !important;
@@ -60,7 +73,7 @@ select.form-control {
 
 .topbar-search-icon {
     left: auto;
-    right: 11px;
+    right: 14px;
 }
 
 .topbar-search-kbd {
@@ -69,7 +82,7 @@ select.form-control {
 }
 
 .topbar-search-input {
-    padding: 0 34px 0 36px !important;
+    padding: 0 42px 0 40px !important;
 }
 
 .topbar-user-btn {
@@ -150,16 +163,12 @@ body[data-sidebar-size="condensed"] .left-side-menu #sidebar-menu > ul > li > a:
     right: calc(var(--sidebar-collapsed-width) - 2px);
 }
 
+/* In condensed mode, avoid hover popout submenus (can appear as empty white box) */
 body[data-sidebar-size="condensed"] .left-side-menu #sidebar-menu > ul > li:hover > a + .collapse {
-    left: auto;
-    right: var(--sidebar-collapsed-width);
-    border-radius: var(--admin-radius) 0 0 var(--admin-radius);
+    display: none !important;
 }
 
-body[data-sidebar-size="condensed"] .left-side-menu #sidebar-menu > ul > li:hover > a + .collapse .nav-second-level > li > a {
-    padding-right: 16px !important;
-    padding-left: 16px !important;
-}
+/* (submenu popout intentionally disabled in condensed mode) */
 
 @media (max-width: 991.98px) {
     .content-page {
@@ -178,5 +187,33 @@ body[data-sidebar-size="condensed"] .left-side-menu #sidebar-menu > ul > li:hove
 
     body.sidebar-enable .left-side-menu {
         transform: translateX(0);
+    }
+}
+
+@media (max-width: 767.98px) {
+    .dashboard-custom-date-row > div {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .dashboard-custom-date-row .custom-date-line {
+        flex-direction: column;
+        align-items: stretch !important;
+    }
+
+    .dashboard-custom-date-row .custom-date-controls {
+        justify-content: flex-start !important;
+    }
+
+    .dashboard-custom-date-row .custom-date-controls > span.kpi-label,
+    .dashboard-custom-date-row .custom-date-controls > span:not(.kpi-label),
+    .dashboard-custom-date-row .custom-date-input-group,
+    .dashboard-custom-date-row .custom-date-apply-btn {
+        width: 100%;
+    }
+
+    .dashboard-custom-date-row .custom-date-total {
+        width: 100%;
+        justify-content: space-between !important;
     }
 }

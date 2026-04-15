@@ -1,13 +1,13 @@
 <li class="sidebar-section-title">{{ __('app.main') }}</li>
 
 <li>
-    <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active-menu' : '' }}">
+    <a href="{{ route('dashboard') }}" data-tooltip="{{ __('app.dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active-menu' : '' }}">
         <i class="fas fa-th-large"></i>
         <span>{{ __('app.dashboard') }}</span>
     </a>
 </li>
 <li>
-    <a href="{{ route('system.reports') }}" class="{{ request()->routeIs('system.reports') ? 'active-menu' : '' }}">
+    <a href="{{ route('system.reports') }}" data-tooltip="{{ __('app.reports_analytics') }}" class="{{ request()->routeIs('system.reports') ? 'active-menu' : '' }}">
         <i class="fas fa-chart-bar"></i>
         <span>{{ __('app.reports_analytics') }}</span>
     </a>
@@ -16,19 +16,19 @@
 <li class="sidebar-section-title">{{ __('app.content') }}</li>
 
 <li>
-    <a href="{{ route('sliders.index') }}" class="{{ request()->routeIs('sliders.*') ? 'active-menu' : '' }}">
+    <a href="{{ route('sliders.index') }}" data-tooltip="{{ __('app.sliders') }}" class="{{ request()->routeIs('sliders.*') ? 'active-menu' : '' }}">
         <i class="fas fa-images"></i>
         <span>{{ __('app.sliders') }}</span>
     </a>
 </li>
 <li>
-    <a href="{{ route('quick-contributions.index') }}" class="{{ request()->routeIs('quick-contributions.*') ? 'active-menu' : '' }}">
+    <a href="{{ route('quick-contributions.index') }}" data-tooltip="{{ __('app.contributions') }}" class="{{ request()->routeIs('quick-contributions.*') ? 'active-menu' : '' }}">
         <i class="fas fa-hand-holding-heart"></i>
         <span>{{ __('app.contributions') }}</span>
     </a>
 </li>
 <li>
-    <a href="#categories" data-toggle="collapse" aria-expanded="false">
+    <a href="#categories" data-tooltip="{{ __('app.categories') }}" data-toggle="collapse" aria-expanded="false">
         <i class="fas fa-folder-open"></i>
         <span>{{ __('app.categories') }}</span>
         <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
@@ -43,7 +43,7 @@
     </div>
 </li>
 <li>
-    <a href="#testimonials" data-toggle="collapse" aria-expanded="false">
+    <a href="#testimonials" data-tooltip="{{ __('app.testimonials') }}" data-toggle="collapse" aria-expanded="false">
         <i class="fas fa-quote-right"></i>
         <span>{{ __('app.testimonials') }}</span>
         <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
@@ -57,7 +57,7 @@
     </div>
 </li>
 <li>
-    <a href="#stories" data-toggle="collapse" aria-expanded="false">
+    <a href="#stories" data-tooltip="{{ __('app.stories') }}" data-toggle="collapse" aria-expanded="false">
         <i class="fas fa-book-open"></i>
         <span>{{ __('app.stories') }}</span>
         <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
@@ -71,7 +71,7 @@
     </div>
 </li>
 <li>
-    <a href="#partners" data-toggle="collapse" aria-expanded="false">
+    <a href="#partners" data-tooltip="{{ __('app.partners') }}" data-toggle="collapse" aria-expanded="false">
         <i class="fas fa-handshake"></i>
         <span>{{ __('app.partners') }}</span>
         <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
@@ -85,7 +85,7 @@
     </div>
 </li>
 <li>
-    <a href="#facts" data-toggle="collapse" aria-expanded="false">
+    <a href="#facts" data-tooltip="{{ __('app.facts') }}" data-toggle="collapse" aria-expanded="false">
         <i class="fas fa-chart-pie"></i>
         <span>{{ __('app.facts') }}</span>
         <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
@@ -99,7 +99,7 @@
     </div>
 </li>
 <li>
-    <a href="#items" data-toggle="collapse" aria-expanded="false">
+    <a href="#items" data-tooltip="{{ __('app.items') }}" data-toggle="collapse" aria-expanded="false">
         <i class="fas fa-box"></i>
         <span>{{ __('app.items') }}</span>
         <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
@@ -114,13 +114,13 @@
     </div>
 </li>
 <li>
-    <a href="{{ route('announcements.index') }}" class="{{ request()->routeIs('announcements.*') ? 'active-menu' : '' }}">
+    <a href="{{ route('announcements.index') }}" data-tooltip="{{ __('app.announcements') }}" class="{{ request()->routeIs('announcements.*') ? 'active-menu' : '' }}">
         <i class="fas fa-bullhorn"></i>
         <span>{{ __('app.announcements') }}</span>
     </a>
 </li>
 <li>
-    <a href="#newsGallery" data-toggle="collapse" aria-expanded="false">
+    <a href="#newsGallery" data-tooltip="{{ __('app.news_media') }}" data-toggle="collapse" aria-expanded="false">
         <i class="fas fa-newspaper"></i>
         <span>{{ __('app.news_media') }}</span>
         <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
@@ -155,13 +155,13 @@
     </div>
 </li>
 <li>
-    <a href="{{ route('seo.index') }}" class="{{ request()->routeIs('seo.*') ? 'active-menu' : '' }}">
+    <a href="{{ route('seo.index') }}" data-tooltip="{{ __('app.seo') }}" class="{{ request()->routeIs('seo.*') ? 'active-menu' : '' }}">
         <i class="fas fa-search"></i>
         <span>{{ __('app.seo') }}</span>
     </a>
 </li>
 <li>
-    <a href="{{ route('shortlinks.index') }}" class="{{ request()->routeIs('shortlinks.*') ? 'active-menu' : '' }}">
+    <a href="{{ route('shortlinks.index') }}" data-tooltip="{{ __('app.short links') }}" class="{{ request()->routeIs('shortlinks.*') ? 'active-menu' : '' }}">
         <i class="fas fa-link"></i>
         <span>{{ __('app.short links') }}</span>
     </a>
@@ -170,14 +170,14 @@
 <li class="sidebar-section-title">{{ __('app.business') }}</li>
 
 <li>
-    <a href="{{ route('payments.index') }}" class="{{ request()->routeIs('payments.*') ? 'active-menu' : '' }}">
+    <a href="{{ route('payments.index') }}" data-tooltip="{{ __('app.all_payments') }}" class="{{ request()->routeIs('payments.*') ? 'active-menu' : '' }}">
         <i class="fas fa-credit-card"></i>
         <span>{{ __('app.all_payments') }}</span>
     </a>
 </li>
 
 <li>
-    <a href="#subscriptionsMenu" data-toggle="collapse" aria-expanded="false">
+    <a href="#subscriptionsMenu" data-tooltip="{{ __('app.subscriptions') }}" data-toggle="collapse" aria-expanded="false">
         <i class="fas fa-sync-alt"></i>
         <span>{{ __('app.subscriptions') }}</span>
         <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
@@ -191,14 +191,14 @@
 </li>
 
 <li>
-    <a href="{{ route('collection_team.index') }}" class="{{ request()->routeIs('collection_team.*') ? 'active-menu' : '' }}">
+    <a href="{{ route('collection_team.index') }}" data-tooltip="{{ __('app.collection_team') }}" class="{{ request()->routeIs('collection_team.*') ? 'active-menu' : '' }}">
         <i class="fas fa-user-friends"></i>
         <span>{{ __('app.collection_team') }}</span>
     </a>
 </li>
 
 <li>
-    <a href="{{ route('excel.index') }}" class="{{ request()->routeIs('excel.*') ? 'active-menu' : '' }}">
+    <a href="{{ route('excel.index') }}" data-tooltip="{{ __('app.upload sheets') }}" class="{{ request()->routeIs('excel.*') ? 'active-menu' : '' }}">
         <i class="fas fa-file-excel"></i>
         <span>{{ __('app.upload sheets') }}</span>
     </a>
@@ -206,7 +206,7 @@
 
 @if(Auth::user()->id == 6128 || Auth::user()->id == 20)
 <li>
-    <a href="{{ route('excel.map') }}">
+    <a href="{{ route('excel.map') }}" data-tooltip="{{ __('app.map items') }}">
         <i class="fas fa-layer-group"></i>
         <span>{{ __('app.map items') }}</span>
     </a>
@@ -216,21 +216,21 @@
 <li class="sidebar-section-title">{{ __('app.customers') }}</li>
 
 <li>
-    <a href="{{ route('users.index') }}" class="{{ request()->routeIs('users.*') ? 'active-menu' : '' }}">
+    <a href="{{ route('users.index') }}" data-tooltip="{{ __('app.all_customers') }}" class="{{ request()->routeIs('users.*') ? 'active-menu' : '' }}">
         <i class="fas fa-users"></i>
         <span>{{ __('app.all_customers') }}</span>
     </a>
 </li>
 
 <li>
-    <a href="{{ route('influencers.index') }}" class="{{ request()->routeIs('influencers.*') ? 'active-menu' : '' }}">
+    <a href="{{ route('influencers.index') }}" data-tooltip="{{ __('app.influencers') }}" class="{{ request()->routeIs('influencers.*') ? 'active-menu' : '' }}">
         <i class="fas fa-star"></i>
         <span>{{ __('app.influencers') }}</span>
     </a>
 </li>
 
 <li>
-    <a href="#admins" data-toggle="collapse" aria-expanded="false">
+    <a href="#admins" data-tooltip="{{ __('app.admin_team') }}" data-toggle="collapse" aria-expanded="false">
         <i class="fas fa-user-shield"></i>
         <span>{{ __('app.admin_team') }}</span>
         <span class="menu-arrow"><i class="fas fa-chevron-down"></i></span>
@@ -246,25 +246,25 @@
 <li class="sidebar-section-title">{{ __('app.communications') }}</li>
 
 <li>
-    <a href="{{ route('contact_us.index', ["type" => "projects"]) }}" class="{{ request()->is('*/contact_us*') && request()->type == 'projects' ? 'active-menu' : '' }}">
+    <a href="{{ route('contact_us.index', ["type" => "projects"]) }}" data-tooltip="{{ __('app.user requests') }}" class="{{ request()->is('*/contact_us*') && request()->type == 'projects' ? 'active-menu' : '' }}">
         <i class="fas fa-inbox"></i>
         <span>{{ __('app.user requests') }}</span>
     </a>
 </li>
 <li>
-    <a href="{{ route('contact_us.index', ["type" => "organization"]) }}" class="{{ request()->is('*/contact_us*') && request()->type == 'organization' ? 'active-menu' : '' }}">
+    <a href="{{ route('contact_us.index', ["type" => "organization"]) }}" data-tooltip="{{ __('app.organization requests') }}" class="{{ request()->is('*/contact_us*') && request()->type == 'organization' ? 'active-menu' : '' }}">
         <i class="fas fa-building"></i>
         <span>{{ __('app.organization requests') }}</span>
     </a>
 </li>
 <li>
-    <a href="/newsletter" class="{{ request()->is('*/newsletter*') ? 'active-menu' : '' }}">
+    <a href="/newsletter" data-tooltip="{{ __('app.newsletter') }}" class="{{ request()->is('*/newsletter*') ? 'active-menu' : '' }}">
         <i class="fas fa-paper-plane"></i>
         <span>{{ __('app.newsletter') }}</span>
     </a>
 </li>
 <li>
-    <a href="{{ route('system.notifications') }}" class="{{ request()->routeIs('system.notifications') ? 'active-menu' : '' }}">
+    <a href="{{ route('system.notifications') }}" data-tooltip="{{ __('app.notifications') }}" class="{{ request()->routeIs('system.notifications') ? 'active-menu' : '' }}">
         <i class="fas fa-bell"></i>
         <span>{{ __('app.notifications') }}</span>
     </a>
@@ -273,19 +273,19 @@
 <li class="sidebar-section-title">{{ __('app.system') }}</li>
 
 <li>
-    <a href="{{ route('system.settings') }}" class="{{ request()->routeIs('system.settings') ? 'active-menu' : '' }}">
+    <a href="{{ route('system.settings') }}" data-tooltip="{{ __('app.general_settings') }}" class="{{ request()->routeIs('system.settings') ? 'active-menu' : '' }}">
         <i class="fas fa-cog"></i>
         <span>{{ __('app.general_settings') }}</span>
     </a>
 </li>
 <li>
-    <a href="{{ route('system.activity-logs') }}" class="{{ request()->routeIs('system.activity-logs') ? 'active-menu' : '' }}">
+    <a href="{{ route('system.activity-logs') }}" data-tooltip="{{ __('app.activity_logs') }}" class="{{ request()->routeIs('system.activity-logs') ? 'active-menu' : '' }}">
         <i class="fas fa-history"></i>
         <span>{{ __('app.activity_logs') }}</span>
     </a>
 </li>
 <li>
-    <a href="{{ route('system.health') }}" class="{{ request()->routeIs('system.health') ? 'active-menu' : '' }}">
+    <a href="{{ route('system.health') }}" data-tooltip="{{ __('app.system_health') }}" class="{{ request()->routeIs('system.health') ? 'active-menu' : '' }}">
         <i class="fas fa-heartbeat"></i>
         <span>{{ __('app.system_health') }}</span>
     </a>

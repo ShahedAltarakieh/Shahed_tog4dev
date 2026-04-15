@@ -1,15 +1,9 @@
-<div class="row mt-3 mb-3">
+<div class="row mb-3">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center flex-wrap" style="gap:12px;">
             <div class="d-flex align-items-center" style="gap:12px;">
-                <a class="btn btn-light btn-sm page-back-btn" onclick="history.back()" href="javascript:void(0)"><i class="fas fa-arrow-left"></i> {{ __('app.back') }}</a>
+                <a class="btn page-back-btn" onclick="history.back()" href="javascript:void(0)"><i class="fas fa-arrow-left"></i> {{ __('app.back') }}</a>
                 <div>
-                    <nav class="breadcrumb-modern" aria-label="breadcrumb">
-                        <ol class="breadcrumb mb-1" style="background:transparent;padding:0;margin:0;">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('app.dashboard') }}</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">{{ $label_name }}</li>
-                        </ol>
-                    </nav>
                     <h4 class="page-title mb-0">
                         {{ $label_name }}
                         @if(isset($type) && !empty($type))
@@ -17,6 +11,12 @@
                             <span style="font-weight:500;color:var(--admin-gray-600);">{{ __('app.'.$type) }}</span>
                         @endif
                     </h4>
+                    <nav class="breadcrumb-modern" aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0" style="background:transparent;padding:0;margin:0;">
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('app.dashboard') }}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ $label_name }}</li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
             <div class="d-flex align-items-center" style="gap:8px;">
