@@ -387,7 +387,7 @@
         <div class="login-brand-panel">
             <div class="brand-content">
                 <div class="brand-logo">
-                    <img src="{{ asset('img/logo.png') }}" alt="{{ config('app.name', 'Tog4Dev') }}">
+                    <img src="{{ asset('img/logo-white.png') }}" alt="{{ config('app.name', 'Tog4Dev') }}">
                 </div>
                 <h2 class="brand-title">{{ __('app.admin_panel') }}</h2>
                 <p class="brand-subtitle">{{ __('app.login_brand_description') }}</p>
@@ -425,7 +425,8 @@
                 </div>
 
                 <div class="login-footer">
-                    &copy; {{ date('Y') }} {{ config('app.name', 'Tog4Dev') }}
+                <b> Together for Development | All Rights Reserved &copy; {{ date('Y') }} </b>
+                <!-- {{ config('app.name', 'Tog4Dev') }} -->
                 </div>
             </div>
         </div>

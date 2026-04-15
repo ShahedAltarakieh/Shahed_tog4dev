@@ -71,14 +71,14 @@
             <div class="container-fluid">
                 <ul class="list-unstyled topnav-menu float-right mb-0">
 
-                    <li class="dropdown notification-list topbar-dropdown d-none d-md-block">
+                <!-- <li class="dropdown notification-list topbar-dropdown d-none d-md-block">
                         <div class="topbar-search">
-                            <input type="text" class="topbar-search-input" placeholder="{{ __('app.search_placeholder') }}" id="topbarSearchAdd">
+                            <input type="text" class=" topbar-search-input" placeholder="{{ __('app.search_placeholder') }}" id="topbarSearch">
                             <span class="topbar-search-icon"><i class="fas fa-search"></i></span>
                             <kbd class="topbar-search-kbd">{{ app()->getLocale() == 'ar' ? 'Ctrl+K' : '⌘K' }}</kbd>
                         </div>
-                    </li>
-
+                    </li> -->
+                    
                     <li class="dropdown notification-list topbar-dropdown d-md-none">
                         <a class="nav-link topbar-icon-btn" href="javascript:void(0)" onclick="if(window.CommandPalette) window.CommandPalette.open();" title="{{ __('app.search_placeholder') }}">
                             <i class="fas fa-search"></i>
