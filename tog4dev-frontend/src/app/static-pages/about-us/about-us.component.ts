@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID, AfterViewInit, ElementRef, NgZone } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { StorageService } from 'app/core/storage/storage.service';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -13,19 +13,22 @@ import { Subscription } from 'rxjs';
   templateUrl: './about-us.component.html',
   styleUrl: './about-us.component.scss'
 })
-export class AboutUsComponent implements OnInit, OnDestroy {
+export class AboutUsComponent implements OnInit, OnDestroy, AfterViewInit {
   pageData: AboutPageData | null = null;
   sections: AboutSection[] = [];
   loading = true;
   error = false;
+  animatedCounters: Map<number, number> = new Map();
   private isBrowser: boolean;
-
   private sub: Subscription | null = null;
+  private observer: IntersectionObserver | null = null;
 
   constructor(
     public metaService: Meta,
     public storageService: StorageService,
     private aboutService: AboutService,
+    private el: ElementRef,
+    private ngZone: NgZone,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -39,8 +42,15 @@ export class AboutUsComponent implements OnInit, OnDestroy {
     }
   }
 
+  ngAfterViewInit(): void {
+    if (this.isBrowser) {
+      this.setupScrollAnimations();
+    }
+  }
+
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
+    this.observer?.disconnect();
   }
 
   loadAboutPage(): void {
@@ -56,12 +66,91 @@ export class AboutUsComponent implements OnInit, OnDestroy {
         if (data?.meta) {
           this.updateMetaTags(data.meta);
         }
+        setTimeout(() => this.setupScrollAnimations(), 100);
       },
       error: () => {
         this.loading = false;
         this.error = true;
       }
     });
+  }
+
+  setupScrollAnimations(): void {
+    if (!this.isBrowser) return;
+    this.observer?.disconnect();
+
+    this.ngZone.runOutsideAngular(() => {
+      this.observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+            if (entry.target.classList.contains('stats-section')) {
+              this.ngZone.run(() => this.startCounters());
+            }
+            this.observer?.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+      const sections = this.el.nativeElement.querySelectorAll('.animate-on-scroll');
+      sections.forEach((section: Element) => this.observer?.observe(section));
+    });
+  }
+
+  startCounters(): void {
+    const statsSection = this.getSectionByKey('stats');
+    if (!statsSection) return;
+
+    statsSection.items.forEach((item) => {
+      const target = this.parseNumber(item.value);
+      if (target === 0) {
+        this.animatedCounters.set(item.id, 0);
+        return;
+      }
+
+      let current = 0;
+      const duration = 2000;
+      const steps = 60;
+      const increment = target / steps;
+      const stepTime = duration / steps;
+
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        this.animatedCounters.set(item.id, Math.floor(current));
+      }, stepTime);
+    });
+  }
+
+  parseNumber(value: string): number {
+    if (!value) return 0;
+    const arabicToAscii = value.replace(/[٠-٩]/g, (d) =>
+      String.fromCharCode(d.charCodeAt(0) - 0x0660 + 48)
+    );
+    const cleaned = arabicToAscii.replace(/[^0-9]/g, '');
+    return parseInt(cleaned, 10) || 0;
+  }
+
+  extractNumericParts(value: string): { prefix: string; number: string; suffix: string } {
+    if (!value) return { prefix: '', number: '', suffix: '' };
+    const normalized = value.replace(/[٠-٩]/g, (d) =>
+      String.fromCharCode(d.charCodeAt(0) - 0x0660 + 48)
+    );
+    const match = normalized.match(/^([^0-9]*?)([\d,.\s]+)(.*)$/);
+    if (!match) return { prefix: '', number: value, suffix: '' };
+    return { prefix: match[1], number: match[2].trim(), suffix: match[3] };
+  }
+
+  formatCounter(itemId: number, originalValue: string): string {
+    const count = this.animatedCounters.get(itemId);
+    if (count === undefined) return originalValue;
+
+    const parts = this.extractNumericParts(originalValue);
+    const formatted = count.toLocaleString();
+    return `${parts.prefix}${formatted}${parts.suffix}`;
   }
 
   getSectionByKey(key: string): AboutSection | undefined {

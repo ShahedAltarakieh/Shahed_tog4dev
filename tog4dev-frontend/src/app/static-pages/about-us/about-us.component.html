@@ -1,39 +1,61 @@
 <div class="about-page">
-  <!-- Hero Section -->
   <div class="hero-section">
     <div class="hero-pattern"></div>
+    <div class="hero-particles">
+      <span class="particle p1"></span>
+      <span class="particle p2"></span>
+      <span class="particle p3"></span>
+      <span class="particle p4"></span>
+      <span class="particle p5"></span>
+    </div>
     <div class="container position-relative">
       <div class="hero-content text-center">
-        <span class="hero-badge">{{ "about us" | translate }}</span>
+        <span class="hero-badge">
+          <i class="fas fa-info-circle me-1"></i>
+          {{ "about us" | translate }}
+        </span>
         @if (getSectionByKey('hero'); as hero) {
           <h1 class="page-title text-white">{{ hero.title }}</h1>
           <p class="hero-subtitle text-white">{{ hero.subtitle }}</p>
           @if (hero.cta_text && hero.cta_link) {
-            <a [href]="hero.cta_link" class="hero-cta-btn">{{ hero.cta_text }}</a>
+            <a [href]="hero.cta_link" class="hero-cta-btn">
+              {{ hero.cta_text }}
+              <i class="fas fa-arrow-left ms-2"></i>
+            </a>
           }
         } @else {
           <h1 class="page-title text-white">{{ "who we are?" | translate }}</h1>
           <p class="hero-subtitle text-white">{{ "together for development" | translate }}</p>
         }
+        <div class="hero-scroll-indicator">
+          <i class="fas fa-chevron-down"></i>
+        </div>
       </div>
     </div>
   </div>
 
   @if (loading) {
     <div class="loading-container">
-      <div class="spinner"></div>
+      <div class="loading-pulse">
+        <div class="pulse-ring"></div>
+        <div class="pulse-core"></div>
+      </div>
     </div>
   }
 
   @if (!loading && !error) {
     @for (section of sections; track section.id) {
       @if (section.section_key !== 'hero' && section.is_visible) {
-        <!-- Intro Section -->
+
         @if (section.section_key === 'intro') {
-          <section class="about-section intro-section">
+          <section class="about-section intro-section animate-on-scroll">
             <div class="container">
               @if (section.title) {
-                <h2 class="section-title">{{ section.title }}</h2>
+                <div class="section-header">
+                  <span class="section-icon"><i class="fas fa-book-open"></i></span>
+                  <h2 class="section-title">{{ section.title }}</h2>
+                  <div class="title-decoration"><span></span></div>
+                </div>
               }
               @if (section.subtitle) {
                 <p class="section-subtitle">{{ section.subtitle }}</p>
@@ -45,16 +67,19 @@
           </section>
         }
 
-        <!-- Highlights Section -->
         @if (section.section_key === 'highlights') {
-          <section class="about-section highlights-section">
+          <section class="about-section highlights-section animate-on-scroll">
             <div class="container">
               @if (section.title) {
-                <h2 class="section-title">{{ section.title }}</h2>
+                <div class="section-header">
+                  <span class="section-icon"><i class="fas fa-star"></i></span>
+                  <h2 class="section-title">{{ section.title }}</h2>
+                  <div class="title-decoration"><span></span></div>
+                </div>
               }
               <div class="highlights-grid">
-                @for (item of section.items; track item.id) {
-                  <div class="highlight-card">
+                @for (item of section.items; track item.id; let i = $index) {
+                  <div class="highlight-card" [style.animation-delay]="(i * 0.12) + 's'">
                     @if (item.icon) {
                       <div class="highlight-icon"><i [class]="item.icon"></i></div>
                     }
@@ -71,12 +96,16 @@
           </section>
         }
 
-        <!-- Statement Section -->
         @if (section.section_key === 'statement') {
-          <section class="about-section statement-section">
+          <section class="about-section statement-section animate-on-scroll">
+            <div class="statement-bg-shapes">
+              <span class="shape s1"></span>
+              <span class="shape s2"></span>
+            </div>
             <div class="container">
               <div class="statement-box">
                 @if (section.title) {
+                  <div class="statement-icon"><i class="fas fa-quote-right"></i></div>
                   <h2>{{ section.title }}</h2>
                 }
                 @if (section.body) {
@@ -87,16 +116,19 @@
           </section>
         }
 
-        <!-- Vision & Mission Section -->
         @if (section.section_key === 'visionMission') {
-          <section class="about-section vision-mission-section">
+          <section class="about-section vision-mission-section animate-on-scroll">
             <div class="container">
               @if (section.title) {
-                <h2 class="section-title">{{ section.title }}</h2>
+                <div class="section-header">
+                  <span class="section-icon"><i class="fas fa-compass"></i></span>
+                  <h2 class="section-title">{{ section.title }}</h2>
+                  <div class="title-decoration"><span></span></div>
+                </div>
               }
               <div class="vm-grid">
-                @for (item of section.items; track item.id) {
-                  <div class="vm-card">
+                @for (item of section.items; track item.id; let i = $index) {
+                  <div class="vm-card" [style.animation-delay]="(i * 0.15) + 's'">
                     @if (item.icon) {
                       <div class="vm-icon"><i [class]="item.icon"></i></div>
                     }
@@ -113,19 +145,22 @@
           </section>
         }
 
-        <!-- Core Values Section -->
         @if (section.section_key === 'coreValues') {
-          <section class="about-section core-values-section">
+          <section class="about-section core-values-section animate-on-scroll">
             <div class="container">
               @if (section.title) {
-                <h2 class="section-title">{{ section.title }}</h2>
+                <div class="section-header">
+                  <span class="section-icon"><i class="fas fa-gem"></i></span>
+                  <h2 class="section-title">{{ section.title }}</h2>
+                  <div class="title-decoration"><span></span></div>
+                </div>
               }
               @if (section.subtitle) {
                 <p class="section-subtitle">{{ section.subtitle }}</p>
               }
               <div class="values-grid">
-                @for (item of section.items; track item.id) {
-                  <div class="value-card">
+                @for (item of section.items; track item.id; let i = $index) {
+                  <div class="value-card" [style.animation-delay]="(i * 0.1) + 's'">
                     @if (item.icon) {
                       <div class="value-icon"><i [class]="item.icon"></i></div>
                     }
@@ -142,19 +177,26 @@
           </section>
         }
 
-        <!-- Founders Section -->
         @if (section.section_key === 'founders') {
-          <section class="about-section founders-section">
+          <section class="about-section founders-section animate-on-scroll">
             <div class="container">
               @if (section.title) {
-                <h2 class="section-title">{{ section.title }}</h2>
+                <div class="section-header">
+                  <span class="section-icon"><i class="fas fa-users"></i></span>
+                  <h2 class="section-title">{{ section.title }}</h2>
+                  <div class="title-decoration"><span></span></div>
+                </div>
               }
               <div class="founders-grid">
-                @for (item of section.items; track item.id) {
-                  <div class="founder-card">
+                @for (item of section.items; track item.id; let i = $index) {
+                  <div class="founder-card" [style.animation-delay]="(i * 0.12) + 's'">
                     @if (item.image) {
                       <div class="founder-image">
                         <img [src]="item.image" [alt]="item.title" loading="lazy">
+                      </div>
+                    } @else {
+                      <div class="founder-avatar">
+                        <i class="fas fa-user"></i>
                       </div>
                     }
                     @if (item.title) {
@@ -182,25 +224,30 @@
           </section>
         }
 
-        <!-- Beliefs Section -->
         @if (section.section_key === 'beliefs') {
-          <section class="about-section beliefs-section">
+          <section class="about-section beliefs-section animate-on-scroll">
             <div class="container">
               @if (section.title) {
-                <h2 class="section-title">{{ section.title }}</h2>
+                <div class="section-header">
+                  <span class="section-icon"><i class="fas fa-lightbulb"></i></span>
+                  <h2 class="section-title">{{ section.title }}</h2>
+                  <div class="title-decoration"><span></span></div>
+                </div>
               }
               <div class="beliefs-grid">
-                @for (item of section.items; track item.id) {
-                  <div class="belief-card">
+                @for (item of section.items; track item.id; let i = $index) {
+                  <div class="belief-card" [style.animation-delay]="(i * 0.1) + 's'">
                     @if (item.icon) {
                       <div class="belief-icon"><i [class]="item.icon"></i></div>
                     }
-                    @if (item.title) {
-                      <h4>{{ item.title }}</h4>
-                    }
-                    @if (item.description) {
-                      <p>{{ item.description }}</p>
-                    }
+                    <div class="belief-content">
+                      @if (item.title) {
+                        <h4>{{ item.title }}</h4>
+                      }
+                      @if (item.description) {
+                        <p>{{ item.description }}</p>
+                      }
+                    </div>
                   </div>
                 }
               </div>
@@ -208,25 +255,31 @@
           </section>
         }
 
-        <!-- Stats Section -->
         @if (section.section_key === 'stats') {
-          <section class="about-section stats-section">
+          <section class="about-section stats-section animate-on-scroll">
+            <div class="stats-bg-pattern"></div>
             <div class="container">
               @if (section.title) {
-                <h2 class="section-title text-white">{{ section.title }}</h2>
+                <div class="section-header">
+                  <span class="section-icon light"><i class="fas fa-chart-bar"></i></span>
+                  <h2 class="section-title text-white">{{ section.title }}</h2>
+                  <div class="title-decoration light"><span></span></div>
+                </div>
               }
               <div class="stats-grid">
-                @for (item of section.items; track item.id) {
-                  <div class="stat-card">
-                    @if (item.icon) {
-                      <div class="stat-icon"><i [class]="item.icon"></i></div>
-                    }
-                    @if (item.value) {
-                      <div class="stat-value">{{ item.value }}</div>
-                    }
-                    @if (item.label) {
-                      <div class="stat-label">{{ item.label }}</div>
-                    }
+                @for (item of section.items; track item.id; let i = $index) {
+                  <div class="stat-card" [style.animation-delay]="(i * 0.15) + 's'">
+                    <div class="stat-card-inner">
+                      @if (item.icon) {
+                        <div class="stat-icon"><i [class]="item.icon"></i></div>
+                      }
+                      @if (item.value) {
+                        <div class="stat-value">{{ formatCounter(item.id, item.value) }}</div>
+                      }
+                      @if (item.label) {
+                        <div class="stat-label">{{ item.label }}</div>
+                      }
+                    </div>
                   </div>
                 }
               </div>
@@ -234,45 +287,55 @@
           </section>
         }
 
-        <!-- Slogan Section -->
         @if (section.section_key === 'slogan') {
-          <section class="about-section slogan-section">
+          <section class="about-section slogan-section animate-on-scroll">
             <div class="container text-center">
-              @if (section.title) {
-                <h2 class="slogan-text">{{ section.title }}</h2>
-              }
-              @if (section.body) {
-                <p class="slogan-body">{{ section.body }}</p>
-              }
-              @if (section.cta_text && section.cta_link) {
-                <a [href]="section.cta_link" class="slogan-btn">{{ section.cta_text }}</a>
-              }
+              <div class="slogan-wrapper">
+                <div class="slogan-icon"><i class="fas fa-hands-helping"></i></div>
+                @if (section.title) {
+                  <h2 class="slogan-text">{{ section.title }}</h2>
+                }
+                @if (section.body) {
+                  <p class="slogan-body">{{ section.body }}</p>
+                }
+                @if (section.cta_text && section.cta_link) {
+                  <a [href]="section.cta_link" class="slogan-btn">
+                    {{ section.cta_text }}
+                    <i class="fas fa-arrow-left ms-2"></i>
+                  </a>
+                }
+              </div>
             </div>
           </section>
         }
 
-        <!-- Contact Section -->
         @if (section.section_key === 'contact') {
-          <section class="about-section contact-section">
+          <section class="about-section contact-section animate-on-scroll">
             <div class="container">
               @if (section.title) {
-                <h2 class="section-title">{{ section.title }}</h2>
+                <div class="section-header">
+                  <span class="section-icon"><i class="fas fa-envelope"></i></span>
+                  <h2 class="section-title">{{ section.title }}</h2>
+                  <div class="title-decoration"><span></span></div>
+                </div>
               }
               @if (section.body) {
                 <div class="contact-body" [innerHTML]="section.body"></div>
               }
               <div class="contact-items">
-                @for (item of section.items; track item.id) {
-                  <div class="contact-item">
+                @for (item of section.items; track item.id; let i = $index) {
+                  <div class="contact-item" [style.animation-delay]="(i * 0.1) + 's'">
                     @if (item.icon) {
-                      <i [class]="item.icon"></i>
+                      <div class="contact-icon"><i [class]="item.icon"></i></div>
                     }
-                    @if (item.title) {
-                      <span>{{ item.title }}</span>
-                    }
-                    @if (item.value) {
-                      <a [href]="item.link || '#'">{{ item.value }}</a>
-                    }
+                    <div class="contact-info">
+                      @if (item.title) {
+                        <span class="contact-label">{{ item.title }}</span>
+                      }
+                      @if (item.value) {
+                        <a [href]="item.link || '#'" class="contact-value">{{ item.value }}</a>
+                      }
+                    </div>
                   </div>
                 }
               </div>
@@ -280,16 +343,19 @@
           </section>
         }
 
-        <!-- Partners Section -->
         @if (section.section_key === 'partners') {
-          <section class="about-section partners-section">
+          <section class="about-section partners-section animate-on-scroll">
             <div class="container">
               @if (section.title) {
-                <h2 class="section-title">{{ section.title }}</h2>
+                <div class="section-header">
+                  <span class="section-icon"><i class="fas fa-handshake"></i></span>
+                  <h2 class="section-title">{{ section.title }}</h2>
+                  <div class="title-decoration"><span></span></div>
+                </div>
               }
               <div class="partners-grid">
-                @for (item of section.items; track item.id) {
-                  <div class="partner-logo">
+                @for (item of section.items; track item.id; let i = $index) {
+                  <div class="partner-logo" [style.animation-delay]="(i * 0.08) + 's'">
                     @if (item.link) {
                       <a [href]="item.link" target="_blank" rel="noopener">
                         @if (item.image) {
@@ -317,6 +383,7 @@
 
   @if (error) {
     <div class="error-container">
+      <div class="error-icon"><i class="fas fa-exclamation-triangle"></i></div>
       <p>{{ "something went wrong" | translate }}</p>
     </div>
   }

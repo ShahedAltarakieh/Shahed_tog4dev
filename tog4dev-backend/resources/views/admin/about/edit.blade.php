@@ -3,30 +3,460 @@
 
 @section('content')
 
-<div class="page-header-box mb-4">
+<style>
+.cms-page-header {
+    background: linear-gradient(135deg, rgba(19,88,93,0.04), rgba(254,205,15,0.04));
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(19,88,93,0.08);
+}
+.cms-page-header h4 { font-weight: 700; font-size: 1.1rem; color: #1a1a1a; }
+.cms-back-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(19,88,93,0.08);
+    color: #13585D;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    border: none;
+}
+.cms-back-btn:hover { background: #13585D; color: #fff; }
+.cms-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.cms-action-btn.preview { background: rgba(19,88,93,0.08); color: #13585D; text-decoration: none; }
+.cms-action-btn.preview:hover { background: rgba(19,88,93,0.15); }
+.cms-action-btn.publish { background: rgba(40,167,69,0.1); color: #28a745; }
+.cms-action-btn.publish:hover { background: #28a745; color: #fff; }
+.cms-action-btn.unpublish { background: rgba(255,193,7,0.1); color: #e6a800; }
+.cms-action-btn.unpublish:hover { background: #e6a800; color: #fff; }
+
+.cms-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+.cms-status-badge.published { background: rgba(40,167,69,0.1); color: #28a745; }
+.cms-status-badge.draft { background: rgba(255,193,7,0.1); color: #e6a800; }
+.cms-status-badge .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+}
+.cms-status-badge.published .dot { background: #28a745; }
+.cms-status-badge.draft .dot { background: #e6a800; }
+
+.cms-country-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    background: rgba(19,88,93,0.06);
+    color: #13585D;
+}
+
+.cms-sections-card {
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.06);
+    overflow: hidden;
+}
+.cms-sections-card > .card-header {
+    background: #fff;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.cms-sections-card > .card-header h5 { font-weight: 700; font-size: 1rem; }
+
+.section-row {
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    transition: background 0.2s ease;
+}
+.section-row:last-child { border-bottom: none; }
+.section-row:hover { background: rgba(19,88,93,0.01); }
+
+.section-header {
+    padding: 14px 20px;
+}
+
+.drag-handle {
+    cursor: grab;
+    color: #ccc;
+    transition: color 0.2s;
+    font-size: 0.9rem;
+    padding: 4px;
+}
+.drag-handle:hover { color: #13585D; }
+
+.section-key-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.section-key-badge.key-hero { background: rgba(19,88,93,0.1); color: #13585D; }
+.section-key-badge.key-intro { background: rgba(99,102,241,0.1); color: #6366f1; }
+.section-key-badge.key-highlights { background: rgba(245,158,11,0.1); color: #d97706; }
+.section-key-badge.key-statement { background: rgba(16,185,129,0.1); color: #059669; }
+.section-key-badge.key-visionMission { background: rgba(139,92,246,0.1); color: #7c3aed; }
+.section-key-badge.key-coreValues { background: rgba(236,72,153,0.1); color: #db2777; }
+.section-key-badge.key-founders { background: rgba(20,184,166,0.1); color: #0d9488; }
+.section-key-badge.key-beliefs { background: rgba(251,146,60,0.1); color: #ea580c; }
+.section-key-badge.key-stats { background: rgba(59,130,246,0.1); color: #2563eb; }
+.section-key-badge.key-slogan { background: rgba(168,85,247,0.1); color: #9333ea; }
+.section-key-badge.key-contact { background: rgba(34,197,94,0.1); color: #16a34a; }
+.section-key-badge.key-partners { background: rgba(107,114,128,0.1); color: #4b5563; }
+
+.section-title-preview {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 500;
+}
+
+.section-edit-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(19,88,93,0.06);
+    color: #13585D;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+}
+.section-edit-btn:hover { background: #13585D; color: #fff; }
+
+.section-form-area {
+    padding: 20px;
+    background: rgba(19,88,93,0.02);
+    border-top: 1px solid rgba(0,0,0,0.04);
+}
+.section-form-area label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+}
+.section-form-area .form-control {
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.08);
+    font-size: 0.88rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.section-form-area .form-control:focus {
+    border-color: #13585D;
+    box-shadow: 0 0 0 3px rgba(19,88,93,0.08);
+}
+.section-save-btn {
+    background: linear-gradient(135deg, #13585D, #0d4f4f);
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+.section-save-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(19,88,93,0.2); }
+
+.items-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 16px 0 12px;
+    padding-top: 16px;
+    border-top: 1px dashed rgba(0,0,0,0.08);
+}
+.items-header h6 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #555;
+}
+.add-item-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 14px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: rgba(40,167,69,0.08);
+    color: #28a745;
+    border: none;
+    transition: all 0.2s ease;
+}
+.add-item-btn:hover { background: #28a745; color: #fff; }
+
+.item-row {
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    background: #fff;
+    transition: all 0.2s ease;
+}
+.item-row:hover {
+    border-color: rgba(19,88,93,0.15);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.item-drag-handle { cursor: grab; color: #ddd; padding: 0 4px; }
+.item-drag-handle:hover { color: #13585D; }
+.item-thumb {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+.item-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #333;
+}
+.item-action-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    transition: all 0.2s ease;
+}
+.item-action-btn.edit { background: rgba(19,88,93,0.06); color: #13585D; }
+.item-action-btn.edit:hover { background: #13585D; color: #fff; }
+.item-action-btn.delete { background: rgba(220,53,69,0.06); color: #dc3545; }
+.item-action-btn.delete:hover { background: #dc3545; color: #fff; }
+
+.cms-sidebar-card {
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.06);
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.cms-sidebar-card .card-header {
+    background: #fff;
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.cms-sidebar-card .card-header h6 { font-weight: 700; font-size: 0.9rem; color: #1a1a1a; }
+.cms-sidebar-card .card-body { padding: 18px; }
+.cms-sidebar-card label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+}
+.cms-sidebar-card .form-control {
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.08);
+    font-size: 0.88rem;
+}
+.cms-sidebar-card .form-control:focus {
+    border-color: #13585D;
+    box-shadow: 0 0 0 3px rgba(19,88,93,0.08);
+}
+.settings-save-btn {
+    background: linear-gradient(135deg, #13585D, #0d4f4f);
+    color: #fff;
+    border: none;
+    padding: 10px 0;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    width: 100%;
+    transition: all 0.2s ease;
+}
+.settings-save-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(19,88,93,0.2); }
+
+.version-list .list-group-item {
+    padding: 12px 16px;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    transition: background 0.2s;
+}
+.version-list .list-group-item:hover { background: rgba(19,88,93,0.02); }
+.version-list .list-group-item:last-child { border-bottom: none; }
+.version-tag-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: rgba(19,88,93,0.08);
+    color: #13585D;
+}
+.version-action {
+    font-size: 0.8rem;
+    color: #666;
+}
+.version-time {
+    font-size: 0.72rem;
+    color: #aaa;
+}
+.rollback-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: rgba(255,193,7,0.08);
+    color: #e6a800;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    transition: all 0.2s ease;
+}
+.rollback-btn:hover { background: #e6a800; color: #fff; }
+
+.custom-switch-modern .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #13585D;
+    border-color: #13585D;
+}
+
+.cms-modal .modal-content {
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+.cms-modal .modal-header {
+    padding: 18px 24px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.cms-modal .modal-title {
+    font-weight: 700;
+    font-size: 1rem;
+}
+.cms-modal .modal-body {
+    padding: 24px;
+}
+.cms-modal .modal-body label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+.cms-modal .modal-body .form-control {
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.08);
+    font-size: 0.88rem;
+}
+.cms-modal .modal-body .form-control:focus {
+    border-color: #13585D;
+    box-shadow: 0 0 0 3px rgba(19,88,93,0.08);
+}
+.cms-modal .modal-footer {
+    padding: 14px 24px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+}
+.modal-save-btn {
+    background: linear-gradient(135deg, #13585D, #0d4f4f);
+    color: #fff;
+    border: none;
+    padding: 8px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+.modal-save-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(19,88,93,0.2); }
+.modal-cancel-btn {
+    background: rgba(108,117,125,0.08);
+    color: #6c757d;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.og-preview { max-height: 60px; border-radius: 8px; margin-top: 8px; border: 1px solid rgba(0,0,0,0.06); }
+</style>
+
+@php
+$sectionIcons = [
+    'hero' => 'fas fa-flag',
+    'intro' => 'fas fa-book-open',
+    'highlights' => 'fas fa-star',
+    'statement' => 'fas fa-quote-right',
+    'visionMission' => 'fas fa-compass',
+    'coreValues' => 'fas fa-gem',
+    'founders' => 'fas fa-users',
+    'beliefs' => 'fas fa-lightbulb',
+    'stats' => 'fas fa-chart-bar',
+    'slogan' => 'fas fa-bullhorn',
+    'contact' => 'fas fa-envelope',
+    'partners' => 'fas fa-handshake',
+];
+@endphp
+
+<div class="cms-page-header">
     <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
-        <div class="d-flex align-items-center gap-2">
-            <a href="{{ route('about-admin.index') }}" class="page-back-btn"><i class="fa fa-arrow-left"></i></a>
-            <h4 class="mb-0">{{ __('app.about us') }} CMS —
-                <span class="badge badge-info">{{ strtoupper($page->country_code) }}</span>
-                @if($page->status === 'published')
-                    <span class="badge badge-success">{{ __('app.published') }} v{{ $page->version }}</span>
-                @else
-                    <span class="badge badge-warning">{{ __('app.draft') }}</span>
-                @endif
-            </h4>
+        <div class="d-flex align-items-center gap-3">
+            <a href="{{ route('about-admin.index') }}" class="cms-back-btn"><i class="fa fa-arrow-left"></i></a>
+            <div>
+                <h4 class="mb-1">
+                    {{ __('app.about us') }} CMS
+                </h4>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="cms-country-tag">
+                        @php
+                            $flags = ['JO'=>'🇯🇴','PS'=>'🇵🇸','SA'=>'🇸🇦','AE'=>'🇦🇪','global'=>'🌍'];
+                        @endphp
+                        {{ $flags[$page->country_code] ?? '🌐' }}
+                        {{ strtoupper($page->country_code) }}
+                    </span>
+                    @if($page->status === 'published')
+                        <span class="cms-status-badge published"><span class="dot"></span> {{ __('app.published') }} v{{ $page->version }}</span>
+                    @else
+                        <span class="cms-status-badge draft"><span class="dot"></span> {{ __('app.draft') }}</span>
+                    @endif
+                </div>
+            </div>
         </div>
         <div class="d-flex gap-2">
-            <a href="{{ route('about-admin.preview', $page->id) }}" target="_blank" class="btn btn-outline-info btn-sm">
-                <i class="fas fa-eye me-1"></i> {{ __('app.preview') }}
+            <a href="{{ route('about-admin.preview', $page->id) }}" target="_blank" class="cms-action-btn preview">
+                <i class="fas fa-eye"></i> {{ __('app.preview') }}
             </a>
             @if($page->status === 'draft')
-                <button class="btn btn-success btn-sm btn-publish" data-id="{{ $page->id }}">
-                    <i class="fas fa-rocket me-1"></i> {{ __('app.publish') }}
+                <button class="cms-action-btn publish btn-publish" data-id="{{ $page->id }}">
+                    <i class="fas fa-rocket"></i> {{ __('app.publish') }}
                 </button>
             @else
-                <button class="btn btn-warning btn-sm btn-unpublish" data-id="{{ $page->id }}">
-                    <i class="fas fa-pause me-1"></i> {{ __('app.unpublish') }}
+                <button class="cms-action-btn unpublish btn-unpublish" data-id="{{ $page->id }}">
+                    <i class="fas fa-pause"></i> {{ __('app.unpublish') }}
                 </button>
             @endif
         </div>
@@ -35,61 +465,64 @@
 
 <div class="row">
     <div class="col-md-8">
-        <div class="card card-box mb-4">
+        <div class="card cms-sections-card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0"><i class="fas fa-layer-group me-2"></i>{{ __('app.sections') }}</h5>
-                <small class="text-muted">{{ __('app.drag to reorder') }}</small>
+                <h5 class="mb-0"><i class="fas fa-layer-group me-2" style="color:#13585D"></i>{{ __('app.sections') }}</h5>
+                <small style="color:#aaa;font-size:0.78rem"><i class="fas fa-grip-vertical me-1"></i>{{ __('app.drag to reorder') }}</small>
             </div>
             <div class="card-body p-0">
                 <div id="sections-list">
                     @foreach($page->sections->sortBy('sort_order') as $section)
                     <div class="section-row" data-section-id="{{ $section->id }}">
-                        <div class="section-header d-flex align-items-center justify-content-between p-3 border-bottom">
+                        <div class="section-header d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center gap-2">
-                                <span class="drag-handle" style="cursor:grab;color:#aaa"><i class="fas fa-grip-vertical"></i></span>
-                                <div class="custom-control custom-switch">
+                                <span class="drag-handle"><i class="fas fa-grip-vertical"></i></span>
+                                <div class="custom-control custom-switch custom-switch-modern">
                                     <input type="checkbox" class="custom-control-input toggle-visibility"
                                         id="vis-{{ $section->id }}" data-section-id="{{ $section->id }}"
                                         {{ $section->is_visible ? 'checked' : '' }}>
                                     <label class="custom-control-label" for="vis-{{ $section->id }}"></label>
                                 </div>
-                                <span class="badge badge-secondary text-uppercase">{{ $section->section_key }}</span>
-                                <span class="section-title-preview text-muted small">{{ $section->title ?: $section->title_en ?: '' }}</span>
+                                <span class="section-key-badge key-{{ $section->section_key }}">
+                                    <i class="{{ $sectionIcons[$section->section_key] ?? 'fas fa-puzzle-piece' }}"></i>
+                                    {{ $section->section_key }}
+                                </span>
+                                <span class="section-title-preview">{{ Str::limit($section->title ?: $section->title_en ?: '', 40) }}</span>
                             </div>
-                            <button class="btn btn-sm btn-outline-primary btn-edit-section" data-toggle="collapse" data-target="#section-body-{{ $section->id }}">
+                            <button class="section-edit-btn btn-edit-section" data-toggle="collapse" data-target="#section-body-{{ $section->id }}">
                                 <i class="fas fa-pencil-alt"></i>
                             </button>
                         </div>
                         <div class="collapse" id="section-body-{{ $section->id }}">
-                            <div class="p-3 bg-light">
+                            <div class="section-form-area">
                                 <form class="section-form" data-page-id="{{ $page->id }}" data-section-id="{{ $section->id }}">
                                     <div class="row mb-3">
                                         <div class="col-md-6">
-                                            <label class="small fw-bold">Title (AR)</label>
+                                            <label>Title (AR)</label>
                                             <input type="text" name="title" class="form-control form-control-sm" value="{{ $section->title }}">
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="small fw-bold">Title (EN)</label>
+                                            <label>Title (EN)</label>
                                             <input type="text" name="title_en" class="form-control form-control-sm" value="{{ $section->title_en }}">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-6">
-                                            <label class="small fw-bold">Subtitle (AR)</label>
+                                            <label>Subtitle (AR)</label>
                                             <input type="text" name="subtitle" class="form-control form-control-sm" value="{{ $section->subtitle }}">
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="small fw-bold">Subtitle (EN)</label>
+                                            <label>Subtitle (EN)</label>
                                             <input type="text" name="subtitle_en" class="form-control form-control-sm" value="{{ $section->subtitle_en }}">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-6">
-                                            <label class="small fw-bold">Body (AR)</label>
+                                            <label>Body (AR)</label>
                                             <textarea name="body" class="form-control form-control-sm" rows="4">{{ $section->body }}</textarea>
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="small fw-bold">Body (EN)</label>
+                                            <label>Body (EN)</label>
                                             <textarea name="body_en" class="form-control form-control-sm" rows="4">{{ $section->body_en }}</textarea>
                                         </div>
                                     </div>
@@ -97,32 +530,32 @@
                                     @if(in_array($section->section_key, ['hero']))
                                     <div class="row mb-3">
                                         <div class="col-md-6">
-                                            <label class="small fw-bold">Image</label>
+                                            <label>Image</label>
                                             <input type="file" name="section_image" class="form-control form-control-sm" accept="image/*">
                                             @if($section->image)
-                                                <img src="{{ $section->image }}" class="mt-2 rounded" style="max-height:60px">
+                                                <img src="{{ $section->image }}" class="og-preview">
                                             @endif
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="small fw-bold">Video URL</label>
+                                            <label>Video URL</label>
                                             <input type="text" name="video_url" class="form-control form-control-sm" value="{{ $section->video_url }}">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-3">
-                                            <label class="small fw-bold">CTA Text (AR)</label>
+                                            <label>CTA Text (AR)</label>
                                             <input type="text" name="cta_text" class="form-control form-control-sm" value="{{ $section->cta_text }}">
                                         </div>
                                         <div class="col-md-3">
-                                            <label class="small fw-bold">CTA Text (EN)</label>
+                                            <label>CTA Text (EN)</label>
                                             <input type="text" name="cta_text_en" class="form-control form-control-sm" value="{{ $section->cta_text_en }}">
                                         </div>
                                         <div class="col-md-3">
-                                            <label class="small fw-bold">CTA Link (AR)</label>
+                                            <label>CTA Link (AR)</label>
                                             <input type="text" name="cta_link" class="form-control form-control-sm" value="{{ $section->cta_link }}">
                                         </div>
                                         <div class="col-md-3">
-                                            <label class="small fw-bold">CTA Link (EN)</label>
+                                            <label>CTA Link (EN)</label>
                                             <input type="text" name="cta_link_en" class="form-control form-control-sm" value="{{ $section->cta_link_en }}">
                                         </div>
                                     </div>
@@ -130,7 +563,7 @@
 
                                     @if(in_array($section->section_key, ['partners']))
                                     <div class="form-group mb-3">
-                                        <label class="small fw-bold">Layout</label>
+                                        <label>Layout</label>
                                         <select name="layout" class="form-control form-control-sm">
                                             <option value="grid" {{ $section->layout === 'grid' ? 'selected' : '' }}>Grid</option>
                                             <option value="carousel" {{ $section->layout === 'carousel' ? 'selected' : '' }}>Carousel</option>
@@ -139,37 +572,38 @@
                                     @endif
 
                                     <div class="text-end">
-                                        <button type="submit" class="btn btn-primary btn-sm">
+                                        <button type="submit" class="section-save-btn">
                                             <i class="fas fa-save me-1"></i> {{ __('app.save') }}
                                         </button>
                                     </div>
                                 </form>
 
-                                @if(in_array($section->section_key, ['highlights', 'coreValues', 'founders', 'stats', 'partners', 'beliefs']))
-                                <hr>
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h6 class="mb-0"><i class="fas fa-list me-1"></i> Items</h6>
-                                    <button class="btn btn-sm btn-outline-success btn-add-item" data-page-id="{{ $page->id }}" data-section-id="{{ $section->id }}" data-section-key="{{ $section->section_key }}">
-                                        <i class="fas fa-plus me-1"></i> Add Item
+                                @if(in_array($section->section_key, ['highlights', 'coreValues', 'founders', 'stats', 'partners', 'beliefs', 'visionMission', 'contact']))
+                                <div class="items-header">
+                                    <h6 class="mb-0"><i class="fas fa-th-list me-1" style="color:#13585D"></i> Items ({{ $section->items->count() }})</h6>
+                                    <button class="add-item-btn btn-add-item" data-page-id="{{ $page->id }}" data-section-id="{{ $section->id }}" data-section-key="{{ $section->section_key }}">
+                                        <i class="fas fa-plus"></i> Add Item
                                     </button>
                                 </div>
                                 <div class="items-list" data-section-id="{{ $section->id }}">
                                     @foreach($section->items->sortBy('sort_order') as $item)
-                                    <div class="item-row border rounded p-2 mb-2 bg-white" data-item-id="{{ $item->id }}">
+                                    <div class="item-row" data-item-id="{{ $item->id }}">
                                         <div class="d-flex align-items-center justify-content-between">
                                             <div class="d-flex align-items-center gap-2">
-                                                <span class="item-drag-handle" style="cursor:grab;color:#ccc"><i class="fas fa-grip-vertical"></i></span>
+                                                <span class="item-drag-handle"><i class="fas fa-grip-vertical"></i></span>
                                                 @if($item->image)
-                                                    <img src="{{ $item->image }}" class="rounded" style="width:30px;height:30px;object-fit:cover">
+                                                    <img src="{{ $item->image }}" class="item-thumb">
+                                                @elseif($item->icon)
+                                                    <span style="width:32px;height:32px;border-radius:8px;background:rgba(19,88,93,0.06);color:#13585D;display:inline-flex;align-items:center;justify-content:center;font-size:0.8rem"><i class="{{ $item->icon }}"></i></span>
                                                 @endif
-                                                <span class="small">{{ $item->title ?: $item->title_en ?: $item->value ?: 'Item #'.$item->id }}</span>
+                                                <span class="item-name">{{ $item->title ?: $item->title_en ?: $item->value ?: 'Item #'.$item->id }}</span>
                                             </div>
                                             <div class="d-flex gap-1">
-                                                <button class="btn btn-xs btn-outline-primary btn-edit-item" data-page-id="{{ $page->id }}" data-section-id="{{ $section->id }}" data-item-id="{{ $item->id }}" data-item='@json($item)'>
+                                                <button class="item-action-btn edit btn-edit-item" data-page-id="{{ $page->id }}" data-section-id="{{ $section->id }}" data-item-id="{{ $item->id }}" data-item='@json($item)'>
                                                     <i class="fas fa-edit"></i>
                                                 </button>
-                                                <button class="btn btn-xs btn-outline-danger btn-delete-item" data-page-id="{{ $page->id }}" data-section-id="{{ $section->id }}" data-item-id="{{ $item->id }}">
-                                                    <i class="fas fa-trash"></i>
+                                                <button class="item-action-btn delete btn-delete-item" data-page-id="{{ $page->id }}" data-section-id="{{ $section->id }}" data-item-id="{{ $item->id }}">
+                                                    <i class="fas fa-trash-alt"></i>
                                                 </button>
                                             </div>
                                         </div>
@@ -187,15 +621,15 @@
     </div>
 
     <div class="col-md-4">
-        <div class="card card-box mb-4">
-            <div class="card-header"><h6 class="mb-0"><i class="fas fa-cog me-2"></i>{{ __('app.settings') }}</h6></div>
+        <div class="card cms-sidebar-card">
+            <div class="card-header"><h6 class="mb-0"><i class="fas fa-cog me-2" style="color:#13585D"></i>{{ __('app.settings') }}</h6></div>
             <div class="card-body">
                 <form action="{{ route('about-admin.update', $page->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
                     <div class="form-group mb-3">
-                        <label class="small fw-bold">{{ __('app.country') }}</label>
+                        <label>{{ __('app.country') }}</label>
                         <select name="country_code" class="form-control form-control-sm">
                             <option value="global" {{ $page->country_code === 'global' ? 'selected' : '' }}>🌍 Global</option>
                             <option value="JO" {{ $page->country_code === 'JO' ? 'selected' : '' }}>🇯🇴 Jordan</option>
@@ -206,30 +640,30 @@
                     </div>
 
                     <div class="form-group mb-3">
-                        <label class="small fw-bold">Meta Title (AR)</label>
+                        <label>Meta Title (AR)</label>
                         <input type="text" name="meta_title" class="form-control form-control-sm" value="{{ $page->meta_title }}">
                     </div>
                     <div class="form-group mb-3">
-                        <label class="small fw-bold">Meta Title (EN)</label>
+                        <label>Meta Title (EN)</label>
                         <input type="text" name="meta_title_en" class="form-control form-control-sm" value="{{ $page->meta_title_en }}">
                     </div>
                     <div class="form-group mb-3">
-                        <label class="small fw-bold">Meta Desc (AR)</label>
+                        <label>Meta Desc (AR)</label>
                         <textarea name="meta_description" class="form-control form-control-sm" rows="2">{{ $page->meta_description }}</textarea>
                     </div>
                     <div class="form-group mb-3">
-                        <label class="small fw-bold">Meta Desc (EN)</label>
+                        <label>Meta Desc (EN)</label>
                         <textarea name="meta_description_en" class="form-control form-control-sm" rows="2">{{ $page->meta_description_en }}</textarea>
                     </div>
                     <div class="form-group mb-3">
-                        <label class="small fw-bold">OG Image</label>
+                        <label>OG Image</label>
                         <input type="file" name="og_image_file" class="form-control form-control-sm" accept="image/*">
                         @if($page->og_image)
-                            <img src="{{ $page->og_image }}" class="mt-2 rounded" style="max-height:60px">
+                            <img src="{{ $page->og_image }}" class="og-preview">
                         @endif
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-sm w-100">
+                    <button type="submit" class="settings-save-btn">
                         <i class="fas fa-save me-1"></i> {{ __('app.save') }} {{ __('app.settings') }}
                     </button>
                 </form>
@@ -237,17 +671,18 @@
         </div>
 
         @if($versions->count() > 0)
-        <div class="card card-box mb-4">
-            <div class="card-header"><h6 class="mb-0"><i class="fas fa-history me-2"></i>{{ __('app.version history') }}</h6></div>
+        <div class="card cms-sidebar-card">
+            <div class="card-header"><h6 class="mb-0"><i class="fas fa-history me-2" style="color:#13585D"></i>{{ __('app.version history') }}</h6></div>
             <div class="card-body p-0">
-                <div class="list-group list-group-flush">
+                <div class="list-group list-group-flush version-list">
                     @foreach($versions as $v)
-                    <div class="list-group-item d-flex justify-content-between align-items-center small">
+                    <div class="list-group-item d-flex justify-content-between align-items-center">
                         <div>
-                            <strong>v{{ $v->version }}</strong> — {{ $v->action }}
-                            <br><span class="text-muted">{{ $v->created_at->format('Y-m-d H:i') }}</span>
+                            <span class="version-tag-sm"><i class="fas fa-code-branch"></i> v{{ $v->version }}</span>
+                            <span class="version-action ms-2">{{ $v->action }}</span>
+                            <br><span class="version-time"><i class="far fa-clock me-1"></i>{{ $v->created_at->diffForHumans() }}</span>
                         </div>
-                        <button class="btn btn-xs btn-outline-warning btn-rollback" data-page-id="{{ $page->id }}" data-version-id="{{ $v->id }}">
+                        <button class="rollback-btn btn-rollback" data-page-id="{{ $page->id }}" data-version-id="{{ $v->id }}" title="Rollback">
                             <i class="fas fa-undo"></i>
                         </button>
                     </div>
@@ -259,12 +694,12 @@
     </div>
 </div>
 
-<div class="modal fade" id="itemModal" tabindex="-1">
+<div class="modal fade cms-modal" id="itemModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Item</h5>
-                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                <h5 class="modal-title"><i class="fas fa-cube me-2" style="color:#13585D"></i>Item</h5>
+                <button type="button" class="close" data-dismiss="modal" style="background:none;border:none;font-size:1.2rem;color:#999"><span>&times;</span></button>
             </div>
             <div class="modal-body">
                 <form id="itemForm" enctype="multipart/form-data">
@@ -273,67 +708,67 @@
                     <input type="hidden" id="item-id">
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label class="small fw-bold">Title (AR)</label>
+                            <label>Title (AR)</label>
                             <input type="text" id="item-title" class="form-control form-control-sm">
                         </div>
                         <div class="col-md-6">
-                            <label class="small fw-bold">Title (EN)</label>
+                            <label>Title (EN)</label>
                             <input type="text" id="item-title-en" class="form-control form-control-sm">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label class="small fw-bold">Description (AR)</label>
+                            <label>Description (AR)</label>
                             <textarea id="item-description" class="form-control form-control-sm" rows="3"></textarea>
                         </div>
                         <div class="col-md-6">
-                            <label class="small fw-bold">Description (EN)</label>
+                            <label>Description (EN)</label>
                             <textarea id="item-description-en" class="form-control form-control-sm" rows="3"></textarea>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <label class="small fw-bold">Value</label>
+                            <label>Value</label>
                             <input type="text" id="item-value" class="form-control form-control-sm" placeholder="+2,000,000">
                         </div>
                         <div class="col-md-4">
-                            <label class="small fw-bold">Label (AR)</label>
+                            <label>Label (AR)</label>
                             <input type="text" id="item-label" class="form-control form-control-sm">
                         </div>
                         <div class="col-md-4">
-                            <label class="small fw-bold">Label (EN)</label>
+                            <label>Label (EN)</label>
                             <input type="text" id="item-label-en" class="form-control form-control-sm">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label class="small fw-bold">Icon (FontAwesome class)</label>
+                            <label><i class="fas fa-icons me-1" style="color:#13585D"></i> Icon (FontAwesome class)</label>
                             <input type="text" id="item-icon" class="form-control form-control-sm" placeholder="fas fa-heart">
                         </div>
                         <div class="col-md-6">
-                            <label class="small fw-bold">Image</label>
+                            <label><i class="fas fa-image me-1" style="color:#13585D"></i> Image</label>
                             <input type="file" id="item-image" class="form-control form-control-sm" accept="image/*">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label class="small fw-bold">Link (AR)</label>
+                            <label>Link (AR)</label>
                             <input type="text" id="item-link" class="form-control form-control-sm">
                         </div>
                         <div class="col-md-6">
-                            <label class="small fw-bold">Link (EN)</label>
+                            <label>Link (EN)</label>
                             <input type="text" id="item-link-en" class="form-control form-control-sm">
                         </div>
                     </div>
                     <div class="form-group mb-3">
-                        <label class="small fw-bold">Social Links (JSON)</label>
+                        <label>Social Links (JSON)</label>
                         <textarea id="item-social-links" class="form-control form-control-sm" rows="2" placeholder='{"linkedin":"url","twitter":"url"}'></textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">{{ __('app.cancel') }}</button>
-                <button type="button" class="btn btn-primary btn-sm" id="saveItemBtn">
+                <button type="button" class="modal-cancel-btn" data-dismiss="modal">{{ __('app.cancel') }}</button>
+                <button type="button" class="modal-save-btn" id="saveItemBtn">
                     <i class="fas fa-save me-1"></i> {{ __('app.save') }}
                 </button>
             </div>
@@ -351,7 +786,9 @@ $(document).ready(function() {
 
     new Sortable(document.getElementById('sections-list'), {
         handle: '.drag-handle',
-        animation: 150,
+        animation: 200,
+        ghostClass: 'sortable-ghost',
+        chosenClass: 'sortable-chosen',
         onEnd: function() {
             var order = [];
             $('#sections-list .section-row').each(function() {
@@ -366,7 +803,7 @@ $(document).ready(function() {
     document.querySelectorAll('.items-list').forEach(function(el) {
         new Sortable(el, {
             handle: '.item-drag-handle',
-            animation: 150,
+            animation: 200,
             onEnd: function() {
                 var sectionId = el.dataset.sectionId;
                 var order = [];
@@ -381,10 +818,13 @@ $(document).ready(function() {
     $('.section-form').on('submit', function(e) {
         e.preventDefault();
         var form = $(this);
+        var btn = form.find('.section-save-btn');
         var pageId = form.data('page-id');
         var sectionId = form.data('section-id');
         var formData = new FormData(this);
         formData.append('_token', csrfToken);
+
+        btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-1"></i> Saving...');
 
         $.ajax({
             url: '/about-management/' + pageId + '/sections/' + sectionId,
@@ -393,10 +833,16 @@ $(document).ready(function() {
             processData: false,
             contentType: false,
             success: function(res) {
+                btn.prop('disabled', false).html('<i class="fas fa-check me-1"></i> Saved!');
+                setTimeout(function() {
+                    btn.html('<i class="fas fa-save me-1"></i> {{ __("app.save") }}');
+                }, 1500);
                 if (window.AdminToast) AdminToast.show(res.message || 'Saved', 'success');
-                else alert('Saved!');
             },
-            error: function() { alert('Error saving section'); }
+            error: function() {
+                btn.prop('disabled', false).html('<i class="fas fa-save me-1"></i> {{ __("app.save") }}');
+                alert('Error saving section');
+            }
         });
     });
 
@@ -406,7 +852,9 @@ $(document).ready(function() {
     });
 
     $('.btn-publish').on('click', function() {
-        $.post('/about-management/' + $(this).data('id') + '/publish', { _token: csrfToken }, function() {
+        var btn = $(this);
+        btn.html('<i class="fas fa-spinner fa-spin me-1"></i> Publishing...');
+        $.post('/about-management/' + btn.data('id') + '/publish', { _token: csrfToken }, function() {
             location.reload();
         });
     });
@@ -424,7 +872,8 @@ $(document).ready(function() {
             title: 'Rollback to this version?',
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Rollback'
+            confirmButtonText: 'Rollback',
+            confirmButtonColor: '#13585D'
         }).then(function(result) {
             if (result.isConfirmed) {
                 $.post('/about-management/' + pageId + '/rollback/' + versionId, { _token: csrfToken }, function() {
@@ -439,7 +888,7 @@ $(document).ready(function() {
         $('#item-page-id').val($(this).data('page-id'));
         $('#item-section-id').val($(this).data('section-id'));
         $('#itemForm')[0].reset();
-        $('#itemModal .modal-title').text('Add Item');
+        $('#itemModal .modal-title').html('<i class="fas fa-plus-circle me-2" style="color:#28a745"></i>Add Item');
         $('#itemModal').modal('show');
     });
 
@@ -459,14 +908,17 @@ $(document).ready(function() {
         $('#item-link').val(item.link || '');
         $('#item-link-en').val(item.link_en || '');
         $('#item-social-links').val(item.social_links ? JSON.stringify(item.social_links) : '');
-        $('#itemModal .modal-title').text('Edit Item');
+        $('#itemModal .modal-title').html('<i class="fas fa-edit me-2" style="color:#13585D"></i>Edit Item');
         $('#itemModal').modal('show');
     });
 
     $('#saveItemBtn').on('click', function() {
+        var btn = $(this);
         var pageId = $('#item-page-id').val();
         var sectionId = $('#item-section-id').val();
         var itemId = $('#item-id').val();
+
+        btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-1"></i> Saving...');
 
         var formData = new FormData();
         formData.append('_token', csrfToken);
@@ -493,7 +945,10 @@ $(document).ready(function() {
             url: url, type: 'POST', data: formData,
             processData: false, contentType: false,
             success: function() { $('#itemModal').modal('hide'); location.reload(); },
-            error: function() { alert('Error saving item'); }
+            error: function() {
+                btn.prop('disabled', false).html('<i class="fas fa-save me-1"></i> {{ __("app.save") }}');
+                alert('Error saving item');
+            }
         });
     });
 
@@ -508,7 +963,9 @@ $(document).ready(function() {
                 $.ajax({
                     url: '/about-management/' + btn.data('page-id') + '/sections/' + btn.data('section-id') + '/items/' + btn.data('item-id'),
                     type: 'DELETE', headers: { 'X-CSRF-TOKEN': csrfToken },
-                    success: function() { btn.closest('.item-row').remove(); }
+                    success: function() {
+                        btn.closest('.item-row').fadeOut(300, function() { $(this).remove(); });
+                    }
                 });
             }
         });
