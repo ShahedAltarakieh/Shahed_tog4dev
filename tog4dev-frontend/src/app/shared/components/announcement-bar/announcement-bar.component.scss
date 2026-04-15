@@ -49,6 +49,10 @@ $bar-accent: #FECD0F;
   padding: 7px 20px;
   min-height: 36px;
   position: relative;
+
+  @media (max-width: 768px) {
+    padding: 8px 14px;
+  }
 }
 
 .announcement-content {
@@ -63,6 +67,11 @@ $bar-accent: #FECD0F;
 
   &.fade-out {
     opacity: 0;
+  }
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    gap: 6px;
   }
 }
 
@@ -93,9 +102,11 @@ $bar-accent: #FECD0F;
   @media (max-width: 768px) {
     font-size: 11.5px;
     white-space: normal;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
+    overflow: visible;
+    text-overflow: unset;
+    display: block;
+    text-align: center;
+    line-height: 1.5;
   }
 }
 

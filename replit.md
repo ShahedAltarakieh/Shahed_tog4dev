@@ -94,10 +94,10 @@ Full-stack module for news articles and media gallery (photos/videos).
 - Routes: `/en/news`, `/en/news/:slug`, `/en/photos`, `/en/videos` + Arabic equivalents (landing page removed; `/en/news-gallery` redirects to `/en/news`)
 - Navigation: "News & Gallery" dropdown in header with SVG icons (News/Photos/Videos), click+hover toggle, rotating arrow indicator, closes on outside click
 - Features: debounced search, category filtering, pagination (9 items/page, 3x3 grid), share (Facebook/WhatsApp/Copy link), breadcrumbs, loading/empty/error states, "Read More" buttons
-- Reading time: auto-calculated from body content (200 wpm), displayed on cards and detail page
-- Recent badge: automatic "NEW" badge on news created within 7 days (replaces old "Featured" toggle)
-- Card layout: category LEFT + date RIGHT in same row, reading time in footer
+- Recent badge: automatic "NEW" badge on news created within 7 days (replaces old "Featured" toggle); positioned top-right on featured card, overlaid on image for small cards
+- Card layout: category LEFT + date RIGHT in same row; "Read More" button at bottom of card content
 - Mobile UX: overflow-x hidden, category pills wrap on mobile, article-body word-break, responsive images
+- Announcement bar: text-length-based rotation timing (6s short / 10s medium / 14s long); mobile text fully readable (no clipping/truncation)
 - Translation keys: `min read`, `new` in both en.json and ar.json
 
 ## Footer

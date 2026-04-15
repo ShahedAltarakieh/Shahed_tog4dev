@@ -197,16 +197,6 @@ $radius: 14px;
         svg { opacity: 0.5; }
     }
 
-    .article-reading-time {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        color: $text-muted;
-        font-size: 0.85rem;
-
-        svg { opacity: 0.5; }
-    }
-
     .article-recent-badge {
         display: inline-block;
         background: #e74c3c;

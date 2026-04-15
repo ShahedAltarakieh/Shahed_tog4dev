@@ -95,21 +95,21 @@ export class AnnouncementBarComponent implements OnInit, AfterViewInit, OnDestro
     if (this.announcements.length <= 1 || this.transitioning) return;
     this.transition(() => {
       this.currentIndex = (this.currentIndex + 1) % this.announcements.length;
-    });
+    }, true);
   }
 
   prev(): void {
     if (this.announcements.length <= 1 || this.transitioning) return;
     this.transition(() => {
       this.currentIndex = (this.currentIndex - 1 + this.announcements.length) % this.announcements.length;
-    });
+    }, true);
   }
 
   goTo(index: number): void {
     if (index === this.currentIndex || this.transitioning) return;
     this.transition(() => {
       this.currentIndex = index;
-    });
+    }, true);
   }
 
   onMouseEnter(): void {
@@ -120,7 +120,7 @@ export class AnnouncementBarComponent implements OnInit, AfterViewInit, OnDestro
   onMouseLeave(): void {
     this.isPaused = false;
     if (this.announcements.length > 1) {
-      this.startAutoRotate();
+      this.scheduleNextRotation();
     }
   }
 
@@ -138,12 +138,15 @@ export class AnnouncementBarComponent implements OnInit, AfterViewInit, OnDestro
     return link.startsWith('http://') || link.startsWith('https://');
   }
 
-  private transition(changeFn: () => void): void {
+  private transition(changeFn: () => void, restartTimer = false): void {
     this.transitioning = true;
     setTimeout(() => {
       changeFn();
       setTimeout(() => {
         this.transitioning = false;
+        if (restartTimer && !this.isPaused && this.announcements.length > 1) {
+          this.scheduleNextRotation();
+        }
       }, 50);
     }, 200);
   }
@@ -160,16 +163,41 @@ export class AnnouncementBarComponent implements OnInit, AfterViewInit, OnDestro
     }
   }
 
+  private getDisplayDuration(): number {
+    if (!this.current) return 6000;
+    const text = this.displayText || this.current.text || '';
+    const wordCount = text.split(/\s+/).filter(w => w.length > 0).length;
+    if (wordCount <= 10) return 6000;
+    if (wordCount <= 25) return 10000;
+    return 14000;
+  }
+
   private startAutoRotate(): void {
     this.stopAutoRotate();
-    this.rotateInterval = setInterval(() => {
-      this.next();
-    }, 4500);
+    this.scheduleNextRotation();
+  }
+
+  private scheduleNextRotation(): void {
+    this.stopAutoRotate();
+    const duration = this.getDisplayDuration();
+    this.rotateInterval = setTimeout(() => {
+      if (this.announcements.length <= 1 || this.transitioning) return;
+      this.transitioning = true;
+      setTimeout(() => {
+        this.currentIndex = (this.currentIndex + 1) % this.announcements.length;
+        setTimeout(() => {
+          this.transitioning = false;
+          if (!this.isPaused) {
+            this.scheduleNextRotation();
+          }
+        }, 50);
+      }, 200);
+    }, duration);
   }
 
   private stopAutoRotate(): void {
     if (this.rotateInterval) {
-      clearInterval(this.rotateInterval);
+      clearTimeout(this.rotateInterval);
       this.rotateInterval = null;
     }
   }
