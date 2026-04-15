@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('about_pages', function (Blueprint $table) {
             $table->id();
-            $table->string('country_code', 5)->default('global');
-            $table->string('language', 5)->default('ar');
+            $table->string('country_code', 10)->default('global');
+            $table->string('language', 10)->default('ar');
             $table->string('status')->default('draft');
             $table->integer('version')->default(1);
             $table->string('meta_title')->nullable();
