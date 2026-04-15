@@ -125,6 +125,8 @@ return [
     'prices' => 'Prices',
     'clearImage' => 'Delete All Images',
     'payments' => 'Payments',
+    'user_payments' => 'User Payments',
+    'influencer_payments' => 'Influencer Payments',
     'show_items' => 'Show Items',
     'show_all_payments' => 'Show All Payments',
     'users' => 'Customers',

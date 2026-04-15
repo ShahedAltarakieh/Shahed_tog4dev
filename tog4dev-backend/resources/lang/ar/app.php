@@ -119,6 +119,8 @@ return [
     'prices' => 'أسعار',
     'clearImage' => 'حذف كل الصور',
     'payments' => 'المدفوعات',
+    'user_payments' => 'مدفوعات المستخدمين',
+    'influencer_payments' => 'مدفوعات المؤثرين',
     'show_items' => 'عرض العناصر',
     'show_all_payments' => 'عرض جميع المدفوعات',
     'users' => 'المستخدمين',

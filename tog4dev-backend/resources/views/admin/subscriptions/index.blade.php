@@ -1,5 +1,5 @@
 @extends('layouts.admin.show')
-@section('title') __('app.subscriptions') @endsection
+@section('title') {{ __('app.subscriptions') }} @endsection
 
 @section('content')
 @include('includes.admin.header', ['label_name' => __('app.subscriptions'), "download_button" => route('subscriptions.download', ["active" => $active])])
