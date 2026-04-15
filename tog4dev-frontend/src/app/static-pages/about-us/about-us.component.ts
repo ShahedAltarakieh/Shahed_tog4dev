@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { StorageService } from 'app/core/storage/storage.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Meta } from '@angular/platform-browser';
@@ -18,17 +18,25 @@ export class AboutUsComponent implements OnInit, OnDestroy {
   sections: AboutSection[] = [];
   loading = true;
   error = false;
+  private isBrowser: boolean;
 
   private sub: Subscription | null = null;
 
   constructor(
     public metaService: Meta,
     public storageService: StorageService,
-    private aboutService: AboutService
-  ) {}
+    private aboutService: AboutService,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   ngOnInit(): void {
-    this.loadAboutPage();
+    if (this.isBrowser) {
+      this.loadAboutPage();
+    } else {
+      this.loading = false;
+    }
   }
 
   ngOnDestroy(): void {

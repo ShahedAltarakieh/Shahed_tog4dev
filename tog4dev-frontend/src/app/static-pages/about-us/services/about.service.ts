@@ -63,6 +63,9 @@ export class AboutService {
     };
 
     return this.apiService.get<any>(this.apiUrl + 'api/v1/about', queryParams, additionalHeaders)
-      .pipe(map((res: any) => res?.data || res));
+      .pipe(
+        map(this.apiService.extractTypeFromMessage),
+        map((body: any) => body?.data || body)
+      );
   }
 }
