@@ -442,6 +442,8 @@ return [
 
     'about us' => 'About Us',
     'about_us' => 'About Us',
+    'pages' => 'Pages',
+    'about_us_pages' => 'About Us Pages',
     'create_about_us' => 'Create About Us',
     'edit_about_us' => 'Edit About Us',
     'create' => 'Create',

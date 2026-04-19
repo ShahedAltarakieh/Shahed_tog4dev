@@ -442,6 +442,8 @@ return [
 
     'about us' => 'من نحن',
     'about_us' => 'من نحن',
+    'pages' => 'الصفحات',
+    'about_us_pages' => 'صفحات من نحن',
     'create_about_us' => 'إنشاء صفحة من نحن',
     'edit_about_us' => 'تعديل صفحة من نحن',
     'create' => 'إنشاء',

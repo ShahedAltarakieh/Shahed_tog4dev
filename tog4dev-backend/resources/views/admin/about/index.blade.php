@@ -195,7 +195,7 @@
 
         <div class="about-table-card card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0"><i class="fas fa-globe me-2" style="color:#13585D"></i>{{ __('app.about us') }} {{ __('app.pages') }}</h5>
+                <h5 class="mb-0"><i class="fas fa-globe me-2" style="color:#13585D"></i>{{ __('app.about_us_pages') }}</h5>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
