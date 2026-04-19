@@ -1,0 +1,26 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "gCg8_O9JKHoSHthxfqdWM"
+uri = "file://tog4dev-backend/storage/app/public/about/items/founder-1.png"
+type = "image"
+title = "founder one portrait"
+
+[[generated]]
+id = "DxwraXdHKuxDh0ugpqH6T"
+uri = "file://tog4dev-backend/storage/app/public/about/items/founder-2.png"
+type = "image"
+title = "founder two portrait"
+
+[[generated]]
+id = "oKdHp0X8Tznw8-3jXhM_5"
+uri = "file://tog4dev-backend/storage/app/public/about/items/founder-3.png"
+type = "image"
+title = "founder three portrait"
+
+[[generated]]
+id = "i8uK97JtLMaANF_cQ1azI"
+uri = "file://tog4dev-backend/storage/app/public/about/sections/journey-team.png"
+type = "image"
+title = "journey team photo"

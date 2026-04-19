@@ -18,7 +18,7 @@ class AboutSectionItemResource extends JsonResource
             'id' => $this->id,
             'title' => $pick($this->title, $this->title_en),
             'description' => $pick($this->description, $this->description_en),
-            'image' => $this->image,
+            'image' => $this->image ? rtrim(env('APP_URL_BACKEND', env('APP_URL', '')), '/') . '/storage/' . ltrim($this->image, '/') : null,
             'icon' => $this->icon,
             'link' => $pick($this->link, $this->link_en),
             'value' => $this->value,

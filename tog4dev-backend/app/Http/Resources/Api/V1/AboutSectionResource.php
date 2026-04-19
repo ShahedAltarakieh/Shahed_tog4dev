@@ -20,7 +20,7 @@ class AboutSectionResource extends JsonResource
             'title' => $pick($this->title, $this->title_en),
             'subtitle' => $pick($this->subtitle, $this->subtitle_en),
             'body' => $pick($this->body, $this->body_en),
-            'image' => $this->image,
+            'image' => $this->image ? rtrim(env('APP_URL_BACKEND', env('APP_URL', '')), '/') . '/storage/' . ltrim($this->image, '/') : null,
             'video_url' => $this->video_url,
             'cta_text' => $pick($this->cta_text, $this->cta_text_en),
             'cta_link' => $pick($this->cta_link, $this->cta_link_en),
