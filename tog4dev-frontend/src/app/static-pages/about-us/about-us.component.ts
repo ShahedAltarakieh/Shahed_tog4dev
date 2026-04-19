@@ -37,13 +37,18 @@ export class AboutUsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
+    const initialLang = this.storageService.siteLanguage$.getValue();
+    this.currentLang = (initialLang === 'en') ? 'en' : 'ar';
+    this.loadAboutPage();
+
     if (this.isBrowser) {
       this.langSub = this.storageService.siteLanguage$.subscribe((lang) => {
-        this.currentLang = (lang === 'en') ? 'en' : 'ar';
-        this.loadAboutPage();
+        const next = (lang === 'en') ? 'en' : 'ar';
+        if (next !== this.currentLang) {
+          this.currentLang = next;
+          this.loadAboutPage();
+        }
       });
-    } else {
-      this.loading = false;
     }
   }
 

@@ -58,7 +58,6 @@ export class AboutService {
     const additionalHeaders = { 'Accept-Language': lang };
     const queryParams: Record<string, string> = {
       country: country,
-      '_': new Date().getTime().toString(),
     };
 
     return this.apiService.get<any>(this.apiUrl + 'api/v1/about', queryParams, additionalHeaders)
