@@ -172,7 +172,7 @@ export class AboutUsComponent implements OnInit, OnDestroy, AfterViewInit {
     return hasText || hasItems || hasMedia || hasCta;
   }
 
-  updateMetaTags(meta: { title: string; description: string; og_image: string }): void {
+  updateMetaTags(meta: { title: string; description: string }): void {
     if (meta.description) {
       this.metaService.updateTag({ name: 'description', content: meta.description });
       this.metaService.updateTag({ property: 'og:description', content: meta.description });
@@ -181,10 +181,6 @@ export class AboutUsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (meta.title) {
       this.metaService.updateTag({ property: 'og:title', content: meta.title });
       this.metaService.updateTag({ name: 'twitter:title', content: meta.title });
-    }
-    if (meta.og_image) {
-      this.metaService.updateTag({ property: 'og:image', content: meta.og_image });
-      this.metaService.updateTag({ name: 'twitter:image', content: meta.og_image });
     }
     this.metaService.updateTag({ property: 'og:type', content: 'website' });
     this.metaService.updateTag({ name: 'twitter:card', content: 'summary_large_image' });

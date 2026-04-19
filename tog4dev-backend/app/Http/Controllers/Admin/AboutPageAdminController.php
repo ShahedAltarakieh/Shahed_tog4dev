@@ -87,12 +87,6 @@ class AboutPageAdminController extends Controller
             'meta_description_en' => $request->meta_description_en,
         ]);
 
-        if ($request->hasFile('og_image_file')) {
-            $request->validate(['og_image_file' => 'image|mimes:jpg,jpeg,png,webp|max:2048']);
-            $path = $request->file('og_image_file')->store('about/og', 'public');
-            $page->update(['og_image' => '/storage/' . $path]);
-        }
-
         return redirect()->route('about-admin.edit', $page->id)
             ->with('success', __('app.updated successfully'));
     }
@@ -101,21 +95,29 @@ class AboutPageAdminController extends Controller
     {
         $section = AboutSection::where('about_page_id', $pageId)->findOrFail($sectionId);
 
-        $section->update($request->only([
-            'title', 'title_en', 'subtitle', 'subtitle_en',
-            'body', 'body_en', 'video_url',
-            'cta_text', 'cta_text_en', 'cta_link', 'cta_link_en',
-            'layout', 'is_visible',
-        ]));
+        if ($section->section_key === 'hero') {
+            // Hero only stores subtitle (AR/EN). All other fields ignored / cleared.
+            $section->update([
+                'subtitle' => $request->input('subtitle'),
+                'subtitle_en' => $request->input('subtitle_en'),
+            ]);
+        } else {
+            $section->update($request->only([
+                'title', 'title_en', 'subtitle', 'subtitle_en',
+                'body', 'body_en', 'video_url',
+                'cta_text', 'cta_text_en', 'cta_link', 'cta_link_en',
+                'layout', 'is_visible',
+            ]));
 
-        if ($request->has('settings')) {
-            $section->update(['settings' => json_decode($request->settings, true)]);
-        }
+            if ($request->has('settings')) {
+                $section->update(['settings' => json_decode($request->settings, true)]);
+            }
 
-        if ($request->hasFile('section_image')) {
-            $request->validate(['section_image' => 'image|mimes:jpg,jpeg,png,webp|max:2048']);
-            $path = $request->file('section_image')->store('about/sections', 'public');
-            $section->update(['image' => '/storage/' . $path]);
+            if ($request->hasFile('section_image')) {
+                $request->validate(['section_image' => 'image|mimes:jpg,jpeg,png,webp|max:2048']);
+                $path = $request->file('section_image')->store('about/sections', 'public');
+                $section->update(['image' => '/storage/' . $path]);
+            }
         }
 
         return response()->json(['success' => true, 'message' => __('app.updated successfully')]);
@@ -250,7 +252,12 @@ class AboutPageAdminController extends Controller
             'published_at' => now(),
         ]);
 
-        return response()->json(['success' => true, 'message' => __('app.published successfully')]);
+        return response()->json([
+            'success' => true,
+            'message' => __('app.published successfully'),
+            'status' => 'published',
+            'version' => $page->version,
+        ]);
     }
 
     public function unpublish($id)
@@ -258,7 +265,12 @@ class AboutPageAdminController extends Controller
         $page = AboutPage::findOrFail($id);
         $page->update(['status' => 'draft']);
 
-        return response()->json(['success' => true, 'message' => 'Unpublished']);
+        return response()->json([
+            'success' => true,
+            'message' => __('app.unpublished_successfully'),
+            'status' => 'draft',
+            'version' => $page->version,
+        ]);
     }
 
     public function rollback($id, $versionId)

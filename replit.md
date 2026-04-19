@@ -259,10 +259,33 @@ Full-stack dynamic CMS for the About Us page with multi-country support, multi-l
 - Service: `AboutService` (`services/about.service.ts`) with typed interfaces (AboutPageData, AboutSection, AboutSectionItem)
 - Component: `AboutUsComponent` — fully dynamic rendering from API data, no hardcoded content
 - Renders all 12 section types with dedicated styling per section
-- Hero section with dark teal gradient (matching News hero style)
+- Hero section: simplified — only displays title (lang key `about us`) + optional subtitle from `getSectionByKey('hero').subtitle`. Hero stores only `subtitle/subtitle_en`; image/video/CTA fields removed.
 - Loading spinner + error state handling
-- SEO: dynamic meta tags from API (title, description, og:image)
+- SEO: dynamic meta tags from API (title, description)
 - Responsive: grid layouts adapt for mobile/tablet/desktop
+
+**Admin standardization (Apr 2026)**:
+- All About admin views (index/create/edit) use `@include('includes.admin.header', ['label_name' => __('app.about_us|create_about_us|edit_about_us')])` — same pattern as other admin pages.
+- `OG Image` upload + `og_image_file` save logic removed.
+- Section-edit form for hero key only renders Subtitle AR/EN; controller `updateSection` short-circuits hero to subtitle-only.
+- Publish/Unpublish use AJAX with no page reload — DOM updated in-place (status badge + button swap) and JSON response includes `status`/`version`.
+
+## Navigation Visibility Manager Module
+
+Admin-controlled toggle for which menu items appear in the public navbar.
+
+**Backend**:
+- Migration: `2026_04_19_000002_create_nav_settings_table.php` — table `nav_settings` (page_key unique, label_en, label_ar, visible bool, order int). Seeds default keys: news_gallery, about_us, contact_us, crowdfunding, ngoverse, projects, organizations.
+- Model: `NavSetting` (fillable: page_key, label_en, label_ar, visible, order; casts visible→bool, order→int).
+- Admin: `Admin\NavSettingController` (index + update via PUT). View `admin/nav_settings/index.blade.php` with switch toggles and order inputs.
+- Routes: `/nav-settings` (web, master middleware) — `nav-settings.index`, `nav-settings.update`.
+- Sidebar: "Navigation Visibility" link with bars icon below About Us.
+- Public API: `GET /api/v1/navigation` → `Api\V1\NavSettingApiController` returns `{success, data:[{page_key,label_en,label_ar,visible,order}]}`.
+
+**Frontend**:
+- Service: `shared/services/navigation/navigation.service.ts` with `load()` (browser-only, cached via shareReplay) and `isVisible(pageKey)` (defaults to true if unknown).
+- `HeaderComponent` calls `navService.load()` in `ngOnInit` (only in browser via PLATFORM_ID), exposes `navVisible(key)`.
+- Header template (desktop + mobile + collapsible news/gallery section) wraps each menu `<li>` with `@if (navVisible('<key>'))`. No hardcoded visibility — disabling a key in admin hides it everywhere.
 
 ## Notes
 

@@ -74,6 +74,7 @@ Route::prefix('v1')->group(function () {
 
     Route::get('/about', [\App\Http\Controllers\Api\V1\AboutPageController::class, 'show'])->name('about.show');
     Route::post('/about/track', [\App\Http\Controllers\Api\V1\AboutPageController::class, 'trackEvent'])->name('about.track');
+    Route::get('/navigation', [\App\Http\Controllers\Api\V1\NavSettingApiController::class, 'index'])->name('navigation.api');
 
     Route::get('/quick-contributions', [QuickContributionController::class, 'index']);
 

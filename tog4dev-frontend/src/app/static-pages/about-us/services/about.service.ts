@@ -42,7 +42,6 @@ export interface AboutPageData {
   meta: {
     title: string;
     description: string;
-    og_image: string;
   };
   sections: AboutSection[];
 }

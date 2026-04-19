@@ -1,36 +1,10 @@
 <div class="about-page" [attr.dir]="currentLang === 'ar' ? 'rtl' : 'ltr'" [attr.lang]="currentLang">
   <div class="hero-section">
-    <div class="hero-pattern"></div>
-    <div class="hero-particles">
-      <span class="particle p1"></span>
-      <span class="particle p2"></span>
-      <span class="particle p3"></span>
-      <span class="particle p4"></span>
-      <span class="particle p5"></span>
-    </div>
-    <div class="container position-relative">
-      <div class="hero-content text-center">
-        <span class="hero-badge">
-          <i class="fas fa-info-circle me-1"></i>
-          {{ "about us" | translate }}
-        </span>
-        @if (getSectionByKey('hero'); as hero) {
-          <h1 class="page-title text-white">{{ hero.title }}</h1>
-          <p class="hero-subtitle text-white">{{ hero.subtitle }}</p>
-          @if (hero.cta_text && hero.cta_link) {
-            <a [href]="hero.cta_link" class="hero-cta-btn">
-              {{ hero.cta_text }}
-              <i class="fas fa-arrow-left ms-2"></i>
-            </a>
-          }
-        } @else {
-          <h1 class="page-title text-white">{{ "who we are?" | translate }}</h1>
-          <p class="hero-subtitle text-white">{{ "together for development" | translate }}</p>
-        }
-        <div class="hero-scroll-indicator">
-          <i class="fas fa-chevron-down"></i>
-        </div>
-      </div>
+    <div class="container">
+      <h1 class="page-title text-center text-white">{{ "about us" | translate }}</h1>
+      @if (getSectionByKey('hero')?.subtitle; as sub) {
+        <p class="hero-subtitle text-center text-white">{{ sub }}</p>
+      }
     </div>
   </div>
 

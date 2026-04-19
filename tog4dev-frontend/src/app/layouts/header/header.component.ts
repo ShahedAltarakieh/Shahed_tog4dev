@@ -1,5 +1,6 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
-import {Location, NgClass} from '@angular/common';
+import { Component, ElementRef, HostListener, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import {Location, NgClass, isPlatformBrowser} from '@angular/common';
+import { NavigationService } from 'app/shared/services/navigation/navigation.service';
 import {Router, RouterLink} from '@angular/router';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -22,7 +23,7 @@ import {WhatsAppComponent} from "../../shared/components/whats-app/whats-app.com
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   homeRoutes: Record<'ar' | 'en' , string> = {
     ar: 'ar',
     en: 'en'
@@ -123,8 +124,20 @@ export class HeaderComponent {
     public basketService: BasketService,
     public router: Router,
     public elementRef: ElementRef,
-    public cookieService: CookieService
+    public cookieService: CookieService,
+    public navService: NavigationService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
+  }
+
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.navService.load().subscribe();
+    }
+  }
+
+  navVisible(key: string): boolean {
+    return this.navService.isVisible(key);
   }
 
   /**

@@ -15,11 +15,11 @@
 
             <nav>
                 <ul class="nav-list">
-                    <li><a [class.active]="activeTab(ngOverseRoutes[storageService.siteLanguage$.value])" [routerLink]="ngOverseRoutes[storageService.siteLanguage$.value]">{{ "ngoverse" | translate }}</a></li>
-                    <li><a [class.active]="activeTab(projectsRoutes[storageService.siteLanguage$.value])" [routerLink]="projectsRoutes[storageService.siteLanguage$.value]">{{ "individual projects" | translate }}</a></li>
-                    <li><a [class.active]="activeTab(organizationRoutes[storageService.siteLanguage$.value])" [routerLink]="organizationRoutes[storageService.siteLanguage$.value]">{{ "organizations projects" | translate }}</a></li>
-                    <li><a [class.active]="activeTab(crowdfundingRoutes[storageService.siteLanguage$.value])" [routerLink]="crowdfundingRoutes[storageService.siteLanguage$.value]">{{ "crowdfunding" | translate }}</a></li>
-                    <li class="nav-dropdown" [class.open]="isNavDropdownOpen">
+                    @if (navVisible('ngoverse')) {<li><a [class.active]="activeTab(ngOverseRoutes[storageService.siteLanguage$.value])" [routerLink]="ngOverseRoutes[storageService.siteLanguage$.value]">{{ "ngoverse" | translate }}</a></li>}
+                    @if (navVisible('projects')) {<li><a [class.active]="activeTab(projectsRoutes[storageService.siteLanguage$.value])" [routerLink]="projectsRoutes[storageService.siteLanguage$.value]">{{ "individual projects" | translate }}</a></li>}
+                    @if (navVisible('organizations')) {<li><a [class.active]="activeTab(organizationRoutes[storageService.siteLanguage$.value])" [routerLink]="organizationRoutes[storageService.siteLanguage$.value]">{{ "organizations projects" | translate }}</a></li>}
+                    @if (navVisible('crowdfunding')) {<li><a [class.active]="activeTab(crowdfundingRoutes[storageService.siteLanguage$.value])" [routerLink]="crowdfundingRoutes[storageService.siteLanguage$.value]">{{ "crowdfunding" | translate }}</a></li>}
+                    @if (navVisible('news_gallery')) {<li class="nav-dropdown" [class.open]="isNavDropdownOpen">
                         <a class="dropdown-toggle" (click)="toggleNavDropdown($event)" [class.active]="activeTab(newsRoutes[storageService.siteLanguage$.value]) || activeTab(photosRoutes[storageService.siteLanguage$.value]) || activeTab(videosRoutes[storageService.siteLanguage$.value])">
                             {{ "news & gallery" | translate }}
                             <svg class="dropdown-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
@@ -44,9 +44,9 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
-                    <li><a [class.active]="activeTab(aboutUsRoutes[storageService.siteLanguage$.value])" [routerLink]="aboutUsRoutes[storageService.siteLanguage$.value]">{{ "about us" | translate }}</a></li>
-                    <li><a [class.active]="activeTab(contactUsRoutes[storageService.siteLanguage$.value])" [routerLink]="contactUsRoutes[storageService.siteLanguage$.value]">{{ "contact us" | translate }}</a></li>
+                    </li>}
+                    @if (navVisible('about_us')) {<li><a [class.active]="activeTab(aboutUsRoutes[storageService.siteLanguage$.value])" [routerLink]="aboutUsRoutes[storageService.siteLanguage$.value]">{{ "about us" | translate }}</a></li>}
+                    @if (navVisible('contact_us')) {<li><a [class.active]="activeTab(contactUsRoutes[storageService.siteLanguage$.value])" [routerLink]="contactUsRoutes[storageService.siteLanguage$.value]">{{ "contact us" | translate }}</a></li>}
                 </ul>
             </nav>
         </div>
@@ -129,10 +129,11 @@
     <div class="d-flex mobile-menu-collapsable-items pb-3">
         <div [ngbCollapse]="isMobileMenuCollapse" class="navbar-collapse collapse">
             <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="ngOverseRoutes[storageService.siteLanguage$.value]">{{ "ngoverse" | translate }}</a></li>
-                <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="projectsRoutes[storageService.siteLanguage$.value]">{{ "individual projects" | translate }}</a></li>
-                <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="organizationRoutes[storageService.siteLanguage$.value]">{{ "organizations projects" | translate }}</a></li>
-                <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="crowdfundingRoutes[storageService.siteLanguage$.value]">{{ "crowdfunding" | translate }}</a></li>
+                @if (navVisible('ngoverse')) {<li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="ngOverseRoutes[storageService.siteLanguage$.value]">{{ "ngoverse" | translate }}</a></li>}
+                @if (navVisible('projects')) {<li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="projectsRoutes[storageService.siteLanguage$.value]">{{ "individual projects" | translate }}</a></li>}
+                @if (navVisible('organizations')) {<li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="organizationRoutes[storageService.siteLanguage$.value]">{{ "organizations projects" | translate }}</a></li>}
+                @if (navVisible('crowdfunding')) {<li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="crowdfundingRoutes[storageService.siteLanguage$.value]">{{ "crowdfunding" | translate }}</a></li>}
+                @if (navVisible('news_gallery')) {
                 <li class="nav-item mobile-section-header"><span class="nav-link fw-bold">{{ "news & gallery" | translate }}</span></li>
                 <li class="nav-item ps-3">
                     <a class="nav-link d-flex align-items-center gap-2" (click)="isMobileMenuCollapse = true" [routerLink]="newsRoutes[storageService.siteLanguage$.value]">
@@ -152,8 +153,9 @@
                         {{ "videos" | translate }}
                     </a>
                 </li>
-                <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="aboutUsRoutes[storageService.siteLanguage$.value]">{{ "about us" | translate }}</a></li>
-                <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="contactUsRoutes[storageService.siteLanguage$.value]">{{ "contact us" | translate }}</a></li>
+                }
+                @if (navVisible('about_us')) {<li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="aboutUsRoutes[storageService.siteLanguage$.value]">{{ "about us" | translate }}</a></li>}
+                @if (navVisible('contact_us')) {<li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="contactUsRoutes[storageService.siteLanguage$.value]">{{ "contact us" | translate }}</a></li>}
                 @if (authService.is_loggedin == true) {
                     <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="profileRoutes[storageService.siteLanguage$.value]">{{ "profile" | translate }}</a></li>
                     <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="historyRoutes[storageService.siteLanguage$.value]">{{ "my subscriptions" | translate }}</a></li>

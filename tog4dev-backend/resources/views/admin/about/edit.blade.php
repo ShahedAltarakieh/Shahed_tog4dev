@@ -1,31 +1,11 @@
 @extends('layouts.admin.add')
-@section('title'){{ __('app.edit') }} - {{ __('app.about us') }} CMS @endsection
+@section('title'){{ __('app.edit_about_us') }} @endsection
 
 @section('content')
 
+@include('includes.admin.header', ['label_name' => __('app.edit_about_us')])
+
 <style>
-.cms-page-header {
-    background: linear-gradient(135deg, rgba(19,88,93,0.04), rgba(254,205,15,0.04));
-    border-radius: 16px;
-    padding: 20px 24px;
-    margin-bottom: 24px;
-    border: 1px solid rgba(19,88,93,0.08);
-}
-.cms-page-header h4 { font-weight: 700; font-size: 1.1rem; color: #1a1a1a; }
-.cms-back-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    background: rgba(19,88,93,0.08);
-    color: #13585D;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    text-decoration: none;
-    border: none;
-}
-.cms-back-btn:hover { background: #13585D; color: #fff; }
 .cms-action-btn {
     display: inline-flex;
     align-items: center;
@@ -84,7 +64,22 @@
     padding: 16px 20px;
     border-bottom: 1px solid rgba(0,0,0,0.06);
 }
-.cms-sections-card > .card-header h5 { font-weight: 700; font-size: 1rem; }
+.cms-sections-card > .card-header h5 { font-weight: 700; font-size: 1rem; display: inline-flex; align-items: center; gap: 8px; }
+.cms-sidebar-card .card-header h6 { display: inline-flex; align-items: center; gap: 8px; }
+.about-meta-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 12px;
+    padding: 12px 18px;
+    margin-bottom: 20px;
+}
+.about-meta-bar .meta-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.about-meta-bar .meta-right { display: flex; align-items: center; gap: 8px; }
 
 .section-row {
     border-bottom: 1px solid rgba(0,0,0,0.04);
@@ -422,41 +417,32 @@ $sectionIcons = [
 ];
 @endphp
 
-<div class="cms-page-header">
-    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
-        <div class="d-flex align-items-center gap-3">
-            <a href="{{ route('about-admin.index') }}" class="cms-back-btn"><i class="fa fa-arrow-left"></i></a>
-            <div>
-                <h4 class="mb-1">
-                    {{ __('app.about us') }} CMS
-                </h4>
-                <div class="d-flex align-items-center gap-2">
-                    <span class="cms-country-tag">
-                        @php
-                            $flags = ['JO'=>'🇯🇴','PS'=>'🇵🇸','SA'=>'🇸🇦','AE'=>'🇦🇪','global'=>'🌍'];
-                        @endphp
-                        {{ $flags[$page->country_code] ?? '🌐' }}
-                        {{ strtoupper($page->country_code) }}
-                    </span>
-                    @if($page->status === 'published')
-                        <span class="cms-status-badge published"><span class="dot"></span> {{ __('app.published') }} v{{ $page->version }}</span>
-                    @else
-                        <span class="cms-status-badge draft"><span class="dot"></span> {{ __('app.draft') }}</span>
-                    @endif
-                </div>
-            </div>
-        </div>
-        <div class="d-flex gap-2">
-            @if($page->status === 'draft')
-                <button class="cms-action-btn publish btn-publish" data-id="{{ $page->id }}">
-                    <i class="fas fa-rocket"></i> {{ __('app.publish') }}
-                </button>
+@php
+    $flags = ['JO'=>'🇯🇴','PS'=>'🇵🇸','SA'=>'🇸🇦','AE'=>'🇦🇪','global'=>'🌍'];
+@endphp
+<div class="about-meta-bar">
+    <div class="meta-left">
+        <span class="cms-country-tag">
+            {{ $flags[$page->country_code] ?? '🌐' }} {{ strtoupper($page->country_code) }}
+        </span>
+        <span id="status-badge-wrap">
+            @if($page->status === 'published')
+                <span class="cms-status-badge published"><span class="dot"></span> {{ __('app.published') }} v{{ $page->version }}</span>
             @else
-                <button class="cms-action-btn unpublish btn-unpublish" data-id="{{ $page->id }}">
-                    <i class="fas fa-pause"></i> {{ __('app.unpublish') }}
-                </button>
+                <span class="cms-status-badge draft"><span class="dot"></span> {{ __('app.draft') }}</span>
             @endif
-        </div>
+        </span>
+    </div>
+    <div class="meta-right" id="publish-actions" data-status="{{ $page->status }}">
+        @if($page->status === 'draft')
+            <button class="cms-action-btn publish btn-publish" data-id="{{ $page->id }}">
+                <i class="fas fa-rocket"></i> {{ __('app.publish') }}
+            </button>
+        @else
+            <button class="cms-action-btn unpublish btn-unpublish" data-id="{{ $page->id }}">
+                <i class="fas fa-pause"></i> {{ __('app.unpublish') }}
+            </button>
+        @endif
     </div>
 </div>
 
@@ -492,70 +478,50 @@ $sectionIcons = [
                         </div>
                         <div class="collapse" id="section-body-{{ $section->id }}">
                             <div class="section-form-area">
-                                <form class="section-form" data-page-id="{{ $page->id }}" data-section-id="{{ $section->id }}">
-                                    <div class="row mb-3">
-                                        <div class="col-md-6">
-                                            <label>Title (AR)</label>
-                                            <input type="text" name="title" class="form-control form-control-sm" value="{{ $section->title }}">
+                                <form class="section-form" data-page-id="{{ $page->id }}" data-section-id="{{ $section->id }}" data-section-key="{{ $section->section_key }}">
+                                    @if($section->section_key === 'hero')
+                                        {{-- Hero: only Subtitle (AR/EN) --}}
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label>{{ __('app.subtitle') ?? 'Subtitle' }} (AR)</label>
+                                                <input type="text" name="subtitle" class="form-control form-control-sm" value="{{ $section->subtitle }}" dir="rtl">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>{{ __('app.subtitle') ?? 'Subtitle' }} (EN)</label>
+                                                <input type="text" name="subtitle_en" class="form-control form-control-sm" value="{{ $section->subtitle_en }}">
+                                            </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <label>Title (EN)</label>
-                                            <input type="text" name="title_en" class="form-control form-control-sm" value="{{ $section->title_en }}">
+                                    @else
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label>Title (AR)</label>
+                                                <input type="text" name="title" class="form-control form-control-sm" value="{{ $section->title }}" dir="rtl">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Title (EN)</label>
+                                                <input type="text" name="title_en" class="form-control form-control-sm" value="{{ $section->title_en }}">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-6">
-                                            <label>Subtitle (AR)</label>
-                                            <input type="text" name="subtitle" class="form-control form-control-sm" value="{{ $section->subtitle }}">
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label>Subtitle (AR)</label>
+                                                <input type="text" name="subtitle" class="form-control form-control-sm" value="{{ $section->subtitle }}" dir="rtl">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Subtitle (EN)</label>
+                                                <input type="text" name="subtitle_en" class="form-control form-control-sm" value="{{ $section->subtitle_en }}">
+                                            </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <label>Subtitle (EN)</label>
-                                            <input type="text" name="subtitle_en" class="form-control form-control-sm" value="{{ $section->subtitle_en }}">
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label>Body (AR)</label>
+                                                <textarea name="body" class="form-control form-control-sm" rows="4" dir="rtl">{{ $section->body }}</textarea>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Body (EN)</label>
+                                                <textarea name="body_en" class="form-control form-control-sm" rows="4">{{ $section->body_en }}</textarea>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-6">
-                                            <label>Body (AR)</label>
-                                            <textarea name="body" class="form-control form-control-sm" rows="4">{{ $section->body }}</textarea>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label>Body (EN)</label>
-                                            <textarea name="body_en" class="form-control form-control-sm" rows="4">{{ $section->body_en }}</textarea>
-                                        </div>
-                                    </div>
-
-                                    @if(in_array($section->section_key, ['hero']))
-                                    <div class="row mb-3">
-                                        <div class="col-md-6">
-                                            <label>Image</label>
-                                            <input type="file" name="section_image" class="form-control form-control-sm" accept="image/*">
-                                            @if($section->image)
-                                                <img src="{{ $section->image }}" class="og-preview">
-                                            @endif
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label>Video URL</label>
-                                            <input type="text" name="video_url" class="form-control form-control-sm" value="{{ $section->video_url }}">
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-3">
-                                            <label>CTA Text (AR)</label>
-                                            <input type="text" name="cta_text" class="form-control form-control-sm" value="{{ $section->cta_text }}">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label>CTA Text (EN)</label>
-                                            <input type="text" name="cta_text_en" class="form-control form-control-sm" value="{{ $section->cta_text_en }}">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label>CTA Link (AR)</label>
-                                            <input type="text" name="cta_link" class="form-control form-control-sm" value="{{ $section->cta_link }}">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label>CTA Link (EN)</label>
-                                            <input type="text" name="cta_link_en" class="form-control form-control-sm" value="{{ $section->cta_link_en }}">
-                                        </div>
-                                    </div>
                                     @endif
 
                                     @if(in_array($section->section_key, ['partners']))
@@ -652,14 +618,6 @@ $sectionIcons = [
                         <label>Meta Desc (EN)</label>
                         <textarea name="meta_description_en" class="form-control form-control-sm" rows="2">{{ $page->meta_description_en }}</textarea>
                     </div>
-                    <div class="form-group mb-3">
-                        <label>OG Image</label>
-                        <input type="file" name="og_image_file" class="form-control form-control-sm" accept="image/*">
-                        @if($page->og_image)
-                            <img src="{{ $page->og_image }}" class="og-preview">
-                        @endif
-                    </div>
-
                     <button type="submit" class="settings-save-btn">
                         <i class="fas fa-save me-1"></i> {{ __('app.save') }} {{ __('app.settings') }}
                     </button>
@@ -780,7 +738,7 @@ $sectionIcons = [
 <script>
 $(document).ready(function() {
     var csrfToken = $('meta[name="csrf-token"]').attr('content');
-    var BASE_URL = "{{ url('about-management/' . $page->id) }}";
+    var BASE_URL = "{{ rtrim(route('about-admin.update', $page->id), '/') }}";
 
     new Sortable(document.getElementById('sections-list'), {
         handle: '.drag-handle',
@@ -859,26 +817,60 @@ $(document).ready(function() {
         $.post(BASE_URL + '/sections/' + sectionId + '/toggle', { _token: csrfToken });
     });
 
-    $('.btn-publish').on('click', function() {
+    function renderPublishedBadge(version) {
+        return '<span class="cms-status-badge published"><span class="dot"></span> {{ __("app.published") }} v' + version + '</span>';
+    }
+    function renderDraftBadge() {
+        return '<span class="cms-status-badge draft"><span class="dot"></span> {{ __("app.draft") }}</span>';
+    }
+    function renderPublishBtn() {
+        return '<button class="cms-action-btn publish btn-publish"><i class="fas fa-rocket"></i> {{ __("app.publish") }}</button>';
+    }
+    function renderUnpublishBtn() {
+        return '<button class="cms-action-btn unpublish btn-unpublish"><i class="fas fa-pause"></i> {{ __("app.unpublish") }}</button>';
+    }
+
+    $(document).on('click', '.btn-publish', function() {
         var btn = $(this);
-        btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-1"></i> Publishing...');
-        $.post(BASE_URL + '/publish', { _token: csrfToken })
-            .done(function() { location.reload(); })
-            .fail(function() {
+        btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-1"></i> {{ __("app.saving") }}...');
+        $.ajax({
+            url: BASE_URL + '/publish', type: 'POST',
+            data: { _token: csrfToken },
+            dataType: 'json',
+            success: function(res) {
+                var v = (res && res.version) || ($('#publish-actions').data('current-version') || '');
+                $('#status-badge-wrap').html(renderPublishedBadge(v || '+'));
+                $('#publish-actions').html(renderUnpublishBtn()).attr('data-status', 'published');
+                showToast((res && res.message) || '{{ __("app.published successfully") }}', 'success');
+            },
+            error: function(xhr) {
                 btn.prop('disabled', false).html('<i class="fas fa-rocket"></i> {{ __("app.publish") }}');
-                showToast('Failed to publish', 'error');
-            });
+                var msg = '{{ __("app.something went wrong") ?: "Failed to publish" }}';
+                if (xhr.responseJSON && xhr.responseJSON.message) msg = xhr.responseJSON.message;
+                showToast(msg, 'error');
+            }
+        });
     });
 
-    $('.btn-unpublish').on('click', function() {
+    $(document).on('click', '.btn-unpublish', function() {
         var btn = $(this);
-        btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-1"></i> Unpublishing...');
-        $.post(BASE_URL + '/unpublish', { _token: csrfToken })
-            .done(function() { location.reload(); })
-            .fail(function() {
+        btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-1"></i> {{ __("app.saving") }}...');
+        $.ajax({
+            url: BASE_URL + '/unpublish', type: 'POST',
+            data: { _token: csrfToken },
+            dataType: 'json',
+            success: function(res) {
+                $('#status-badge-wrap').html(renderDraftBadge());
+                $('#publish-actions').html(renderPublishBtn()).attr('data-status', 'draft');
+                showToast((res && res.message) || '{{ __("app.unpublished_successfully") }}', 'success');
+            },
+            error: function(xhr) {
                 btn.prop('disabled', false).html('<i class="fas fa-pause"></i> {{ __("app.unpublish") }}');
-                showToast('Failed to unpublish', 'error');
-            });
+                var msg = 'Failed to unpublish';
+                if (xhr.responseJSON && xhr.responseJSON.message) msg = xhr.responseJSON.message;
+                showToast(msg, 'error');
+            }
+        });
     });
 
     $('.btn-rollback').on('click', function() {

@@ -120,9 +120,15 @@
     </a>
 </li>
 <li>
-    <a href="{{ route('about-admin.index') }}" data-tooltip="{{ __('app.about us') }} CMS" class="{{ request()->routeIs('about-admin.*') ? 'active-menu' : '' }}">
+    <a href="{{ route('about-admin.index') }}" data-tooltip="{{ __('app.about_us') }}" class="{{ request()->routeIs('about-admin.*') ? 'active-menu' : '' }}">
         <i class="fas fa-info-circle"></i>
-        <span>{{ __('app.about us') }} CMS</span>
+        <span>{{ __('app.about_us') }}</span>
+    </a>
+</li>
+<li>
+    <a href="{{ route('nav-settings.index') }}" data-tooltip="{{ __('app.navigation_visibility') }}" class="{{ request()->routeIs('nav-settings.*') ? 'active-menu' : '' }}">
+        <i class="fas fa-bars"></i>
+        <span>{{ __('app.navigation_visibility') }}</span>
     </a>
 </li>
 <li>

@@ -19,7 +19,6 @@ class AboutPage extends Model
         'meta_title_en',
         'meta_description',
         'meta_description_en',
-        'og_image',
         'published_by',
         'published_at',
     ];

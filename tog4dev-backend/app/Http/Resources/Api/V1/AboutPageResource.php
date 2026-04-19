@@ -26,7 +26,6 @@ class AboutPageResource extends JsonResource
             'meta' => [
                 'title' => $title,
                 'description' => $description,
-                'og_image' => $this->og_image,
             ],
             'sections' => AboutSectionResource::collection($this->whenLoaded('sections', function () {
                 return $this->sections->where('is_visible', true)->sortBy('sort_order')->values();

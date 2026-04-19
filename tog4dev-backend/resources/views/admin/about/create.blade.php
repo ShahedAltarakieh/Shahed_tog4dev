@@ -1,16 +1,9 @@
 @extends('layouts.admin.add')
-@section('title'){{ __('app.create') }} - {{ __('app.about us') }} CMS @endsection
+@section('title'){{ __('app.create_about_us') }} @endsection
 
 @section('content')
 
-<div class="page-header-box mb-4">
-    <div class="d-flex align-items-center justify-content-between flex-wrap">
-        <div>
-            <a href="{{ route('about-admin.index') }}" class="page-back-btn"><i class="fa fa-arrow-left"></i></a>
-            <h4 class="d-inline-block mb-0 ms-2">{{ __('app.create') }} {{ __('app.about us') }} CMS</h4>
-        </div>
-    </div>
-</div>
+@include('includes.admin.header', ['label_name' => __('app.create_about_us')])
 
 <div class="row">
     <div class="col-md-8 mx-auto">
@@ -66,6 +59,7 @@
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-plus me-1"></i> {{ __('app.create') }}
                         </button>
+                        <a href="{{ route('about-admin.index') }}" class="btn btn-light ms-2">{{ __('app.cancel') }}</a>
                     </div>
                 </form>
             </div>

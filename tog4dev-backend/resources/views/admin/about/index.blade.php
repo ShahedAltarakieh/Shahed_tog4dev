@@ -3,7 +3,7 @@
 
 @section('content')
 
-@include('includes.admin.header', ['label_name' => __('app.about us') . ' CMS', "add_button" => route('about-admin.create')])
+@include('includes.admin.header', ['label_name' => __('app.about_us'), "add_button" => route('about-admin.create')])
 
 <style>
 .about-cms-stats {
