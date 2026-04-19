@@ -338,5 +338,7 @@
         setInterval(refreshToken, 300000);
     </script>
     @yield('jsCode')
+
+    @include('admin.partials.toast')
 </body>
 </html>

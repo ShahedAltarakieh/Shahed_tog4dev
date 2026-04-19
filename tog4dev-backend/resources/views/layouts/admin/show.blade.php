@@ -399,6 +399,8 @@
 
     @yield('jsCode')
 
+    @include('admin.partials.toast')
+
 </body>
 
 </html>
