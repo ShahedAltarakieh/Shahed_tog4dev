@@ -26,15 +26,15 @@
               @if (isExternalLink(current.link)) {
                 <a [href]="current.link" target="_blank" rel="noopener" class="announcement-link">
                   <span>{{ displayText }}</span>
-                  @if (current.cta_text) {
-                    <span class="ticker-cta">{{ current.cta_text }} &rarr;</span>
+                  @if (displayCta) {
+                    <span class="ticker-cta">{{ displayCta }} &rarr;</span>
                   }
                 </a>
               } @else {
                 <a [routerLink]="current.link" class="announcement-link">
                   <span>{{ displayText }}</span>
-                  @if (current.cta_text) {
-                    <span class="ticker-cta">{{ current.cta_text }} &rarr;</span>
+                  @if (displayCta) {
+                    <span class="ticker-cta">{{ displayCta }} &rarr;</span>
                   }
                 </a>
               }
@@ -64,15 +64,15 @@
           <span class="announcement-text">{{ displayText }}</span>
         }
 
-        @if (current.link && current.cta_text) {
+        @if (current.link && displayCta) {
           @if (isExternalLink(current.link)) {
             <a [href]="current.link" target="_blank" rel="noopener" class="announcement-cta">
-              {{ current.cta_text }}
+              {{ displayCta }}
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </a>
           } @else {
             <a [routerLink]="current.link" class="announcement-cta">
-              {{ current.cta_text }}
+              {{ displayCta }}
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </a>
           }

@@ -11,10 +11,14 @@ class Announcement extends Model
 
     protected $fillable = [
         'title',
+        'title_ar',
         'text',
+        'text_ar',
         'short_text',
+        'short_text_ar',
         'link',
         'cta_text',
+        'cta_text_ar',
         'source_type',
         'news_id',
         'badge_type',
@@ -57,5 +61,37 @@ class Announcement extends Model
             return $query->whereIn('target_view', [$target, 'both']);
         }
         return $query;
+    }
+
+    /**
+     * Pick a value for the requested locale with bidirectional fallback.
+     */
+    protected function pickLocalized(?string $en, ?string $ar, ?string $locale = null): ?string
+    {
+        $locale = $locale ?: app()->getLocale();
+        if ($locale === 'ar') {
+            return ($ar !== null && $ar !== '') ? $ar : $en;
+        }
+        return ($en !== null && $en !== '') ? $en : $ar;
+    }
+
+    public function getLocalizedTitle(?string $locale = null): ?string
+    {
+        return $this->pickLocalized($this->title, $this->title_ar, $locale);
+    }
+
+    public function getLocalizedText(?string $locale = null): ?string
+    {
+        return $this->pickLocalized($this->text, $this->text_ar, $locale);
+    }
+
+    public function getLocalizedShortText(?string $locale = null): ?string
+    {
+        return $this->pickLocalized($this->short_text, $this->short_text_ar, $locale);
+    }
+
+    public function getLocalizedCtaText(?string $locale = null): ?string
+    {
+        return $this->pickLocalized($this->cta_text, $this->cta_text_ar, $locale);
     }
 }

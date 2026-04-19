@@ -21,30 +21,51 @@ class AnnouncementAdminController extends Controller
         return view('admin.announcements.create', compact('newsItems'));
     }
 
-    public function store(Request $request)
+    protected function validationRules(): array
     {
-        $request->validate([
-            'text' => 'required|string|max:500',
-            'title' => 'nullable|string|max:255',
-            'short_text' => 'nullable|string|max:200',
-            'link' => 'nullable|string|max:500',
-            'cta_text' => 'nullable|string|max:100',
-            'badge_type' => 'required|in:LIVE,INFO,ALERT,NEW',
-            'target_view' => 'required|in:desktop,mobile,both',
-            'source_type' => 'required|in:manual,news',
-            'news_id' => 'nullable|required_if:source_type,news|exists:news,id',
-            'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
-        ]);
+        return [
+            'text'           => 'required|string|max:500',
+            'text_ar'        => 'required|string|max:500',
+            'title'          => 'nullable|string|max:255',
+            'title_ar'       => 'nullable|string|max:255',
+            'short_text'     => 'nullable|string|max:200',
+            'short_text_ar'  => 'nullable|string|max:200',
+            'link'           => 'nullable|string|max:500',
+            'cta_text'       => 'nullable|string|max:100',
+            'cta_text_ar'    => 'nullable|string|max:100',
+            'badge_type'     => 'required|in:LIVE,INFO,ALERT,NEW',
+            'target_view'    => 'required|in:desktop,mobile,both',
+            'source_type'    => 'required|in:manual,news',
+            'news_id'        => 'nullable|required_if:source_type,news|exists:news,id',
+            'start_date'     => 'nullable|date',
+            'end_date'       => 'nullable|date|after_or_equal:start_date',
+        ];
+    }
 
+    protected function bilingualPayload(Request $request): array
+    {
         $data = $request->only([
-            'title', 'text', 'short_text', 'link', 'cta_text',
-            'badge_type', 'target_view', 'start_date', 'end_date',
+            'title', 'title_ar',
+            'text', 'text_ar',
+            'short_text', 'short_text_ar',
+            'link',
+            'cta_text', 'cta_text_ar',
+            'badge_type', 'target_view',
+            'start_date', 'end_date',
         ]);
 
         $data['source_type'] = $request->input('source_type', 'manual');
         $data['news_id'] = $data['source_type'] === 'news' ? $request->input('news_id') : null;
         $data['is_active'] = $request->has('is_active') ? true : false;
+
+        return $data;
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate($this->validationRules());
+
+        $data = $this->bilingualPayload($request);
         $data['order_no'] = Announcement::max('order_no') + 1;
 
         Announcement::create($data);
@@ -64,28 +85,12 @@ class AnnouncementAdminController extends Controller
     {
         $announcement = Announcement::findOrFail($id);
 
-        $request->validate([
-            'text' => 'required|string|max:500',
-            'title' => 'nullable|string|max:255',
-            'short_text' => 'nullable|string|max:200',
-            'link' => 'nullable|string|max:500',
-            'cta_text' => 'nullable|string|max:100',
-            'badge_type' => 'required|in:LIVE,INFO,ALERT,NEW',
-            'target_view' => 'required|in:desktop,mobile,both',
-            'source_type' => 'required|in:manual,news',
-            'news_id' => 'nullable|required_if:source_type,news|exists:news,id',
-            'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
-        ]);
+        $request->validate($this->validationRules());
 
-        $data = $request->only([
-            'title', 'text', 'short_text', 'link', 'cta_text',
-            'badge_type', 'target_view', 'start_date', 'end_date',
-        ]);
-
-        $data['source_type'] = $request->input('source_type', $announcement->source_type ?? 'manual');
-        $data['news_id'] = $data['source_type'] === 'news' ? $request->input('news_id') : null;
-        $data['is_active'] = $request->has('is_active') ? true : false;
+        $data = $this->bilingualPayload($request);
+        if (!$request->filled('source_type')) {
+            $data['source_type'] = $announcement->source_type ?? 'manual';
+        }
 
         $announcement->update($data);
 

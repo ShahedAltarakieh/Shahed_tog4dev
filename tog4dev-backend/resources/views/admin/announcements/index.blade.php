@@ -34,13 +34,26 @@
                                     <i class="fas fa-grip-vertical" style="cursor:grab;color:var(--admin-gray-400);"></i>
                                 </td>
                                 <td>
-                                    <div style="max-width:300px;">
-                                        @if($item->title)
-                                        <strong style="font-size:12px;color:var(--admin-gray-500);display:block;">{{ $item->title }}</strong>
+                                    <div style="max-width:340px;">
+                                        @if($item->title || $item->title_ar)
+                                        <strong style="font-size:12px;color:var(--admin-gray-500);display:block;">
+                                            @if($item->title)<span title="EN">{{ $item->title }}</span>@endif
+                                            @if($item->title && $item->title_ar) · @endif
+                                            @if($item->title_ar)<span dir="rtl" lang="ar" title="AR">{{ $item->title_ar }}</span>@endif
+                                        </strong>
                                         @endif
-                                        <span style="font-size:13px;">{{ Str::limit($item->text, 80) }}</span>
+                                        @if($item->text)
+                                        <span style="font-size:13px;display:block;">
+                                            <span class="badge badge-soft-primary" style="font-size:9px;margin-right:4px;">EN</span>{{ Str::limit($item->text, 70) }}
+                                        </span>
+                                        @endif
+                                        @if($item->text_ar)
+                                        <span style="font-size:13px;display:block;" dir="rtl" lang="ar">
+                                            <span class="badge badge-soft-warning" style="font-size:9px;margin-left:4px;">AR</span>{{ Str::limit($item->text_ar, 70) }}
+                                        </span>
+                                        @endif
                                         @if($item->link)
-                                        <br><small class="text-muted"><i class="fas fa-link"></i> {{ Str::limit($item->link, 30) }}</small>
+                                        <small class="text-muted"><i class="fas fa-link"></i> {{ Str::limit($item->link, 30) }}</small>
                                         @endif
                                     </div>
                                 </td>

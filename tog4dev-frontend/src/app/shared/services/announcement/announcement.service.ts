@@ -5,16 +5,31 @@ import { map, Observable, of, shareReplay, catchError } from 'rxjs';
 
 export interface Announcement {
   id: number;
-  title: string;
+  title: string | null;
+  title_ar: string | null;
   text: string;
+  text_ar: string | null;
   short_text: string | null;
+  short_text_ar: string | null;
   link: string | null;
   cta_text: string | null;
+  cta_text_ar: string | null;
   badge_type: 'LIVE' | 'INFO' | 'ALERT' | 'NEW';
   target_view: 'desktop' | 'mobile' | 'both';
   source_type: 'manual' | 'news' | 'system';
-  is_active: boolean;
-  order_no: number;
+}
+
+/**
+ * Pick the value matching the requested locale, falling back to the other
+ * language when the preferred one is empty/null.
+ */
+export function pickLocalized(en: string | null | undefined, ar: string | null | undefined, lang: string): string {
+  const en_ = (en ?? '').toString();
+  const ar_ = (ar ?? '').toString();
+  if (lang === 'ar') {
+    return ar_.trim() ? ar_ : en_;
+  }
+  return en_.trim() ? en_ : ar_;
 }
 
 @Injectable({

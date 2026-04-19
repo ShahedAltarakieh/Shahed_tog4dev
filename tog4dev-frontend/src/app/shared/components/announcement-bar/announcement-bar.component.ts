@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, Inject, PLATFORM_ID, NgZone, HostBinding, HostListener } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { AnnouncementService, Announcement } from 'app/shared/services/announcement/announcement.service';
+import { AnnouncementService, Announcement, pickLocalized } from 'app/shared/services/announcement/announcement.service';
 import { StorageService } from 'app/core/storage/storage.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-announcement-bar',
@@ -20,10 +21,16 @@ export class AnnouncementBarComponent implements OnInit, AfterViewInit, OnDestro
   stickyTop = 0;
   isHeaderScrolled = false;
   isMobile = false;
+  currentLang = 'en';
 
   @HostBinding('style.top.px')
   get hostStickyTop(): number {
     return this.stickyTop;
+  }
+
+  @HostBinding('attr.dir')
+  get hostDir(): string {
+    return this.currentLang === 'ar' ? 'rtl' : 'ltr';
   }
 
   private rotateInterval: any;
@@ -32,6 +39,7 @@ export class AnnouncementBarComponent implements OnInit, AfterViewInit, OnDestro
   private headerObserver: ResizeObserver | null = null;
   private scrollHandler: (() => void) | null = null;
   private headerHeight = 0;
+  private langSub: Subscription | null = null;
 
   readonly badgeColors: Record<string, string> = {
     'LIVE': '#ef4444',
@@ -61,6 +69,11 @@ export class AnnouncementBarComponent implements OnInit, AfterViewInit, OnDestro
 
     this.isMobile = window.innerWidth < 768;
     const target = this.isMobile ? 'mobile' : 'desktop';
+
+    this.langSub = this.storageService.siteLanguage$.subscribe(lang => {
+      this.currentLang = (lang === 'ar') ? 'ar' : 'en';
+    });
+
     this.announcementService.getAnnouncements(target).subscribe({
       next: (items) => {
         this.announcements = items;
@@ -78,6 +91,10 @@ export class AnnouncementBarComponent implements OnInit, AfterViewInit, OnDestro
 
   ngOnDestroy(): void {
     this.stopAutoRotate();
+    if (this.langSub) {
+      this.langSub.unsubscribe();
+      this.langSub = null;
+    }
     if (this.headerObserver) {
       this.headerObserver.disconnect();
       this.headerObserver = null;
@@ -94,10 +111,22 @@ export class AnnouncementBarComponent implements OnInit, AfterViewInit, OnDestro
 
   get displayText(): string {
     if (!this.current) return '';
-    if (window.innerWidth < 768 && this.current.short_text) {
-      return this.current.short_text;
+    const lang = this.currentLang;
+    if (window.innerWidth < 768) {
+      const short = pickLocalized(this.current.short_text, this.current.short_text_ar, lang);
+      if (short && short.trim()) return short;
     }
-    return this.current.text;
+    return pickLocalized(this.current.text, this.current.text_ar, lang);
+  }
+
+  get displayCta(): string {
+    if (!this.current) return '';
+    return pickLocalized(this.current.cta_text, this.current.cta_text_ar, this.currentLang);
+  }
+
+  get displayTitle(): string {
+    if (!this.current) return '';
+    return pickLocalized(this.current.title, this.current.title_ar, this.currentLang);
   }
 
   next(): void {
@@ -174,7 +203,7 @@ export class AnnouncementBarComponent implements OnInit, AfterViewInit, OnDestro
 
   private getDisplayDuration(): number {
     if (!this.current) return 6000;
-    const text = this.displayText || this.current.text || '';
+    const text = this.displayText || '';
     const wordCount = text.split(/\s+/).filter(w => w.length > 0).length;
     if (wordCount <= 10) return 6000;
     if (wordCount <= 25) return 10000;
