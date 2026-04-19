@@ -480,7 +480,21 @@ $sectionIcons = [
                             <div class="section-form-area">
                                 <form class="section-form" data-page-id="{{ $page->id }}" data-section-id="{{ $section->id }}" data-section-key="{{ $section->section_key }}">
                                     @if($section->section_key === 'hero')
-                                        {{-- Hero: only Subtitle (AR/EN) --}}
+                                        {{-- Hero: Title + Subtitle (AR/EN). Page name "About Us" stays fixed. --}}
+                                        <div class="alert alert-info py-2 mb-3" style="font-size:0.85rem;">
+                                            <i class="fas fa-info-circle me-2"></i>
+                                            {{ __('app.hero_fixed_note') ?? 'The page name "About Us" stays fixed. You can edit the title and subtitle shown below it.' }}
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label>{{ __('app.title') ?? 'Title' }} (AR)</label>
+                                                <input type="text" name="title" class="form-control form-control-sm" value="{{ $section->title }}" dir="rtl">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>{{ __('app.title') ?? 'Title' }} (EN)</label>
+                                                <input type="text" name="title_en" class="form-control form-control-sm" value="{{ $section->title_en }}">
+                                            </div>
+                                        </div>
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <label>{{ __('app.subtitle') ?? 'Subtitle' }} (AR)</label>

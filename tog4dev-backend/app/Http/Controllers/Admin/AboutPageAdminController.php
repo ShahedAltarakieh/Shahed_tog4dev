@@ -96,8 +96,10 @@ class AboutPageAdminController extends Controller
         $section = AboutSection::where('about_page_id', $pageId)->findOrFail($sectionId);
 
         if ($section->section_key === 'hero') {
-            // Hero only stores subtitle (AR/EN). All other fields ignored / cleared.
+            // Hero stores title + subtitle (AR/EN). Page name "About Us" is fixed in the frontend.
             $section->update([
+                'title' => $request->input('title'),
+                'title_en' => $request->input('title_en'),
                 'subtitle' => $request->input('subtitle'),
                 'subtitle_en' => $request->input('subtitle_en'),
             ]);

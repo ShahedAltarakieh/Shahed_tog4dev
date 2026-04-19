@@ -1,10 +1,14 @@
 <div class="about-page" [attr.dir]="currentLang === 'ar' ? 'rtl' : 'ltr'" [attr.lang]="currentLang">
   <div class="hero-section">
+    <div class="hero-pattern"></div>
     <div class="container">
-      <h1 class="page-title text-center text-white">{{ "about us" | translate }}</h1>
-      @if (getSectionByKey('hero')?.subtitle; as sub) {
-        <p class="hero-subtitle text-center text-white">{{ sub }}</p>
-      }
+      <div class="hero-content text-center">
+        <span class="hero-badge">{{ "about us" | translate }}</span>
+        <h1 class="page-title text-white">{{ getSectionByKey('hero')?.title || ('about us' | translate) }}</h1>
+        @if (getSectionByKey('hero')?.subtitle; as heroSub) {
+          <p class="hero-subtitle text-white">{{ heroSub }}</p>
+        }
+      </div>
     </div>
   </div>
 
