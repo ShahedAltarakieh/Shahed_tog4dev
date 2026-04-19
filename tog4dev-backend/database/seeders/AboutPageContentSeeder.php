@@ -130,12 +130,12 @@ class AboutPageContentSeeder extends Seeder
                 'title' => 'شركاؤنا',
                 'title_en' => 'Our Partners',
                 'items' => [
-                    ['title'=>'وزارة التنمية الاجتماعية','title_en'=>'Ministry of Social Development','link'=>'#'],
-                    ['title'=>'تكية أم علي','title_en'=>'Tkiyet Um Ali','link'=>'#'],
-                    ['title'=>'مؤسسة الملك حسين','title_en'=>'King Hussein Foundation','link'=>'#'],
-                    ['title'=>'مؤسسة الحسن للشباب','title_en'=>'Al-Hussein Foundation for Youth','link'=>'#'],
-                    ['title'=>'الهلال الأحمر الأردني','title_en'=>'Jordan Red Crescent','link'=>'#'],
-                    ['title'=>'مؤسسة نهر الأردن','title_en'=>'Jordan River Foundation','link'=>'#'],
+                    ['title'=>'وزارة التنمية الاجتماعية','title_en'=>'Ministry of Social Development','image'=>'about/partners/partner-1.png','link'=>'#'],
+                    ['title'=>'تكية أم علي','title_en'=>'Tkiyet Um Ali','image'=>'about/partners/partner-2.png','link'=>'#'],
+                    ['title'=>'مؤسسة الملك حسين','title_en'=>'King Hussein Foundation','image'=>'about/partners/partner-3.png','link'=>'#'],
+                    ['title'=>'مؤسسة الحسن للشباب','title_en'=>'Al-Hussein Foundation for Youth','image'=>'about/partners/partner-4.png','link'=>'#'],
+                    ['title'=>'الهلال الأحمر الأردني','title_en'=>'Jordan Red Crescent','image'=>'about/partners/partner-5.png','link'=>'#'],
+                    ['title'=>'مؤسسة نهر الأردن','title_en'=>'Jordan River Foundation','image'=>'about/partners/partner-6.png','link'=>'#'],
                 ],
             ],
         ];

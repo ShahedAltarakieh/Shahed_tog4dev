@@ -331,26 +331,37 @@
                   <div class="title-decoration"><span></span></div>
                 </div>
               }
-              <div class="partners-grid">
-                @for (item of section.items; track item.id; let i = $index) {
-                  <div class="partner-logo" [style.animation-delay]="(i * 0.08) + 's'">
-                    @if (item.link) {
-                      <a [href]="item.link" target="_blank" rel="noopener">
+              <div class="partners-marquee" [class.rtl]="currentLang === 'ar'">
+                <div class="partners-track">
+                  @for (item of section.items; track 'a-' + item.id) {
+                    <div class="partner-logo">
+                      @if (item.link) {
+                        <a [href]="item.link" target="_blank" rel="noopener">
+                          @if (item.image) {
+                            <img [src]="item.image" [alt]="item.title" loading="lazy">
+                          } @else if (item.title) {
+                            <span>{{ item.title }}</span>
+                          }
+                        </a>
+                      } @else {
                         @if (item.image) {
                           <img [src]="item.image" [alt]="item.title" loading="lazy">
                         } @else if (item.title) {
                           <span>{{ item.title }}</span>
                         }
-                      </a>
-                    } @else {
+                      }
+                    </div>
+                  }
+                  @for (item of section.items; track 'b-' + item.id) {
+                    <div class="partner-logo" aria-hidden="true">
                       @if (item.image) {
-                        <img [src]="item.image" [alt]="item.title" loading="lazy">
+                        <img [src]="item.image" [alt]="" loading="lazy">
                       } @else if (item.title) {
                         <span>{{ item.title }}</span>
                       }
-                    }
-                  </div>
-                }
+                    </div>
+                  }
+                </div>
               </div>
             </div>
           </section>
