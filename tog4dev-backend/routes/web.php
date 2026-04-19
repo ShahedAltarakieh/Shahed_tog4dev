@@ -233,7 +233,6 @@ Route::group(
             Route::post('/{id}/publish', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'publish'])->name('about-admin.publish');
             Route::post('/{id}/unpublish', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'unpublish'])->name('about-admin.unpublish');
             Route::post('/{id}/rollback/{versionId}', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'rollback'])->name('about-admin.rollback');
-            Route::get('/{id}/preview', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'preview'])->name('about-admin.preview');
             Route::post('/{pageId}/sections/reorder', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'reorderSections'])->name('about-admin.sections.reorder');
             Route::post('/{pageId}/sections/{sectionId}', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'updateSection'])->name('about-admin.sections.update');
             Route::post('/{pageId}/sections/{sectionId}/toggle', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'toggleVisibility'])->name('about-admin.sections.toggle');

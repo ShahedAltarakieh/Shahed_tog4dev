@@ -10,14 +10,22 @@ class AboutPageResource extends JsonResource
     {
         $lang = $request->header('Accept-Language', 'ar');
 
+        $title = $lang === 'en'
+            ? ($this->meta_title_en ?: $this->meta_title)
+            : ($this->meta_title ?: $this->meta_title_en);
+
+        $description = $lang === 'en'
+            ? ($this->meta_description_en ?: $this->meta_description)
+            : ($this->meta_description ?: $this->meta_description_en);
+
         return [
             'id' => $this->id,
             'country_code' => $this->country_code,
             'status' => $this->status,
             'version' => $this->version,
             'meta' => [
-                'title' => $lang === 'en' ? ($this->meta_title_en ?: $this->meta_title) : $this->meta_title,
-                'description' => $lang === 'en' ? ($this->meta_description_en ?: $this->meta_description) : $this->meta_description,
+                'title' => $title,
+                'description' => $description,
                 'og_image' => $this->og_image,
             ],
             'sections' => AboutSectionResource::collection($this->whenLoaded('sections', function () {

@@ -10,16 +10,20 @@ class AboutSectionResource extends JsonResource
     {
         $lang = $request->header('Accept-Language', 'ar');
 
+        $pick = function ($ar, $en) use ($lang) {
+            return $lang === 'en' ? ($en ?: $ar) : ($ar ?: $en);
+        };
+
         return [
             'id' => $this->id,
             'section_key' => $this->section_key,
-            'title' => $lang === 'en' ? ($this->title_en ?: $this->title) : $this->title,
-            'subtitle' => $lang === 'en' ? ($this->subtitle_en ?: $this->subtitle) : $this->subtitle,
-            'body' => $lang === 'en' ? ($this->body_en ?: $this->body) : $this->body,
+            'title' => $pick($this->title, $this->title_en),
+            'subtitle' => $pick($this->subtitle, $this->subtitle_en),
+            'body' => $pick($this->body, $this->body_en),
             'image' => $this->image,
             'video_url' => $this->video_url,
-            'cta_text' => $lang === 'en' ? ($this->cta_text_en ?: $this->cta_text) : $this->cta_text,
-            'cta_link' => $lang === 'en' ? ($this->cta_link_en ?: $this->cta_link) : $this->cta_link,
+            'cta_text' => $pick($this->cta_text, $this->cta_text_en),
+            'cta_link' => $pick($this->cta_link, $this->cta_link_en),
             'layout' => $this->layout,
             'settings' => $this->settings ?? [],
             'sort_order' => $this->sort_order,

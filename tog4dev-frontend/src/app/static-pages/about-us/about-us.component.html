@@ -1,4 +1,4 @@
-<div class="about-page">
+<div class="about-page" [attr.dir]="currentLang === 'ar' ? 'rtl' : 'ltr'" [attr.lang]="currentLang">
   <div class="hero-section">
     <div class="hero-pattern"></div>
     <div class="hero-particles">
@@ -45,7 +45,7 @@
 
   @if (!loading && !error) {
     @for (section of sections; track section.id) {
-      @if (section.section_key !== 'hero' && section.is_visible) {
+      @if (section.section_key !== 'hero' && section.is_visible && hasContent(section)) {
 
         @if (section.section_key === 'intro') {
           <section class="about-section intro-section animate-on-scroll">

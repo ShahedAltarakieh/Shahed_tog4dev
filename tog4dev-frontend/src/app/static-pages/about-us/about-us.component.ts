@@ -18,9 +18,11 @@ export class AboutUsComponent implements OnInit, OnDestroy, AfterViewInit {
   sections: AboutSection[] = [];
   loading = true;
   error = false;
+  currentLang: 'ar' | 'en' = 'ar';
   animatedCounters: Map<number, number> = new Map();
   private isBrowser: boolean;
   private sub: Subscription | null = null;
+  private langSub: Subscription | null = null;
   private observer: IntersectionObserver | null = null;
 
   constructor(
@@ -36,7 +38,10 @@ export class AboutUsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     if (this.isBrowser) {
-      this.loadAboutPage();
+      this.langSub = this.storageService.siteLanguage$.subscribe((lang) => {
+        this.currentLang = (lang === 'en') ? 'en' : 'ar';
+        this.loadAboutPage();
+      });
     } else {
       this.loading = false;
     }
@@ -50,15 +55,16 @@ export class AboutUsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
+    this.langSub?.unsubscribe();
     this.observer?.disconnect();
   }
 
   loadAboutPage(): void {
-    const lang = (this.storageService.siteLanguage$.value === 'en') ? 'en' : 'ar';
+    this.sub?.unsubscribe();
     this.loading = true;
     this.error = false;
 
-    this.sub = this.aboutService.getAboutPage(lang as 'ar' | 'en', 'JO').subscribe({
+    this.sub = this.aboutService.getAboutPage(this.currentLang, 'JO').subscribe({
       next: (data) => {
         this.pageData = data;
         this.sections = data?.sections || [];
@@ -155,6 +161,15 @@ export class AboutUsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getSectionByKey(key: string): AboutSection | undefined {
     return this.sections.find(s => s.section_key === key);
+  }
+
+  hasContent(section: AboutSection): boolean {
+    if (!section) return false;
+    const hasText = !!(section.title || section.subtitle || section.body);
+    const hasItems = !!(section.items && section.items.length > 0);
+    const hasMedia = !!(section.image || section.video_url);
+    const hasCta = !!(section.cta_text && section.cta_link);
+    return hasText || hasItems || hasMedia || hasCta;
   }
 
   updateMetaTags(meta: { title: string; description: string; og_image: string }): void {

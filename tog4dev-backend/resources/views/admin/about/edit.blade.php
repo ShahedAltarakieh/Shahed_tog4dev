@@ -447,9 +447,6 @@ $sectionIcons = [
             </div>
         </div>
         <div class="d-flex gap-2">
-            <a href="{{ route('about-admin.preview', $page->id) }}" target="_blank" class="cms-action-btn preview">
-                <i class="fas fa-eye"></i> {{ __('app.preview') }}
-            </a>
             @if($page->status === 'draft')
                 <button class="cms-action-btn publish btn-publish" data-id="{{ $page->id }}">
                     <i class="fas fa-rocket"></i> {{ __('app.publish') }}
@@ -783,6 +780,7 @@ $sectionIcons = [
 <script>
 $(document).ready(function() {
     var csrfToken = $('meta[name="csrf-token"]').attr('content');
+    var BASE_URL = "{{ url('about-management/' . $page->id) }}";
 
     new Sortable(document.getElementById('sections-list'), {
         handle: '.drag-handle',
@@ -794,7 +792,7 @@ $(document).ready(function() {
             $('#sections-list .section-row').each(function() {
                 order.push($(this).data('section-id'));
             });
-            $.post('/about-management/{{ $page->id }}/sections/reorder', {
+            $.post(BASE_URL + '/sections/reorder', {
                 _token: csrfToken, order: order
             });
         }
@@ -808,18 +806,26 @@ $(document).ready(function() {
                 var sectionId = el.dataset.sectionId;
                 var order = [];
                 $(el).find('.item-row').each(function() { order.push($(this).data('item-id')); });
-                $.post('/about-management/{{ $page->id }}/sections/' + sectionId + '/items/reorder', {
+                $.post(BASE_URL + '/sections/' + sectionId + '/items/reorder', {
                     _token: csrfToken, order: order
                 });
             }
         });
     });
 
+    function showToast(msg, type) {
+        if (window.Swal) {
+            Swal.fire({
+                icon: type || 'success', title: msg, toast: true,
+                position: 'top-end', timer: 2000, showConfirmButton: false, timerProgressBar: true
+            });
+        }
+    }
+
     $('.section-form').on('submit', function(e) {
         e.preventDefault();
         var form = $(this);
         var btn = form.find('.section-save-btn');
-        var pageId = form.data('page-id');
         var sectionId = form.data('section-id');
         var formData = new FormData(this);
         formData.append('_token', csrfToken);
@@ -827,7 +833,7 @@ $(document).ready(function() {
         btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-1"></i> Saving...');
 
         $.ajax({
-            url: '/about-management/' + pageId + '/sections/' + sectionId,
+            url: BASE_URL + '/sections/' + sectionId,
             type: 'POST',
             data: formData,
             processData: false,
@@ -837,36 +843,45 @@ $(document).ready(function() {
                 setTimeout(function() {
                     btn.html('<i class="fas fa-save me-1"></i> {{ __("app.save") }}');
                 }, 1500);
-                if (window.AdminToast) AdminToast.show(res.message || 'Saved', 'success');
+                showToast((res && res.message) || 'Saved', 'success');
             },
-            error: function() {
+            error: function(xhr) {
                 btn.prop('disabled', false).html('<i class="fas fa-save me-1"></i> {{ __("app.save") }}');
-                alert('Error saving section');
+                var msg = 'Error saving section';
+                if (xhr.responseJSON && xhr.responseJSON.message) msg = xhr.responseJSON.message;
+                showToast(msg, 'error');
             }
         });
     });
 
     $('.toggle-visibility').on('change', function() {
         var sectionId = $(this).data('section-id');
-        $.post('/about-management/{{ $page->id }}/sections/' + sectionId + '/toggle', { _token: csrfToken });
+        $.post(BASE_URL + '/sections/' + sectionId + '/toggle', { _token: csrfToken });
     });
 
     $('.btn-publish').on('click', function() {
         var btn = $(this);
-        btn.html('<i class="fas fa-spinner fa-spin me-1"></i> Publishing...');
-        $.post('/about-management/' + btn.data('id') + '/publish', { _token: csrfToken }, function() {
-            location.reload();
-        });
+        btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-1"></i> Publishing...');
+        $.post(BASE_URL + '/publish', { _token: csrfToken })
+            .done(function() { location.reload(); })
+            .fail(function() {
+                btn.prop('disabled', false).html('<i class="fas fa-rocket"></i> {{ __("app.publish") }}');
+                showToast('Failed to publish', 'error');
+            });
     });
 
     $('.btn-unpublish').on('click', function() {
-        $.post('/about-management/' + $(this).data('id') + '/unpublish', { _token: csrfToken }, function() {
-            location.reload();
-        });
+        var btn = $(this);
+        btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-1"></i> Unpublishing...');
+        $.post(BASE_URL + '/unpublish', { _token: csrfToken })
+            .done(function() { location.reload(); })
+            .fail(function() {
+                btn.prop('disabled', false).html('<i class="fas fa-pause"></i> {{ __("app.unpublish") }}');
+                showToast('Failed to unpublish', 'error');
+            });
     });
 
     $('.btn-rollback').on('click', function() {
-        var pageId = $(this).data('page-id');
         var versionId = $(this).data('version-id');
         Swal.fire({
             title: 'Rollback to this version?',
@@ -876,7 +891,7 @@ $(document).ready(function() {
             confirmButtonColor: '#13585D'
         }).then(function(result) {
             if (result.isConfirmed) {
-                $.post('/about-management/' + pageId + '/rollback/' + versionId, { _token: csrfToken }, function() {
+                $.post(BASE_URL + '/rollback/' + versionId, { _token: csrfToken }, function() {
                     location.reload();
                 });
             }
@@ -938,16 +953,18 @@ $(document).ready(function() {
         if (imageFile) formData.append('item_image', imageFile);
 
         var url = itemId
-            ? '/about-management/' + pageId + '/sections/' + sectionId + '/items/' + itemId
-            : '/about-management/' + pageId + '/sections/' + sectionId + '/items';
+            ? BASE_URL + '/sections/' + sectionId + '/items/' + itemId
+            : BASE_URL + '/sections/' + sectionId + '/items';
 
         $.ajax({
             url: url, type: 'POST', data: formData,
             processData: false, contentType: false,
             success: function() { $('#itemModal').modal('hide'); location.reload(); },
-            error: function() {
+            error: function(xhr) {
                 btn.prop('disabled', false).html('<i class="fas fa-save me-1"></i> {{ __("app.save") }}');
-                alert('Error saving item');
+                var msg = 'Error saving item';
+                if (xhr.responseJSON && xhr.responseJSON.message) msg = xhr.responseJSON.message;
+                showToast(msg, 'error');
             }
         });
     });
@@ -961,7 +978,7 @@ $(document).ready(function() {
         }).then(function(result) {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '/about-management/' + btn.data('page-id') + '/sections/' + btn.data('section-id') + '/items/' + btn.data('item-id'),
+                    url: BASE_URL + '/sections/' + btn.data('section-id') + '/items/' + btn.data('item-id'),
                     type: 'DELETE', headers: { 'X-CSRF-TOKEN': csrfToken },
                     success: function() {
                         btn.closest('.item-row').fadeOut(300, function() { $(this).remove(); });

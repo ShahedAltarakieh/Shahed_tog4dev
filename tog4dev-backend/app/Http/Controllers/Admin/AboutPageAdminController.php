@@ -321,25 +321,6 @@ class AboutPageAdminController extends Controller
         return response()->json(['success' => true, 'message' => 'Rolled back to version ' . $version->version]);
     }
 
-    public function preview($id)
-    {
-        $page = AboutPage::with(['sections' => function ($q) {
-            $q->orderBy('sort_order');
-            $q->with(['items' => function ($q2) {
-                $q2->orderBy('sort_order');
-            }]);
-        }])->findOrFail($id);
-
-        return response()->json([
-            'data' => $page->toArray(),
-            'sections' => $page->sections->map(function ($s) {
-                $data = $s->toArray();
-                $data['items'] = $s->items->toArray();
-                return $data;
-            }),
-        ]);
-    }
-
     public function destroy($id)
     {
         $page = AboutPage::findOrFail($id);

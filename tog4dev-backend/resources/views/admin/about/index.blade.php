@@ -277,7 +277,7 @@ $(document).ready(function() {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '/about-management/' + id,
+                    url: "{{ url('about-management') }}/" + id,
                     type: 'DELETE',
                     headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                     success: function() { location.reload(); }
