@@ -67,6 +67,7 @@ return [
     'testimonials' => 'Testimonials',
     'categories' => 'Categories',
     'title' => 'Title',
+    'subtitle' => 'Subtitle',
     'description' => 'Description',
     'type' => 'Type',
     'active' => 'Active',

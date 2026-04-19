@@ -497,11 +497,11 @@ $sectionIcons = [
                                         </div>
                                         <div class="row mb-3">
                                             <div class="col-md-6">
-                                                <label>{{ __('app.subtitle') ?? 'Subtitle' }} (AR)</label>
+                                                <label>{{ __('app.subtitle') }} (AR)</label>
                                                 <input type="text" name="subtitle" class="form-control form-control-sm" value="{{ $section->subtitle }}" dir="rtl">
                                             </div>
                                             <div class="col-md-6">
-                                                <label>{{ __('app.subtitle') ?? 'Subtitle' }} (EN)</label>
+                                                <label>{{ __('app.subtitle') }} (EN)</label>
                                                 <input type="text" name="subtitle_en" class="form-control form-control-sm" value="{{ $section->subtitle_en }}">
                                             </div>
                                         </div>
@@ -747,7 +747,7 @@ $sectionIcons = [
 
 @endsection
 
-@section('scripts')
+@section('jsCode')
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script>
 $(document).ready(function() {

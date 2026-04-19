@@ -54,6 +54,7 @@ return [
     'testimonials' => 'آراء العملاء',
     'categories' => 'الفئات',
     'title' => 'العنوان',
+    'subtitle' => 'العنوان الفرعي',
     'description' => 'الوصف',
     'type' => 'النوع',
     'active' => 'فعال',
