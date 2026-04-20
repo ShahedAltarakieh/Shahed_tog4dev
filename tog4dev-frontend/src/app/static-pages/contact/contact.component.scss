@@ -201,63 +201,20 @@ $accent: #FECD0F;
 /* ---------- ASIDE ---------- */
 .aside-stack { display: flex; flex-direction: column; gap: 18px; }
 
-.promise-card {
+.map-card {
   background: #fff;
   border-radius: 18px;
-  padding: 24px 22px;
+  overflow: hidden;
   border: 1px solid rgba(0,0,0,0.05);
   box-shadow: 0 8px 28px rgba(13,67,71,0.06);
+  height: 260px;
 
-  .promise-title {
-    font-size: 0.95rem;
-    font-weight: 800;
-    color: $primary;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin: 0 0 14px;
-  }
-
-  .promise-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-
-    li {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-
-      div {
-        display: flex;
-        flex-direction: column;
-        line-height: 1.35;
-      }
-      strong {
-        color: #1a1a1a;
-        font-size: 0.92rem;
-        font-weight: 700;
-      }
-      span {
-        color: #6c757d;
-        font-size: 0.82rem;
-      }
-    }
-  }
-
-  .promise-icon {
-    flex-shrink: 0;
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, rgba($primary, 0.12), rgba($accent, 0.18));
-    color: $primary;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.85rem;
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    filter: saturate(1.05);
   }
 }
 
@@ -322,7 +279,7 @@ $accent: #FECD0F;
 
     li {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: 12px;
       padding: 10px 0;
       font-size: 0.9rem;
@@ -333,16 +290,17 @@ $accent: #FECD0F;
 
       i {
         flex-shrink: 0;
-        margin-top: 4px;
-        width: 28px;
-        height: 28px;
-        background: rgba(255,255,255,0.12);
-        color: $accent;
-        border-radius: 8px;
+        width: 32px;
+        height: 32px;
+        background: rgba(255,255,255,0.14);
+        color: #fff;
+        border-radius: 9px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-size: 0.8rem;
+        font-size: 0.85rem;
+        line-height: 1;
+        text-align: center;
       }
       span { opacity: 0.94; }
     }
