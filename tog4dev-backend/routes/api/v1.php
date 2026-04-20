@@ -56,6 +56,8 @@ Route::prefix('v1')->group(function () {
     Route::post('/newsletter', [NewsletterSubscriberController::class, 'store'])->name('newsletter');
     // Contact Us
     Route::post('/contact-us', [ContactUsController::class, 'store'])->name('contact_us');
+    // Contact Info (admin-managed)
+    Route::get('/contact-info', [\App\Http\Controllers\Api\V1\ContactInfoController::class, 'show'])->name('contact_info.show');
     // Sliders
     Route::get('/sliders', [SliderController::class, 'index'])->name('sliders');
 

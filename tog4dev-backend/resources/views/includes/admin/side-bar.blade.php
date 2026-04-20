@@ -126,6 +126,12 @@
     </a>
 </li>
 <li>
+    <a href="{{ route('contact-info-admin.edit') }}" data-tooltip="{{ __('app.contact_info') }}" class="{{ request()->routeIs('contact-info-admin.*') ? 'active-menu' : '' }}">
+        <i class="fas fa-address-card"></i>
+        <span>{{ __('app.contact_info') }}</span>
+    </a>
+</li>
+<li>
     <a href="{{ route('nav-settings.index') }}" data-tooltip="{{ __('app.navigation_visibility') }}" class="{{ request()->routeIs('nav-settings.*') ? 'active-menu' : '' }}">
         <i class="fas fa-bars"></i>
         <span>{{ __('app.navigation_visibility') }}</span>

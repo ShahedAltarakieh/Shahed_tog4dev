@@ -223,6 +223,11 @@ Route::group(
             Route::post('/change-status/{id}', [NewsCategoryAdminController::class, 'change_status'])->name('news-categories-admin.change_status');
         });
 
+        Route::prefix('contact-info')->middleware('master')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\ContactInfoAdminController::class, 'edit'])->name('contact-info-admin.edit');
+            Route::put('/', [\App\Http\Controllers\Admin\ContactInfoAdminController::class, 'update'])->name('contact-info-admin.update');
+        });
+
         Route::prefix('about-management')->middleware('master')->group(function () {
             Route::get('/', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'index'])->name('about-admin.index');
             Route::get('/create', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'create'])->name('about-admin.create');

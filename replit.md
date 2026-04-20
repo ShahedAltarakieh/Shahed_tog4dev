@@ -295,3 +295,11 @@ Admin-controlled toggle for which menu items appear in the public navbar.
 - SSR compatibility fixes applied across ~20 components: all `window.location.href`, `window.scrollY`, `window.pageYOffset`, `window.location.origin` calls wrapped with `typeof window !== 'undefined'` guards
 - All 6 Swiper slider components (home-slider, project-slider, our-stories, testimonials, about-us-slider, ngoverse-slider) protected with `isPlatformBrowser()` guard in `initSwiper()` to prevent `i.children is not iterable` SSR errors
 - `MetaPixelService.fbq` getter guarded against SSR (`typeof window !== 'undefined'`) to prevent `window is not defined` errors during server rendering
+
+## Dynamic Contact Info (Apr 20, 2026)
+- Migration: `2026_04_20_000001_create_contact_info_table.php` — singleton table `contact_info` with bilingual (EN + `_ar`) text fields plus JSON arrays (`extra_phones`, `extra_emails`, `social_links`) and map fields (`map_link`, `map_embed_url`, `map_lat`, `map_lng`); seeded row id=1 with current production values.
+- Model: `App\Models\ContactInfo` with `current()` (auto-creates singleton) and `localized($key)` helper.
+- Admin: `Admin\ContactInfoAdminController` (edit + update with strict validation; `map_embed_url` allowlisted to `https://*google.*/maps...`); blade at `admin/contact_info/edit.blade.php`; sidebar link `contact-info-admin.edit`; routes under `master` middleware at `/contact-info` (PUT update).
+- Public API: `Api\V1\ContactInfoController@show` at `GET /api/v1/contact-info`. Locale resolution via `?lang=` query first, then `Accept-Language` header, normalizing `ar-*`/`en-*` -> `ar`/`en` (defaults to en). Returns localized payload with EN<->AR fallback per field.
+- Frontend: `ContactInfoService` (HTTP client, sends `Accept-Language` + `?lang=` param), `ContactComponent` subscribes to `storageService.siteLanguage$` and reloads on language switch. On error, resets `info/socials/mapEmbedSafe` so template falls back to defaults. Map iframe uses `safeMapUrl()` allowlist (Google Maps domains only) before `bypassSecurityTrustResourceUrl`.
+- Lang strings added to `resources/lang/{en,ar}/app.php` for all admin labels (`contact_info`, `quick_cards`, `office_card`, etc.).
