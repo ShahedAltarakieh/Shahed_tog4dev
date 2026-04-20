@@ -1,3 +1,19 @@
 <div class="loader-overlay">
-    <div class="loader"></div> <!-- Your loader animation -->
+  <div class="logo-loader" role="status" aria-label="Loading">
+    <!-- Rotating dashed accent ring -->
+    <span class="logo-loader__ring"></span>
+    <!-- Pulsing accent halo -->
+    <span class="logo-loader__halo"></span>
+    <!-- The logo, breathing -->
+    <img class="logo-loader__mark"
+         src="/app/assets/images/shared/logo.svg"
+         alt="Together for Development"
+         width="84" height="64" />
+    <!-- Bouncing dots underneath -->
+    <span class="logo-loader__dots" aria-hidden="true">
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </span>
+  </div>
 </div>
