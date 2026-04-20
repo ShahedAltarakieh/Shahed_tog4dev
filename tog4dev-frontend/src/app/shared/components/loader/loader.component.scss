@@ -45,13 +45,13 @@ $accent:  #FECD0F;
   }
 
   &__path--top {
-    animation: draw-stroke 4.5s ease-in-out infinite;
+    animation: draw-stroke 1.4s ease-in-out infinite;
   }
 
   &__path--bottom {
     /* second stroke starts a beat after the first */
-    animation: draw-stroke 4.5s ease-in-out infinite;
-    animation-delay: 0.9s;
+    animation: draw-stroke 1.4s ease-in-out infinite;
+    animation-delay: 0.25s;
   }
 }
 
