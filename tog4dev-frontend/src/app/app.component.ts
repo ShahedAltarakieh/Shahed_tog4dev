@@ -34,7 +34,7 @@ export class AppComponent implements OnInit, AfterViewInit{
   private apiUrl = environment.apiUrl;
   private isProd = environment.production;
   title = 'Together for Development';
-  isLoading = false;
+  isLoading = true;
   translatedRoutes!: { [route: string]: string; };
   maintenanceInfo: PageMaintenanceInfo | null = null;
 
@@ -119,6 +119,9 @@ export class AppComponent implements OnInit, AfterViewInit{
         }, 1000)
       }
     });
+
+    // Safety: hide initial-load loader after 1.5s even if no NavigationEnd fires
+    setTimeout(() => { this.isLoading = false; }, 1500);
 
     if(this.isProd){
       if (window.location.protocol !== 'https:') {
