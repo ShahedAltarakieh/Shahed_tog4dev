@@ -5,35 +5,48 @@
     <div class="tg-title-decoration"><span></span></div>
   </div>
 
-  <p class="hiw-intro">{{ "every delegation to our sustainable development projects follows these key steps:" | translate }}</p>
+  <div class="hiw-callout">
+    <span class="hiw-callout-icon" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L15 8.5L22 9.5L17 14.5L18.5 22L12 18.5L5.5 22L7 14.5L2 9.5L9 8.5L12 2Z"/>
+      </svg>
+    </span>
+    <span class="hiw-callout-text">{{ "every delegation to our sustainable development projects follows these key steps:" | translate }}</span>
+    <span class="hiw-callout-shine" aria-hidden="true"></span>
+  </div>
 
   <div class="hiw-flow">
-    @for (step of steps; track step.n; let last = $last) {
-      <div class="hiw-col">
-        <div class="hiw-num-row">
-          <span class="hiw-num">{{ step.n }}</span>
-          @if (!last) {
-            <span class="hiw-connector" aria-hidden="true">
-              <span class="bar"></span>
-              <span class="pulse"></span>
-            </span>
-          }
-        </div>
+    @for (step of steps; track step.n; let last = $last; let i = $index) {
+      <div class="hiw-col" [style.--delay]="(i * 90) + 'ms'">
+        <article class="hiw-card">
+          <span class="hiw-watermark" aria-hidden="true">{{ '0' + step.n }}</span>
 
-        <div class="hiw-card">
-          <div class="hiw-icon">
-            <mat-icon [svgIcon]="step.icon"></mat-icon>
+          <div class="hiw-card-head">
+            <div class="hiw-icon">
+              <mat-icon [svgIcon]="step.icon"></mat-icon>
+            </div>
+            <span class="hiw-step-tag">{{ "step" | translate }} {{ step.n }}</span>
           </div>
+
           <h3 class="hiw-title">{{ step.title | translate }}</h3>
           <p class="hiw-desc">{{ step.desc | translate }}</p>
+
           @if (step.hasCta) {
             <a class="hiw-cta" [routerLink]="aboutUsRoutes[storageService.siteLanguage$.value]">
               {{ "learn more about us" | translate }}
               <span class="arrow" aria-hidden="true">→</span>
             </a>
           }
-        </div>
+
+          <span class="hiw-card-glow" aria-hidden="true"></span>
+        </article>
       </div>
-    }
+      @if (!last) {
+        <span class="hiw-arrow" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 6 15 12 9 18"/>
+          </svg>
+        </span>
+      }
   </div>
 </div>

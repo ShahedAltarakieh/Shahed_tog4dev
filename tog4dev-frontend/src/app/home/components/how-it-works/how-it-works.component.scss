@@ -32,225 +32,289 @@
   }
 }
 
-.hiw-intro {
+/* ===== Callout banner ===== */
+.hiw-callout {
   position: relative;
   z-index: 1;
-  text-align: center;
-  color: #13585D;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 26px;
-  margin: 0 auto 44px;
-  max-width: 720px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 auto 56px;
+  padding: 14px 28px 14px 18px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #13585D 0%, #0f4c50 60%, #0c4044 100%);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+  box-shadow: 0 18px 38px rgba(19, 88, 93, 0.30),
+              inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(254, 205, 15, 0.35);
+  max-width: min(820px, 96%);
+  text-align: start;
+  overflow: hidden;
+  isolation: isolate;
+
+  display: flex;
+  justify-content: center;
+
+  .hiw-callout-icon {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FECD0F, #f4b800);
+    color: #13585D;
+    box-shadow: 0 6px 14px rgba(254, 205, 15, 0.45);
+  }
+
+  .hiw-callout-text {
+    flex: 0 1 auto;
+  }
+
+  .hiw-callout-shine {
+    position: absolute;
+    inset-inline-start: -40%;
+    top: 0;
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(110deg,
+      rgba(255, 255, 255, 0) 20%,
+      rgba(255, 255, 255, 0.25) 50%,
+      rgba(255, 255, 255, 0) 80%);
+    transform: skewX(-20deg);
+    animation: hiwShine 4.5s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+  }
 }
 
+@keyframes hiwShine {
+  0%, 60%, 100% { transform: translateX(0) skewX(-20deg); opacity: 0; }
+  70%           { transform: translateX(180%) skewX(-20deg); opacity: 1; }
+  100%          { transform: translateX(420%) skewX(-20deg); opacity: 0; }
+}
+
+[dir="rtl"] .hiw-callout .hiw-callout-shine {
+  inset-inline-start: auto;
+  right: -40%;
+  animation-name: hiwShineRtl;
+}
+
+@keyframes hiwShineRtl {
+  0%, 60%, 100% { transform: translateX(0) skewX(20deg); opacity: 0; }
+  70%           { transform: translateX(-180%) skewX(20deg); opacity: 1; }
+  100%          { transform: translateX(-420%) skewX(20deg); opacity: 0; }
+}
+
+/* Center the inline-flex callout */
+.how-it-works-container > .hiw-callout {
+  display: flex;
+  margin-inline: auto;
+  width: fit-content;
+}
+
+/* ===== Flow row ===== */
 .hiw-flow {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
+  display: flex;
   align-items: stretch;
+  gap: 0;
+  max-width: 1240px;
+  margin: 0 auto;
 }
 
 .hiw-col {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: stretch;
+  flex: 1;
+  min-width: 0;
 }
 
-.hiw-num-row {
-  position: relative;
-  display: flex;
+.hiw-arrow {
+  align-self: center;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  margin-bottom: -32px;
-  z-index: 2;
-}
-
-.hiw-num {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #13585D 0%, #0f4c50 100%);
-  color: #ffffff;
-  font-size: 26px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 12px 28px rgba(19, 88, 93, 0.35),
-              0 0 0 6px rgba(19, 88, 93, 0.08);
+  width: 40px;
+  height: 40px;
+  color: #FECD0F;
+  margin: 0 6px;
   flex-shrink: 0;
-  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 320ms ease;
+  filter: drop-shadow(0 4px 8px rgba(254, 205, 15, 0.35));
+  animation: hiwArrowPulse 2.2s ease-in-out infinite;
+
+  &:nth-of-type(2) { animation-delay: 0.4s; }
+  &:nth-of-type(3) { animation-delay: 0.8s; }
 }
 
-.hiw-connector {
-  position: absolute;
-  top: 50%;
-  inset-inline-start: calc(50% + 38px);
-  width: calc(100% - 76px);
-  height: 3px;
-  transform: translateY(-50%);
-  overflow: hidden;
-  border-radius: 3px;
-
-  .bar {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg,
-      rgba(254, 205, 15, 0.20) 0%,
-      #FECD0F 35%,
-      #FECD0F 65%,
-      rgba(19, 88, 93, 0.30) 100%);
-    border-radius: 3px;
-  }
-
-  .pulse {
-    position: absolute;
-    top: -2px;
-    left: -40%;
-    width: 40%;
-    height: 7px;
-    border-radius: 8px;
-    background: linear-gradient(90deg,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0.95) 50%,
-      rgba(255, 255, 255, 0) 100%);
-    filter: blur(1px);
-    animation: hiwPulse 2.4s linear infinite;
-  }
+@keyframes hiwArrowPulse {
+  0%, 100% { transform: translateX(0); opacity: 0.7; }
+  50%      { transform: translateX(4px); opacity: 1; }
 }
 
-@keyframes hiwPulse {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(360%); }
+[dir="rtl"] .hiw-arrow {
+  animation-name: hiwArrowPulseRtl;
+  svg { transform: scaleX(-1); }
+}
+@keyframes hiwArrowPulseRtl {
+  0%, 100% { transform: translateX(0); opacity: 0.7; }
+  50%      { transform: translateX(-4px); opacity: 1; }
 }
 
-[dir="rtl"] .hiw-connector .pulse {
-  left: auto;
-  right: -40%;
-  animation-name: hiwPulseRtl;
-}
-@keyframes hiwPulseRtl {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-360%); }
-}
-
+/* ===== Card ===== */
 .hiw-card {
   position: relative;
+  flex: 1;
   background: #ffffff;
   border-radius: 22px;
-  padding: 52px 22px 26px;
-  width: 100%;
-  text-align: center;
+  padding: 26px 22px 26px;
+  text-align: start;
+  border: 1.5px solid rgba(19, 88, 93, 0.10);
   box-shadow: 0 10px 30px rgba(19, 88, 93, 0.10);
-  border: 1px solid rgba(19, 88, 93, 0.08);
-  transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
-              box-shadow 350ms ease,
-              border-color 350ms ease;
-  flex: 1;
+  transition: transform 380ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 380ms ease,
+              border-color 380ms ease;
+  overflow: hidden;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  min-height: 240px;
+  animation: hiwCardIn 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--delay, 0ms);
 
   &:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 22px 50px rgba(19, 88, 93, 0.18);
+    transform: translateY(-8px);
+    box-shadow: 0 26px 56px rgba(19, 88, 93, 0.20);
     border-color: rgba(254, 205, 15, 0.55);
 
+    .hiw-watermark { color: rgba(254, 205, 15, 0.22); transform: translate(6px, -6px) rotate(-4deg); }
     .hiw-icon {
       background: linear-gradient(135deg, #FECD0F, #f4b800);
-      transform: rotate(-4deg) scale(1.06);
-      box-shadow: 0 10px 22px rgba(254, 205, 15, 0.45);
+      transform: rotate(-6deg) scale(1.06);
+      box-shadow: 0 14px 28px rgba(254, 205, 15, 0.45);
 
       mat-icon ::ng-deep svg path,
       mat-icon ::ng-deep svg circle { stroke: #0F0F0F; }
     }
+    .hiw-card-glow { opacity: 1; }
   }
 }
 
-.hiw-col:hover .hiw-num {
-  transform: translateY(-3px);
-  box-shadow: 0 16px 32px rgba(19, 88, 93, 0.45),
-              0 0 0 6px rgba(254, 205, 15, 0.18);
+@keyframes hiwCardIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hiw-watermark {
+  position: absolute;
+  top: 6px;
+  inset-inline-end: 14px;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 78px;
+  font-weight: 900;
+  letter-spacing: -3px;
+  line-height: 1;
+  color: rgba(19, 88, 93, 0.07);
+  pointer-events: none;
+  transition: color 380ms ease, transform 380ms cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 0;
+}
+
+.hiw-card-head {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
 .hiw-icon {
-  width: 54px;
-  height: 54px;
+  width: 52px;
+  height: 52px;
   border-radius: 14px;
-  background: linear-gradient(135deg, rgba(19, 88, 93, 0.10), rgba(19, 88, 93, 0.06));
-  display: flex;
+  background: linear-gradient(135deg, rgba(19, 88, 93, 0.12), rgba(19, 88, 93, 0.06));
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 14px;
-  transition: all 350ms cubic-bezier(0.22, 1, 0.36, 1);
+  flex-shrink: 0;
+  transition: all 380ms cubic-bezier(0.22, 1, 0.36, 1);
 
-  mat-icon {
-    width: 28px;
-    height: 28px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-  mat-icon ::ng-deep svg {
-    width: 28px;
-    height: 28px;
-  }
+  mat-icon { width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; }
+  mat-icon ::ng-deep svg { width: 26px; height: 26px; }
   mat-icon ::ng-deep svg path,
   mat-icon ::ng-deep svg circle { stroke: #13585D; transition: stroke 250ms ease; }
 }
 
-.hiw-title {
+.hiw-step-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(254, 205, 15, 0.16);
+  border: 1px solid rgba(254, 205, 15, 0.45);
   color: #13585D;
-  font-size: 17px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+.hiw-title {
+  position: relative;
+  z-index: 1;
+  color: #13585D;
+  font-size: 18px;
   font-weight: 800;
   margin: 0 0 6px;
   line-height: 1.3;
 }
 
 .hiw-desc {
+  position: relative;
+  z-index: 1;
   color: #5b7a7d;
   font-size: 13.5px;
   line-height: 20px;
-  margin: 0;
-  max-width: 220px;
+  margin: 0 0 auto;
 }
 
 .hiw-cta {
+  position: relative;
+  z-index: 1;
   margin-top: 16px;
+  align-self: flex-start;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 16px;
+  padding: 9px 16px;
   border-radius: 999px;
-  background: #ffffff;
-  border: 1.5px solid rgba(19, 88, 93, 0.22);
-  color: #13585D;
+  background: linear-gradient(135deg, #13585D 0%, #0f4c50 100%);
+  border: 1.5px solid transparent;
+  color: #ffffff;
   font-size: 13px;
   font-weight: 700;
   text-decoration: none;
-  box-shadow: 0 4px 12px rgba(19, 88, 93, 0.08);
+  box-shadow: 0 8px 18px rgba(19, 88, 93, 0.30);
   transition: all 240ms ease;
 
   .arrow { transition: transform 240ms ease; }
 
   &:hover {
-    background: #FECD0F;
-    border-color: #FECD0F;
+    background: linear-gradient(135deg, #FECD0F 0%, #f4b800 100%);
     color: #0F0F0F;
-    transform: translateY(-1px);
-    box-shadow: 0 10px 22px rgba(254, 205, 15, 0.40);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(254, 205, 15, 0.45);
     .arrow { transform: translateX(4px); }
   }
 
   &:focus-visible {
-    outline: 2px solid #13585D;
-    outline-offset: 2px;
+    outline: 2px solid #FECD0F;
+    outline-offset: 3px;
   }
 }
 
@@ -259,18 +323,55 @@
   &:hover .arrow { transform: scaleX(-1) translateX(4px); }
 }
 
+.hiw-card-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 100% 0%, rgba(254, 205, 15, 0.18), transparent 55%);
+  opacity: 0;
+  transition: opacity 380ms ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== Responsive ===== */
 @media all and (max-width: 992px) {
-  .hiw-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 56px; }
-  .hiw-connector { display: none; }
+  .hiw-flow {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+  }
+  .hiw-col { flex: initial; }
+  .hiw-arrow { display: none; }
 }
 
 @media all and (max-width: 576px) {
   .how-it-works-container { padding: 50px 14px; border-radius: 24px; }
   .hiw-flow {
     grid-template-columns: 1fr;
-    gap: 44px;
+    gap: 16px;
   }
-  .hiw-num { width: 56px; height: 56px; font-size: 22px; }
-  .hiw-card { padding: 44px 18px 22px; }
-  .hiw-intro { margin-bottom: 32px; font-size: 15px; }
+  .hiw-callout {
+    font-size: 13.5px;
+    padding: 12px 18px 12px 14px;
+    margin-bottom: 36px;
+    .hiw-callout-icon { width: 32px; height: 32px; }
+  }
+  .hiw-watermark { font-size: 64px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hiw-callout-shine,
+  .hiw-arrow {
+    animation: none !important;
+  }
+  .hiw-card {
+    animation: none !important;
+  }
+  .hiw-card:hover,
+  .hiw-card:hover .hiw-icon,
+  .hiw-card:hover .hiw-watermark,
+  .hiw-cta:hover,
+  .hiw-cta:hover .arrow {
+    transform: none !important;
+  }
 }
