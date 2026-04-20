@@ -132,8 +132,8 @@
                             </div>
 
 
-                            <div class="form-group col-md-12 text-center mt-3">
-                                <button type="submit" class="btn btn-primary px-5">{{ __('app.save') }}</button>
+                            <div class="form-group col-md-12">
+                                <button type="submit" class="btn btn-primary px-4">{{ __('app.save') }}</button>
                             </div>
                         </div>
                     </div>

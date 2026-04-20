@@ -63,14 +63,29 @@
                                 <div class="form-group col-4">
                                     <label for="image">{{ __('app.image') }} (Web) (538x450)</label>
                                     <input type="file" id="image" name="image" data-plugins="dropify" data-default-file="{{ $data->image }}" data-height="200" data-allowed-file-extensions="png jpg jpeg webp"  />
+                                    @include('includes.admin.image-upload-notes', [
+                                        'recommendedSize' => '538 x 450 px',
+                                        'maxSize' => '5 MB',
+                                        'extensions' => 'png,jpg,jpeg,webp'
+                                    ])
                                 </div>
                                 <div class="form-group col-4">
                                     <label for="image_tablet">{{ __('app.image') }} (Tablet) (454x380)</label>
                                     <input type="file" id="image_tablet" name="image_tablet" data-plugins="dropify" data-default-file="{{ $data->image_tablet }}" data-height="200" data-allowed-file-extensions="png jpg jpeg webp"  />
+                                    @include('includes.admin.image-upload-notes', [
+                                        'recommendedSize' => '454 x 380 px',
+                                        'maxSize' => '5 MB',
+                                        'extensions' => 'png,jpg,jpeg,webp'
+                                    ])
                                 </div>
                                 <div class="form-group col-4">
                                     <label for="image_mobile">{{ __('app.image') }} (Mobile) (348x318)</label>
                                     <input type="file" id="image_mobile" name="image_mobile" data-plugins="dropify" data-default-file="{{ $data->image_mobile }}" data-height="200" data-allowed-file-extensions="png jpg jpeg webp"  />
+                                    @include('includes.admin.image-upload-notes', [
+                                        'recommendedSize' => '348 x 318 px',
+                                        'maxSize' => '5 MB',
+                                        'extensions' => 'png,jpg,jpeg,webp'
+                                    ])
                                 </div>
                                 <div class="form-group col-6 d-none">
                                     <label for="image_en">{{ __('app.image') }} (EN)</label>

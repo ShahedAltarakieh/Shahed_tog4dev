@@ -3,18 +3,7 @@
 @section('title') {{ __('app.add_announcement') }} @endsection
 
 @section('content')
-<div class="row mt-3 mb-3">
-    <div class="col-12">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-1" style="background:none;padding:0;">
-                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('app.dashboard') }}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('announcements.index') }}">{{ __('app.announcements') }}</a></li>
-                <li class="breadcrumb-item active">{{ __('app.add_announcement') }}</li>
-            </ol>
-        </nav>
-        <h4 class="page-title mb-0">{{ __('app.add_announcement') }}</h4>
-    </div>
-</div>
+@include('includes.admin.header', ['label_name' => __('app.add_announcement')])
 
 <form action="{{ route('announcements.store') }}" method="POST">
     @csrf

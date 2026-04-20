@@ -34,7 +34,7 @@
                                     <i class="fas fa-grip-vertical" style="cursor:grab;color:var(--admin-gray-400);"></i>
                                 </td>
                                 <td>
-                                    <div style="max-width:340px;">
+                                    <div>
                                         @if($item->title || $item->title_ar)
                                         <strong style="font-size:12px;color:var(--admin-gray-500);display:block;">
                                             @if($item->title)<span title="EN">{{ $item->title }}</span>@endif

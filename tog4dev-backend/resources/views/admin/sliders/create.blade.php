@@ -48,14 +48,29 @@
                             <div class="form-group col-4">
                                 <label for="image">{{ __('app.image') }} (Web) (1300x664)</label>
                                 <input type="file" id="image" name="image" data-plugins="dropify" data-height="200" data-allowed-file-extensions="png jpg jpeg webp"  />
+                                @include('includes.admin.image-upload-notes', [
+                                    'recommendedSize' => '1300 x 664 px',
+                                    'maxSize' => '3 MB',
+                                    'extensions' => 'png,jpg,jpeg,webp'
+                                ])
                             </div>
                             <div class="form-group col-4">
                                 <label for="image_tablet">{{ __('app.image') }} (Tablet) (900x460)</label>
                                 <input type="file" id="image_tablet" name="image_tablet" data-plugins="dropify" data-height="200" data-allowed-file-extensions="png jpg jpeg webp"  />
+                                @include('includes.admin.image-upload-notes', [
+                                    'recommendedSize' => '900 x 460 px',
+                                    'maxSize' => '3 MB',
+                                    'extensions' => 'png,jpg,jpeg,webp'
+                                ])
                             </div>
                             <div class="form-group col-4">
                                 <label for="image_mobile">{{ __('app.image') }} (Mobile) (432x690)</label>
                                 <input type="file" id="image_mobile" name="image_mobile" data-plugins="dropify" data-height="200" data-allowed-file-extensions="png jpg jpeg webp"  />
+                                @include('includes.admin.image-upload-notes', [
+                                    'recommendedSize' => '432 x 690 px',
+                                    'maxSize' => '3 MB',
+                                    'extensions' => 'png,jpg,jpeg,webp'
+                                ])
                             </div>
                             <div class="form-group col-6 d-none">
                                 <label for="image_en">{{ __('app.image') }} (EN)</label>
@@ -64,6 +79,11 @@
                             <div class="form-group col-6">
                                 <label for="logo">{{ __('app.logo') }} (AR)</label>
                                 <input type="file" id="logo" name="logo" data-plugins="dropify" data-height="200" data-allowed-file-extensions="png jpg jpeg webp"  />
+                                @include('includes.admin.image-upload-notes', [
+                                    'recommendedSize' => '300 x 200 px',
+                                    'maxSize' => '3 MB',
+                                    'extensions' => 'png,jpg,jpeg,webp'
+                                ])
                             </div>
                             <div class="form-group col-6 d-none">
                                 <label for="logo_en">{{ __('app.logo') }} (EN)</label>

@@ -45,10 +45,20 @@
                             <div class="form-group col-6">
                                 <label for="image">Category Hero Logo (AR)</label>
                                 <input type="file" id="image" name="image" data-plugins="dropify" data-height="200" data-allowed-file-extensions="png jpg jpeg webp" />
+                                @include('includes.admin.image-upload-notes', [
+                                    'recommendedSize' => '400 x 400 px',
+                                    'maxSize' => '5 MB',
+                                    'extensions' => 'png,jpg,jpeg,webp'
+                                ])
                             </div>
                             <div class="form-group col-6">
                                 <label for="image">Category Hero Logo (EN)</label>
                                 <input type="file" id="image_en" name="image_en" data-plugins="dropify" data-height="200" data-allowed-file-extensions="png jpg jpeg webp" />
+                                @include('includes.admin.image-upload-notes', [
+                                    'recommendedSize' => '400 x 400 px',
+                                    'maxSize' => '5 MB',
+                                    'extensions' => 'png,jpg,jpeg,webp'
+                                ])
                             </div>
                             <div class="col-12">
                                 <hr class="my-5">
@@ -72,14 +82,29 @@
                             <div class="form-group col-4">
                                 <label for="hero_image">Category Hero Image (Web) (1300x376)</label>
                                 <input type="file" id="hero_image" name="hero_image" data-plugins="dropify" data-height="200" data-allowed-file-extensions="png jpg jpeg webp" />
+                                @include('includes.admin.image-upload-notes', [
+                                    'recommendedSize' => '1300 x 376 px',
+                                    'maxSize' => '5 MB',
+                                    'extensions' => 'png,jpg,jpeg,webp'
+                                ])
                             </div>
                             <div class="form-group col-4">
                                 <label for="hero_image_tablet">Category Hero Image (Tablet) (900x376)</label>
                                 <input type="file" id="hero_image_tablet" name="hero_image_tablet" data-plugins="dropify" data-height="200" data-allowed-file-extensions="png jpg jpeg webp" />
+                                @include('includes.admin.image-upload-notes', [
+                                    'recommendedSize' => '900 x 376 px',
+                                    'maxSize' => '5 MB',
+                                    'extensions' => 'png,jpg,jpeg,webp'
+                                ])
                             </div>
                             <div class="form-group col-4">
                                 <label for="hero_image_mobile">Category Hero Image (Mobile) (432x690)</label>
                                 <input type="file" id="hero_image_mobile" name="hero_image_mobile" data-plugins="dropify" data-height="200" data-allowed-file-extensions="png jpg jpeg webp" />
+                                @include('includes.admin.image-upload-notes', [
+                                    'recommendedSize' => '432 x 690 px',
+                                    'maxSize' => '5 MB',
+                                    'extensions' => 'png,jpg,jpeg,webp'
+                                ])
                             </div>
                             <div class="form-group col-6 d-none">
                                 <label for="hero_image_en">Category Hero Image (EN)</label>
