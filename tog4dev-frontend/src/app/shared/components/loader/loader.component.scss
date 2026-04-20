@@ -19,9 +19,9 @@ $accent:  #FECD0F;
   to   { opacity: 1; }
 }
 
-.heart-loader {
-  width: 140px;
-  height: 140px;
+.logo-loader {
+  width: 180px;
+  height: 180px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,33 +35,40 @@ $accent:  #FECD0F;
   &__path {
     fill: transparent;
     stroke: $accent;
-    stroke-width: 4;
+    stroke-width: 2.2;
     stroke-linecap: round;
     stroke-linejoin: round;
-    filter: drop-shadow(0 0 6px rgba(254, 205, 15, 0.45));
+    filter: drop-shadow(0 0 4px rgba(254, 205, 15, 0.5));
+    /* path lengths are roughly 220–260; use a generous value */
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+  }
 
-    /* path length is ~280 — use a value larger than the path */
-    stroke-dasharray: 320;
-    stroke-dashoffset: 320;
+  &__path--top {
+    animation: draw-stroke 2.6s ease-in-out infinite;
+  }
 
-    animation: draw-heart 2.4s ease-in-out infinite;
+  &__path--bottom {
+    /* second stroke starts a beat after the first */
+    animation: draw-stroke 2.6s ease-in-out infinite;
+    animation-delay: 0.45s;
   }
 }
 
-@keyframes draw-heart {
+@keyframes draw-stroke {
   0% {
-    stroke-dashoffset: 320;
+    stroke-dashoffset: 300;
     fill: transparent;
   }
-  60% {
+  55% {
     stroke-dashoffset: 0;
     fill: transparent;
   }
-  80% {
+  75% {
     stroke-dashoffset: 0;
-    fill: rgba(254, 205, 15, 0.95);
+    fill: rgba(254, 205, 15, 0.9);
   }
-  100% {
+  95%, 100% {
     stroke-dashoffset: 0;
     fill: transparent;
   }
@@ -70,10 +77,10 @@ $accent:  #FECD0F;
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   .loader-overlay,
-  .heart-loader__path {
+  .logo-loader__path {
     animation: none !important;
   }
-  .heart-loader__path {
+  .logo-loader__path {
     stroke-dashoffset: 0;
     fill: $accent;
   }
