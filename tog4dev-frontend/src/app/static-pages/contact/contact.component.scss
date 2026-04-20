@@ -8,10 +8,28 @@ $accent: #FECD0F;
 .contact-page { background: #f7f9fa; min-height: 100vh; padding-bottom: 60px; }
 
 /* ---------- HERO ---------- */
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroBadgePop {
+  from { opacity: 0; transform: translateY(-10px) scale(0.9); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes heroPatternDrift {
+  0%   { transform: translate3d(0,0,0) scale(1); }
+  50%  { transform: translate3d(-12px,8px,0) scale(1.04); }
+  100% { transform: translate3d(0,0,0) scale(1); }
+}
+@keyframes heroOrbFloat {
+  0%, 100% { transform: translate(0,0); }
+  50%      { transform: translate(15px,-15px); }
+}
+
 .hero-section {
   position: relative;
-  background: linear-gradient(135deg, #1a7a7a 0%, $primary 45%, $primary-dark 100%);
-  padding: 80px 0 110px;
+  background: linear-gradient(135deg, #1a7a7a, #13585d 45%, #0d4347);
+  padding: 31px 0 110px;
   overflow: hidden;
   isolation: isolate;
 
@@ -22,9 +40,36 @@ $accent: #FECD0F;
       radial-gradient(circle at 12% 20%, rgba(255,255,255,0.06) 0%, transparent 45%),
       radial-gradient(circle at 88% 80%, rgba($accent, 0.08) 0%, transparent 50%);
     z-index: -1;
+    animation: heroPatternDrift 14s ease-in-out infinite;
   }
 
-  .hero-content { max-width: 760px; margin: 0 auto; }
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+    filter: blur(40px);
+  }
+  &::before {
+    width: 220px; height: 220px;
+    top: -60px; left: 8%;
+    background: radial-gradient(circle, rgba($accent, 0.18), transparent 70%);
+    animation: heroOrbFloat 9s ease-in-out infinite;
+  }
+  &::after {
+    width: 280px; height: 280px;
+    bottom: -80px; right: 6%;
+    background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
+    animation: heroOrbFloat 11s ease-in-out infinite reverse;
+  }
+
+  .hero-content {
+    max-width: 760px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
 
   .hero-badge {
     display: inline-block;
@@ -39,6 +84,7 @@ $accent: #FECD0F;
     letter-spacing: 1.2px;
     text-transform: uppercase;
     margin-bottom: 18px;
+    animation: heroBadgePop 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   .page-title {
@@ -47,6 +93,7 @@ $accent: #FECD0F;
     line-height: 1.15;
     margin: 0 0 14px;
     letter-spacing: -0.5px;
+    animation: heroFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
   }
 
   .hero-subtitle {
@@ -55,6 +102,12 @@ $accent: #FECD0F;
     opacity: 0.92;
     margin: 0;
     font-weight: 400;
+    animation: heroFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-pattern, &::before, &::after,
+    .hero-badge, .page-title, .hero-subtitle { animation: none; }
   }
 }
 
@@ -146,6 +199,68 @@ $accent: #FECD0F;
 }
 
 /* ---------- ASIDE ---------- */
+.aside-stack { display: flex; flex-direction: column; gap: 18px; }
+
+.promise-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 24px 22px;
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 8px 28px rgba(13,67,71,0.06);
+
+  .promise-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: $primary;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 14px;
+  }
+
+  .promise-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+
+      div {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.35;
+      }
+      strong {
+        color: #1a1a1a;
+        font-size: 0.92rem;
+        font-weight: 700;
+      }
+      span {
+        color: #6c757d;
+        font-size: 0.82rem;
+      }
+    }
+  }
+
+  .promise-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba($primary, 0.12), rgba($accent, 0.18));
+    color: $primary;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+  }
+}
+
 .aside-card {
   background: linear-gradient(155deg, $primary 0%, $primary-dark 70%, $primary-darker 100%);
   color: #fff;
