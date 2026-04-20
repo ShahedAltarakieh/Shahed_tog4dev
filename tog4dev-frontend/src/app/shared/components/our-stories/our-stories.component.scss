@@ -1,14 +1,9 @@
+:host { display: block; padding-block: 16px 60px; }
+
 .swiper {
-  margin-top: 20px;
+  margin-top: 12px;
   margin-bottom: 38px;
   max-width: 3500px;
-}
-
-.section-title{
-  color: #13585D;
-  font-size: 27px;
-  font-weight: 500;
-  line-height: 34px;
 }
 
 .slide-img {
@@ -19,11 +14,25 @@
   height: 100%;
   overflow: hidden;
   position: relative;
+  cursor: pointer;
+  transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 350ms ease;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 38px rgba(19, 88, 93, 0.25);
+
+    img { transform: scale(1.06); }
+    .img-overlay {
+      background: linear-gradient(180deg, rgba(19, 88, 93, 0) 0%, rgba(19, 88, 93, 0.85) 100%);
+    }
+    .story-title { transform: translateY(-6px); }
+  }
 
   .img-overlay{
     background: linear-gradient(180deg, rgba(138, 208, 193, 0) 10%, #13585D 119.45%);
     top: 0;
     left: 0;
+    transition: background 350ms ease;
   }
   img {
     border-radius: 24px;
@@ -31,16 +40,19 @@
     min-width: 267px;
     object-fit: cover;
     width: 100%;
+    transition: transform 600ms ease;
   }
 }
 
 .story-title {
   color: #ffffff;
-  font-size: 27px;
-  line-height: 34px;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 30px;
   text-align: center;
   margin-bottom: 60px;
-  padding-inline: 3rem;
+  padding-inline: 2.5rem;
+  transition: transform 350ms ease;
 }
 
 .story-category {
@@ -48,14 +60,25 @@
   display: flex;
   gap: 11px;
   justify-content: center;
-  border-radius: 14px;
-  margin-top: 12px;
-  background: #13585DB2;
+  border-radius: 999px;
+  margin-top: 14px;
+  background: #13585D;
   width: fit-content;
   margin-inline: auto;
-  padding: 6px 10px;
+  padding: 8px 16px;
+  transition: all 250ms ease;
+  border: 1.5px solid #13585D;
+
   &:hover{
-    background: #13585DB2;
+    background: #FECD0F;
+    color: #0F0F0F;
+    border-color: #FECD0F;
+    .category-text { color: #0F0F0F; }
+  }
+
+  &:focus-visible {
+    outline: 2px solid #FECD0F;
+    outline-offset: 3px;
   }
 }
 
@@ -64,13 +87,14 @@
   display: block;
   font-size: 13px;
   font-weight: 700;
+  transition: color 200ms ease;
 }
 
 
 @media only screen and (max-width: 768px) {
   .story-title {
-    font-size: 19px;
-    line-height: 29px;
+    font-size: 18px;
+    line-height: 26px;
     margin-bottom: 40px;
     padding-inline: 1rem;
   }

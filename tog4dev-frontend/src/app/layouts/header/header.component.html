@@ -177,7 +177,7 @@
         </div>
     </div>
 </header>
-<div class="social-media {{ storageService.siteLanguage$.value }}">
+<div class="social-media {{ storageService.siteLanguage$.value }}" [class.is-hidden]="hideSocialMedia">
     <app-social-media />
 </div>
 <div class="whatsapp {{ storageService.siteLanguage$.value }}">

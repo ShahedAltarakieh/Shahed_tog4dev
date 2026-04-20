@@ -93,6 +93,7 @@ export class HeaderComponent implements OnInit {
   isNavDropdownOpen = false;
   isMobileMenuCollapse = true;
   isScrolled: boolean = false;
+  hideSocialMedia: boolean = false;
 
   @HostListener('document:click', ['$event.target'])
   onOutsideClick(target: HTMLElement) {
@@ -113,7 +114,20 @@ export class HeaderComponent implements OnInit {
   @HostListener('window:scroll', [])
   onWindowScroll() {
     // Change the header style when the scroll position is greater than 50px
-    this.isScrolled = typeof window !== 'undefined' ? window.scrollY > 50 : false;
+    if (typeof window === 'undefined') {
+      this.isScrolled = false;
+      return;
+    }
+    this.isScrolled = window.scrollY > 50;
+
+    // Hide side social media once user reaches the our-partners section
+    const partners = document.getElementById('our-partners');
+    if (partners) {
+      const rect = partners.getBoundingClientRect();
+      this.hideSocialMedia = rect.top <= window.innerHeight * 0.85;
+    } else {
+      this.hideSocialMedia = false;
+    }
   }
 
   constructor(
@@ -133,6 +147,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.navService.load().subscribe();
+      // Initialize scroll-derived state in case page loads at non-zero scroll
+      setTimeout(() => this.onWindowScroll(), 0);
     }
   }
 
