@@ -1,30 +1,30 @@
 .social-media-sticky {
-  gap: 14px;
+  gap: 10px;
 
   a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background: linear-gradient(135deg, #13585D 0%, #0f4c50 100%);
-    box-shadow: 0 6px 18px rgba(19, 88, 93, 0.35),
-                0 0 0 2px rgba(255, 255, 255, 0.7);
+    box-shadow: 0 4px 12px rgba(19, 88, 93, 0.30),
+                0 0 0 1.5px rgba(255, 255, 255, 0.7);
     transition: transform 250ms ease, box-shadow 250ms ease, background 250ms ease;
 
     img {
-      width: 18px;
-      height: 18px;
+      width: 13px;
+      height: 13px;
       filter: brightness(0) invert(1);
       transition: transform 250ms ease;
     }
 
     &:hover {
       background: linear-gradient(135deg, #FECD0F 0%, #f4b800 100%);
-      box-shadow: 0 10px 24px rgba(254, 205, 15, 0.45),
-                  0 0 0 2px rgba(255, 255, 255, 0.9);
-      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 18px rgba(254, 205, 15, 0.40),
+                  0 0 0 1.5px rgba(255, 255, 255, 0.9);
+      transform: translateY(-2px) scale(1.05);
 
       img {
         filter: brightness(0);

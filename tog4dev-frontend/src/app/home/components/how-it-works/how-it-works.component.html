@@ -5,8 +5,19 @@
     <div class="tg-title-decoration"><span></span></div>
   </div>
 
-  <p class="text-center fw-bold helper-line">{{ "discover more about together for intermediation services llc (together for development)" | translate }}, <a [routerLink]="aboutUsRoutes[storageService.siteLanguage$.value]">{{ "click here" | translate }}</a></p>
-  <p class="section-desc text-center">{{ "every delegation to our sustainable development projects follows these key steps:" | translate }}</p>
+  <div class="step-sequence-desc">
+    <span class="seq-badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      {{ "step by step" | translate }}
+    </span>
+    <p class="seq-text">{{ "every delegation to our sustainable development projects follows these key steps:" | translate }}</p>
+    <div class="seq-dots" aria-hidden="true">
+      <span class="dot"></span><span class="line"></span>
+      <span class="dot"></span><span class="line"></span>
+      <span class="dot"></span><span class="line"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
 
   <div class="how-it-works-steps">
     <div class="how-it-works-step-item">
@@ -23,6 +34,10 @@
         <mat-icon svgIcon="how-it-works-2"></mat-icon>
       </div>
       <p class="item-content-text">{{ "make a delegation" | translate }}</p>
+      <a class="learn-more-pill" [routerLink]="aboutUsRoutes[storageService.siteLanguage$.value]">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        {{ "click here to know about us" | translate }}
+      </a>
     </div>
 
     <div class="how-it-works-step-item">

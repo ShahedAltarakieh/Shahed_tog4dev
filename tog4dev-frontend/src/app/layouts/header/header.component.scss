@@ -520,6 +520,21 @@ nav ul li a:hover {
 
 .animated-button1 span {
   position: absolute;
+  display: none;
+}
+
+.animated-button1 {
+  background: rgba(254, 205, 15, 0.10);
+  border: 1px solid rgba(254, 205, 15, 0.7) !important;
+  transition: background 280ms ease, transform 280ms ease, box-shadow 280ms ease, border-color 280ms ease;
+
+  &:hover {
+    background: #FECD0F;
+    color: #0F0F0F;
+    border-color: #FECD0F !important;
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(254, 205, 15, 0.45);
+  }
 }
 
 .animated-button1 span:nth-child(1) {
