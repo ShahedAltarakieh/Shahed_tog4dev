@@ -232,7 +232,7 @@ $accent: #FECD0F;
   padding: 32px 28px;
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(0,0,0,0.05);
+  border: 2px solid $primary;
   box-shadow: 0 12px 36px rgba(13,67,71,0.08);
 
   &::before {
@@ -362,7 +362,8 @@ $accent: #FECD0F;
   border-radius: 12px;
   font-weight: 700;
   font-size: 0.95rem;
-  margin-inline: auto;
+  margin-inline-start: auto;
+  margin-inline-end: 0;
   margin-top: 22px;
   display: block;
   transition: all 0.25s ease;
