@@ -199,7 +199,13 @@ $accent: #FECD0F;
 }
 
 /* ---------- ASIDE ---------- */
-.aside-stack { display: flex; flex-direction: column; gap: 18px; }
+.contact-aside { height: 100%; }
+.aside-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  height: 100%;
+}
 
 .map-card {
   background: #fff;
@@ -207,7 +213,8 @@ $accent: #FECD0F;
   overflow: hidden;
   border: 1px solid rgba(0,0,0,0.05);
   box-shadow: 0 8px 28px rgba(13,67,71,0.06);
-  height: 260px;
+  flex: 1 1 auto;
+  min-height: 240px;
 
   iframe {
     width: 100%;
@@ -219,13 +226,14 @@ $accent: #FECD0F;
 }
 
 .aside-card {
-  background: linear-gradient(155deg, $primary 0%, $primary-dark 70%, $primary-darker 100%);
-  color: #fff;
+  background: #fff;
+  color: #2a2a2a;
   border-radius: 20px;
   padding: 32px 28px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 14px 40px rgba(13,67,71,0.18);
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 12px 36px rgba(13,67,71,0.08);
 
   &::before {
     content: '';
@@ -235,7 +243,7 @@ $accent: #FECD0F;
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba($accent, 0.18), transparent 70%);
+    background: radial-gradient(circle, rgba($accent, 0.22), transparent 70%);
     pointer-events: none;
   }
   &::after {
@@ -246,30 +254,31 @@ $accent: #FECD0F;
     width: 240px;
     height: 240px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,255,255,0.06), transparent 70%);
+    background: radial-gradient(circle, rgba($primary, 0.06), transparent 70%);
     pointer-events: none;
   }
+
+  > * { position: relative; z-index: 1; }
 
   .aside-title {
     font-size: 1.35rem;
     font-weight: 800;
     margin: 0 0 8px;
-    color: #fff;
+    color: $primary;
   }
   .aside-desc {
     font-size: 0.92rem;
-    opacity: 0.85;
+    color: #6c757d;
     line-height: 1.55;
     margin: 0 0 18px;
   }
   .aside-subtitle {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 700;
     margin: 0 0 14px;
-    color: #fff;
+    color: $primary;
     text-transform: uppercase;
     letter-spacing: 1px;
-    opacity: 0.95;
   }
 
   .aside-list {
@@ -284,7 +293,8 @@ $accent: #FECD0F;
       padding: 10px 0;
       font-size: 0.9rem;
       line-height: 1.5;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      color: #3a3a3a;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
 
       &:last-child { border-bottom: none; }
 
@@ -292,8 +302,8 @@ $accent: #FECD0F;
         flex-shrink: 0;
         width: 32px;
         height: 32px;
-        background: rgba(255,255,255,0.14);
-        color: #fff;
+        background: rgba($primary, 0.1);
+        color: $primary;
         border-radius: 9px;
         display: inline-flex;
         align-items: center;
@@ -302,13 +312,12 @@ $accent: #FECD0F;
         line-height: 1;
         text-align: center;
       }
-      span { opacity: 0.94; }
     }
   }
 
   .aside-divider {
     height: 1px;
-    background: rgba(255,255,255,0.14);
+    background: rgba(0,0,0,0.07);
     margin: 4px 0 22px;
   }
 
@@ -326,21 +335,42 @@ $accent: #FECD0F;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255,255,255,0.1);
-      color: #fff;
+      background: rgba($primary, 0.08);
+      color: $primary;
       border-radius: 12px;
       font-size: 1rem;
       text-decoration: none;
       transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid transparent;
 
       &:hover {
-        background: $accent;
-        color: $primary-darker;
+        background: $primary;
+        color: #fff;
         transform: translateY(-3px) scale(1.05);
-        box-shadow: 0 6px 18px rgba($accent, 0.35);
+        box-shadow: 0 6px 18px rgba($primary, 0.28);
       }
     }
+  }
+}
+
+/* ---------- SUBMIT BUTTON OVERRIDE ---------- */
+.contact-form-card ::ng-deep .submit-btn {
+  width: auto;
+  min-width: 180px;
+  padding: 0 32px;
+  height: 44px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-inline: auto;
+  margin-top: 22px;
+  display: block;
+  transition: all 0.25s ease;
+  box-shadow: 0 6px 18px rgba($accent, 0.32);
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba($accent, 0.42);
   }
 }
 
