@@ -252,6 +252,11 @@ Route::group(
             Route::put('/', [\App\Http\Controllers\Admin\NavSettingController::class, 'update'])->name('nav-settings.update');
         });
 
+        Route::prefix('page-maintenance')->middleware('master')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Admin\PageMaintenanceController::class, 'index'])->name('page-maintenance.index');
+            Route::put('/', [\App\Http\Controllers\Admin\PageMaintenanceController::class, 'update'])->name('page-maintenance.update');
+        });
+
         Route::prefix('announcements')->middleware('master')->group(function () {
             Route::get('/', [AnnouncementAdminController::class, 'index'])->name('announcements.index');
             Route::get('/create', [AnnouncementAdminController::class, 'create'])->name('announcements.create');

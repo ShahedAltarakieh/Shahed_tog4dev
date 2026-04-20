@@ -138,6 +138,12 @@
     </a>
 </li>
 <li>
+    <a href="{{ route('page-maintenance.index') }}" data-tooltip="{{ __('app.page_maintenance') }}" class="{{ request()->routeIs('page-maintenance.*') ? 'active-menu' : '' }}">
+        <i class="fas fa-tools"></i>
+        <span>{{ __('app.page_maintenance') }}</span>
+    </a>
+</li>
+<li>
     <a href="#newsGallery" data-tooltip="{{ __('app.news_media') }}" data-toggle="collapse" aria-expanded="false">
         <i class="fas fa-newspaper"></i>
         <span>{{ __('app.news_media') }}</span>

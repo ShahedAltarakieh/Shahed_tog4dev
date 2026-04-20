@@ -1,6 +1,8 @@
 import {AfterViewInit, ChangeDetectorRef, Component, OnInit, Inject, PLATFORM_ID} from '@angular/core';
 import {Location, NgIf, isPlatformBrowser} from '@angular/common';
-import {RouterOutlet, ActivatedRoute, Router, NavigationStart, NavigationEnd, NavigationError} from '@angular/router';
+import {RouterOutlet, ActivatedRoute, Router, NavigationStart, NavigationEnd, NavigationError, ActivatedRouteSnapshot} from '@angular/router';
+import { PageMaintenanceService, PageMaintenanceInfo } from './shared/services/page-maintenance/page-maintenance.service';
+import { MaintenancePageComponent } from './shared/components/maintenance-page/maintenance-page.component';
 
 import { StorageService } from './core/storage/storage.service';
 import { TextDirectionService } from 'app/text-direction.service';
@@ -24,7 +26,7 @@ import { environment } from 'environments/environment';
 import { GoogleTagManagerService } from './shared/services/google-tag-manager-service/google-tag-manager-service.service';
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet, HeaderComponent, FooterComponent, LoaderComponent, NgIf, AnnouncementBarComponent],
+    imports: [RouterOutlet, HeaderComponent, FooterComponent, LoaderComponent, NgIf, AnnouncementBarComponent, MaintenancePageComponent],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
@@ -34,6 +36,7 @@ export class AppComponent implements OnInit, AfterViewInit{
   title = 'Together for Development';
   isLoading = false;
   translatedRoutes!: { [route: string]: string; };
+  maintenanceInfo: PageMaintenanceInfo | null = null;
 
   constructor( 
     public directionService: TextDirectionService,
@@ -50,6 +53,7 @@ export class AppComponent implements OnInit, AfterViewInit{
     private route: ActivatedRoute,
     public apiService: ApiService,
     private gtm: GoogleTagManagerService,
+    public pageMaintenanceService: PageMaintenanceService,
     @Inject(PLATFORM_ID) private platformId: Object
    ) {
     translate.addLangs(['en', 'ar']);
@@ -88,6 +92,18 @@ export class AppComponent implements OnInit, AfterViewInit{
   
     this.storageService.siteLanguage$.subscribe((lang: 'en' | 'ar') => {
       this.handleSiteLanguage(lang);
+    });
+
+    // Page maintenance: load on both server (SSR) and browser so the initial
+    // SSR render reflects maintenance state instead of flickering after hydration.
+    this.pageMaintenanceService.load().subscribe(() => {
+      this.updateMaintenanceForCurrentRoute();
+    });
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.updateMaintenanceForCurrentRoute();
+      }
     });
 
     if (!isPlatformBrowser(this.platformId)) {
@@ -182,6 +198,24 @@ export class AppComponent implements OnInit, AfterViewInit{
   /**
    * Used to handle the site translation, cotent and routes
    */
+  /**
+   * Walks the activated route tree to find the deepest `data.pageKey` and
+   * checks the page maintenance service. If the page is currently under
+   * update, sets `maintenanceInfo` so the template renders the maintenance
+   * screen instead of the router-outlet.
+   */
+  updateMaintenanceForCurrentRoute(): void {
+    let snap: ActivatedRouteSnapshot | null = this.route.snapshot;
+    let pageKey: string | undefined;
+    while (snap) {
+      if (snap.data && snap.data['pageKey']) {
+        pageKey = snap.data['pageKey'];
+      }
+      snap = snap.firstChild;
+    }
+    this.maintenanceInfo = this.pageMaintenanceService.getActive(pageKey);
+  }
+
   setSiteLanguageFromUrl(): void {
     const siteLanguage = this.location.path().includes('/ar') ? 'ar' : 'en';
     this.storageService.siteLanguage$.next(siteLanguage);

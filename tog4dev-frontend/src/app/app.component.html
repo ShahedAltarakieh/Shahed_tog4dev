@@ -2,6 +2,11 @@
 <app-header></app-header>
 <app-announcement-bar></app-announcement-bar>
 <div class="content">
-  <router-outlet />
+  <ng-container *ngIf="maintenanceInfo; else routedContent">
+    <app-maintenance-page [info]="maintenanceInfo"></app-maintenance-page>
+  </ng-container>
+  <ng-template #routedContent>
+    <router-outlet />
+  </ng-template>
 </div>
 <app-footer></app-footer>
