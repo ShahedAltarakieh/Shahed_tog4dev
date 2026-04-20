@@ -1,19 +1,18 @@
 <div class="loader-overlay">
-  <div class="logo-loader" role="status" aria-label="Loading">
-    <!-- Rotating dashed accent ring -->
-    <span class="logo-loader__ring"></span>
-    <!-- Pulsing accent halo -->
-    <span class="logo-loader__halo"></span>
-    <!-- The logo, breathing -->
-    <img class="logo-loader__mark"
-         src="/app/assets/images/shared/logo.svg"
-         alt="Together for Development"
-         width="84" height="64" />
-    <!-- Bouncing dots underneath -->
-    <span class="logo-loader__dots" aria-hidden="true">
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-    </span>
+  <div class="heart-loader" role="status" aria-label="Loading">
+    <svg class="heart-loader__svg"
+         viewBox="0 0 100 90"
+         xmlns="http://www.w3.org/2000/svg"
+         aria-hidden="true">
+      <!-- Heart path (drawn in one continuous stroke) -->
+      <path class="heart-loader__path"
+            d="M50 80
+               C 18 58, 8 40, 8 26
+               C 8 14, 18 6, 28 6
+               C 38 6, 46 12, 50 22
+               C 54 12, 62 6, 72 6
+               C 82 6, 92 14, 92 26
+               C 92 40, 82 58, 50 80 Z" />
+    </svg>
   </div>
 </div>
