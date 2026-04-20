@@ -26,6 +26,7 @@ export class ModalComponent{
   @Input() confirm_remove_button: boolean = false;
   @Input() confirm_button_label: string | null = '';
   @Input() yellow_button: string | null = '';
+  @Input() success_icon: boolean = false;
 
   accept(){
     this.valueEmitted.emit(false);

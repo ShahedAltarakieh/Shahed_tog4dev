@@ -56,6 +56,65 @@
         color: #13585D;
         margin: 0 0 18px;
         letter-spacing: -0.01em;
+        text-transform: capitalize;
+      }
+
+      .success-check {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 14px;
+        border-radius: 50%;
+        background: rgba(19, 88, 93, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+          width: 56px;
+          height: 56px;
+        }
+
+        .check-circle {
+          stroke: #13585D;
+          stroke-width: 3;
+          stroke-dasharray: 160;
+          stroke-dashoffset: 160;
+          animation: checkCircle 0.55s ease-out forwards;
+        }
+
+        .check-mark {
+          stroke: #13585D;
+          stroke-width: 4;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          stroke-dasharray: 48;
+          stroke-dashoffset: 48;
+          animation: checkMark 0.4s 0.5s ease-out forwards;
+        }
+      }
+
+      .modal-description {
+        .lead-text {
+          color: #13585D !important;
+          font-weight: 600 !important;
+          font-size: 1rem !important;
+        }
+
+        .modal-phone {
+          display: inline-block;
+          color: #13585D;
+          font-weight: 700;
+          text-decoration: none;
+          letter-spacing: 0.02em;
+          padding: 1px 4px;
+          border-radius: 4px;
+          transition: background 0.2s ease;
+
+          &:hover {
+            background: rgba(19, 88, 93, 0.08);
+            text-decoration: underline;
+          }
+        }
       }
 
       hr {
@@ -190,6 +249,13 @@
 @keyframes modalPop {
   from { opacity: 0; transform: translateY(20px) scale(0.94); }
   to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+@keyframes checkCircle {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes checkMark {
+  to { stroke-dashoffset: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

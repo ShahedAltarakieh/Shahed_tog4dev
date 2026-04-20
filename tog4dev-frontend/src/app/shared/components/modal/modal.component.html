@@ -10,6 +10,14 @@
                 </div>
                 <p class="modal-title text-center">{{ title }}</p>
             } @else {
+                @if(success_icon){
+                    <div class="success-check" aria-hidden="true">
+                        <svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+                            <circle class="check-circle" cx="26" cy="26" r="24" fill="none"/>
+                            <path class="check-mark" fill="none" d="M14 27l8 8 16-18"/>
+                        </svg>
+                    </div>
+                }
                 <p class="modal-title text-center">{{ title }}</p>
                 <hr class="my-0">
                 <div class="modal-description">
