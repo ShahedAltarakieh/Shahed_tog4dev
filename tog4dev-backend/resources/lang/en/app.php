@@ -255,6 +255,8 @@ return [
     'mobile only' => 'Mobile Only',
     'desktop only' => 'Desktop Only',
     'display target help' => 'Choose where this item should appear: on all devices, only on mobile, or only on desktop.',
+    'current cover' => 'Current Cover',
+    'no image' => 'No Image',
     'thumbnail' => 'Thumbnail',
     'short description' => 'Short Description',
     'full content' => 'Full Content',

@@ -255,6 +255,8 @@ return [
     'mobile only' => 'الجوال فقط',
     'desktop only' => 'سطح المكتب فقط',
     'display target help' => 'اختر أين يظهر هذا العنصر: على جميع الأجهزة، أو على الجوال فقط، أو على سطح المكتب فقط.',
+    'current cover' => 'الغلاف الحالي',
+    'no image' => 'لا توجد صورة',
     'thumbnail' => 'الصورة المصغرة',
     'short description' => 'الوصف المختصر',
     'full content' => 'المحتوى الكامل',
