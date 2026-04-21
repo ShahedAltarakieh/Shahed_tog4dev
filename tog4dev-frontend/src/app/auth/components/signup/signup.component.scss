@@ -140,7 +140,15 @@ $accent: #FECD0F;
   margin-bottom: 26px;
 }
 
-.fullname-wrapper { gap: 22px; }
+.fullname-wrapper {
+  gap: 22px;
+
+  > app-basic-input {
+    flex: 1 1 0;
+    min-width: 0;
+    display: block;
+  }
+}
 
 .checkbox-container {
   display: flex;
@@ -207,5 +215,13 @@ $accent: #FECD0F;
   .hero-section { padding: 28px 0 90px; .page-title { font-size: 1.8rem; } }
   .auth-form-card { padding: 30px 24px; }
   .auth-form-section { margin-top: -55px; }
-  .fullname-wrapper { gap: 22px; }
+  .fullname-wrapper {
+  gap: 22px;
+
+  > app-basic-input {
+    flex: 1 1 0;
+    min-width: 0;
+    display: block;
+  }
+}
 }

@@ -22,11 +22,12 @@ import { CookieService } from "ngx-cookie-service";
 import {BasketService} from "./shared/services/basket/basket.service";
 import {CartService} from "./shared/services/cart/cart.service";
 import {LoaderComponent} from "./shared/components/loader/loader.component";
+import {ScrollToTopComponent} from "./shared/components/scroll-to-top/scroll-to-top.component";
 import { environment } from 'environments/environment';
 import { GoogleTagManagerService } from './shared/services/google-tag-manager-service/google-tag-manager-service.service';
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet, HeaderComponent, FooterComponent, LoaderComponent, NgIf, AnnouncementBarComponent, MaintenancePageComponent],
+    imports: [RouterOutlet, HeaderComponent, FooterComponent, LoaderComponent, NgIf, AnnouncementBarComponent, MaintenancePageComponent, ScrollToTopComponent],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
