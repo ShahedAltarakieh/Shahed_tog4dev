@@ -11,11 +11,6 @@ interface LanguagesResponse {
   version: string;
 }
 
-/**
- * Loads the admin-managed list of active languages from the backend and pushes
- * it into StorageService. Falls back silently to the built-in EN/AR list if the
- * API is unreachable so the app keeps working.
- */
 @Injectable({ providedIn: 'root' })
 export class LanguagesService {
   private apiUrl = environment.apiUrl + 'api/v1/languages';
@@ -28,13 +23,7 @@ export class LanguagesService {
     private zone: NgZone,
   ) {}
 
-  /**
-   * Loads languages from the API. The backend payload includes a `version`
-   * hash (md5 of max(updated_at)); when `force=true` we always re-hit the
-   * API and refresh the in-memory list if the version has changed. Useful
-   * for the admin to call after toggling language activation so the
-   * frontend picks up changes without a full page reload.
-   */
+  // Refresh cached list; updates state only when server `version` changes.
   load(force = false): Observable<AppLanguage[]> {
     if (this.loadedVersion && !force) {
       return of(this.storageService.availableLanguages$.value);
@@ -61,26 +50,15 @@ export class LanguagesService {
     );
   }
 
-  /**
-   * Forces a fresh fetch from the API regardless of the cached version.
-   */
   refresh(): Observable<AppLanguage[]> {
     return this.load(true);
   }
 
-  /** Current cached version hash, or null if never loaded successfully. */
   get currentVersion(): string | null {
     return this.loadedVersion;
   }
 
-  /**
-   * Starts a background poll that re-queries the languages API every
-   * `intervalMs` milliseconds (default 5 minutes). Because `load(force=true)`
-   * only mutates state when the server's `version` hash actually changes,
-   * polling is cheap and admin updates propagate to already-open clients
-   * without a hard refresh. Runs outside the Angular zone so it does not
-   * trigger needless change detection cycles, and is a no-op on the server.
-   */
+  // Background poll. No-op on the server.
   startAutoRevalidation(intervalMs = 5 * 60 * 1000): void {
     if (this.pollSub || typeof window === 'undefined') { return; }
     this.zone.runOutsideAngular(() => {

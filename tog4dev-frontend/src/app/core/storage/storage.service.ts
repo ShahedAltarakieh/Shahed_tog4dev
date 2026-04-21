@@ -54,12 +54,7 @@ export class StorageService {
     return !!this.findLanguage(code);
   }
 
-  /**
-   * Resolves a value out of a per-language map (e.g. legacy `Record<'en'|'ar', string>`
-   * route tables) for the *current* site language. Falls back to the entry for the
-   * default language and finally to the first map entry, so newly added languages
-   * never produce broken routerLinks/URLs.
-   */
+  // Pick a per-language entry: current → default → 'en' → first available.
   localized(map: { [key: string]: string } | null | undefined): string {
     if (!map) { return ''; }
     const lang = this.siteLanguage$.value;

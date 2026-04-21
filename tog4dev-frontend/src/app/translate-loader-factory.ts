@@ -7,18 +7,7 @@ import { TranslateLoader } from '@ngx-translate/core';
 
 import { StorageService } from './core/storage/storage.service';
 
-/**
- * Loads i18n JSON files for a language. The fallback chain is, in order:
- *   1. The full BCP-47 code requested (e.g. `pt-br.json`)
- *   2. The base language code (e.g. `pt.json`)
- *   3. The currently-active default language file as reported by the
- *      backend `/api/v1/languages` payload (so the admin can rename or
- *      change the default without the frontend hard-coding `en`).
- *   4. The hard-coded `en.json` as a final safety net.
- *
- * If every step fails we resolve with `{}` so the app keeps rendering keys
- * instead of throwing.
- */
+// Loader that tries: full BCP-47 → base code → runtime default → 'en'.
 export class CustomTranslateHttpLoader implements TranslateLoader {
   private static HARD_FALLBACK = 'en';
 
@@ -33,14 +22,10 @@ export class CustomTranslateHttpLoader implements TranslateLoader {
     const fullCode = (lang || '').toLowerCase();
     const baseCode = fullCode.split('-')[0];
     const runtimeDefault = (this.getRuntimeDefault() || '').toLowerCase();
-    const hardFallback = CustomTranslateHttpLoader.HARD_FALLBACK;
-
-    // De-duplicate so we never request the same file twice in a row.
     const chain: string[] = [];
-    [fullCode, baseCode, runtimeDefault, hardFallback].forEach(code => {
-      if (code && !chain.includes(code)) { chain.push(code); }
+    [fullCode, baseCode, runtimeDefault, CustomTranslateHttpLoader.HARD_FALLBACK].forEach(c => {
+      if (c && !chain.includes(c)) { chain.push(c); }
     });
-
     return this.tryChain(chain, 0);
   }
 
@@ -58,13 +43,8 @@ export function translateLoaderFactory(http: HttpClient, injector: Injector) {
     'app/assets/i18n/',
     '.json?v=9.1',
     () => {
-      // Resolved lazily so the loader picks up admin changes to the default
-      // language without needing the bootstrap order to be perfect.
-      try {
-        return injector.get(StorageService).defaultLanguage || 'en';
-      } catch {
-        return 'en';
-      }
+      try { return injector.get(StorageService).defaultLanguage || 'en'; }
+      catch { return 'en'; }
     },
   );
 }

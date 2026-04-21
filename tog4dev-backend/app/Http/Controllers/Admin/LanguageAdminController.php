@@ -56,9 +56,12 @@ class LanguageAdminController extends Controller
                 ->withErrors(['is_default' => __('app.cannot remove default language. set another language as default first.')]);
         }
 
-        // Active protection: cannot deactivate the default
+        // Active protection: cannot deactivate the default — return a clear
+        // validation error rather than silently re-enabling the flag.
         if ($validated['is_default'] && !$validated['is_active']) {
-            $validated['is_active'] = true;
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['is_active' => __('app.cannot deactivate default language. set another language as default first.')]);
         }
 
         $lang->update($validated);

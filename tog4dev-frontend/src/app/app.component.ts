@@ -96,24 +96,15 @@ export class AppComponent implements OnInit, AfterViewInit{
     this.languagesService.load().subscribe(() => {
       this.translate.addLangs(this.storageService.availableLanguages$.value.map(l => l.code));
       this.setSiteLanguageFromUrl();
-      // Re-check the language list periodically so admin updates (added,
-      // removed, renamed, default-changed languages) propagate to long-lived
-      // sessions without requiring a hard refresh. No-op on the server.
       this.languagesService.startAutoRevalidation();
     });
 
-    // Also revalidate on every navigation and on browser focus so admin
-    // changes show up immediately the next time a user clicks a link or
-    // returns to the tab — not after the next 5-minute poll. The request
-    // is cheap because the backend caches the payload for 300s and the
-    // service short-circuits when the version hash is unchanged.
+    // Revalidate on navigation + tab focus so admin changes propagate immediately.
     if (isPlatformBrowser(this.platformId)) {
       this.router.events
         .pipe(filter(e => e instanceof NavigationEnd))
         .subscribe(() => this.languagesService.refresh().subscribe());
-      window.addEventListener('focus', () => {
-        this.languagesService.refresh().subscribe();
-      });
+      window.addEventListener('focus', () => this.languagesService.refresh().subscribe());
     }
 
     // Initial resolution using fallback list so SSR/early render is correct.
@@ -265,17 +256,10 @@ export class AppComponent implements OnInit, AfterViewInit{
     const defaultCode = this.storageService.defaultLanguage || 'en';
     this.storageService.siteLanguage$.next(defaultCode);
 
-    // Only rewrite when the URL clearly attempted a BCP-47 language prefix.
-    // This pattern is the same one the backend uses to validate language
-    // codes (LanguageAdminController) so any code the admin could legally
-    // create — including longer region-tagged codes like `pt-br`,
-    // `zh-hant`, `es-419` — is recognized as a language attempt and
-    // redirected to the default rather than silently 404ing.
+    // BCP-47 prefix check (mirrors backend LanguageAdminController regex).
     const looksLikeLangAttempt = /^[a-z]{2,10}(-[a-z0-9]{2,10})?$/.test(firstSegment);
 
     if (looksLikeLangAttempt && isPlatformBrowser(this.platformId)) {
-      // Preserve the rest of the path under the default language so deep
-      // links keep working when an unknown/inactive language code was used.
       const remainder = segments.slice(1).join('/');
       const target = '/' + defaultCode + (remainder ? '/' + remainder : '');
       this.router.navigateByUrl(target);

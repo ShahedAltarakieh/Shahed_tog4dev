@@ -49,20 +49,10 @@ class Language extends Model
         Cache::forget(self::CACHE_KEY);
     }
 
-    /**
-     * Persist the row inside a single DB transaction so that toggling the
-     * default flag is atomic: the previously-default row is unset and the
-     * new one is set within the same transaction. If the final write fails
-     * the rollback restores the prior default — the system never ends up
-     * with zero defaults. We also reject self-demotion of the only default
-     * row (callers must promote another row in the same request instead).
-     */
+    // Atomic single-default enforcement.
     public function save(array $options = []): bool
     {
         return DB::transaction(function () use ($options) {
-            // Prevent unsetting the only remaining default. Promoting a
-            // different row to default uses set_default which always passes
-            // is_default=true and goes through the branch below.
             if ($this->exists
                 && $this->getOriginal('is_default')
                 && !$this->is_default) {
