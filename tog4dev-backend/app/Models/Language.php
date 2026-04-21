@@ -33,6 +33,11 @@ class Language extends Model
             if (!in_array($lang->direction, ['ltr', 'rtl'], true)) {
                 $lang->direction = 'ltr';
             }
+            // Invariant: default rows must be active. Enforced for all
+            // entry points (controllers, seeders, tinker, jobs, etc.).
+            if ($lang->is_default) {
+                $lang->is_active = true;
+            }
         });
 
         static::saved(function () {

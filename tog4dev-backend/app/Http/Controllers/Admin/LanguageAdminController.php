@@ -31,6 +31,13 @@ class LanguageAdminController extends Controller
             $validated['is_default'] = true;
         }
 
+        // Default rows must always be active.
+        if ($validated['is_default'] && !$validated['is_active']) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['is_active' => __('app.default language must be active.')]);
+        }
+
         Language::create($validated);
         return redirect()->route('languages-admin.index')->with('success', __('app.created successfully'));
     }
