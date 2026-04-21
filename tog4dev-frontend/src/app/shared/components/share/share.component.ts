@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Inject, Input, OnDestroy, OnInit, Output, PLATFORM_ID, SimpleChanges} from '@angular/core';
+import {DOCUMENT, isPlatformBrowser, NgClass, NgIf} from "@angular/common";
 
 import {TranslatePipe} from "@ngx-translate/core";
-import {NgClass, NgIf} from "@angular/common";
 import {CookieService} from "ngx-cookie-service";
 
 @Component({
@@ -14,7 +14,7 @@ import {CookieService} from "ngx-cookie-service";
     templateUrl: './share.component.html',
     styleUrl: './share.component.scss'
 })
-export class ShareComponent implements OnInit{
+export class ShareComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() valueEmitted = new EventEmitter<boolean>();
   link!: string;
   @Input() title!: string;
@@ -22,10 +22,33 @@ export class ShareComponent implements OnInit{
   @Input() show!: boolean;
   copied: boolean = false;
   @Input() URL!: string;
-  
-  constructor(private cookieService: CookieService) {}
+  private movedToBody = false;
+
+  constructor(
+    private cookieService: CookieService,
+    private hostEl: ElementRef<HTMLElement>,
+    @Inject(DOCUMENT) private document: Document,
+    @Inject(PLATFORM_ID) private platformId: Object,
+  ) {}
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit(): void {
+    // Teleport the host element to <body> so that `position: fixed`
+    // escapes any transformed/clipped ancestor (carousels, cards, etc.).
+    if (!isPlatformBrowser(this.platformId)) return;
+    const host = this.hostEl?.nativeElement;
+    if (host && this.document?.body && host.parentElement !== this.document.body) {
+      this.document.body.appendChild(host);
+      this.movedToBody = true;
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.movedToBody && this.hostEl?.nativeElement?.parentElement === this.document?.body) {
+      this.document.body.removeChild(this.hostEl.nativeElement);
+    }
   }
 
   /**
@@ -120,6 +143,15 @@ export class ShareComponent implements OnInit{
 
   close(){
     this.valueEmitted.emit(true);
+  }
+
+  onBackdropClick(_evt: MouseEvent) {
+    this.close();
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape() {
+    if (this.show) this.close();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
