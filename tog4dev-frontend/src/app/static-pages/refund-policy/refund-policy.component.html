@@ -1,44 +1,57 @@
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="mb-4 mt-5">{{ "refund policy" | translate }}</h1>
+<div class="legal-page" [attr.dir]="storageService.siteLanguage$.value === 'ar' ? 'rtl' : 'ltr'">
+  <section class="hero-section">
+    <div class="hero-pattern" aria-hidden="true"></div>
+    <div class="container">
+      <div class="hero-content text-center">
+        <span class="hero-badge">{{ "policy" | translate }}</span>
+        <h1 class="page-title">{{ "refund policy" | translate }}</h1>
+        <p class="hero-subtitle">{{ "our cancellation and refund terms for project services." | translate }}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="legal-card-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10 col-12">
+          <div class="legal-card">
             @if(storageService.siteLanguage$.value == "ar"){
+              <p>شكرًا لاختياركم خدمات <strong>شركة معاً للوساطة التجارية ذ.م.م (معاً للتنمية)</strong>. نحن نسعى جاهدين لضمان تجربة إيجابية لجميع عملائنا. إليكم سياسة الإلغاء الخاصة بنا:</p>
 
-                <p>شكرًا لاختياركم خدمات <strong>شركة معاً للوساطة التجارية ذ.م.م (معاً للتنمية)</strong>. نحن نسعى جاهدين لضمان تجربة إيجابية لجميع عملائنا. إليكم سياسة الإلغاء الخاصة بنا:</p>
+              <div class="section-title">1. فترة الإلغاء:</div>
+              <p>يمكن للعميل إلغاء الخدمة قبل البدء بالمشروع ويتم خصم <span class="highlight">25%</span> من التكلفة وإرجاع الباقي للعميل. أما في حال تم البدء في المشروع، فيتم خصم المبلغ كاملًا.</p>
 
-                <div class="section-title">1. فترة الإلغاء:</div>
-                <p>يمكن للعميل إلغاء الخدمة قبل البدء بالمشروع ويتم خصم <span class="highlight">25%</span> من التكلفة وإرجاع الباقي للعميل. أما في حال تم البدء في المشروع، فيتم خصم المبلغ كاملًا.</p>
+              <div class="section-title">2. إجراءات الإلغاء:</div>
+              <p>يجب على العميل الاتصال بفريق خدمة العملاء الخاص بنا لطلب عملية الإلغاء وتقديم طلب كتابي.</p>
 
-                <div class="section-title">2. إجراءات الإلغاء:</div>
-                <p>يجب على العميل الاتصال بفريق خدمة العملاء الخاص بنا لطلب عملية الإلغاء وتقديم طلب كتابي.</p>
+              <div class="section-title">3. مواعيد الإلغاء:</div>
+              <p>يتم مراجعة طلبات الإلغاء والبت فيها في أقرب وقت ممكن.</p>
 
-                <div class="section-title">3. مواعيد الإلغاء:</div>
-                <p>يتم مراجعة طلبات الإلغاء والبت فيها في أقرب وقت ممكن.</p>
+              <div class="section-title">4. إعادة المدفوعات:</div>
+              <p>سيتم استرداد المبالغ المستحقة بالكامل ونسبتها <span class="highlight">75%</span> من مجمل التكلفة إذا تم إلغاء الخدمة قبل بدء المشروع خلال <span class="highlight">14 يوم عمل</span>.</p>
 
-                <div class="section-title">4. إعادة المدفوعات:</div>
-                <p>سيتم استرداد المبالغ المستحقة بالكامل ونسبتها <span class="highlight">75%</span> من مجمل التكلفة إذا تم إلغاء الخدمة قبل بدء المشروع خلال <span class="highlight">14 يوم عمل</span>.</p>
-
-                <p><strong>يرجى ملاحظة:</strong> أن هذه السياسة قابلة للتغيير دون إشعار مسبق. يُرجى مراجعة شروط الخدمة بانتظام للحصول على أحدث المعلومات والتحديثات.</p>
-
+              <p><strong>يرجى ملاحظة:</strong> أن هذه السياسة قابلة للتغيير دون إشعار مسبق. يُرجى مراجعة شروط الخدمة بانتظام للحصول على أحدث المعلومات والتحديثات.</p>
             }
             @else{
-                <p>Thank you for choosing <strong>Together for Intermediation Services LLC (Together for Development)</strong> water management services. We strive to ensure a positive experience for all our customers. Below is our cancellation policy:</p>
+              <p>Thank you for choosing <strong>Together for Intermediation Services LLC (Together for Development)</strong> water management services. We strive to ensure a positive experience for all our customers. Below is our cancellation policy:</p>
 
-                <div class="section-title">Cancellation Period:</div>
-                <p>Customers may cancel the service before the project begins, with <span class="highlight">25%</span> of the total cost deducted and the remaining amount refunded. If the project has already started, the full amount will be deducted.</p>
+              <div class="section-title">Cancellation Period:</div>
+              <p>Customers may cancel the service before the project begins, with <span class="highlight">25%</span> of the total cost deducted and the remaining amount refunded. If the project has already started, the full amount will be deducted.</p>
 
-                <div class="section-title">Cancellation Procedure:</div>
-                <p>Customers must contact our customer service team to request a cancellation and submit a written cancellation request.</p>
+              <div class="section-title">Cancellation Procedure:</div>
+              <p>Customers must contact our customer service team to request a cancellation and submit a written cancellation request.</p>
 
-                <div class="section-title">Cancellation Review:</div>
-                <p>Cancellation requests will be reviewed and processed as promptly as possible.</p>
+              <div class="section-title">Cancellation Review:</div>
+              <p>Cancellation requests will be reviewed and processed as promptly as possible.</p>
 
-                <div class="section-title">Refunds:</div>
-                <p>A refund of <span class="highlight">75%</span> of the total cost will be issued if the service is canceled before the project begins, within <span class="highlight">14 business days</span>.</p>
+              <div class="section-title">Refunds:</div>
+              <p>A refund of <span class="highlight">75%</span> of the total cost will be issued if the service is canceled before the project begins, within <span class="highlight">14 business days</span>.</p>
 
-                <p><strong>Please note:</strong> This policy is subject to change without prior notice. Customers are encouraged to review the Terms of Service regularly for the latest information and updates.</p>
+              <p><strong>Please note:</strong> This policy is subject to change without prior notice. Customers are encouraged to review the Terms of Service regularly for the latest information and updates.</p>
             }
-
+          </div>
         </div>
+      </div>
     </div>
+  </section>
 </div>
