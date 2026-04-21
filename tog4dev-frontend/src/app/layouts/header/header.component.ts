@@ -170,16 +170,6 @@ export class HeaderComponent implements OnInit {
     return this.storageService.getCurrentLanguage();
   }
 
-  /** Short label shown next to the globe icon for the *next* language to swap to. */
-  get nextLanguageShort(): string {
-    const langs = this.availableLanguages;
-    if (langs.length < 2) {
-      return this.currentLanguage.native_name?.charAt(0) || this.currentLanguage.code.toUpperCase();
-    }
-    const next = this.getNextLanguage();
-    return next.native_name?.charAt(0) || next.code.toUpperCase();
-  }
-
   private getNextLanguage(): AppLanguage {
     const langs = this.availableLanguages;
     const currentCode = this.storageService.siteLanguage$.value;

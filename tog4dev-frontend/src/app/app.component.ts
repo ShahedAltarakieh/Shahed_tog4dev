@@ -61,7 +61,6 @@ export class AppComponent implements OnInit, AfterViewInit{
    ) {
     // Bootstrap with the fallback list so SSR has something before the API resolves.
     translate.addLangs(this.storageService.availableLanguages$.value.map(l => l.code));
-        const queryParams = { ...this.route.snapshot.queryParams };
   }
 
   ngAfterViewInit() {
