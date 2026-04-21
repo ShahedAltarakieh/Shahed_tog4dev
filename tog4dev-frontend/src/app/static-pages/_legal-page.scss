@@ -175,6 +175,16 @@ $accent: #FECD0F;
       padding: 6px 14px;
       border-radius: 8px;
       margin: 4px 0 14px;
+      margin-inline-end: 8px;
+      border-bottom: none !important;
+      text-decoration: none;
+      transition: background 0.2s ease, transform 0.2s ease;
+
+      &:hover {
+        background: rgba($primary, 0.14);
+        color: $primary-dark;
+        transform: translateY(-1px);
+      }
     }
 
     .highlight {
