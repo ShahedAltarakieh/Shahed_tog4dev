@@ -36,17 +36,22 @@ export class LanguagesService {
           || list[0]?.code
           || 'en';
         const version = res?.version || '';
-        return { list, defaultCode, version };
+        return { list, defaultCode, version, ok: true };
       }),
-      catchError(() => of({ list: FALLBACK_LANGUAGES, defaultCode: 'en', version: '' })),
-      tap(({ list, defaultCode, version }) => {
+      // Transient failures must NOT clobber a previously loaded language list.
+      // Only seed fallback data when we have never successfully loaded.
+      catchError(() => of({ list: FALLBACK_LANGUAGES, defaultCode: 'en', version: '', ok: false })),
+      tap(({ list, defaultCode, version, ok }) => {
+        if (!ok && this.loadedVersion) { return; }
         if (version !== this.loadedVersion) {
           this.storageService.availableLanguages$.next(list);
           this.storageService.defaultLanguage = defaultCode;
           this.loadedVersion = version;
         }
       }),
-      map(({ list }) => list),
+      map(({ list, ok }) => (!ok && this.loadedVersion)
+        ? this.storageService.availableLanguages$.value
+        : list),
     );
   }
 

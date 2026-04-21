@@ -80,12 +80,11 @@ class LanguageAdminController extends Controller
         $lang = Language::findOrFail($id);
 
         if ($lang->is_default) {
-            echo json_encode(['status' => 'error', 'message' => __('app.cannot delete default language.')]);
-            return;
+            return response()->json(['status' => 'error', 'message' => __('app.cannot delete default language.')], 422);
         }
 
         $lang->delete();
-        echo json_encode(['status' => 'success']);
+        return response()->json(['status' => 'success']);
     }
 
     public function change_status($id)
@@ -93,13 +92,12 @@ class LanguageAdminController extends Controller
         $lang = Language::findOrFail($id);
 
         if ($lang->is_default && $lang->is_active) {
-            echo json_encode(['status' => 'error', 'message' => __('app.cannot deactivate default language.')]);
-            return;
+            return response()->json(['status' => 'error', 'message' => __('app.cannot deactivate default language.')], 422);
         }
 
         $lang->is_active = !$lang->is_active;
         $lang->save();
-        echo json_encode(['status' => 'success']);
+        return response()->json(['status' => 'success']);
     }
 
     public function set_default($id)
