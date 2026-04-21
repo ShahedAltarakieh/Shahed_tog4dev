@@ -252,21 +252,34 @@ export class AppComponent implements OnInit, AfterViewInit{
       return;
     }
 
-    // Unknown / missing language code in URL — prefer the user's persisted
-    // selection (localStorage) over the configured default; falls back to the
-    // default when no stored preference exists or it is no longer active.
-    const stored = this.storageService.getStoredLanguage();
-    const storedActive = stored && this.storageService.isKnownCode(stored) ? stored : '';
-    const defaultCode = storedActive || this.storageService.defaultLanguage || 'en';
-    this.storageService.siteLanguage$.next(defaultCode);
-
     // BCP-47 prefix check (mirrors backend LanguageAdminController regex).
-    const looksLikeLangAttempt = /^[a-z]{2,10}(-[a-z0-9]{2,10})?$/.test(firstSegment);
+    const looksLikeLangAttempt = !!firstSegment
+      && /^[a-z]{2,10}(-[a-z0-9]{2,10})?$/.test(firstSegment);
 
-    if (allowRedirect && looksLikeLangAttempt && isPlatformBrowser(this.platformId)) {
+    // Per spec: an *unknown* `/xx/...` segment must redirect to the configured
+    // default language, never to a persisted user preference. The stored
+    // preference is only used when the URL has no language segment at all
+    // (e.g., bookmarked root `/`).
+    const defaultCode = this.storageService.defaultLanguage || 'en';
+    let activeCode = defaultCode;
+    if (!firstSegment) {
+      const stored = this.storageService.getStoredLanguage();
+      if (stored && this.storageService.isKnownCode(stored)) { activeCode = stored; }
+    }
+    this.storageService.siteLanguage$.next(activeCode);
+
+    if (allowRedirect && isPlatformBrowser(this.platformId)) {
       const remainder = segments.slice(1).join('/');
-      const target = '/' + defaultCode + (remainder ? '/' + remainder : '');
-      this.router.navigateByUrl(target);
+      // Preserve query string + fragment so the redirect is transparent.
+      const search = (typeof window !== 'undefined' && window.location) ? window.location.search : '';
+      const hash = (typeof window !== 'undefined' && window.location) ? window.location.hash : '';
+      if (looksLikeLangAttempt) {
+        const target = '/' + defaultCode + (remainder ? '/' + remainder : '') + search + hash;
+        this.router.navigateByUrl(target);
+      } else if (!firstSegment && activeCode !== defaultCode) {
+        // Root path with stored preference — route to that language.
+        this.router.navigateByUrl('/' + activeCode + search + hash);
+      }
     }
   }
 
