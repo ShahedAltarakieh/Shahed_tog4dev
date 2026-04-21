@@ -239,7 +239,10 @@ export class AppComponent implements OnInit, AfterViewInit{
   }
 
   setSiteLanguageFromUrl(allowRedirect: boolean = false): void {
-    const path = this.location.path() || '/';
+    const rawPath = this.location.path() || '/';
+    // `Location.path()` includes search/hash; isolate the pathname so we don't
+    // double-append query strings when constructing redirects.
+    const path = rawPath.split('?')[0].split('#')[0];
     const segments = path.split('/').filter(Boolean);
     const firstSegment = segments[0] ? decodeURIComponent(segments[0]).toLowerCase() : '';
 
