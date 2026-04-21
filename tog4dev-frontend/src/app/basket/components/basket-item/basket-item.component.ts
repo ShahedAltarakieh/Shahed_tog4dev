@@ -84,16 +84,16 @@ export class BasketItemComponent implements OnInit{
       const category_type = this.item.item.category_type;
       switch (category_type) {
         case 1:
-          this.route = this.detailsOrganizationsRoutes[this.storageService.siteLanguage$.value] + this.item.item.category_slug;
-          this.route_testimonial = this.detailsOrganizationsRoutes[this.storageService.siteLanguage$.value] + this.item.item.category_slug + "#testimonials";
+          this.route = this.storageService.localized(this.detailsOrganizationsRoutes) + this.item.item.category_slug;
+          this.route_testimonial = this.storageService.localized(this.detailsOrganizationsRoutes) + this.item.item.category_slug + "#testimonials";
           break;
         case 2:
-          this.route = this.detailsProjectsRoutes[this.storageService.siteLanguage$.value] + this.item.item.category_slug;
-          this.route_testimonial = this.detailsProjectsRoutes[this.storageService.siteLanguage$.value] + this.item.item.category_slug + "#testimonials";
+          this.route = this.storageService.localized(this.detailsProjectsRoutes) + this.item.item.category_slug;
+          this.route_testimonial = this.storageService.localized(this.detailsProjectsRoutes) + this.item.item.category_slug + "#testimonials";
           break;
         case 3:
-          this.route = this.detailsCrowdFundingsRoutes[this.storageService.siteLanguage$.value] + this.item.item.category_slug;
-          this.route_testimonial = this.detailsCrowdFundingsRoutes[this.storageService.siteLanguage$.value] + this.item.item.category_slug + "#testimonials";
+          this.route = this.storageService.localized(this.detailsCrowdFundingsRoutes) + this.item.item.category_slug;
+          this.route_testimonial = this.storageService.localized(this.detailsCrowdFundingsRoutes) + this.item.item.category_slug + "#testimonials";
           break;
       }
     }

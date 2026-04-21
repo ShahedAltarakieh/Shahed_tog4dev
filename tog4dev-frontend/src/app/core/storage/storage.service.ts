@@ -53,4 +53,22 @@ export class StorageService {
   isKnownCode(code: string): boolean {
     return !!this.findLanguage(code);
   }
+
+  /**
+   * Resolves a value out of a per-language map (e.g. legacy `Record<'en'|'ar', string>`
+   * route tables) for the *current* site language. Falls back to the entry for the
+   * default language and finally to the first map entry, so newly added languages
+   * never produce broken routerLinks/URLs.
+   */
+  localized(map: { [key: string]: string } | null | undefined): string {
+    if (!map) { return ''; }
+    const lang = this.siteLanguage$.value;
+    if (map[lang] !== undefined) { return map[lang]; }
+    if (this.defaultLanguage && map[this.defaultLanguage] !== undefined) {
+      return map[this.defaultLanguage];
+    }
+    if (map['en'] !== undefined) { return map['en']; }
+    const keys = Object.keys(map);
+    return keys.length ? map[keys[0]] : '';
+  }
 }

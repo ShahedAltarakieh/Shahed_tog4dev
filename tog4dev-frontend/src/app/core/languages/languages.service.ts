@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, map, of, tap } from 'rxjs';
+import { Observable, Subscription, catchError, interval, map, of, tap } from 'rxjs';
 
 import { environment } from 'environments/environment';
 import { AppLanguage, FALLBACK_LANGUAGES, StorageService } from 'app/core/storage/storage.service';
@@ -20,10 +20,12 @@ interface LanguagesResponse {
 export class LanguagesService {
   private apiUrl = environment.apiUrl + 'api/v1/languages';
   private loadedVersion: string | null = null;
+  private pollSub: Subscription | null = null;
 
   constructor(
     private http: HttpClient,
     private storageService: StorageService,
+    private zone: NgZone,
   ) {}
 
   /**
@@ -69,5 +71,27 @@ export class LanguagesService {
   /** Current cached version hash, or null if never loaded successfully. */
   get currentVersion(): string | null {
     return this.loadedVersion;
+  }
+
+  /**
+   * Starts a background poll that re-queries the languages API every
+   * `intervalMs` milliseconds (default 5 minutes). Because `load(force=true)`
+   * only mutates state when the server's `version` hash actually changes,
+   * polling is cheap and admin updates propagate to already-open clients
+   * without a hard refresh. Runs outside the Angular zone so it does not
+   * trigger needless change detection cycles, and is a no-op on the server.
+   */
+  startAutoRevalidation(intervalMs = 5 * 60 * 1000): void {
+    if (this.pollSub || typeof window === 'undefined') { return; }
+    this.zone.runOutsideAngular(() => {
+      this.pollSub = interval(intervalMs).subscribe(() => {
+        this.zone.run(() => this.refresh().subscribe());
+      });
+    });
+  }
+
+  stopAutoRevalidation(): void {
+    this.pollSub?.unsubscribe();
+    this.pollSub = null;
   }
 }

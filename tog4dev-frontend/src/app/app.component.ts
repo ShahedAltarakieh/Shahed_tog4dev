@@ -96,6 +96,10 @@ export class AppComponent implements OnInit, AfterViewInit{
     this.languagesService.load().subscribe(() => {
       this.translate.addLangs(this.storageService.availableLanguages$.value.map(l => l.code));
       this.setSiteLanguageFromUrl();
+      // Re-check the language list periodically so admin updates (added,
+      // removed, renamed, default-changed languages) propagate to long-lived
+      // sessions without requiring a hard refresh. No-op on the server.
+      this.languagesService.startAutoRevalidation();
     });
 
     // Initial resolution using fallback list so SSR/early render is correct.

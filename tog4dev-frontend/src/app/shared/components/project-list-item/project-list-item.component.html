@@ -24,7 +24,7 @@
           <h2 class="project-title mb-0">{{ project.title }}</h2>
           <p class="project-desc mb-0">{{ project.description }}</p>
       </div>
-      <a class="btn details-page text-center" [routerLink]="[detailsOrganizationsRoutes[storageService.siteLanguage$.value], project.category.slug, project.slug]">{{ "more details" | translate }}</a>
+      <a class="btn details-page text-center" [routerLink]="[storageService.localized(detailsOrganizationsRoutes), project.category.slug, project.slug]">{{ "more details" | translate }}</a>
   </div>
 
   <div class="link-icon-wrapper">
@@ -57,7 +57,7 @@
             </div>
 
             <div>
-                <a class="d-flex flex-column item-info text-decoration-none" [routerLink]="[detailsProjectsRoutes[storageService.siteLanguage$.value], project.category.slug, project.slug]">
+                <a class="d-flex flex-column item-info text-decoration-none" [routerLink]="[storageService.localized(detailsProjectsRoutes), project.category.slug, project.slug]">
                     <h2 class="project-title mb-0">{{ project.title }}</h2>
                     <p class="project-desc mb-0">{{ project.description }}</p>
                 </a>
@@ -132,7 +132,7 @@
 
             <div class="d-flex flex-column item-info">
 
-                <a class="d-flex flex-column text-decoration-none" [routerLink]="[detailsCrowdFundingsRoutes[storageService.siteLanguage$.value], project.category.slug, project.slug]">
+                <a class="d-flex flex-column text-decoration-none" [routerLink]="[storageService.localized(detailsCrowdFundingsRoutes), project.category.slug, project.slug]">
                     <h2 class="project-title mb-3">{{ project.title }}</h2>
                     <p class="project-desc mb-0">{{ project.description }}</p>
                 </a>

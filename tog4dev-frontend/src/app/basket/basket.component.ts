@@ -275,7 +275,7 @@ export class BasketComponent implements OnInit {
     this.show_collection_modal = false;
     this.show_error_payment = false;
     this.payment_error_modal = false;
-    this.router.navigate([this.basketRoutes[this.storageService.siteLanguage$.value]], {
+    this.router.navigate([this.storageService.localized(this.basketRoutes)], {
       queryParams: {
         'payment': null,
         'message': null
