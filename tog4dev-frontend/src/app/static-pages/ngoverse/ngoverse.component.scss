@@ -39,7 +39,7 @@ $accent-light: #ffe04a;
 
   &.animate-in {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
 
     .plan-card { animation: fadeInUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
   }
@@ -218,12 +218,6 @@ $accent-light: #ffe04a;
 
 .ngoverse-section { padding: 70px 0; }
 
-.slider-section { padding-top: 50px; padding-bottom: 30px; }
-
-.intro-section {
-  padding-top: 30px;
-  padding-bottom: 20px;
-}
 
 /* ==================== PRICING ==================== */
 .pricing-section {

@@ -46,7 +46,6 @@ export class ContactUsFormComponent implements OnInit ,OnDestroy {
       this.contactUsFormService.contactUsForm.organizationName.value = '';
       this.contactUsFormService.contactUsForm.phone.value = '';
       this.contactUsFormService.contactUsForm.message.value = '';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
       this.show_popup = true;
     });
   }
