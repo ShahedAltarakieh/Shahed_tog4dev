@@ -102,6 +102,20 @@ export class AppComponent implements OnInit, AfterViewInit{
       this.languagesService.startAutoRevalidation();
     });
 
+    // Also revalidate on every navigation and on browser focus so admin
+    // changes show up immediately the next time a user clicks a link or
+    // returns to the tab — not after the next 5-minute poll. The request
+    // is cheap because the backend caches the payload for 300s and the
+    // service short-circuits when the version hash is unchanged.
+    if (isPlatformBrowser(this.platformId)) {
+      this.router.events
+        .pipe(filter(e => e instanceof NavigationEnd))
+        .subscribe(() => this.languagesService.refresh().subscribe());
+      window.addEventListener('focus', () => {
+        this.languagesService.refresh().subscribe();
+      });
+    }
+
     // Initial resolution using fallback list so SSR/early render is correct.
     this.setSiteLanguageFromUrl();
 
@@ -251,12 +265,13 @@ export class AppComponent implements OnInit, AfterViewInit{
     const defaultCode = this.storageService.defaultLanguage || 'en';
     this.storageService.siteLanguage$.next(defaultCode);
 
-    // Only rewrite when the URL clearly attempted a language prefix
-    // (single short alpha segment) to avoid breaking deep links like /s/<code>.
-    const looksLikeLangAttempt = !!firstSegment
-      && firstSegment.length >= 2
-      && firstSegment.length <= 5
-      && /^[a-z-]+$/.test(firstSegment);
+    // Only rewrite when the URL clearly attempted a BCP-47 language prefix.
+    // This pattern is the same one the backend uses to validate language
+    // codes (LanguageAdminController) so any code the admin could legally
+    // create — including longer region-tagged codes like `pt-br`,
+    // `zh-hant`, `es-419` — is recognized as a language attempt and
+    // redirected to the default rather than silently 404ing.
+    const looksLikeLangAttempt = /^[a-z]{2,10}(-[a-z0-9]{2,10})?$/.test(firstSegment);
 
     if (looksLikeLangAttempt && isPlatformBrowser(this.platformId)) {
       // Preserve the rest of the path under the default language so deep
