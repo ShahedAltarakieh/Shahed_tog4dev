@@ -28,7 +28,10 @@ export class LanguagesService {
     if (this.loadedVersion && !force) {
       return of(this.storageService.availableLanguages$.value);
     }
-    return this.http.get<LanguagesResponse>(this.apiUrl).pipe(
+    // Cache-busting query param defends against any intermediate proxy that
+    // might still cache the languages payload despite no-store headers.
+    const url = this.apiUrl + '?_=' + Date.now();
+    return this.http.get<LanguagesResponse>(url).pipe(
       map(res => {
         const list = (res?.data && res.data.length > 0) ? res.data : FALLBACK_LANGUAGES;
         const defaultCode = res?.default

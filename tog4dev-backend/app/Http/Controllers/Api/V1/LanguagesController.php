@@ -37,6 +37,6 @@ class LanguagesController extends Controller
         });
 
         return response()->json($payload)
-            ->header('Cache-Control', 'public, max-age=300');
+            ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
     }
 }
