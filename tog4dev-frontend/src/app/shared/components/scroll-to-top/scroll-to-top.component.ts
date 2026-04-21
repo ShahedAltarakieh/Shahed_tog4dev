@@ -21,8 +21,8 @@ import { isPlatformBrowser, NgClass } from '@angular/common';
   styles: [`
     :host {
       position: fixed;
-      bottom: 92px;
-      inset-inline-end: 22px;
+      bottom: 104px;
+      inset-inline-end: 37px;
       z-index: 999;
       pointer-events: none;
     }
@@ -58,7 +58,7 @@ import { isPlatformBrowser, NgClass } from '@angular/common';
       outline-offset: 3px;
     }
     @media (max-width: 576px) {
-      :host { bottom: 80px; inset-inline-end: 16px; }
+      :host { bottom: 96px; inset-inline-end: 32px; }
       .scroll-to-top-btn { width: 42px; height: 42px; }
     }
   `]
