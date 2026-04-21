@@ -78,13 +78,15 @@
             <p class="converted_currency_message" *ngIf="converted_price">
                 {{ amount }}{{ 'JOD' | translate }} {{ "equivalent to your currency approximately without transfer fees" | translate: {'total':converted_price, 'currency': converted_currency_label} }}
             </p>
-            <div class="footer-section d-flex justify-content-between">
-                <div class="quantity-section w-100 d-flex align-items-center">
-                    <span class="remove-quantity" (click)="decrease_quantity()"><img src="/app/assets/images/shared/minus.svg"></span>
-                    <span class="quantity-number text-center">{{ default_quantity }}</span>
-                    <span class="add-quantity" (click)="increase_quantity()"><img src="/app/assets/images/shared/plus.svg"></span>
+            <div class="footer-section">
+                <div class="footer-top d-flex justify-content-between align-items-center">
+                    <div class="quantity-section d-flex align-items-center">
+                        <span class="remove-quantity" (click)="decrease_quantity()"><img src="/app/assets/images/shared/minus.svg"></span>
+                        <span class="quantity-number text-center">{{ default_quantity }}</span>
+                        <span class="add-quantity" (click)="increase_quantity()"><img src="/app/assets/images/shared/plus.svg"></span>
+                    </div>
+                    <span class="total-price text-end">{{"total" | translate }}: <span class="amount-value">{{ amount }}{{ 'JOD' | translate }}</span></span>
                 </div>
-                <span class="total-price w-100 text-center">{{"total" | translate }}: <span>{{ amount }}{{ 'JOD' | translate }}</span></span>
                 <button class="btn contribute-btn text-center w-100" (click)="submitContribute($event)">{{ "order now" | translate }}</button>
             </div>
         </div>
