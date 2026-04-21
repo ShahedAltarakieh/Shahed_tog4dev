@@ -252,8 +252,12 @@ export class AppComponent implements OnInit, AfterViewInit{
       return;
     }
 
-    // Unknown / missing language code in URL — fall back to the default.
-    const defaultCode = this.storageService.defaultLanguage || 'en';
+    // Unknown / missing language code in URL — prefer the user's persisted
+    // selection (localStorage) over the configured default; falls back to the
+    // default when no stored preference exists or it is no longer active.
+    const stored = this.storageService.getStoredLanguage();
+    const storedActive = stored && this.storageService.isKnownCode(stored) ? stored : '';
+    const defaultCode = storedActive || this.storageService.defaultLanguage || 'en';
     this.storageService.siteLanguage$.next(defaultCode);
 
     // BCP-47 prefix check (mirrors backend LanguageAdminController regex).

@@ -96,13 +96,13 @@
             <div class="language-change position-relative" (click)="toggleLanguageDropdown($event)">
                 <img src="/app/assets/images/shared/earth.svg" alt="change language" style="width: 25px"/>
                 <span class='toggle-lang' [ngClass]="{'ar': storageService.siteLanguage$.value == 'en'}">
-                    @if (availableLanguages.length <= 2) {
+                    @if (availableLanguages.length <= 1) {
                         {{ 'TOGGLE_LANGUAGE_SHORT' | translate }}
                     } @else {
                         {{ currentLanguage.native_name }}
                     }
                 </span>
-                @if (isLanguageDropdownOpen && availableLanguages.length > 2) {
+                @if (isLanguageDropdownOpen && availableLanguages.length > 1) {
                     <ul class="profile-dropdown language-dropdown" (click)="$event.stopPropagation()">
                         @for (lang of availableLanguages; track lang.code) {
                             <li>
@@ -178,7 +178,7 @@
                     <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="storageService.localized(historyRoutes)">{{ "my subscriptions" | translate }}</a></li>
                     <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true; logout();" [routerLink]="storageService.localized(profileRoutes)">{{ "logout" | translate }}</a></li>
                 }
-                @if (availableLanguages.length <= 2) {
+                @if (availableLanguages.length <= 1) {
                 <li class="nav-item mt-3">
                     <div class="language-change" (click)="isMobileMenuCollapse = true; toggleLanguage()">
                         <img src="/app/assets/images/shared/earth.svg" alt="change language" class="mx-2"/>

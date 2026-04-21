@@ -190,7 +190,7 @@ export class HeaderComponent implements OnInit {
   toggleLanguageDropdown(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
-    if (this.availableLanguages.length <= 2) {
+    if (this.availableLanguages.length <= 1) {
       // Legacy single-click toggle behaviour for the EN/AR case.
       this.toggleLanguage();
       return;

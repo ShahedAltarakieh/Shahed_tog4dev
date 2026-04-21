@@ -33,7 +33,27 @@ export class StorageService {
   /** Default language code. */
   defaultLanguage: string = 'en';
 
-  constructor() { }
+  private readonly STORAGE_KEY = 'tog4dev.siteLanguage';
+
+  constructor() {
+    // Persist language selection to localStorage as a fallback when the URL
+    // lacks a language prefix (e.g., bookmarked root path).
+    if (typeof window !== 'undefined' && window.localStorage) {
+      try {
+        const stored = window.localStorage.getItem(this.STORAGE_KEY);
+        if (stored) { this.siteLanguage$.next(stored); }
+      } catch { /* storage unavailable */ }
+      this.siteLanguage$.subscribe(code => {
+        try { window.localStorage.setItem(this.STORAGE_KEY, code); } catch { /* ignore */ }
+      });
+    }
+  }
+
+  /** Returns the persisted language code if any (browser-only). */
+  getStoredLanguage(): string | null {
+    if (typeof window === 'undefined' || !window.localStorage) { return null; }
+    try { return window.localStorage.getItem(this.STORAGE_KEY); } catch { return null; }
+  }
 
   /** Returns the AppLanguage object for the current code, or the default. */
   getCurrentLanguage(): AppLanguage {
