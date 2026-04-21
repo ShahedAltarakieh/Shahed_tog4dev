@@ -309,7 +309,12 @@ Admin-controlled toggle for which menu items appear in the public navbar.
 - Model: `App\Models\Language` with `active()` scope, single-default enforcement on save, `CACHE_KEY` constant; auto-busts `Cache::forget` on save/delete.
 - Admin: `Admin\LanguageAdminController` (full CRUD + `set_default` action) under `master` middleware at `/languages`. Blade views `index/create/edit`. Sidebar link in System section. Default language cannot be deactivated or deleted.
 - Public APIs: `GET /api/v1/languages` (no auth) and `GET /api/v2/languages` (no auth, mirror for partners). Returns `{data:[{code,name,native_name,direction,is_default,position}], default, version}` with 300s `Cache-Control: public, max-age=300` + Laravel cache.
-- Lang strings added to `resources/lang/{en,ar}/app.php`: `languages`, `native name`, `direction`, `set as default`, `cannot remove default language` (+ AR), `lowercase letters only, e.g. en, ar, fr, es`.
+- Lang strings added to `resources/lang/{en,ar}/app.php`: `languages`, `native name`, `direction`, `set as default`, `cannot remove default language` (+ AR), `lowercase letters only, e.g. en, ar, fr, es`, `default language must be active.`, `cannot deactivate default language.`, `cannot delete default language.`.
+
+### Default-language invariants (enforcement model)
+- **At most one default**: enforced at the DB level via single-default unique index (Postgres partial unique, MySQL virtual generated column + unique, SQLite partial unique).
+- **At least one default**: enforced at the application level by `LanguageAdminController` (cannot deactivate/un-default/delete the sole default) plus a self-healing path in `Language::defaultCode()` that auto-promotes a row if none is marked default. (Standard SQL cannot enforce row-existence cross-table; this convergence guarantee is intentional.)
+- **Default rows must be active**: enforced at all entry points by the `Language::saving` model event (forces `is_active = true` whenever `is_default = true`), plus controller-side validation rejection in `store()` / `update()`.
 - Frontend service: `LanguagesService` fetches `/api/v1/languages` on bootstrap with silent fallback to hardcoded EN+AR if the API is unreachable. Exposes `availableLanguages$` (BehaviorSubject) + `defaultLanguage`.
 - StorageService: `siteLanguage$` widened from `'ar'|'en'` to `string`; `AppLanguage` interface re-exported.
 - TextDirectionService: now accepts an explicit direction (passed by caller from API metadata) instead of hardcoding `ar => rtl`.
