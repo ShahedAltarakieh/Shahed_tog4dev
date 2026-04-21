@@ -95,7 +95,7 @@ export class AppComponent implements OnInit, AfterViewInit{
     // Load admin-managed languages, then resolve the active language from the URL.
     this.languagesService.load().subscribe(() => {
       this.translate.addLangs(this.storageService.availableLanguages$.value.map(l => l.code));
-      this.setSiteLanguageFromUrl();
+      this.setSiteLanguageFromUrl(true);
       this.languagesService.startAutoRevalidation();
     });
 
@@ -239,7 +239,7 @@ export class AppComponent implements OnInit, AfterViewInit{
     this.maintenanceInfo = this.pageMaintenanceService.getActive(pageKey);
   }
 
-  setSiteLanguageFromUrl(): void {
+  setSiteLanguageFromUrl(allowRedirect: boolean = false): void {
     const path = this.location.path() || '/';
     const segments = path.split('/').filter(Boolean);
     const firstSegment = segments[0] ? decodeURIComponent(segments[0]).toLowerCase() : '';
@@ -259,7 +259,7 @@ export class AppComponent implements OnInit, AfterViewInit{
     // BCP-47 prefix check (mirrors backend LanguageAdminController regex).
     const looksLikeLangAttempt = /^[a-z]{2,10}(-[a-z0-9]{2,10})?$/.test(firstSegment);
 
-    if (looksLikeLangAttempt && isPlatformBrowser(this.platformId)) {
+    if (allowRedirect && looksLikeLangAttempt && isPlatformBrowser(this.platformId)) {
       const remainder = segments.slice(1).join('/');
       const target = '/' + defaultCode + (remainder ? '/' + remainder : '');
       this.router.navigateByUrl(target);

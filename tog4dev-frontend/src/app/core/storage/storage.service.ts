@@ -55,15 +55,27 @@ export class StorageService {
   }
 
   // Pick a per-language entry: current → default → 'en' → first available.
+  // For language-preserving URLs, when we fall back to another language's
+  // entry we rewrite a leading `/{lang}/` prefix to the active language so
+  // `fr` users stay on `/fr/...` instead of being silently swapped to
+  // `/en/...`. Non-string-shaped values are returned as-is.
   localized(map: { [key: string]: string } | null | undefined): string {
     if (!map) { return ''; }
     const lang = this.siteLanguage$.value;
     if (map[lang] !== undefined) { return map[lang]; }
+    let fallbackKey = '';
     if (this.defaultLanguage && map[this.defaultLanguage] !== undefined) {
-      return map[this.defaultLanguage];
+      fallbackKey = this.defaultLanguage;
+    } else if (map['en'] !== undefined) {
+      fallbackKey = 'en';
+    } else {
+      const keys = Object.keys(map);
+      if (!keys.length) { return ''; }
+      fallbackKey = keys[0];
     }
-    if (map['en'] !== undefined) { return map['en']; }
-    const keys = Object.keys(map);
-    return keys.length ? map[keys[0]] : '';
+    const value = map[fallbackKey];
+    if (typeof value !== 'string' || !lang || lang === fallbackKey) { return value; }
+    const prefixRe = new RegExp('^(/?)' + fallbackKey + '(/|$)');
+    return prefixRe.test(value) ? value.replace(prefixRe, `$1${lang}$2`) : value;
   }
 }

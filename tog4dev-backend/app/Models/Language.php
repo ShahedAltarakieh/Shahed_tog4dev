@@ -86,7 +86,17 @@ class Language extends Model
     public static function defaultCode(): string
     {
         $code = static::query()->where('is_default', true)->value('code');
-        return $code ?: 'en';
+        if ($code) { return $code; }
+        // Self-healing: if no default exists (edge case from a failed admin
+        // operation), promote the first active row (or any row) so the system
+        // always converges to having exactly one default.
+        $row = static::query()->orderByDesc('is_active')->orderBy('position')->orderBy('id')->first();
+        if ($row) {
+            $row->is_default = true;
+            $row->save();
+            return $row->code;
+        }
+        return 'en';
     }
 
     public static function activeCodes(): array
