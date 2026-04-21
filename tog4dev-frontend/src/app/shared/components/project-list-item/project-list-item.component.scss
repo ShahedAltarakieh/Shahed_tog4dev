@@ -148,12 +148,26 @@
   .total-price{
     color: #6b7378;
     font-size: 14px;
+    font-weight: 500;
     white-space: nowrap;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+
     .amount-value {
       color: #13585D;
-      font-weight: 700;
-      margin-inline-start: 4px;
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: -0.3px;
+      background: linear-gradient(180deg, rgba(254,205,15,0) 60%, rgba(254,205,15,0.45) 60%);
+      padding: 0 4px;
+      border-radius: 4px;
+      transition: transform 200ms ease;
     }
+  }
+
+  &:hover .total-price .amount-value {
+    transform: translateY(-1px);
   }
 }
 
@@ -562,7 +576,8 @@
       padding: 3px 5px;
     }
     .total-price{
-      font-size: 13px;
+      font-size: 12px;
+      .amount-value { font-size: 18px; }
     }
   }
 

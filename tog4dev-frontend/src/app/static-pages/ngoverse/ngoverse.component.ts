@@ -3,7 +3,6 @@ import { isPlatformBrowser, NgClass, NgIf, NgFor } from '@angular/common';
 
 import { StorageService } from 'app/core/storage/storage.service';
 import { TranslatePipe } from "@ngx-translate/core";
-import { NgoverseSliderComponent } from "./components/ngoverse-slider/ngoverse-slider.component";
 import { ContactUsFormComponent } from "../../shared/components/contact-us-form/contact-us-form.component";
 import { Subject, takeUntil } from 'rxjs';
 import { Meta } from '@angular/platform-browser';
@@ -35,7 +34,6 @@ interface Plan {
     NgFor,
     NgClass,
     TranslatePipe,
-    NgoverseSliderComponent,
     ContactUsFormComponent,
   ],
   templateUrl: './ngoverse.component.html',
