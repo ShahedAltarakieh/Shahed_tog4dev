@@ -20,16 +20,29 @@ export class CustomTranslateHttpLoader implements TranslateLoader {
   ) {}
 
   getTranslation(lang: string): Observable<any> {
-    const langCode = (lang || '').split('-')[0];
-    return this.http.get(`${this.prefix}${langCode}${this.suffix}`).pipe(
-      catchError(() => {
-        if (langCode === CustomTranslateHttpLoader.DEFAULT_LANG) {
-          return of({});
-        }
-        return this.http.get(`${this.prefix}${CustomTranslateHttpLoader.DEFAULT_LANG}${this.suffix}`)
-          .pipe(catchError(() => of({})));
-      }),
-    );
+    // Try the full BCP-47 code first (e.g. "pt-br.json"), then fall back to
+    // the base language code (e.g. "pt.json"), then to the default language.
+    const fullCode = (lang || '').toLowerCase();
+    const baseCode = fullCode.split('-')[0];
+    const defaultCode = CustomTranslateHttpLoader.DEFAULT_LANG;
+
+    const tryLoad = (code: string, next: () => Observable<any>): Observable<any> =>
+      this.http.get(`${this.prefix}${code}${this.suffix}`).pipe(catchError(() => next()));
+
+    return tryLoad(fullCode, () => {
+      if (baseCode && baseCode !== fullCode) {
+        return tryLoad(baseCode, () => this.loadDefault(defaultCode, fullCode));
+      }
+      return this.loadDefault(defaultCode, fullCode);
+    });
+  }
+
+  private loadDefault(defaultCode: string, requested: string): Observable<any> {
+    if (requested === defaultCode) {
+      return of({});
+    }
+    return this.http.get(`${this.prefix}${defaultCode}${this.suffix}`)
+      .pipe(catchError(() => of({})));
   }
 }
 

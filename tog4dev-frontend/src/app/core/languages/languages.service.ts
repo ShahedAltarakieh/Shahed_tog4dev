@@ -19,7 +19,7 @@ interface LanguagesResponse {
 @Injectable({ providedIn: 'root' })
 export class LanguagesService {
   private apiUrl = environment.apiUrl + 'api/v1/languages';
-  private loaded = false;
+  private loadedVersion: string | null = null;
 
   constructor(
     private http: HttpClient,
@@ -27,11 +27,14 @@ export class LanguagesService {
   ) {}
 
   /**
-   * Loads languages from the API. Idempotent: subsequent calls reuse the
-   * cached list pushed into StorageService.availableLanguages$.
+   * Loads languages from the API. The backend payload includes a `version`
+   * hash (md5 of max(updated_at)); when `force=true` we always re-hit the
+   * API and refresh the in-memory list if the version has changed. Useful
+   * for the admin to call after toggling language activation so the
+   * frontend picks up changes without a full page reload.
    */
   load(force = false): Observable<AppLanguage[]> {
-    if (this.loaded && !force) {
+    if (this.loadedVersion && !force) {
       return of(this.storageService.availableLanguages$.value);
     }
     return this.http.get<LanguagesResponse>(this.apiUrl).pipe(
@@ -41,15 +44,30 @@ export class LanguagesService {
           || (list.find(l => l.is_default)?.code)
           || list[0]?.code
           || 'en';
-        return { list, defaultCode };
+        const version = res?.version || '';
+        return { list, defaultCode, version };
       }),
-      catchError(() => of({ list: FALLBACK_LANGUAGES, defaultCode: 'en' })),
-      tap(({ list, defaultCode }) => {
-        this.storageService.availableLanguages$.next(list);
-        this.storageService.defaultLanguage = defaultCode;
-        this.loaded = true;
+      catchError(() => of({ list: FALLBACK_LANGUAGES, defaultCode: 'en', version: '' })),
+      tap(({ list, defaultCode, version }) => {
+        if (version !== this.loadedVersion) {
+          this.storageService.availableLanguages$.next(list);
+          this.storageService.defaultLanguage = defaultCode;
+          this.loadedVersion = version;
+        }
       }),
       map(({ list }) => list),
     );
+  }
+
+  /**
+   * Forces a fresh fetch from the API regardless of the cached version.
+   */
+  refresh(): Observable<AppLanguage[]> {
+    return this.load(true);
+  }
+
+  /** Current cached version hash, or null if never loaded successfully. */
+  get currentVersion(): string | null {
+    return this.loadedVersion;
   }
 }

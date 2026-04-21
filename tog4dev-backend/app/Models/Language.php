@@ -35,13 +35,22 @@ class Language extends Model
             }
         });
 
-        static::saved(function (Language $lang) {
-            // Enforce single default
+        static::saving(function (Language $lang) {
+            // Transactional single-default enforcement: clear other defaults
+            // BEFORE this row is written so the partial unique index never
+            // sees two true rows simultaneously. Wrap both writes in a tx.
             if ($lang->is_default) {
-                static::where('id', '!=', $lang->id)
-                    ->where('is_default', true)
-                    ->update(['is_default' => false]);
+                DB::transaction(function () use ($lang) {
+                    $query = static::where('is_default', true);
+                    if ($lang->exists) {
+                        $query->where('id', '!=', $lang->id);
+                    }
+                    $query->update(['is_default' => false]);
+                });
             }
+        });
+
+        static::saved(function () {
             static::bustCache();
         });
 

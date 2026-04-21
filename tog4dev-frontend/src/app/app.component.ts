@@ -255,7 +255,11 @@ export class AppComponent implements OnInit, AfterViewInit{
       && /^[a-z-]+$/.test(firstSegment);
 
     if (looksLikeLangAttempt && isPlatformBrowser(this.platformId)) {
-      this.router.navigate(['/' + defaultCode]);
+      // Preserve the rest of the path under the default language so deep
+      // links keep working when an unknown/inactive language code was used.
+      const remainder = segments.slice(1).join('/');
+      const target = '/' + defaultCode + (remainder ? '/' + remainder : '');
+      this.router.navigateByUrl(target);
     }
   }
 
@@ -272,7 +276,7 @@ export class AppComponent implements OnInit, AfterViewInit{
     // Legacy hard-coded route translations only cover EN/AR; gracefully no-op
     // for new languages so the switcher still works (URLs just keep their
     // current path and only swap the leading language segment).
-    this.translatedRoutes = (routeTranslations as any)[lang] || (routeTranslations as any)[this.storageService.defaultLanguage] || {};
+    this.translatedRoutes = routeTranslations[lang] || routeTranslations[this.storageService.defaultLanguage] || {};
   }
 
   generateSessionID() {

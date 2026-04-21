@@ -111,7 +111,7 @@ class LanguageAdminController extends Controller
                 'string',
                 'min:2',
                 'max:10',
-                'regex:/^[a-z]{2,10}(-[a-z0-9]{2,10})?$/i',
+                'regex:/^[a-z]{2,10}(-[a-z0-9]{2,10})?$/',
                 Rule::unique('languages', 'code')->ignore($ignoreId),
             ],
             'name'        => 'required|string|max:100',

@@ -231,8 +231,8 @@ export class HeaderComponent implements OnInit {
       lng === 'en' || lng === 'ar';
 
     let newUrl: string;
-    if (segments.length > 2 && hasLegacyMapping(language) && (routeTranslations as any)[language]?.[currentRoute]) {
-      newUrl = url.replace(/\/(en|ar)\/[^\/]+$/, `/${language}/${encodeURIComponent((routeTranslations as any)[language][currentRoute])}`);
+    if (segments.length > 2 && hasLegacyMapping(language) && routeTranslations[language]?.[currentRoute]) {
+      newUrl = url.replace(/\/(en|ar)\/[^\/]+$/, `/${language}/${encodeURIComponent(routeTranslations[language][currentRoute])}`);
     } else {
       newUrl = url.replace(knownPattern, `/${language}`);
       if (newUrl === url && !knownPattern.test(url)) {
