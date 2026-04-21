@@ -11,7 +11,7 @@ export class FactAndStatisticsService {
   private apiUrl = environment.apiUrl;
   constructor(public httpClient: HttpClient) { }
 
-  getFactsAndStatistics(lang: 'ar' | 'en', type: string | null = null, category_id: number | null = null){
+  getFactsAndStatistics(lang: string, type: string | null = null, category_id: number | null = null){
     return this.httpClient.get<GetFactResponse>(this.apiUrl + 'api/v1/facts', {
       headers: { 'Accept-Language': lang, 'Content-Type': 'application/json' },
       params: {

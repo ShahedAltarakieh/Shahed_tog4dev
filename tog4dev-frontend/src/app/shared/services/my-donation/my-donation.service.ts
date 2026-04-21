@@ -15,7 +15,7 @@ export class MyDonationService {
               public authService: AuthService,
               public storageService: StorageService) { }
 
-  getList(lang: 'ar' | 'en'){
+  getList(lang: string){
     const loggedInUser = this.authService.loggedInUser;
     const additionalHeaders = {
       'Authorization': 'Bearer ' + loggedInUser?.token,
@@ -28,7 +28,7 @@ export class MyDonationService {
         .pipe(map(this.apiService.extractTypeFromMessage));
   }
 
-  unsubscribePayment(lang: 'ar' | 'en', id: number){
+  unsubscribePayment(lang: string, id: number){
     const loggedInUser = this.authService.loggedInUser;
 
     return this.httpClient.put(this.apiUrl + 'api/v1/subscriptions/unsubscribe/' + id, {}, {

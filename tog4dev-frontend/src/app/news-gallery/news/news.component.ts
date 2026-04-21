@@ -58,7 +58,7 @@ export class NewsComponent implements OnInit, OnDestroy {
     }
 
     fetchCategories(): void {
-        const lang = this.storageService.siteLanguage$.value as 'ar' | 'en';
+        const lang = this.storageService.siteLanguage$.value as string;
         this.newsService.getCategories(lang).subscribe({
             next: (res) => {
                 if (res) this.categories = res.data;
@@ -70,7 +70,7 @@ export class NewsComponent implements OnInit, OnDestroy {
     fetchNews(): void {
         this.loading = true;
         this.hasError = false;
-        const lang = this.storageService.siteLanguage$.value as 'ar' | 'en';
+        const lang = this.storageService.siteLanguage$.value as string;
         this.newsService.getNews(lang, {
             category: this.selectedCategory || undefined,
             search: this.searchQuery || undefined,

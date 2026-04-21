@@ -62,7 +62,7 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
         this.article = null;
         this.relatedNews = [];
         this.hasError = false;
-        const lang = this.storageService.siteLanguage$.value as 'ar' | 'en';
+        const lang = this.storageService.siteLanguage$.value as string;
         this.newsService.getNewsArticle(lang, slug).subscribe({
             next: (res: any) => {
                 if (res && res.data) {
@@ -84,7 +84,7 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
     }
 
     fetchRelated(slug: string): void {
-        const lang = this.storageService.siteLanguage$.value as 'ar' | 'en';
+        const lang = this.storageService.siteLanguage$.value as string;
         this.newsService.getRelatedNews(lang, slug).subscribe({
             next: (res) => {
                 if (res && res.data) {

@@ -531,4 +531,10 @@ return [
     'off' => 'OFF',
     'maintenance_message_placeholder_en' => 'e.g. We are improving this page. Please check back soon.',
     'maintenance_message_placeholder_ar' => 'مثال: نعمل على تحسين هذه الصفحة. يرجى العودة قريبًا.',
+    'languages' => 'Languages',
+    'native name' => 'Native Name',
+    'direction' => 'Direction',
+    'set as default' => 'Set as default',
+    'cannot remove default language. set another language as default first.' => 'Cannot remove default language. Set another language as default first.',
+    'lowercase letters only, e.g. en, ar, fr, es' => 'Lowercase letters only, e.g. en, ar, fr, es',
 ];

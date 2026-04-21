@@ -4,7 +4,8 @@ import {RouterOutlet, ActivatedRoute, Router, NavigationStart, NavigationEnd, Na
 import { PageMaintenanceService, PageMaintenanceInfo } from './shared/services/page-maintenance/page-maintenance.service';
 import { MaintenancePageComponent } from './shared/components/maintenance-page/maintenance-page.component';
 
-import { StorageService } from './core/storage/storage.service';
+import { StorageService, AppLanguage } from './core/storage/storage.service';
+import { LanguagesService } from './core/languages/languages.service';
 import { TextDirectionService } from 'app/text-direction.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -55,9 +56,11 @@ export class AppComponent implements OnInit, AfterViewInit{
     public apiService: ApiService,
     private gtm: GoogleTagManagerService,
     public pageMaintenanceService: PageMaintenanceService,
+    private languagesService: LanguagesService,
     @Inject(PLATFORM_ID) private platformId: Object
    ) {
-    translate.addLangs(['en', 'ar']);
+    // Bootstrap with the fallback list so SSR has something before the API resolves.
+    translate.addLangs(this.storageService.availableLanguages$.value.map(l => l.code));
         const queryParams = { ...this.route.snapshot.queryParams };
   }
 
@@ -88,10 +91,17 @@ export class AppComponent implements OnInit, AfterViewInit{
     });
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
+    // Load admin-managed languages, then resolve the active language from the URL.
+    this.languagesService.load().subscribe(() => {
+      this.translate.addLangs(this.storageService.availableLanguages$.value.map(l => l.code));
+      this.setSiteLanguageFromUrl();
+    });
+
+    // Initial resolution using fallback list so SSR/early render is correct.
     this.setSiteLanguageFromUrl();
-  
-    this.storageService.siteLanguage$.subscribe((lang: 'en' | 'ar') => {
+
+    this.storageService.siteLanguage$.subscribe((lang: string) => {
       this.handleSiteLanguage(lang);
     });
 
@@ -221,18 +231,48 @@ export class AppComponent implements OnInit, AfterViewInit{
   }
 
   setSiteLanguageFromUrl(): void {
-    const siteLanguage = this.location.path().includes('/ar') ? 'ar' : 'en';
-    this.storageService.siteLanguage$.next(siteLanguage);
+    const path = this.location.path() || '/';
+    const segments = path.split('/').filter(Boolean);
+    const firstSegment = segments[0] ? decodeURIComponent(segments[0]).toLowerCase() : '';
+
+    const known = this.storageService.findLanguage(firstSegment);
+    if (known) {
+      if (this.storageService.siteLanguage$.value !== known.code) {
+        this.storageService.siteLanguage$.next(known.code);
+      }
+      return;
+    }
+
+    // Unknown / missing language code in URL — fall back to the default.
+    const defaultCode = this.storageService.defaultLanguage || 'en';
+    this.storageService.siteLanguage$.next(defaultCode);
+
+    // Only rewrite when the URL clearly attempted a language prefix
+    // (single short alpha segment) to avoid breaking deep links like /s/<code>.
+    const looksLikeLangAttempt = !!firstSegment
+      && firstSegment.length >= 2
+      && firstSegment.length <= 5
+      && /^[a-z-]+$/.test(firstSegment);
+
+    if (looksLikeLangAttempt && isPlatformBrowser(this.platformId)) {
+      this.router.navigate(['/' + defaultCode]);
+    }
   }
 
   /**
    * Used to handle the site ( content and routes ) Language
-   * @param lang en or ar
+   * @param lang language code (e.g. 'en', 'ar', 'fr')
    */
-  handleSiteLanguage = (lang: 'en' | 'ar'): void => {
+  handleSiteLanguage = (lang: string): void => {
     this.translate.use(lang);
-    this.directionService.setDirection(lang);
-    this.translatedRoutes = routeTranslations[lang];
+
+    const langDef: AppLanguage | undefined = this.storageService.findLanguage(lang);
+    this.directionService.setDirection(lang, langDef?.direction);
+
+    // Legacy hard-coded route translations only cover EN/AR; gracefully no-op
+    // for new languages so the switcher still works (URLs just keep their
+    // current path and only swap the leading language segment).
+    this.translatedRoutes = (routeTranslations as any)[lang] || (routeTranslations as any)[this.storageService.defaultLanguage] || {};
   }
 
   generateSessionID() {

@@ -10,7 +10,7 @@ export class OurStoriesService {
   private apiUrl = environment.apiUrl;
   constructor(public httpClient: HttpClient) { }
 
-  getStories(lang: 'ar' | 'en', type: string | null = null, category_id: number | null = null, home_only: boolean | null = null){
+  getStories(lang: string, type: string | null = null, category_id: number | null = null, home_only: boolean | null = null){
     return  this.httpClient.get<GetStoryResponse>(this.apiUrl + 'api/v1/stories', {
       headers: { 'Accept-Language': lang, 'Content-Type': 'application/json' },
       params: {

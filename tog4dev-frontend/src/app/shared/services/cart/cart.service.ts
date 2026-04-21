@@ -35,7 +35,7 @@ export class CartService {
     });
   }
 
-  submitPayment(lang: 'ar' | 'en', userData: any = null){
+  submitPayment(lang: string, userData: any = null){
     const loggedInUser = this.authService.loggedInUser;
 
     return this.httpClient.post(this.apiUrl + 'api/v1/payment/create', {
@@ -51,7 +51,7 @@ export class CartService {
     });
   }
 
-  removeFromCart(lang: 'ar' | 'en', id: number){
+  removeFromCart(lang: string, id: number){
     const loggedInUser = this.authService.loggedInUser;
     return this.httpClient.delete(this.apiUrl + 'api/v1/cart/remove/'+id, {
       headers: { 'Accept-Language': lang, 'Authorization': 'Bearer ' + loggedInUser?.token, 'Content-Type': 'application/json' },
@@ -59,7 +59,7 @@ export class CartService {
     });
   }
 
-  getCart(lang: 'ar' | 'en'){
+  getCart(lang: string){
     const loggedInUser = this.authService.loggedInUser;
     const additionalHeaders = {
       'Authorization': 'Bearer ' + loggedInUser?.token,
@@ -78,7 +78,7 @@ export class CartService {
    * Store dedication names (and optional dedication phrase ids) for cart items that have has_beneficiary.
    * Payload: { items: [ { cart_item_id: number, names: string[], dedication_phrase_ids?: number[] } ] }
    */
-  storeDedicationNames(lang: 'ar' | 'en', payload: { items: { cart_item_id: number; names: string[]; dedication_phrase_ids?: number[] }[] }): Observable<any> {
+  storeDedicationNames(lang: string, payload: { items: { cart_item_id: number; names: string[]; dedication_phrase_ids?: number[] }[] }): Observable<any> {
     const loggedInUser = this.authService.loggedInUser;
     return this.httpClient.post(
       this.apiUrl + 'api/v1/cart/store-dedication-names',

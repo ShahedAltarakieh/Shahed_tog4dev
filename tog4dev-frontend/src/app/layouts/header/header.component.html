@@ -93,9 +93,26 @@
                 {{ 'mama. giving shope' | translate }}
             </a>
 
-            <div class="language-change" (click)="toggleLanguage()">
+            <div class="language-change position-relative" (click)="toggleLanguageDropdown($event)">
                 <img src="/app/assets/images/shared/earth.svg" alt="change language" style="width: 25px"/>
-                <span class='toggle-lang' [ngClass]="{'ar': storageService.siteLanguage$.value == 'en'}">{{ 'TOGGLE_LANGUAGE_SHORT' | translate }}</span>
+                <span class='toggle-lang' [ngClass]="{'ar': storageService.siteLanguage$.value == 'en'}">
+                    @if (availableLanguages.length <= 2) {
+                        {{ 'TOGGLE_LANGUAGE_SHORT' | translate }}
+                    } @else {
+                        {{ currentLanguage.native_name }}
+                    }
+                </span>
+                @if (isLanguageDropdownOpen && availableLanguages.length > 2) {
+                    <ul class="profile-dropdown language-dropdown" (click)="$event.stopPropagation()">
+                        @for (lang of availableLanguages; track lang.code) {
+                            <li>
+                                <a href="javascript:void(0)" (click)="selectLanguage(lang.code)" [class.active]="lang.code === storageService.siteLanguage$.value">
+                                    {{ lang.native_name }}
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                }
             </div>
         </div>
     </div>
@@ -161,12 +178,26 @@
                     <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true" [routerLink]="historyRoutes[storageService.siteLanguage$.value]">{{ "my subscriptions" | translate }}</a></li>
                     <li class="nav-item"><a class="nav-link" (click)="isMobileMenuCollapse = true; logout();" [routerLink]="profileRoutes[storageService.siteLanguage$.value]">{{ "logout" | translate }}</a></li>
                 }
+                @if (availableLanguages.length <= 2) {
                 <li class="nav-item mt-3">
-                    <div (click)="isMobileMenuCollapse = true" class="language-change" (click)="toggleLanguage()">
+                    <div class="language-change" (click)="isMobileMenuCollapse = true; toggleLanguage()">
                         <img src="/app/assets/images/shared/earth.svg" alt="change language" class="mx-2"/>
                         <span>{{ 'TOGGLE_LANGUAGE' | translate }}</span>
                     </div>
                 </li>
+                } @else {
+                <li class="nav-item mt-3 mobile-section-header"><span class="nav-link fw-bold">{{ 'TOGGLE_LANGUAGE' | translate }}</span></li>
+                @for (lang of availableLanguages; track lang.code) {
+                <li class="nav-item ps-3">
+                    <a class="nav-link d-flex align-items-center gap-2" href="javascript:void(0)"
+                       (click)="isMobileMenuCollapse = true; selectLanguage(lang.code)"
+                       [class.active]="lang.code === storageService.siteLanguage$.value">
+                        <img src="/app/assets/images/shared/earth.svg" alt="" style="width: 16px"/>
+                        {{ lang.native_name }}
+                    </a>
+                </li>
+                }
+                }
             </ul>
             @if (authService.is_loggedin == false) {
                 <div class="user-auth-actions">

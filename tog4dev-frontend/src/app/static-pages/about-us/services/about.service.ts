@@ -54,7 +54,7 @@ export class AboutService {
 
   constructor(private apiService: ApiService) {}
 
-  getAboutPage(lang: 'ar' | 'en', country: string = 'JO'): Observable<AboutPageData> {
+  getAboutPage(lang: string, country: string = 'JO'): Observable<AboutPageData> {
     const additionalHeaders = { 'Accept-Language': lang };
     const queryParams: Record<string, string> = {
       country: country,

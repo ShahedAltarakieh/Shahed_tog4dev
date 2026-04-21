@@ -18,7 +18,7 @@ export class AboutUsComponent implements OnInit, OnDestroy, AfterViewInit {
   sections: AboutSection[] = [];
   loading = true;
   error = false;
-  currentLang: 'ar' | 'en' = 'ar';
+  currentLang: string = 'ar';
   animatedCounters: Map<number, number> = new Map();
   private isBrowser: boolean;
   private sub: Subscription | null = null;

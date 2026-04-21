@@ -34,15 +34,15 @@ import { CelebrationsService } from 'app/shared/services/celebrations/celebratio
 export class ProjectListItemComponent implements OnInit, OnDestroy{
   @Input({ required: true }) project: ProjectItem = {} as unknown as ProjectItem;
 
-  detailsProjectsRoutes: Record<'ar' | 'en' , string> = {
+  detailsProjectsRoutes: Record<string , string> = {
     ar: '/ar/المشاريع-الفردية/',
     en: '/en/individual-projects/'
   };
-  detailsOrganizationsRoutes: Record<'ar' | 'en' , string> = {
+  detailsOrganizationsRoutes: Record<string , string> = {
     ar: '/ar/مشاريع-المنظمات/',
     en: '/en/organizations-projects/'
   };
-  detailsCrowdFundingsRoutes: Record<'ar' | 'en' , string> = {
+  detailsCrowdFundingsRoutes: Record<string , string> = {
     ar: '/ar/التمويل-الجماعي/',
     en: '/en/crowdfunding/'
   };
