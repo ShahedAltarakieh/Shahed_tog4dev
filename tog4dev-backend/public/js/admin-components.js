@@ -43,7 +43,6 @@
         results: null,
         commands: [],
         isOpen: false,
-        selectedIndex: -1,
 
         init: function() {
             this.buildUI();
@@ -59,30 +58,27 @@
                 { title: 'Dashboard', icon: 'fas fa-tachometer-alt', url: prefix + '/', category: 'Navigation' },
                 { title: 'Payments', icon: 'fas fa-credit-card', url: prefix + '/payments', category: 'Navigation' },
                 { title: 'Users', icon: 'fas fa-users', url: prefix + '/users', category: 'Navigation' },
-                { title: 'Subscriptions (Active)', icon: 'fas fa-sync-alt', url: prefix + '/subscriptions/active', category: 'Navigation' },
-                { title: 'Subscriptions (Inactive)', icon: 'fas fa-pause-circle', url: prefix + '/subscriptions/inactive', category: 'Navigation' },
-                { title: 'Influencers', icon: 'fas fa-star', url: prefix + '/influencers', category: 'Navigation' },
-                { title: 'Admins', icon: 'fas fa-user-shield', url: prefix + '/admins', category: 'Navigation' },
-                { title: 'Collection Team', icon: 'fas fa-user-friends', url: prefix + '/collection_team', category: 'Navigation' },
                 { title: 'News Management', icon: 'fas fa-newspaper', url: prefix + '/news-management', category: 'Content' },
                 { title: 'Photos Gallery', icon: 'fas fa-images', url: prefix + '/gallery-management/photos', category: 'Content' },
                 { title: 'Videos Gallery', icon: 'fas fa-video', url: prefix + '/gallery-management/videos', category: 'Content' },
                 { title: 'Sliders', icon: 'fas fa-sliders-h', url: prefix + '/sliders', category: 'Content' },
-                { title: 'Announcements', icon: 'fas fa-bullhorn', url: prefix + '/announcements', category: 'Content' },
-                { title: 'SEO', icon: 'fas fa-search', url: prefix + '/seo', category: 'Content' },
-                { title: 'Short Links', icon: 'fas fa-link', url: prefix + '/shortlinks', category: 'Content' },
-                { title: 'Newsletter', icon: 'fas fa-paper-plane', url: prefix + '/newsletter', category: 'Communications' },
-                { title: 'User Requests', icon: 'fas fa-inbox', url: prefix + '/contact_us?type=projects', category: 'Communications' },
-                { title: 'Organization Requests', icon: 'fas fa-building', url: prefix + '/contact_us?type=organization', category: 'Communications' },
-                { title: 'Notifications', icon: 'fas fa-bell', url: prefix + '/system/notifications', category: 'Communications' },
+                { title: 'Influencers', icon: 'fas fa-hand-holding-heart', url: prefix + '/influencers', category: 'Users' },
+                { title: 'Admins', icon: 'fas fa-user-shield', url: prefix + '/admins', category: 'Users' },
+                { title: 'Subscriptions (Active)', icon: 'fas fa-sync-alt', url: prefix + '/subscriptions/active', category: 'Business' },
+                { title: 'Subscriptions (Inactive)', icon: 'fas fa-pause-circle', url: prefix + '/subscriptions/inactive', category: 'Business' },
+                { title: 'Newsletter', icon: 'fas fa-envelope', url: prefix + '/newsletter', category: 'Communications' },
+                { title: 'SEO', icon: 'fas fa-search', url: prefix + '/seo', category: 'System' },
+                { title: 'Short Links', icon: 'fas fa-link', url: prefix + '/shortlinks', category: 'System' },
                 { title: 'Activity Logs', icon: 'fas fa-history', url: prefix + '/system/activity-logs', category: 'System' },
+                { title: 'Notifications', icon: 'fas fa-bell', url: prefix + '/system/notifications', category: 'System' },
                 { title: 'Settings', icon: 'fas fa-cog', url: prefix + '/system/settings', category: 'System' },
                 { title: 'System Health', icon: 'fas fa-heartbeat', url: prefix + '/system/health', category: 'System' },
                 { title: 'Reports Center', icon: 'fas fa-chart-pie', url: prefix + '/system/reports', category: 'System' },
-                { title: 'Add News', icon: 'fas fa-plus-circle', url: prefix + '/news-management/create', category: 'Quick Actions' },
-                { title: 'Add Photo', icon: 'fas fa-plus-circle', url: prefix + '/gallery-management/photos/create', category: 'Quick Actions' },
-                { title: 'Add Video', icon: 'fas fa-plus-circle', url: prefix + '/gallery-management/videos/create', category: 'Quick Actions' },
-                { title: 'Add Admin', icon: 'fas fa-plus-circle', url: prefix + '/admins/create', category: 'Quick Actions' },
+                { title: 'Media Library', icon: 'fas fa-photo-video', url: prefix + '/system/media-library', category: 'System' },
+                { title: 'Add News', icon: 'fas fa-plus', url: prefix + '/news-management/create', category: 'Quick Actions' },
+                { title: 'Add Photo', icon: 'fas fa-plus', url: prefix + '/gallery-management/photos/create', category: 'Quick Actions' },
+                { title: 'Add Video', icon: 'fas fa-plus', url: prefix + '/gallery-management/videos/create', category: 'Quick Actions' },
+                { title: 'Add Admin', icon: 'fas fa-plus', url: prefix + '/admins/create', category: 'Quick Actions' },
                 { title: 'Upload Excel Sheet', icon: 'fas fa-file-excel', url: prefix + '/excel/create', category: 'Quick Actions' },
             ];
         },
@@ -90,10 +86,10 @@
         buildUI: function() {
             this.overlay = document.createElement('div');
             this.overlay.id = 'command-palette-overlay';
-            this.overlay.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100000;backdrop-filter:blur(4px);justify-content:center;padding-top:12vh;';
+            this.overlay.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100000;backdrop-filter:blur(4px);justify-content:center;padding-top:15vh;';
 
             var modal = document.createElement('div');
-            modal.style.cssText = 'background:#fff;border-radius:16px;width:580px;max-width:92vw;max-height:72vh;box-shadow:0 25px 60px rgba(0,0,0,0.2);display:flex;flex-direction:column;overflow:hidden;animation:cmdPaletteIn 0.15s ease-out;';
+            modal.style.cssText = 'background:#fff;border-radius:16px;width:560px;max-width:90vw;max-height:70vh;box-shadow:0 25px 60px rgba(0,0,0,0.2);display:flex;flex-direction:column;overflow:hidden;animation:cmdPaletteIn 0.15s ease-out;';
 
             var header = document.createElement('div');
             header.style.cssText = 'padding:16px 20px;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;gap:12px;';
@@ -125,31 +121,26 @@
             });
 
             this.input.addEventListener('input', function() {
-                self.selectedIndex = -1;
                 self.search(this.value);
             });
 
             this.input.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') { self.close(); return; }
-                var items = self.results.querySelectorAll('.cmd-item');
                 if (e.key === 'Enter') {
-                    e.preventDefault();
-                    var active = items[self.selectedIndex] || items[0];
-                    if (active) window.location.href = active.dataset.url;
-                    return;
+                    var first = self.results.querySelector('.cmd-item');
+                    if (first) window.location.href = first.dataset.url;
                 }
                 if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
                     e.preventDefault();
-                    if (e.key === 'ArrowDown') {
-                        self.selectedIndex = Math.min(self.selectedIndex + 1, items.length - 1);
-                    } else {
-                        self.selectedIndex = Math.max(self.selectedIndex - 1, 0);
-                    }
-                    items.forEach(function(i, idx) {
-                        i.style.background = idx === self.selectedIndex ? '#f3f4f6' : 'transparent';
-                    });
-                    if (items[self.selectedIndex]) {
-                        items[self.selectedIndex].scrollIntoView({ block: 'nearest' });
+                    var items = self.results.querySelectorAll('.cmd-item');
+                    var active = self.results.querySelector('.cmd-item.active');
+                    var idx = Array.prototype.indexOf.call(items, active);
+                    if (e.key === 'ArrowDown') idx = Math.min(idx + 1, items.length - 1);
+                    else idx = Math.max(idx - 1, 0);
+                    items.forEach(function(i) { i.classList.remove('active'); });
+                    if (items[idx]) {
+                        items[idx].classList.add('active');
+                        items[idx].scrollIntoView({ block: 'nearest' });
                     }
                 }
             });
@@ -172,7 +163,6 @@
             this.isOpen = true;
             this.overlay.style.display = 'flex';
             this.input.value = '';
-            this.selectedIndex = -1;
             this.search('');
             var self = this;
             setTimeout(function() { self.input.focus(); }, 50);
@@ -181,10 +171,6 @@
         close: function() {
             this.isOpen = false;
             this.overlay.style.display = 'none';
-        },
-
-        toggle: function() {
-            this.isOpen ? this.close() : this.open();
         },
 
         search: function(query) {
@@ -204,17 +190,17 @@
 
             var html = '';
             for (var cat in grouped) {
-                html += '<div style="padding:6px 12px 4px;"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:#9ca3af;">' + cat + '</span></div>';
-                grouped[cat].forEach(function(cmd) {
-                    html += '<a href="' + cmd.url + '" class="cmd-item" data-url="' + cmd.url + '" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;text-decoration:none;color:#374151;transition:background 0.1s;cursor:pointer;" onmouseenter="this.style.background=\'#f3f4f6\'" onmouseleave="this.style.background=\'transparent\'">';
-                    html += '<div style="width:32px;height:32px;border-radius:8px;background:rgba(19,88,93,0.06);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="' + cmd.icon + '" style="color:#13585D;font-size:14px;"></i></div>';
-                    html += '<span style="font-size:14px;font-weight:500;">' + cmd.title + '</span>';
+                html += '<div style="padding:4px 12px 4px;"><span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#9ca3af;">' + cat + '</span></div>';
+                grouped[cat].forEach(function(cmd, i) {
+                    html += '<a href="' + cmd.url + '" class="cmd-item' + (i === 0 && !q ? '' : '') + '" data-url="' + cmd.url + '" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;text-decoration:none;color:#374151;transition:background 0.1s;cursor:pointer;" onmouseenter="this.style.background=\'#f3f4f6\'" onmouseleave="this.style.background=\'transparent\'">';
+                    html += '<i class="' + cmd.icon + '" style="width:20px;text-align:center;color:#6b7280;font-size:14px;"></i>';
+                    html += '<span style="font-size:14px;">' + cmd.title + '</span>';
                     html += '</a>';
                 });
             }
 
             if (filtered.length === 0) {
-                html = '<div style="text-align:center;padding:40px 20px;"><div style="width:56px;height:56px;border-radius:50%;background:#f3f4f6;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"><i class="fas fa-search" style="font-size:22px;color:#d1d5db;"></i></div><p style="color:#6b7280;font-size:14px;margin:0 0 4px;font-weight:600;">No results found</p><p style="color:#9ca3af;font-size:13px;margin:0;">Try a different search term</p></div>';
+                html = '<div style="text-align:center;padding:40px 20px;"><i class="fas fa-search" style="font-size:32px;color:#d1d5db;display:block;margin-bottom:12px;"></i><p style="color:#6b7280;font-size:14px;margin:0;">No results found</p></div>';
             }
 
             this.results.innerHTML = html;
@@ -276,62 +262,23 @@
         });
     }
 
-    function initSidebarMenuArrows() {
-        var toggles = document.querySelectorAll('#side-menu [data-toggle="collapse"]');
-        toggles.forEach(function(toggle) {
-            var targetId = toggle.getAttribute('href') || toggle.getAttribute('data-target');
-            if (!targetId) return;
-            var target = document.querySelector(targetId);
-            if (!target) return;
+    function addKeyboardShortcutHints() {
+        var sidebar = document.querySelector('#side-menu');
+        if (!sidebar) return;
 
-            if (target.classList.contains('show')) {
-                toggle.setAttribute('aria-expanded', 'true');
-            }
+        var shortcutHint = document.createElement('div');
+        shortcutHint.style.cssText = 'padding:12px 20px;border-top:1px solid rgba(255,255,255,0.1);margin-top:auto;';
+        shortcutHint.innerHTML = '<div style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:8px 12px;border-radius:8px;background:rgba(255,255,255,0.05);" onclick="if(window.CommandPalette)CommandPalette.open()"><i class="fas fa-search" style="color:rgba(255,255,255,0.5);font-size:12px;"></i><span style="color:rgba(255,255,255,0.5);font-size:12px;">Search</span><kbd style="margin-left:auto;font-size:10px;padding:1px 5px;border:1px solid rgba(255,255,255,0.2);border-radius:3px;color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.05);">Ctrl+K</kbd></div>';
 
-            $(target).on('show.bs.collapse', function() {
-                toggle.setAttribute('aria-expanded', 'true');
-            });
-            $(target).on('hide.bs.collapse', function() {
-                toggle.setAttribute('aria-expanded', 'false');
-            });
-        });
-    }
-
-    function initSidebarActiveState() {
-        var currentPath = window.location.pathname;
-        var currentSearch = window.location.search;
-        var links = document.querySelectorAll('#sidebar-menu a[href]');
-        links.forEach(function(link) {
-            try {
-                var url = new URL(link.href, window.location.origin);
-                var pathMatch = url.pathname === currentPath;
-                var searchMatch = !url.search || url.search === currentSearch;
-                if (pathMatch && searchMatch && !link.getAttribute('data-toggle')) {
-                    link.classList.add('active-menu');
-                    var parentCollapse = link.closest('.collapse');
-                    while (parentCollapse) {
-                        parentCollapse.classList.add('show');
-                        var toggler = document.querySelector('[href="#' + parentCollapse.id + '"]');
-                        if (toggler) toggler.setAttribute('aria-expanded', 'true');
-                        parentCollapse = parentCollapse.parentElement ? parentCollapse.parentElement.closest('.collapse') : null;
-                    }
-                }
-            } catch(e) {}
-        });
-    }
-
-    function initCollapsedSidebarTooltips() {
-        var items = document.querySelectorAll('#sidebar-menu > ul > li > a');
-        items.forEach(function(link) {
-            var span = link.querySelector('span:not(.menu-arrow)');
-            if (span) {
-                link.setAttribute('data-tooltip', span.textContent.trim());
-            }
-        });
+        var sidebarContainer = sidebar.closest('.left-side-menu');
+        if (sidebarContainer) {
+            var simplebar = sidebarContainer.querySelector('[data-simplebar]');
+            if (simplebar) simplebar.appendChild(shortcutHint);
+        }
     }
 
     var style = document.createElement('style');
-    style.textContent = '@keyframes cmdPaletteIn{from{opacity:0;transform:scale(0.95) translateY(-10px)}to{opacity:1;transform:scale(1) translateY(0)}}.cmd-item.active{background:#f3f4f6 !important;}#side-menu [aria-expanded="true"]>.menu-arrow i{transform:rotate(180deg);}';
+    style.textContent = '@keyframes cmdPaletteIn{from{opacity:0;transform:scale(0.95) translateY(-10px)}to{opacity:1;transform:scale(1) translateY(0)}}.cmd-item.active{background:#f3f4f6 !important;}';
     document.head.appendChild(style);
 
     if (document.readyState === 'loading') {
@@ -339,17 +286,13 @@
             CommandPalette.init();
             window.CommandPalette = CommandPalette;
             enhanceDeleteButtons();
-            initSidebarMenuArrows();
-            initSidebarActiveState();
-            initCollapsedSidebarTooltips();
+            addKeyboardShortcutHints();
         });
     } else {
         CommandPalette.init();
         window.CommandPalette = CommandPalette;
         enhanceDeleteButtons();
-        initSidebarMenuArrows();
-        initSidebarActiveState();
-        initCollapsedSidebarTooltips();
+        addKeyboardShortcutHints();
     }
 
 })();

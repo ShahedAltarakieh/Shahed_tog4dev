@@ -55,7 +55,7 @@ export class PhotosComponent implements OnInit, OnDestroy {
         });
 
         this.storageService.siteLanguage$.pipe(takeUntil(this.destroy$)).subscribe(() => {
-            this.newsService.getCategories(this.storageService.siteLanguage$.value as string).subscribe({
+            this.newsService.getCategories(this.storageService.siteLanguage$.value as 'ar' | 'en').subscribe({
                 next: (res) => {
                     if (res) this.categories = res.data;
                 },
@@ -73,7 +73,7 @@ export class PhotosComponent implements OnInit, OnDestroy {
     fetchPhotos(): void {
         this.loading = true;
         this.hasError = false;
-        const lang = this.storageService.siteLanguage$.value as string;
+        const lang = this.storageService.siteLanguage$.value as 'ar' | 'en';
         this.galleryService.getPhotos(lang, {
             category: this.selectedCategory || undefined,
             search: this.searchQuery || undefined,

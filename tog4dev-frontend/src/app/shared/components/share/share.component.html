@@ -1,30 +1,25 @@
-<div class="share-overlay"
-     *ngIf="show"
-     role="dialog"
-     aria-modal="true"
-     [attr.aria-label]="title"
-     (click)="onBackdropClick($event)">
-    <div class="share-section position-relative" (click)="$event.stopPropagation()">
-        <button class="close btn" type="button" aria-label="Close" (click)="close()"><img src="/app/assets/images/share/close.svg" alt=""></button>
+<div class="share-overlay" *ngIf="show">
+    <div class="share-section position-relative">
+        <button class="close btn" (click)="close()"><img src="/app/assets/images/share/close.svg" alt="close"></button>
         <h2 class="title">{{ title }}</h2>
         <p class="desc">{{ "share the contribution with your friends" | translate}}</p>
         <ul class="d-flex list-unstyled justify-content-between">
-            <li><a target="_blank" rel="noopener noreferrer" [href]="getTwitterUrl()" class="d-flex item flex-column align-items-center"><img src="/app/assets/images/share/twitter-black.svg" alt="twitter / X"><span>Twitter</span></a></li>
-            <li><a target="_blank" rel="noopener noreferrer" [href]="getWhatsAppUrl()" class="d-flex item flex-column align-items-center"><img src="/app/assets/images/share/whatsapp.svg" alt="whatsapp"><span>WhatsApp</span></a></li>
+            <li><a target="_blank" [href]="getTwitterUrl()" class="d-flex item flex-column align-items-center"><img src="/app/assets/images/share/twitter-black.svg" alt="twitter / X"><span>Twitter</span></a></li>
+            <li><a target="_blank" [href]="getWhatsAppUrl()" class="d-flex item flex-column align-items-center"><img src="/app/assets/images/share/whatsapp.svg" alt="whatsapp"><span>WhatsApp</span></a></li>
             <li>
-                <a target="_blank" rel="noopener noreferrer" data-layout="" data-size=""
+                <a target="_blank" data-layout="" data-size=""
                    href="https://www.facebook.com/sharer/sharer.php?u={{ facebookLink() }}&amp;src=sdkpreparse"
                    class="d-flex item flex-column align-items-center">
                     <img src="/app/assets/images/share/facebook.svg" alt="facebook"><span>Facebook</span>
                 </a>
             </li>
-            <li><a target="_blank" rel="noopener noreferrer" [href]="getLinkedInUrl()" class="d-flex item flex-column align-items-center"><img src="/app/assets/images/share/linkedin.svg" alt="linkedin"><span>Linkedin</span></a></li>
+            <li><a target="_blank" [href]="getLinkedInUrl()" class="d-flex item flex-column align-items-center"><img src="/app/assets/images/share/linkedin.svg"><span>Linkedin</span></a></li>
         </ul>
         <div class="copy-section">
             <p>{{ getDisplayUrl() }}</p>
-            <span (click)="copyLink()" role="button" aria-label="Copy link">
+            <span (click)="copyLink()">
                 <img class="copy-icon" src="/app/assets/images/share/copy-icon.svg" alt="copy icon" [ngClass]="{'d-none': copied == true}">
-                <img class="copy-icon" src="/app/assets/images/shared/check-2.png" alt="copied" [ngClass]="{'d-none': copied == false}">
+                <img class="copy-icon" src="/app/assets/images/shared/check-2.png" alt="check" [ngClass]="{'d-none': copied == false}">
             </span>
         </div>
     </div>

@@ -70,20 +70,10 @@
                         <div class="form-group col-6">
                             <label for="image">{{ __('app.image') }} (AR)</label>
                             <input type="file" id="image" name="image" data-plugins="dropify" data-height="200" data-default-file="{{ $seo->image }}" data-allowed-file-extensions="png jpg jpeg webp"  />
-                            @include('includes.admin.image-upload-notes', [
-                                'recommendedSize' => '1200 x 630 px',
-                                'maxSize' => '5 MB',
-                                'extensions' => 'png,jpg,jpeg,webp'
-                            ])
                         </div>
                         <div class="form-group col-6">
                             <label for="image_en">{{ __('app.image') }} (EN)</label>
                             <input type="file" id="image_en" name="image_en" data-plugins="dropify" data-height="200" data-default-file="{{ $seo->image_en }}" data-allowed-file-extensions="png jpg jpeg webp"  />
-                            @include('includes.admin.image-upload-notes', [
-                                'recommendedSize' => '1200 x 630 px',
-                                'maxSize' => '5 MB',
-                                'extensions' => 'png,jpg,jpeg,webp'
-                            ])
                         </div>
 
                         <!-- Submit Button -->

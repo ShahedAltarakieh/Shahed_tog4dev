@@ -9,7 +9,7 @@ export class CategoriesService {
   private apiUrl = environment.apiUrl;
   constructor(public httpClient: HttpClient) { }
 
-  getCategories(lang: string, type: string | null = null, id: number| null = null) {
+  getCategories(lang: 'ar' | 'en', type: string | null = null, id: number| null = null) {
     return this.httpClient.get<GetCategoryResponse>(this.apiUrl + 'api/v1/categories', {
       headers: { 'Accept-Language': lang, 'Content-Type': 'application/json' },
       params: {

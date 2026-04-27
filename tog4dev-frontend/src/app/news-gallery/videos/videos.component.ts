@@ -58,7 +58,7 @@ export class VideosComponent implements OnInit, OnDestroy {
         });
 
         this.storageService.siteLanguage$.pipe(takeUntil(this.destroy$)).subscribe(() => {
-            this.newsService.getCategories(this.storageService.siteLanguage$.value as string).subscribe({
+            this.newsService.getCategories(this.storageService.siteLanguage$.value as 'ar' | 'en').subscribe({
                 next: (res) => {
                     if (res) this.categories = res.data;
                 },
@@ -76,7 +76,7 @@ export class VideosComponent implements OnInit, OnDestroy {
     fetchVideos(): void {
         this.loading = true;
         this.hasError = false;
-        const lang = this.storageService.siteLanguage$.value as string;
+        const lang = this.storageService.siteLanguage$.value as 'ar' | 'en';
         const displayTarget = isPlatformBrowser(this.platformId)
             ? (this.isMobile ? 'mobile' : 'desktop')
             : undefined;

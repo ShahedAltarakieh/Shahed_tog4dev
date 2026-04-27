@@ -10,14 +10,6 @@
                 </div>
                 <p class="modal-title text-center">{{ title }}</p>
             } @else {
-                @if(success_icon){
-                    <div class="success-check" aria-hidden="true">
-                        <svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
-                            <circle class="check-circle" cx="26" cy="26" r="24" fill="none"/>
-                            <path class="check-mark" fill="none" d="M14 27l8 8 16-18"/>
-                        </svg>
-                    </div>
-                }
                 <p class="modal-title text-center">{{ title }}</p>
                 <hr class="my-0">
                 <div class="modal-description">
@@ -38,11 +30,6 @@
                                 {{ "remove" | translate}}
                             }
                         </button>
-                    </div>
-                } @else if(with_basket_button){
-                    <div class="d-flex two-button w-100">
-                        <a class="btn btn-cancel" [href]="basketLink" (click)="goToBasket($event)">{{ "go to basket" | translate}}</a>
-                        <button class="btn btn-remove" (click)="accept()">{{ "done" | translate}}</button>
                     </div>
                 } @else {
                     <button class="btn btn-accept" (click)="accept()">

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { StorageService } from '../core/storage/storage.service';
 
 @Component({
     selector: 'app-notfound-redirect',
@@ -12,13 +11,14 @@ import { StorageService } from '../core/storage/storage.service';
 })
 export class NotfoundRedirectComponent {
 
-  constructor(private router: Router, private route: ActivatedRoute, private storageService: StorageService) {
+  constructor(private router: Router, private route: ActivatedRoute) {
     const queryParams = { ...this.route.snapshot.queryParams };
-    const target = '/' + (this.storageService.defaultLanguage || 'en');
     if (Object.keys(queryParams).length > 0) {
-      this.router.navigate([target], { queryParams });
+      // redirect keeping query params
+      this.router.navigate(['/en'], { queryParams });
     } else {
-      this.router.navigate([target]);
+      // redirect without query params
+      this.router.navigate(['/en']);
     }
   }
 }

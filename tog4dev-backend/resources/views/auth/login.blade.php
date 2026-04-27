@@ -1,65 +1,56 @@
 @extends('layouts.admin.login')
 
 @section('content')
-<div class="login-form-header">
-    <h1>{{ __('app.welcome_back') }}</h1>
-    <p>{{ __('app.login_subtitle') }}</p>
-</div>
+<div class="card bg-pattern">
 
-@if($errors->any())
-<div class="error-alert">
-    <i class="fas fa-exclamation-circle"></i>
-    <span>{{ $errors->first() }}</span>
-</div>
-@endif
+    <div class="card-body p-4">
 
-<form method="POST" action="{{ route('login') }}">
-    @csrf
-    <div class="form-group">
-        <label for="emailaddress">{{ __('app.email') }}</label>
-        <div class="form-input-wrap">
-            <i class="fas fa-envelope field-icon"></i>
-            <input class="form-input" type="email" name="email" id="emailaddress" value="{{ old('email') }}" placeholder="{{ __('app.enter_email') }}" required autofocus>
+        <div class="text-center w-75 m-auto">
+            <div class="auth-logo">
+
+                <a href="javascript:void(0)" class="logo  text-center">
+                    <span class="logo-lg" style="background:unset;">
+                        <img src="{{ asset('img/logo.png') }}" alt="" height="100">
+                    </span>
+                </a>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <label for="password">{{ __('app.password') }}</label>
-        <div class="form-input-wrap">
-            <i class="fas fa-lock field-icon"></i>
-            <input class="form-input" type="password" name="password" id="password" placeholder="{{ __('app.enter_password') }}" required>
-            <button type="button" class="password-toggle" onclick="togglePassword()" aria-label="{{ __('app.toggle_password') }}">
-                <i class="fas fa-eye" id="toggleIcon"></i>
-            </button>
-        </div>
-    </div>
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+            <div class="mb-3">
+                <label for="emailaddress" class="form-label">{{ __('app.email') }}</label>
+                <input class="form-control" type="email" name="email" id="emailaddress" value="{{ old('email') }}" placeholder="{{ __('app.email') }}">
+                @error('email')
+                <span class="invalid-feedback d-block" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
 
-    <div class="form-options">
-        <label class="remember-me">
-            <input type="checkbox" name="remember">
-            <span>{{ __('app.remember_me') }}</span>
-        </label>
-    </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">{{ __('app.password') }}</label>
+                <div class="input-group input-group-merge">
+                    <input type="password" name="password" id="password" class="form-control" placeholder="{{ __('app.password') }}">
+                    <div class="input-group-text" data-password="false">
+                        <span class="password-eye"></span>
+                    </div>
+                </div>
+                @error('password')
+                <span class="invalid-feedback d-block" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
 
-    <button class="login-btn" type="submit">
-        <i class="fas fa-sign-in-alt"></i>
-        {{ __('app.login') }}
-    </button>
-</form>
 
-<script>
-function togglePassword() {
-    var input = document.getElementById('password');
-    var icon = document.getElementById('toggleIcon');
-    if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-    } else {
-        input.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
-    }
-}
-</script>
+            <div class="text-center d-grid">
+                <button class="btn btn-primary" type="submit"> {{ __('app.login') }} </button>
+            </div>
+
+        </form>
+
+    </div> <!-- end card-body -->
+</div>
+<!-- end card -->
 @endsection

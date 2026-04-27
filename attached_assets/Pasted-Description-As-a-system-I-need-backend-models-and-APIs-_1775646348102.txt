@@ -1,0 +1,171 @@
+Description
+As a system,
+I need backend models and APIs for News & Gallery,
+so that the frontend can display dynamic content and support search, listings, details pages, and related content.
+
+Scope
+Build the backend data model and public APIs for:
+
+News
+Photo
+Video
+Category
+This work must be implemented in the backend repository.
+The backend must expose clean REST APIs and return stable JSON responses consumable by the frontend.
+Functional Requirements
+1. Core Entities
+Create backend entities/models for:
+
+News
+Photo
+Video
+Category
+2. News Model
+News should support:
+
+id
+title
+short_description
+full_content
+category_id
+cover_image
+publish_date
+status
+created_at
+updated_at
+3. Photo Model
+Photo should support:
+
+id
+title
+description or caption
+category_id
+image_url
+publish_date
+status
+created_at
+updated_at
+4. Video Model
+Video should support:
+
+id
+title
+short_description
+category_id
+youtube_url
+publish_date
+status
+created_at
+updated_at
+5. Category Model
+Category should support:
+
+id
+name
+status
+6. Status Rules
+For current phase, use content status such as:
+
+draft
+published
+Only published content should appear in public APIs.
+7. Public APIs
+Provide public APIs for:
+
+list news
+get news details
+list photos
+list videos
+search content by keyword
+list related news
+8. Search Logic
+Search must:
+
+search by keyword
+return only published content
+support searching in:
+title
+short description
+full content where applicable
+9. Related News Logic
+For current phase:
+
+related news should be based on category
+current news item should be excluded from related results
+10. Visibility Rules
+
+Only published content appears in public APIs
+Draft or unpublished items must not appear in frontend responses
+11. Sorting
+
+Default sorting should be latest publish date first
+12. Pagination
+Listing APIs should support pagination, for example:
+
+page
+limit
+13. Data Storage Notes
+
+Images should not be stored as binary in the database
+Store only image paths or URLs in database
+Store YouTube URL for videos
+Frontend will handle rendering/embed behavior
+API Contract Requirements
+GET /news
+Returns paginated or list-based news items:
+JSON
+{ "data": [ { "id": 1, "title": "News title", "short_description": "Short preview", "cover_image": "image-url", "publish_date": "2026-04-06", "category": { "id": 1, "name": "Water Projects" } } ], "meta": { "page": 1, "limit": 10, "total": 1 } }
+
+GET /news/{id}
+Returns full news details:
+{ "id": 1, "title": "News title", "short_description": "Short preview", "full_content": "Full news content", "cover_image": "image-url", "publish_date": "2026-04-06", "category": { "id": 1, "name": "Water Projects" } }
+
+GET /news/{id}/related
+Returns related news:
+[ { "id": 2, "title": "Related news title", "cover_image": "image-url", "publish_date": "2026-04-05" } ]
+
+GET /photos
+Returns photos list:
+{ "data": [ { "id": 1, "title": "Photo title", "image_url": "image-url", "publish_date": "2026-04-06", "category": { "id": 2, "name": "Events" } } ], "meta": { "page": 1, "limit": 10, "total": 1 } }
+
+GET /videos
+Returns videos list:
+{ "data": [ { "id": 1, "title": "Video title", "youtube_url": "youtube-link", "publish_date": "2026-04-06", "category": { "id": 3, "name": "Videos" } } ], "meta": { "page": 1, "limit": 10, "total": 1 } }
+
+GET /search?q={keyword}
+Returns grouped search result:
+{ "news": [], "photos": [], "videos": [] }
+
+Non-Functional Notes
+
+Public APIs are open for current phase unless authentication is required elsewhere in the platform
+Responses should be stable and frontend-friendly
+Use clean naming and modular architecture
+Code should be ready for future enhancements without large schema changes
+Replit Implementation Notes
+
+Build clean REST APIs
+Keep code production-ready and extendable
+Keep schema ready for future features
+Do not fully implement future features in this phase
+Keep category relationships reusable across content types
+Acceptance Criteria
+
+Models are created correctly
+Public APIs return valid data
+Search works correctly
+Related news works correctly
+Only published content is exposed publicly
+Default sorting works as expected
+Pagination is supported
+API responses are stable and consumable by frontend
+Future-Ready Notes
+Backend schema should be designed to support later:
+
+featured flag
+multiple images per news article
+tags
+scheduled publish datetime
+Arabic and English fields
+SEO fields
+manual related news mapping

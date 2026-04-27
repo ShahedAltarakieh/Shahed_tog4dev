@@ -30,12 +30,6 @@ class News extends Model implements HasMedia
         'status',
         'published_at',
         'position',
-        'announcement_visibility',
-        'announcement_text',
-        'announcement_cta',
-        'announcement_badge',
-        'announcement_start',
-        'announcement_end',
     ];
 
     protected $casts = [
@@ -81,11 +75,6 @@ class News extends Model implements HasMedia
     public function category()
     {
         return $this->belongsTo(NewsCategory::class, 'news_category_id');
-    }
-
-    public function announcements()
-    {
-        return $this->hasMany(Announcement::class);
     }
 
     public function getImageAttribute()

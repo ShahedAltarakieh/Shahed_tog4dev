@@ -20,6 +20,5 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call(EfwateercomServiceSeeder::class);
-        $this->call(LanguageSeeder::class);
     }
 }

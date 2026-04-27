@@ -89,8 +89,8 @@ export class MobileNumberComponent {
     // Validate input length
     if (!value && this.isRequired) {
       this.errorChanged.next('empty error');
-    } else if (value.length < 9) {
-      this.errorChanged.next('minimum of 9 digits is required');
+    } else if (value.length < 8) {
+      this.errorChanged.next('minimum of 8 digits is required');
     } else if (value.length > 10) {
       this.errorChanged.next('maximum 10 digits allowed');
     } else {

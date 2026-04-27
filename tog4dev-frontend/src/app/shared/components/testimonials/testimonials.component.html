@@ -1,8 +1,4 @@
-<div class="tg-section-header">
-  <h2 class="tg-section-title">{{ 'beneficiaries Feedback' | translate }}</h2>
-  <p class="tg-section-subtitle">{{ 'every voice matters' | translate }}</p>
-  <div class="tg-title-decoration"><span></span></div>
-</div>
+<h2 class="section-title">{{ 'beneficiaries Feedback' | translate}}</h2>
 
 <div class="why-together-wrapper {{ storageService.siteLanguage$.value }}">
   <div class="control-icon next-icon">
@@ -17,14 +13,11 @@
         @for (item of testimonialsList; track item) {
           <div class="swiper-slide">
             <div class="slide-info">
-              <div class="quote-mark" aria-hidden="true">&ldquo;</div>
               <p class="description">{{ item.description }}</p>
-              <div class="author-block">
-                <span class="author">{{ item.name }}</span>
+              <span class="author">{{ item.name }}</span>
                 @if(item.location){
                   <span class="location"><img src="/app/assets/images/shared/pin.png" alt="pin" style="width: 16px;"> {{ item.location }}</span>
                 }
-              </div>
             </div>
 
             <div class="slide-img">

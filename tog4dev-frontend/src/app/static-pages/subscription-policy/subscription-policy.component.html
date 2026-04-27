@@ -1,86 +1,61 @@
-<div class="legal-page" [attr.dir]="storageService.siteLanguage$.value === 'ar' ? 'rtl' : 'ltr'">
-  <section class="hero-section">
-    <div class="hero-pattern" aria-hidden="true"></div>
-    <div class="container">
-      <div class="hero-content text-center">
-        <span class="hero-badge">{{ "subscription" | translate }}</span>
-        @if(storageService.siteLanguage$.value == "ar"){
-          <h1 class="page-title">الشروط والأحكام الخاصة بخدمة الاشتراك الشهري</h1>
-          <p class="hero-subtitle">سياسة التجديد التلقائي والاشتراكات</p>
-        } @else {
-          <h1 class="page-title">Terms &amp; Conditions for Monthly Subscription Service</h1>
-          <p class="hero-subtitle">Automatic Renewal and Subscription Policy</p>
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="legal-card-section">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-10 col-12">
-          <div class="legal-card">
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-12">
             @if(storageService.siteLanguage$.value == "ar"){
-              <h3 class="section-title">البند الأول: التجديد التلقائي</h3>
-              <p>1. عند الاشتراك في أي من مشاريع وخدمات شركة <strong>معاً للوساطة التجارية ذ.م.م (معاً للتنمية)</strong>، يتم خصم قيمة الاشتراك الشهري تلقائيًا من الحساب المصرفي أو البطاقة المسجلة (بحسب الوسيلة المحددة من قبل المشترك) في ذات اليوم من كل شهر عند حلول موعد الاستحقاق.</p>
-              <p>2. يُجدد الاشتراك تلقائيًا شهريًا ما لم يقم المشترك بإلغائه <span class="highlight">قبل ثلاثة (3) أيام</span> من تاريخ استحقاق الدفعة التالية.</p>
-
-              <h3 class="section-title">البند الثاني: إلغاء الاشتراك</h3>
-              <p>1. يحق للمشترك إلغاء اشتراكه حسب ما ورد أعلاه من خلال صفحة الحساب على موقع <strong>معاً للوساطة التجارية (معاً للتنمية)</strong>.</p>
-              <p>2. يبقى الاشتراك نشطًا حتى نهاية دورة الفوترة الحالية، ولن يتم فرض أي رسوم إضافية بعد تاريخ الإلغاء.</p>
-              <p>3. لا يحق للمشترك المطالبة باسترداد أي مبالغ مدفوعة عن الفترات السابقة للإلغاء.</p>
-
-              <h3 class="section-title">البند الثالث: قيمة الاشتراك واستمرارية المشروع</h3>
-              <p>1. تمثل قيمة الاشتراك الشهري التزامًا مستمرًا لدعم تشغيل المشروع المحدد من قبل المشترك.</p>
-              <p>2. يمكن للمشترك تعديل قيمة الاشتراك الشهري أو تغيير وسيلة الدفع في أي وقت من خلال حسابه الشخصي على موقع معاً للوساطة التجارية (معاً للتنمية).</p>
-              <p>3. في حال تعديل قيمة الاشتراك، يتم تطبيق القيمة الجديدة اعتبارًا من <span class="highlight">دورة الفوترة التالية</span>.</p>
-
-              <h3 class="section-title">البند الرابع: إشعارات الدفع</h3>
-              <p>يتلقى المشترك عقدًا وإيصال قبض إلكتروني بعد كل عملية دفع ناجحة، يتضمن تفاصيل المبلغ المدفوع وبنود الاشتراك، وذلك عبر <strong>البريد الإلكتروني</strong> أو عبر تطبيق <strong>واتساب</strong>، وفقًا للمعلومات المسجلة لدى الشركة.</p>
-
-              <h3 class="section-title">البند الخامس: مشاكل في عملية الدفع</h3>
-              <p>1. في حال عدم تمكن النظام من إتمام عملية الخصم لأي سبب (مثل عدم كفاية الرصيد أو انتهاء صلاحية البطاقة)، سيتم محاولة الخصم مرة أخرى <span class="highlight">خلال ثلاثة أيام</span> من تاريخ عدم إتمام الدفع.</p>
-              <p>2. إذا استمر عدم إتمام الدفع، سيتم تعليق الاشتراك تلقائيًا إلى أن يقوم المشترك بتحديث بيانات الدفع الخاصة به.</p>
-
-              <h3 class="section-title">البند السادس: الخصوصية والأمان</h3>
-              <p>1. يتم التعامل مع جميع بيانات الدفع والمعلومات الشخصية للمشتركين وفقًا لـ<strong>سياسة الخصوصية</strong> المعتمدة لدى معاً للوساطة التجارية (معاً للتنمية)، بما يضمن السرية والحماية الكاملة للمعلومات.</p>
-
-              <h3 class="section-title">البند السابع: التعديلات على الشروط والأحكام</h3>
-              <p>1. تحتفظ شركة معاً للوساطة التجارية ذ.م.م (معاً للتنمية) بحق تعديل هذه الشروط والأحكام وفقًا لما تراه مناسبًا.</p>
-              <p>2. يتم إخطار المشتركين بأي تعديلات جوهرية عبر البريد الإلكتروني، ويُعتبر استمرار الاشتراك بعد الإشعار بهذه التعديلات <strong>موافقة ضمنية</strong> على الشروط الجديدة.</p>
+                <h1 class="mb-4 mt-5 text-center">الشروط والأحكام الخاصة بخدمة الاشتراك الشهري:</h1>
+                <h2 class="text-center">سياسة التجديد التلقائي والاشتراكات</h2>
+                <h3 class="section-title">البند الأول: التجديد التلقائي</h3>
+                <p>
+                    1-عند الاشتراك في أي من مشاريع وخدمات شركة معاً للوساطة التجارية ذ.م.م (معاً للتنمية)، يتم خصم قيمة الاشتراك الشهري تلقائيًا من الحساب المصرفي أو البطاقة المسجلة (بحسب الوسيلة المحددة من قبل المشترك) في ذات اليوم من كل شهر عند حلول موعد الاستحقاق.
+                </p>
+                <p>2-يُجدد الاشتراك تلقائيًا شهريًا ما لم يقم المشترك بإلغائه قبل ثلاثة أيام من تاريخ استحقاق الدفعة التالية.</p>
+                <h3 class="section-title">البند الثاني: إلغاء الاشتراك</h3>
+                <p>1-يحق للمشترك إلغاء اشتراكه حسب ما ورد أعلاه من خلال صفحة الحساب على موقع معاً للوساطة التجارية (معاً للتنمية).</p>
+                <p>2-يبقى الاشتراك نشطًا حتى نهاية دورة الفوترة الحالية، ولن يتم فرض أي رسوم إضافية بعد تاريخ الإلغاء.</p>
+                <p>3-لا يحق للمشترك المطالبة باسترداد أي مبالغ مدفوعة عن الفترات السابقة للإلغاء.</p>
+                <h3 class="section-title">البند الثالث: قيمة الاشتراك واستمرارية المشروع</h3>
+                <p>1-تمثل قيمة الاشتراك الشهري التزامًا مستمرًا لدعم تشغيل المشروع المحدد من قبل المشترك.</p>
+                <p>2-يمكن للمشترك تعديل قيمة الاشتراك الشهري أو تغيير وسيلة الدفع في أي وقت من خلال حسابه الشخصي على موقع معاً للوساطة التجارية (معاً للتنمية).</p>
+                <p>3-في حال تعديل قيمة الاشتراك، يتم تطبيق القيمة الجديدة اعتبارًا من دورة الفوترة التالية.</p>
+                <h3 class="section-title">البند الرابع: إشعارات الدفع</h3>
+                <p>يتلقى المشترك عقدًا وإيصال قبض إلكتروني بعد كل عملية دفع ناجحة، يتضمن تفاصيل المبلغ المدفوع وبنود الاشتراك، وذلك عبر البريد الإلكتروني أو عبر تطبيق واتساب، وفقًا للمعلومات المسجلة لدى الشركة.</p>
+                <h3 class="section-title">البند الخامس: مشاكل في عملية الدفع</h3>
+                <p>1-في حال عدم تمكن النظام من إتمام عملية الخصم لأي سبب (مثل عدم كفاية الرصيد أو انتهاء صلاحية البطاقة)، سيتم محاولة الخصم مرة أخرى خلال ثلاثة أيام من تاريخ عدم إتمام الدفع.</p>
+                <p>2-إذا استمر عدم إتمام الدفع، سيتم تعليق الاشتراك تلقائيًا إلى أن يقوم المشترك بتحديث بيانات الدفع الخاصة به.</p>
+                <h3 class="section-title">البند السادس: الخصوصية والأمان</h3>
+                <p>1-يتم التعامل مع جميع بيانات الدفع والمعلومات الشخصية للمشتركين وفقًا لسياسة الخصوصية المعتمدة لدى معاً للوساطة التجارية (معاً للتنمية)، بما يضمن السرية والحماية الكاملة للمعلومات.</p>
+                <h3 class="section-title">البند السابع: التعديلات على الشروط والأحكام</h3>
+                <p>
+                    1-تحتفظ شركة معاً للوساطة التجارية ذ.م.م (معاً للتنمية) بحق تعديل هذه الشروط والأحكام وفقًا لما تراه مناسبًا.
+                </p>
+                <p>2-يتم إخطار المشتركين بأي تعديلات جوهرية عبر البريد الإلكتروني، ويُعتبر استمرار الاشتراك بعد الإشعار بهذه التعديلات موافقة ضمنية على الشروط الجديدة.</p>
             }
             @else{
-              <h3 class="section-title">Clause 1: Automatic Renewal</h3>
-              <p>1. Upon subscribing to any of the projects or services offered by <strong>Together for Intermediation Services LLC (Together for Development)</strong>, the monthly subscription fee shall be automatically deducted from the subscriber’s designated bank account or registered payment card (as per the payment method specified by the subscriber) on the same day each month when the payment becomes due.</p>
-              <p>2. The subscription shall <strong>automatically renew</strong> on a monthly basis unless the subscriber cancels the subscription <span class="highlight">at least three (3) days prior</span> to the next scheduled payment due date.</p>
-
-              <h3 class="section-title">Clause 2: Subscription Cancellation</h3>
-              <p>1. The subscriber may cancel their subscription, as outlined above, through their personal account page on the Company’s website.</p>
-              <p>2. The subscription will remain active until the end of the current billing cycle, and no additional charges will be applied following the cancellation date.</p>
-              <p>3. The subscriber is <strong>not entitled to a refund</strong> for any amounts paid for periods prior to cancellation.</p>
-
-              <h3 class="section-title">Clause 3: Subscription Value and Project Continuity</h3>
-              <p>1. The monthly subscription fee constitutes a continuous financial obligation for the operation of the selected project.</p>
-              <p>2. The subscriber may modify the monthly subscription fee or alter the payment method at any time through their personal account on the Company’s website.</p>
-              <p>3. In the event of a modification to the subscription fee, the revised amount will take effect starting from the <span class="highlight">subsequent billing cycle</span>.</p>
-
-              <h3 class="section-title">Clause 4: Payment Notifications</h3>
-              <p>After each successful transaction, the subscriber will receive an agreement and payment receipt electronically, which will include the details of the amount paid and the terms of the subscription. These notifications will be sent via <strong>email</strong> or <strong>WhatsApp</strong>, depending on the contact information provided to the Company.</p>
-
-              <h3 class="section-title">Clause 5: Payment Issues</h3>
-              <p>1. If the system is unable to complete the payment transaction due to any reason (e.g., insufficient funds or expired card), the payment will be retried <span class="highlight">within three days</span> of the unsuccessful attempt.</p>
-              <p>2. If the payment remains incomplete, the subscription will be <strong>automatically suspended</strong> until the subscriber updates their payment details.</p>
-
-              <h3 class="section-title">Clause 6: Privacy and Security</h3>
-              <p>1. All payment data and personal information provided by the subscriber will be processed in accordance with the Company’s <strong>Privacy Policy</strong>, ensuring the confidentiality and security of such information.</p>
-
-              <h3 class="section-title">Clause 7: Amendments to Terms &amp; Conditions</h3>
-              <p>1. The Company reserves the right to amend these terms and conditions at its discretion.</p>
-              <p>2. Subscribers will be notified of any material changes via email, and continued subscription following such notification will be deemed as <strong>acceptance of the revised terms</strong> and conditions.</p>
+                <h1 class="mb-4 mt-5">Terms and Conditions for Monthly Subscription Service</h1>
+                <h2 class="text-center">Automatic Renewal and Subscription Policy</h2>
+                <h3 class="section-title">Clause 1: Automatic Renewal</h3>
+                <p>1-Upon subscribing to any of the projects or services offered by Together for Intermediation Services LLC (Together for Development), the monthly subscription fee shall be automatically deducted from the subscriber’s designated bank account or registered payment card (as per the payment method specified by the subscriber) on the same day each month when the payment becomes due.</p>
+                <p>2-The subscription shall automatically renew on a monthly basis unless the subscriber cancels the subscription at least three (3) days prior to the next scheduled payment due date.</p>
+                <h3 class="section-title">Clause 2: Subscription Cancellation</h3>
+                <p>1-The subscriber may cancel their subscription, as outlined above, through their personal account page on the Company’s website.</p>
+                <p>2-The subscription will remain active until the end of the current billing cycle, and no additional charges will be applied following the cancellation date.</p>
+                <p>3-The subscriber is not entitled to a refund for any amounts paid for periods prior to cancellation.</p>
+                <h3 class="section-title">Clause 3: Subscription Value and Project Continuity</h3>
+                <p>1-The monthly subscription fee constitutes a continuous financial obligation for the operation of the selected project.</p>
+                <p>2-The subscriber may modify the monthly subscription fee or alter the payment method at any time through their personal account on the Company’s website.</p>
+                <p>3-In the event of a modification to the subscription fee, the revised amount will take effect starting from the subsequent billing cycle.</p>
+                <h3 class="section-title">Clause 4: Payment Notifications</h3>
+                <p>After each successful transaction, the subscriber will receive an agreement and payment receipt electronically, which will include the details of the amount paid and the terms of the subscription. These notifications will be sent via email or WhatsApp, depending on the contact information provided to the Company.</p>
+                <h3 class="section-title">Clause 5: Payment Issues</h3>
+                <p>1-If the system is unable to complete the payment transaction due to any reason (e.g., insufficient funds or expired card), the payment will be retried within three days of the unsuccessful attempt.</p>
+                <p>2-If the payment remains incomplete, the subscription will be automatically suspended until the subscriber updates their payment details.</p>
+                <h3 class="section-title">Clause 6: Privacy and Security</h3>
+                <p>1-All payment data and personal information provided by the subscriber will be processed in accordance with the Company’s Privacy Policy, ensuring the confidentiality and security of such information.</p>
+                <h3 class="section-title">Clause 7: Amendments to Terms and Conditions</h3>
+                <p>1-The Company reserves the right to amend these terms and conditions at its discretion.</p>
+                <p>2-Subscribers will be notified of any material changes via email, and continued subscription following such notification will be deemed as acceptance of the revised terms and conditions.</p>
             }
-          </div>
+
         </div>
-      </div>
     </div>
-  </section>
 </div>

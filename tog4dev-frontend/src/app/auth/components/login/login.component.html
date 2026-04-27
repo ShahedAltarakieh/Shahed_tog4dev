@@ -1,85 +1,64 @@
-<div class="auth-page">
-    <!-- Hero -->
-    <section class="hero-section">
-        <div class="hero-pattern" aria-hidden="true"></div>
-        <div class="container">
-            <div class="hero-content text-center text-white">
-                <span class="hero-badge">{{ 'login' | translate }}</span>
-                <h1 class="page-title">{{ 'welcome back' | translate }}</h1>
-                <p class="hero-subtitle">{{ "welcome back! Log in to access your account and join us in making a difference. choose your preferred method to get started." | translate }}</p>
-            </div>
-        </div>
-    </section>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5 col-sm-7 col-12">
 
-    <!-- Form Card -->
-    <section class="auth-form-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-6 col-md-8 col-sm-10 col-12">
-                    <div class="auth-form-card">
-                        <div class="form-header">
-                            <span class="form-eyebrow">{{ 'login' | translate }}</span>
-                            <h2 class="form-title">{{ 'sign in to your account' | translate }}</h2>
-                            <p class="form-desc">{{ 'enter your credentials to continue' | translate }}</p>
-                        </div>
-
-                        <div class="signup-platforms d-none">
-                            <ul class="list-unstyled d-flex">
-                                <li class="signup-platforms-item"><button class="signup-platforms-item-btn"><img alt="apple" src="/app/assets/images/auth/apple.svg"></button></li>
-                                <li class="signup-platforms-item"><button class="signup-platforms-item-btn"><img alt="facebook" src="/app/assets/images/auth/facebook.svg"></button></li>
-                                <li class="signup-platforms-item"><button class="signup-platforms-item-btn"><img alt="google" src="/app/assets/images/auth/google.svg"></button></li>
-                            </ul>
-                        </div>
-
-                        <form (submit)="loginUser($event)" class="form-container">
-                            <div class="input-container">
-                                <app-basic-input
-                                    [inputAttr]="{ id: 'email', name: 'email', label: 'e-mail', placeholder: 'enter your email', isRequired: true, icon: 'email'}"
-                                    [value]="loginService.loginForm.email.value"
-                                    [errorMsg]="loginService.loginForm.email.errorMsg"
-                                    inputType="email"
-                                    (valueChanged)="loginService.loginForm.email.value = $event"
-                                    (errorChanged)="emailErrorHandler($event)"
-                                />
-
-                                <app-basic-input
-                                    [inputAttr]="{ id: 'password', name: 'password', label: 'password', placeholder: 'enter your password', isRequired: true, icon: 'eye'}"
-                                    [value]="loginService.loginForm.password.value"
-                                    [errorMsg]="loginService.loginForm.password.errorMsg"
-                                    inputType="password"
-                                    (valueChanged)="loginService.loginForm.password.value = $event"
-                                    (errorChanged)="passwordErrorHandler($event)"
-                                />
-                            </div>
-
-                            <div class="form-row-actions">
-                                <div class="remember-me-container">
-                                    <input type="checkbox" id="remember-me" name="remember-me" (input)="onRememberMeCheck($event)">
-                                    <label for="remember-me">{{ 'remember me' | translate }}</label>
-                                </div>
-                                <a [routerLink]="storageService.localized(forgetRoutes)" class="forget-password">{{ "forget password?" | translate }}</a>
-                            </div>
-
-                            <div class="alert alert-danger p-2" style="font-size:14px;" *ngIf="error_message">
-                                {{ error_message | translate }}
-                            </div>
-
-                            <button
-                                class="submit-btn btn"
-                                type="submit"
-                                [disabled]="(!loginService.loginForm.email.isValid || !loginService.loginForm.password.isValid) || isLoading"
-                            >
-                                {{ "login" | translate}}
-                            </button>
-                        </form>
-
-                        <p class="auth-switch text-center">
-                            {{ "don't have an account?" | translate }}
-                            <a [routerLink]="storageService.localized(signupRoutes)">{{ "sign up" | translate }}</a>
-                        </p>
-                    </div>
+            <div class="login-section bg-white">
+                <h1 class="login-title">{{ "login" | translate }}</h1>
+                
+                <p class="login-desc">{{ "welcome back! Log in to access your account and join us in making a difference. choose your preferred method to get started." | translate }}</p>
+                
+                <div class="signup-platforms d-none">
+                    <ul class="list-unstyled d-flex">
+                        <li class="signup-platforms-item"><button class="signup-platforms-item-btn"><img alt="apple" src="/app/assets/images/auth/apple.svg"></button></li>
+                        <li class="signup-platforms-item"><button class="signup-platforms-item-btn"><img alt="facebook" src="/app/assets/images/auth/facebook.svg"></button></li>
+                        <li class="signup-platforms-item"><button class="signup-platforms-item-btn"><img alt="google" src="/app/assets/images/auth/google.svg"></button></li>
+                    </ul>
                 </div>
+
+                <div class="separator"></div>
+
+                <form (submit)="loginUser($event)" class="form-container">
+                    <div class="input-container">
+                        <app-basic-input 
+                            [inputAttr]="{ id: 'email', name: 'email', label: 'e-mail', placeholder: 'enter your email', isRequired: true, icon: 'email'}"
+                            [value]="loginService.loginForm.email.value"
+                            [errorMsg]="loginService.loginForm.email.errorMsg"
+                            inputType="email"
+                            (valueChanged)="loginService.loginForm.email.value = $event"
+                            (errorChanged)="emailErrorHandler($event)"
+                        />
+
+                        <app-basic-input 
+                            [inputAttr]="{ id: 'password', name: 'password', label: 'password', placeholder: 'enter your password', isRequired: true, icon: 'eye'}"
+                            [value]="loginService.loginForm.password.value"
+                            [errorMsg]="loginService.loginForm.password.errorMsg"
+                            inputType="password"
+                            (valueChanged)="loginService.loginForm.password.value = $event"
+                            (errorChanged)="passwordErrorHandler($event)"
+                        />
+                    </div>
+
+                    <div class="remember-me-container">
+                        <input type="checkbox" id="remember-me" name="remember-me" (input)="onRememberMeCheck($event)">
+                        <label for="remember-me">{{ 'remember me' | translate }}</label>
+                    </div>
+
+                    <a  [routerLink]="forgetRoutes[storageService.siteLanguage$.value]" class="forget-password mb-2 d-block">{{ "forget password?" | translate }}</a>
+                    <div class="alert alert-danger p-2" style="font-size:14px;" *ngIf="error_message">
+                        {{ error_message | translate }}
+                    </div>
+                    <button
+                        class="submit-btn btn w-100" 
+                        type="submit"
+                        [disabled]="(!loginService.loginForm.email.isValid || !loginService.loginForm.password.isValid) || isLoading"
+                    >
+                        {{ "login" | translate}}
+                    </button>
+                </form>
+                <p class="text-center mt-3">
+                    {{ "don't have an account?" | translate }} <a [routerLink]="signupRoutes[storageService.siteLanguage$.value]">{{ "sign up" | translate }}</a>.
+                </p>
             </div>
         </div>
-    </section>
+    </div>
 </div>

@@ -55,7 +55,7 @@ export class NewsGalleryMainComponent implements OnInit, OnDestroy {
     fetchAll(): void {
         this.loading = true;
         this.hasError = false;
-        const lang = this.storageService.siteLanguage$.value as string;
+        const lang = this.storageService.siteLanguage$.value as 'ar' | 'en';
         const searchParam = this.searchQuery || undefined;
 
         forkJoin({

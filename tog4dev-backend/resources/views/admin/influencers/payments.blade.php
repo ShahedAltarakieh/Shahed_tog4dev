@@ -1,8 +1,8 @@
 @extends('layouts.admin.show')
-@section('title') {{ __('app.influencer_payments') }} @endsection
+@section('title') {{ __('app.Payments') }} @endsection
 
 @section('content')
-@include('includes.admin.header', ['label_name' => __('app.influencer_payments')])
+@include('includes.admin.header', ['label_name' => __('app.payments')])
 <div class='row mt-3'>
     <div class="col-md-12">
         <div class="widget-rounded-circle card-box">

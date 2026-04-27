@@ -121,31 +121,16 @@
                                 <input type="file" id="image" name="image" data-plugins="dropify"
                                     data-default-file="{{ old('image', $data->image) }}" data-height="200"
                                     data-allowed-file-extensions="png jpg jpeg webp" />
-                                @include('includes.admin.image-upload-notes', [
-                                    'recommendedSize' => '404 x 200 px',
-                                    'maxSize' => '5 MB',
-                                    'extensions' => 'png,jpg,jpeg,webp'
-                                ])
                             </div>
                             <div class="form-group col-4">
                                 <label for="image_tablet">{{ __('app.image') }} (Tablet) (404x200)</label>
                                 <input type="file" id="image_tablet" name="image_tablet" data-plugins="dropify" data-height="200"
                                     data-default-file="{{ old('image_tablet', $data->image_tablet) }}" data-allowed-file-extensions="png jpg jpeg webp" />
-                                @include('includes.admin.image-upload-notes', [
-                                    'recommendedSize' => '404 x 200 px',
-                                    'maxSize' => '5 MB',
-                                    'extensions' => 'png,jpg,jpeg,webp'
-                                ])
                             </div>
                             <div class="form-group col-4">
                                 <label for="image_mobile">{{ __('app.image') }} (Mobile) (404x200)</label>
                                 <input type="file" id="image_mobile" name="image_mobile" data-plugins="dropify" data-height="200"
                                     data-default-file="{{ old('image_mobile', $data->image_mobile) }}" data-allowed-file-extensions="png jpg jpeg webp" />
-                                @include('includes.admin.image-upload-notes', [
-                                    'recommendedSize' => '404 x 200 px',
-                                    'maxSize' => '5 MB',
-                                    'extensions' => 'png,jpg,jpeg,webp'
-                                ])
                             </div>
 
                             <!-- Image EN -->

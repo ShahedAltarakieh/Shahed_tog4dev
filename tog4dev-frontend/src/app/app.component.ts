@@ -1,17 +1,13 @@
 import {AfterViewInit, ChangeDetectorRef, Component, OnInit, Inject, PLATFORM_ID} from '@angular/core';
 import {Location, NgIf, isPlatformBrowser} from '@angular/common';
-import {RouterOutlet, ActivatedRoute, Router, NavigationStart, NavigationEnd, NavigationError, ActivatedRouteSnapshot} from '@angular/router';
-import { PageMaintenanceService, PageMaintenanceInfo } from './shared/services/page-maintenance/page-maintenance.service';
-import { MaintenancePageComponent } from './shared/components/maintenance-page/maintenance-page.component';
+import {RouterOutlet, ActivatedRoute, Router, NavigationStart, NavigationEnd, NavigationError} from '@angular/router';
 
-import { StorageService, AppLanguage } from './core/storage/storage.service';
-import { LanguagesService } from './core/languages/languages.service';
+import { StorageService } from './core/storage/storage.service';
 import { TextDirectionService } from 'app/text-direction.service';
 import { TranslateService } from '@ngx-translate/core';
 
 import { FooterComponent } from './layouts/footer/footer.component';
 import { HeaderComponent } from './layouts/header/header.component';
-import { AnnouncementBarComponent } from './shared/components/announcement-bar/announcement-bar.component';
 
 import { routeTranslations } from 'app/route-translations';
 import { ApiService } from 'app/core/api/api.service';
@@ -23,12 +19,11 @@ import { CookieService } from "ngx-cookie-service";
 import {BasketService} from "./shared/services/basket/basket.service";
 import {CartService} from "./shared/services/cart/cart.service";
 import {LoaderComponent} from "./shared/components/loader/loader.component";
-import {ScrollToTopComponent} from "./shared/components/scroll-to-top/scroll-to-top.component";
 import { environment } from 'environments/environment';
 import { GoogleTagManagerService } from './shared/services/google-tag-manager-service/google-tag-manager-service.service';
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet, HeaderComponent, FooterComponent, LoaderComponent, NgIf, AnnouncementBarComponent, MaintenancePageComponent, ScrollToTopComponent],
+    imports: [RouterOutlet, HeaderComponent, FooterComponent, LoaderComponent, NgIf],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
@@ -36,9 +31,8 @@ export class AppComponent implements OnInit, AfterViewInit{
   private apiUrl = environment.apiUrl;
   private isProd = environment.production;
   title = 'Together for Development';
-  isLoading = true;
+  isLoading = false;
   translatedRoutes!: { [route: string]: string; };
-  maintenanceInfo: PageMaintenanceInfo | null = null;
 
   constructor( 
     public directionService: TextDirectionService,
@@ -55,12 +49,10 @@ export class AppComponent implements OnInit, AfterViewInit{
     private route: ActivatedRoute,
     public apiService: ApiService,
     private gtm: GoogleTagManagerService,
-    public pageMaintenanceService: PageMaintenanceService,
-    private languagesService: LanguagesService,
     @Inject(PLATFORM_ID) private platformId: Object
    ) {
-    // Bootstrap with the fallback list so SSR has something before the API resolves.
-    translate.addLangs(this.storageService.availableLanguages$.value.map(l => l.code));
+    translate.addLangs(['en', 'ar']);
+        const queryParams = { ...this.route.snapshot.queryParams };
   }
 
   ngAfterViewInit() {
@@ -90,39 +82,11 @@ export class AppComponent implements OnInit, AfterViewInit{
     });
   }
 
-  ngOnInit(): void {
-    // Load admin-managed languages, then resolve the active language from the URL.
-    this.languagesService.load().subscribe(() => {
-      this.translate.addLangs(this.storageService.availableLanguages$.value.map(l => l.code));
-      this.setSiteLanguageFromUrl(true);
-      this.languagesService.startAutoRevalidation();
-    });
-
-    // Revalidate on navigation + tab focus so admin changes propagate immediately.
-    if (isPlatformBrowser(this.platformId)) {
-      this.router.events
-        .pipe(filter(e => e instanceof NavigationEnd))
-        .subscribe(() => this.languagesService.refresh().subscribe());
-      window.addEventListener('focus', () => this.languagesService.refresh().subscribe());
-    }
-
-    // Initial resolution using fallback list so SSR/early render is correct.
+  ngOnInit(): void { 
     this.setSiteLanguageFromUrl();
-
-    this.storageService.siteLanguage$.subscribe((lang: string) => {
+  
+    this.storageService.siteLanguage$.subscribe((lang: 'en' | 'ar') => {
       this.handleSiteLanguage(lang);
-    });
-
-    // Page maintenance: load on both server (SSR) and browser so the initial
-    // SSR render reflects maintenance state instead of flickering after hydration.
-    this.pageMaintenanceService.load().subscribe(() => {
-      this.updateMaintenanceForCurrentRoute();
-    });
-
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.updateMaintenanceForCurrentRoute();
-      }
     });
 
     if (!isPlatformBrowser(this.platformId)) {
@@ -138,9 +102,6 @@ export class AppComponent implements OnInit, AfterViewInit{
         }, 1000)
       }
     });
-
-    // Safety: hide initial-load loader after 1.5s even if no NavigationEnd fires
-    setTimeout(() => { this.isLoading = false; }, 1500);
 
     if(this.isProd){
       if (window.location.protocol !== 'https:') {
@@ -220,85 +181,19 @@ export class AppComponent implements OnInit, AfterViewInit{
   /**
    * Used to handle the site translation, cotent and routes
    */
-  /**
-   * Walks the activated route tree to find the deepest `data.pageKey` and
-   * checks the page maintenance service. If the page is currently under
-   * update, sets `maintenanceInfo` so the template renders the maintenance
-   * screen instead of the router-outlet.
-   */
-  updateMaintenanceForCurrentRoute(): void {
-    let snap: ActivatedRouteSnapshot | null = this.route.snapshot;
-    let pageKey: string | undefined;
-    while (snap) {
-      if (snap.data && snap.data['pageKey']) {
-        pageKey = snap.data['pageKey'];
-      }
-      snap = snap.firstChild;
-    }
-    this.maintenanceInfo = this.pageMaintenanceService.getActive(pageKey);
-  }
-
-  setSiteLanguageFromUrl(allowRedirect: boolean = false): void {
-    const rawPath = this.location.path() || '/';
-    // `Location.path()` includes search/hash; isolate the pathname so we don't
-    // double-append query strings when constructing redirects.
-    const path = rawPath.split('?')[0].split('#')[0];
-    const segments = path.split('/').filter(Boolean);
-    const firstSegment = segments[0] ? decodeURIComponent(segments[0]).toLowerCase() : '';
-
-    const known = this.storageService.findLanguage(firstSegment);
-    if (known) {
-      if (this.storageService.siteLanguage$.value !== known.code) {
-        this.storageService.siteLanguage$.next(known.code);
-      }
-      return;
-    }
-
-    // BCP-47 prefix check (mirrors backend LanguageAdminController regex).
-    const looksLikeLangAttempt = !!firstSegment
-      && /^[a-z]{2,10}(-[a-z0-9]{2,10})?$/.test(firstSegment);
-
-    // Per spec: an *unknown* `/xx/...` segment must redirect to the configured
-    // default language, never to a persisted user preference. The stored
-    // preference is only used when the URL has no language segment at all
-    // (e.g., bookmarked root `/`).
-    const defaultCode = this.storageService.defaultLanguage || 'en';
-    let activeCode = defaultCode;
-    if (!firstSegment) {
-      const stored = this.storageService.getStoredLanguage();
-      if (stored && this.storageService.isKnownCode(stored)) { activeCode = stored; }
-    }
-    this.storageService.siteLanguage$.next(activeCode);
-
-    if (allowRedirect && isPlatformBrowser(this.platformId)) {
-      const remainder = segments.slice(1).join('/');
-      // Preserve query string + fragment so the redirect is transparent.
-      const search = (typeof window !== 'undefined' && window.location) ? window.location.search : '';
-      const hash = (typeof window !== 'undefined' && window.location) ? window.location.hash : '';
-      if (looksLikeLangAttempt) {
-        const target = '/' + defaultCode + (remainder ? '/' + remainder : '') + search + hash;
-        this.router.navigateByUrl(target);
-      } else if (!firstSegment && activeCode !== defaultCode) {
-        // Root path with stored preference — route to that language.
-        this.router.navigateByUrl('/' + activeCode + search + hash);
-      }
-    }
+  setSiteLanguageFromUrl(): void {
+    const siteLanguage = this.location.path().includes('/ar') ? 'ar' : 'en';
+    this.storageService.siteLanguage$.next(siteLanguage);
   }
 
   /**
    * Used to handle the site ( content and routes ) Language
-   * @param lang language code (e.g. 'en', 'ar', 'fr')
+   * @param lang en or ar
    */
-  handleSiteLanguage = (lang: string): void => {
+  handleSiteLanguage = (lang: 'en' | 'ar'): void => {
     this.translate.use(lang);
-
-    const langDef: AppLanguage | undefined = this.storageService.findLanguage(lang);
-    this.directionService.setDirection(lang, langDef?.direction);
-
-    // Legacy hard-coded route translations only cover EN/AR; gracefully no-op
-    // for new languages so the switcher still works (URLs just keep their
-    // current path and only swap the leading language segment).
-    this.translatedRoutes = routeTranslations[lang] || routeTranslations[this.storageService.defaultLanguage] || {};
+    this.directionService.setDirection(lang);
+    this.translatedRoutes = routeTranslations[lang];
   }
 
   generateSessionID() {

@@ -1,134 +1,344 @@
-<div class="ngoverse-page" [attr.dir]="currentLang === 'ar' ? 'rtl' : 'ltr'" [attr.lang]="currentLang">
+<div class="container">
+    <div class="row mb-5 justify-content-center">
+        <div class="col-12">
+            @if(storageService.siteLanguage$.value == "ar"){
+                <section id="price-section">
+                    <div class="container">
+                        <div class="row justify-content-center gapsectionsecond">
+                            <div class="col-lg-7 text-center">
+                                <div class="title-big pb-3 mb-3">
+                                    <h2>عالم المنظمات</h2>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <app-ngoverse-slider />
+                            </div>
+                            <div class="col-lg-7 text-center">
+                                <p class="description-p pe-0 pe-lg-0">
+                                    اختر الخطة المناسبة لنمو منظمتك<br>
+                                    نمكّن المنظمات غير الربحية من تطوير عملياتها، وتعزيز تواصلها مع العملاء، وتوسيع أثرها من خلال حلول رقمية ذكية.<br>
+                                    استكشف خططنا المرنة المصممة لتلبية احتياجات منظمتك، سواء كنت تسعى لإطلاق حضورك الرقمي، أو إدارة الموارد المالية، أو إدارة العمليات المالية الكاملة.<br>                                </p>
+                            </div>
+                        </div>
+                        <div class="row pt-5">
+                            <div class="col-lg-4 pb-5 pb-lg-0">
+                                <div class="wrap-price">
+                                    <div class="price-innerdetail text-center">
+                                        <h5 class="primary-color">🥈 الخطة الفضية 🥈</h5>
+                                        <p class="prices" style="font-weight:bold">100 دولار شهرياً أو 1000 دولار سنوياً</p>
+                                        <p>الأفضل للمنظمات غير الربحية التي ترغب في اطلاق موقعها الإلكتروني.</p>
+                                        <ul class="text-end custom-bullets ar">
+                                            <li class="detail-pricing">
+                                                <span>موقع إخباري ديناميكي</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>تحصيل العمليات المالية عبر الإنترنت</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>دمج كامل مع بوابات الدفع الإلكتروني</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>لوحة تحكم ذكية للإدارة</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>إدارة وتحديث المحتوى بسهولة</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>تجربة مستخدم وتصميم واجهة احترافي</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>تصميم موقع متجاوب مع جميع الأجهزة</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>إمكانية تحديث الأخبار بسرعة</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>جاهز للتكامل مع أنظمة الـ ERP</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>إصدار العقود والفواتير بشكل آلي</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>خدمة "هدية الخير"</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>دعم العملات المتعددة</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>دعم تعدد اللغات</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>وحدة تقارير إدارية</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>دعم فني عبر الإنترنت وفقاً لاتفاقية مستوى الخدمة (SLA) النهائية</span>
+                                            </li>
+                                        </ul>   
+                                        <small class="text-muted text-end d-block">ملاحظة: لا تشمل الخطة تصميم مخصص للواجهة، إدارة النطاق، الاستضافة، إدارة النسخ الاحتياطي أو التكامل مع أنظمة أخرى.</small>
+                                        <div class="mt-3 d-flex flex-column align-items-center d-none">
+                                            <button class="button-secondary my-2 w-150 border-radius-28">$100/{{ 'monthly' | translate }} </button>
+                                            <button class="button-secondary my-2 w-150 border-radius-28">$1000/{{ 'yearly' | translate }} </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 pb-5 pb-lg-0">
+                                <div class="wrap-price">
+                                    <div class="price-innerdetail text-center">
+                                        <h5 class="primary-color">🥇 الخطة الذهبية 🥇</h5>
+                                        <p class="prices" style="font-weight:bold">150 دولاراً شهرياً أو 1500 دولار سنوياً</p>
+                                        <p>مثالية للمنظمات غير الربحية التي تحتاج إلى إدارة كاملة للعمليات والعملاء.</p>
+                                        <ul class="text-end custom-bullets ar">
+                                            <li class="detail-pricing">
+                                                <span>نظام ERP مالي مصمم خصيصاً للمنظمات غير الربحية</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>وحدة محاسبية متقدمة</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>نظام CRM لإدارة العملاء</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>نظام إدارة المخزون</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>تكامل مع الموقع الإلكتروني وبوابة الدفع</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>إصدار الفواتير والعقود والإيصالات بشكل آلي</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>قوالب تواصل قابلة للتخصيص مع العملاء</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>مبني على منصة اودو</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>يشمل 3 تراخيص مستخدمين</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>لوحات تحكم وتقارير مالية لحظية</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>دعم فني عبر الإنترنت وفقاً لاتفاقية مستوى الخدمة (SLA) النهائية</span>
+                                            </li>
+                                        </ul>
+                                        <small class="text-muted text-end d-block">ملاحظة: لا تشمل الخطة تصميم واجهة مخصصة، إدارة النطاق، أو الاستضافة، أو إدارة النسخ الاحتياطي، أو التكامل مع أنظمة أخرى.</small>
+                                        <div class="mt-3 d-flex flex-column align-items-center d-none">
+                                            <button class="button-secondary my-2 w-150 border-radius-28">$150/{{ 'monthly' | translate }} </button>
+                                            <button class="button-secondary my-2 w-150 border-radius-28">$1500/{{ 'yearly' | translate }} </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 pb-5 pb-lg-0">
+                                <div class="wrap-price">
+                                    <div class="price-innerdetail text-center">
+                                        <h5 class="primary-color">🏆 الخطة البلاتينية 🏆</h5>
+                                        <p class="prices" style="font-weight:bold">225 دولاراً شهرياً أو 2250 دولاراً سنوياً</p>
+                                        <p>الحل الأمثل حيث يجمع بين الخطة الفضية والخطة الذهبية لتحقيق نمو شامل.</p>
+                                        <ul class="text-end custom-bullets ar">
+                                            <li class="detail-pricing">
+                                                <span>كل ما هو متوفر في الخطة الفضية</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>كل ما هو متوفر في الخطة الذهبية</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>دعم فني ذو أولوية (استجابات أسرع) وفقاً لاتفاقية مستوى الخدمة (SLA)</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>تقارير وتحليلات متقدمة ومتكاملة</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>عدد غير محدود من المشاريع والحملات الإلكترونية</span>
+                                            </li>
+                                        </ul>
+                                        <small class="text-muted text-end d-block">ملاحظة: لا تشمل الخطة تصميم واجهة مخصصة، إدارة النطاق، الاستضافة، إدارة النسخ الاحتياطي، أو التكامل مع أنظمة أخرى.</small>
+                                        <div class="mt-3 d-flex flex-column align-items-center d-none">
+                                            <button class="button-secondary my-2 w-150 border-radius-28">$225/{{ 'monthly' | translate }} </button>
+                                            <button class="button-secondary my-2 w-150 border-radius-28">$2250/{{ 'yearly' | translate }} </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            }
+            @else{
+                <section id="price-section">
+                    <div class="container">
+                        <div class="row justify-content-center gapsectionsecond">
+                            <div class="col-lg-7 text-center">
+                                <div class="title-big pb-3 mb-3">
+                                    <h2>NGOverse</h2>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <app-ngoverse-slider />
+                            </div>
+                            <div class="col-lg-7 text-center">
+                                <p class="description-p pe-0 pe-lg-0">
+                                    Choose the Right Plan for Your NGO’s Growth<br>
+                    We empower NGOs to streamline their operations, connect with clients, and scale their impact through smart digital solutions.<br>
+                    Explore our flexible plans designed to meet your organization's needs whether you’re building your online presence, Financial Resource Management, or running full financial operations.<br>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row pt-5">
+                            <div class="col-lg-4 pb-5 pb-lg-0">
+                                <div class="wrap-price">
+                                    <div class="price-innerdetail text-center">
+                                        <h5 class="primary-color">🥈 Silver Plan 🥈</h5>
+                                        <p class="prices" style="font-weight:bold">$100/month or $1,000/year</p>
+                                        <p>Best for NGOs looking to launch and manage their online presence.</p>
+                                        <ul class="text-start custom-bullets">
+                                            <li class="detail-pricing">
+                                                <span>Dynamic News Website</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Online Clients Collection</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Full Payment Gateway Integration</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Smart Admin Dashboard</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Easy content managements & updates</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Professional UX/UI</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Responsive Website Design</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Fast News Updates capability</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Ready For ERP Integration</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Automated Invoice & Contract issuing</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>"Gift of Goodness" Service</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Multi-Currency Support</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Multilingual Support</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Reporting consul</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Online support according to the final contract SLAs</span>
+                                            </li>
+                                        </ul>   
+                                        <small class="text-muted text-start d-block">Notice: UX/UI self theme, domain Managment, Hosting, Backup Managment & Integration with other systems are excluded.</small>
+                                        <div class="mt-3 d-flex flex-column align-items-center d-none">
+                                            <button class="button-secondary my-2 w-150 border-radius-28">$100/{{ 'monthly' | translate }} </button>
+                                            <button class="button-secondary my-2 w-150 border-radius-28">$1,000/{{ 'yearly' | translate }} </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 pb-5 pb-lg-0">
+                                <div class="wrap-price">
+                                    <div class="price-innerdetail text-center">
+                                        <h5 class="primary-color">🥇 Gold Plan 🥇</h5>
+                                        <p class="prices" style="font-weight:bold">$150/month or $1,500/year</p>
+                                        <p>Perfect for NGOs that need full operational and Financial Resource Management.</p>
+                                        <ul class="text-start custom-bullets">
+                                            <li class="detail-pricing">
+                                                <span>Financial ERP System tailored for NGOs</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Advanced Accounting Module</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>CRM for Client Management</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Inventory Management System</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Website and Payment Gateway Integration</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Automated Invoicing, Contract Management, and Receipt Issuance</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Customizable Client Communication Templates</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Built on Odoo platform</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Includes 3 User Licenses</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Real-time Financial Dashboards and Reports</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Online support according to the final contract SLAs</span>
+                                            </li>
+                                        </ul>
+                                        <small class="text-muted text-start d-block">Notice: UX/UI self theme, Domain Managment, Hosting, Backup Managment & Integration with other systems are excluded.</small>
+                                        <div class="mt-3 d-flex flex-column align-items-center d-none">
+                                            <button class="button-secondary my-2 w-150 border-radius-28">$150/{{ 'monthly' | translate }} </button>
+                                            <button class="button-secondary my-2 w-150 border-radius-28">$1,500/{{ 'yearly' | translate }} </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 pb-5 pb-lg-0">
+                                <div class="wrap-price">
+                                    <div class="price-innerdetail text-center">
+                                        <h5 class="primary-color">🏆 Platinum Plan 🏆   </h5>
+                                        <p class="prices" style="font-weight:bold">$225/month or $2,250/year</p>
+                                        <p>The ultimate solution combining Silver and Gold plans for full-scale growth.</p>
+                                        <ul class="text-start custom-bullets">
+                                            <li class="detail-pricing">
+                                                <span>Everything in the Silver Plan</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Everything in the Gold Plan</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Priority Support (faster response times) according to the SLA</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Advanced integrated reporting and Insights</span>
+                                            </li>
+                                            <li class="detail-pricing">
+                                                <span>Unlimited Website Projects and Campaigns</span>
+                                            </li>
+                                        </ul>
 
-  <!-- Hero -->
-  <section class="hero-section">
-    <div class="hero-pattern"></div>
-    <div class="container">
-      <div class="hero-content text-center">
-        <span class="hero-badge">NGOverse</span>
-        <h1 class="page-title text-white">
-          {{ currentLang === 'ar' ? 'عالم المنظمات غير الربحية' : 'A Universe Built for NGOs' }}
-        </h1>
-        <p class="hero-subtitle text-white">
-          {{ currentLang === 'ar'
-              ? 'اختر الخطة المناسبة لنمو منظمتك. نمكّن المنظمات غير الربحية من تطوير عملياتها، وتعزيز تواصلها مع العملاء، وتوسيع أثرها من خلال حلول رقمية ذكية.'
-              : 'Choose the right plan for your NGO\'s growth. We empower NGOs to streamline operations, connect with their community, and scale their impact through smart digital solutions.' }}
-        </p>
-        <div class="hero-actions">
-          <a href="#ngoverse-plans" class="hero-btn primary" (click)="scrollToPlans($event)">
-            <i class="fas fa-rocket"></i>
-            {{ currentLang === 'ar' ? 'اكتشف الخطط' : 'Explore Plans' }}
-          </a>
-          <a href="#ngoverse-contact" class="hero-btn ghost" (click)="scrollToContact($event)">
-            {{ currentLang === 'ar' ? 'تحدّث معنا' : 'Talk to Us' }}
-          </a>
+                                        <small class="text-muted text-start d-block">Notice: UX/UI self theme, domain Managment, Hosting, Backup Managment & Integration with other systems are excluded.</small>
+                                        <div class="mt-3 d-flex flex-column align-items-center d-none">
+                                            <button class="button-secondary my-2 w-150 border-radius-28">$225/{{ 'monthly' | translate }} </button>
+                                            <button class="button-secondary my-2 w-150 border-radius-28">$2,250/{{ 'yearly' | translate }} </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            }
+
         </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- Intro -->
-  <section class="ngoverse-section intro-section animate-on-scroll" id="ngoverse-plans">
-    <div class="container">
-      <div class="section-header">
-        <h2 class="section-title">
-          {{ currentLang === 'ar' ? 'خطط مرنة لكل منظمة' : 'Flexible Plans for Every NGO' }}
-        </h2>
-        <div class="title-decoration"><span></span></div>
-        <p class="section-subtitle">
-          {{ currentLang === 'ar'
-              ? 'استكشف خططنا المصممة لتلبية احتياجك، سواء كنت تطلق حضورك الرقمي أو تدير عمليات مالية متكاملة.'
-              : 'Explore plans crafted to meet your needs — from launching your online presence to running full financial operations.' }}
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pricing -->
-  <section class="ngoverse-section pricing-section animate-on-scroll">
-    <div class="container">
-      <div class="pricing-grid">
-        <div *ngFor="let plan of plans; let i = index"
-             class="plan-card"
-             [class.featured]="plan.featured"
-             [style.animation-delay]="(i * 0.12) + 's'">
-
-          <div class="plan-badge" *ngIf="plan.featured">
-            <i class="fas fa-star"></i>
-            <span>{{ plan[currentLang].badge }}</span>
-          </div>
-
-          <div class="plan-icon">
-            <i [class]="plan.icon"></i>
-          </div>
-
-          <h3 class="plan-name">{{ plan[currentLang].name }}</h3>
-          <p class="plan-desc">{{ plan[currentLang].description }}</p>
-
-          <div class="plan-price">
-            <span class="price-amount">{{ plan[currentLang].price_monthly }}</span>
-            <span class="price-period">/ {{ 'monthly' | translate }}</span>
-          </div>
-          <div class="plan-price-yearly">
-            {{ currentLang === 'ar' ? 'أو' : 'or' }}
-            <strong>{{ plan[currentLang].price_yearly }}</strong>
-            / {{ 'yearly' | translate }}
-          </div>
-
-          <ul class="plan-features" [class.ar]="currentLang === 'ar'">
-            <li *ngFor="let feature of plan[currentLang].features">
-              <i class="fas fa-check"></i>
-              <span>{{ feature }}</span>
-            </li>
-          </ul>
-
-          <p class="plan-note">{{ plan[currentLang].note }}</p>
-
-          <a href="#ngoverse-contact" class="plan-cta" (click)="scrollToContact($event)">
-            {{ plan[currentLang].cta }}
-            <i class="fas" [ngClass]="currentLang === 'ar' ? 'fa-arrow-left' : 'fa-arrow-right'"></i>
-          </a>
+        <div class="col-md-8 mt-5">
+            <p class="form-title text-center mb-4"> {{ "embrace the future of digital transformation with smart, innovative solutions." | translate }}<br>{{ "book your package now by filling out the form below" | translate }}.</p>
+            <app-contact-us-form [type]="3"/>
         </div>
-      </div>
     </div>
-  </section>
-
-  <!-- Contact / Custom plan -->
-  <section class="ngoverse-section contact-section animate-on-scroll" id="ngoverse-contact">
-    <div class="container">
-      <div class="contact-wrapper">
-        <div class="contact-intro">
-          <span class="contact-eyebrow">
-            {{ currentLang === 'ar' ? 'هل تحتاج خطة مخصصة؟' : 'Need a Custom Plan?' }}
-          </span>
-          <h2 class="contact-title">
-            {{ currentLang === 'ar' ? 'تحدّث مع فريقنا' : 'Talk to Our Team' }}
-          </h2>
-          <p class="contact-desc">
-            {{ currentLang === 'ar'
-                ? 'أخبرنا عن احتياجات منظمتك وسنرسم لك حلاً يناسب حجم عملك وأهدافك. سنرد عليك خلال 24 ساعة.'
-                : 'Tell us about your NGO\'s needs and we\'ll tailor a solution that fits your scale and goals. We respond within 24 hours.' }}
-          </p>
-          <ul class="contact-perks">
-            <li><i class="fas fa-check-circle"></i> {{ currentLang === 'ar' ? 'استشارة مجانية' : 'Free consultation' }}</li>
-            <li><i class="fas fa-check-circle"></i> {{ currentLang === 'ar' ? 'حلول قابلة للتوسع' : 'Scalable solutions' }}</li>
-            <li><i class="fas fa-check-circle"></i> {{ currentLang === 'ar' ? 'دعم محلي ومتعدد اللغات' : 'Local & multilingual support' }}</li>
-          </ul>
-        </div>
-
-        <div class="contact-form-card">
-          <div class="form-header">
-            <h3 class="form-title">
-              {{ currentLang === 'ar' ? 'أرسل لنا رسالة' : 'Send Us a Message' }}
-            </h3>
-            <p class="form-subtitle">
-              {{ currentLang === 'ar' ? 'املأ النموذج وسيتواصل معك فريقنا قريباً.' : 'Fill in the form and our team will reach out shortly.' }}
-            </p>
-          </div>
-          <app-contact-us-form [type]="3" />
-        </div>
-      </div>
-    </div>
-  </section>
-
 </div>

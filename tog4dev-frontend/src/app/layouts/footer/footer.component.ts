@@ -16,15 +16,15 @@ import { StorageService } from 'app/core/storage/storage.service';
     styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
-  contactUsRoutes: Record<string , string> = {
+  contactUsRoutes: Record<'ar' | 'en' , string> = {
     ar: 'ar/تواصل-معنا',
     en: 'en/contact-us'
   };
-  aboutUsRoutes: Record<string, string> = {
+  aboutUsRoutes: Record<'ar' | 'en', string> = {
     ar: 'ar/من-نحن',
     en: 'en/about-us',
   };
-  ngOverseRoutes: Record<string , string> = {
+  ngOverseRoutes: Record<'ar' | 'en' , string> = {
     ar: 'ar/عالم-المنظمات',
     en: 'en/ngoverse'
   };

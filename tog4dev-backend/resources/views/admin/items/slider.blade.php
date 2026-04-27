@@ -17,11 +17,6 @@
         <div class="form-group col-12">
             <input type="file" id="image_item" name="image_item" data-plugins="dropify" data-height="200"
                 data-allowed-file-extensions="png jpg jpeg webp" />
-            @include('includes.admin.image-upload-notes', [
-                'recommendedSize' => '1200 x 800 px',
-                'maxSize' => '5 MB',
-                'extensions' => 'png,jpg,jpeg,webp'
-            ])
         </div>
         <div class="col-12 m-2 text-center">
             <button type="submit" class="btn btn-primary">{{ __('app.save') }}</button>

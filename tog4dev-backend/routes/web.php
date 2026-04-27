@@ -29,7 +29,6 @@ use App\Http\Controllers\ShortLinkController;
 use App\Http\Controllers\Admin\NewsAdminController;
 use App\Http\Controllers\Admin\NewsCategoryAdminController;
 use App\Http\Controllers\Admin\GalleryAdminController;
-use App\Http\Controllers\Admin\AnnouncementAdminController;
 use App\Http\Controllers\AdminSystemController;
 /*
 |--------------------------------------------------------------------------
@@ -223,62 +222,6 @@ Route::group(
             Route::post('/change-status/{id}', [NewsCategoryAdminController::class, 'change_status'])->name('news-categories-admin.change_status');
         });
 
-        Route::prefix('contact-info')->middleware('master')->group(function () {
-            Route::get('/', [\App\Http\Controllers\Admin\ContactInfoAdminController::class, 'edit'])->name('contact-info-admin.edit');
-            Route::put('/', [\App\Http\Controllers\Admin\ContactInfoAdminController::class, 'update'])->name('contact-info-admin.update');
-        });
-
-        Route::prefix('about-management')->middleware('master')->group(function () {
-            Route::get('/', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'index'])->name('about-admin.index');
-            Route::get('/create', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'create'])->name('about-admin.create');
-            Route::post('/', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'store'])->name('about-admin.store');
-            Route::get('/{id}/edit', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'edit'])->name('about-admin.edit');
-            Route::put('/{id}', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'update'])->name('about-admin.update');
-            Route::delete('/{id}', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'destroy'])->name('about-admin.destroy');
-            Route::post('/{id}/publish', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'publish'])->name('about-admin.publish');
-            Route::post('/{id}/unpublish', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'unpublish'])->name('about-admin.unpublish');
-            Route::post('/{id}/rollback/{versionId}', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'rollback'])->name('about-admin.rollback');
-            Route::post('/{pageId}/sections/reorder', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'reorderSections'])->name('about-admin.sections.reorder');
-            Route::post('/{pageId}/sections/{sectionId}', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'updateSection'])->name('about-admin.sections.update');
-            Route::post('/{pageId}/sections/{sectionId}/toggle', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'toggleVisibility'])->name('about-admin.sections.toggle');
-            Route::post('/{pageId}/sections/{sectionId}/items', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'storeItem'])->name('about-admin.items.store');
-            Route::post('/{pageId}/sections/{sectionId}/items/reorder', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'reorderItems'])->name('about-admin.items.reorder');
-            Route::post('/{pageId}/sections/{sectionId}/items/{itemId}', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'updateItem'])->name('about-admin.items.update');
-            Route::delete('/{pageId}/sections/{sectionId}/items/{itemId}', [\App\Http\Controllers\Admin\AboutPageAdminController::class, 'deleteItem'])->name('about-admin.items.delete');
-        });
-
-        Route::prefix('nav-settings')->middleware('master')->group(function () {
-            Route::get('/', [\App\Http\Controllers\Admin\NavSettingController::class, 'index'])->name('nav-settings.index');
-            Route::put('/', [\App\Http\Controllers\Admin\NavSettingController::class, 'update'])->name('nav-settings.update');
-        });
-
-        Route::prefix('page-maintenance')->middleware('master')->group(function () {
-            Route::get('/', [\App\Http\Controllers\Admin\PageMaintenanceController::class, 'index'])->name('page-maintenance.index');
-            Route::put('/', [\App\Http\Controllers\Admin\PageMaintenanceController::class, 'update'])->name('page-maintenance.update');
-        });
-
-        Route::prefix('languages')->middleware('master')->group(function () {
-            Route::get('/', [\App\Http\Controllers\Admin\LanguageAdminController::class, 'index'])->name('languages-admin.index');
-            Route::get('/create', [\App\Http\Controllers\Admin\LanguageAdminController::class, 'create'])->name('languages-admin.create');
-            Route::post('/', [\App\Http\Controllers\Admin\LanguageAdminController::class, 'store'])->name('languages-admin.store');
-            Route::get('/{id}', [\App\Http\Controllers\Admin\LanguageAdminController::class, 'show'])->name('languages-admin.show');
-            Route::put('/{id}', [\App\Http\Controllers\Admin\LanguageAdminController::class, 'update'])->name('languages-admin.update');
-            Route::delete('/{id}', [\App\Http\Controllers\Admin\LanguageAdminController::class, 'destroy'])->name('languages-admin.destroy');
-            Route::post('/change-status/{id}', [\App\Http\Controllers\Admin\LanguageAdminController::class, 'change_status'])->name('languages-admin.change_status');
-            Route::post('/set-default/{id}', [\App\Http\Controllers\Admin\LanguageAdminController::class, 'set_default'])->name('languages-admin.set_default');
-        });
-
-        Route::prefix('announcements')->middleware('master')->group(function () {
-            Route::get('/', [AnnouncementAdminController::class, 'index'])->name('announcements.index');
-            Route::get('/create', [AnnouncementAdminController::class, 'create'])->name('announcements.create');
-            Route::post('/', [AnnouncementAdminController::class, 'store'])->name('announcements.store');
-            Route::get('/{id}/edit', [AnnouncementAdminController::class, 'edit'])->name('announcements.edit');
-            Route::put('/{id}', [AnnouncementAdminController::class, 'update'])->name('announcements.update');
-            Route::delete('/{id}', [AnnouncementAdminController::class, 'destroy'])->name('announcements.destroy');
-            Route::post('/change-status/{id}', [AnnouncementAdminController::class, 'changeStatus'])->name('announcements.change_status');
-            Route::post('/reorder', [AnnouncementAdminController::class, 'reorder'])->name('announcements.reorder');
-        });
-
         Route::prefix('gallery-management')->middleware('master')->group(function () {
             Route::get('/photos', [GalleryAdminController::class, 'indexPhotos'])->name('gallery-admin.photos.index');
             Route::get('/photos/create', [GalleryAdminController::class, 'createPhoto'])->name('gallery-admin.photos.create');
@@ -310,6 +253,7 @@ Route::group(
             Route::get('/settings', [AdminSystemController::class, 'settings'])->name('system.settings');
             Route::get('/health', [AdminSystemController::class, 'systemHealth'])->name('system.health');
             Route::get('/reports', [AdminSystemController::class, 'reportsCenter'])->name('system.reports');
+            Route::get('/media-library', [AdminSystemController::class, 'mediaLibrary'])->name('system.media-library');
         });
 
         Route::post('/download-payments-dashboard', [DashboardController::class,'downloadPayments'])->middleware('master')->name('dashboard.download_payments');

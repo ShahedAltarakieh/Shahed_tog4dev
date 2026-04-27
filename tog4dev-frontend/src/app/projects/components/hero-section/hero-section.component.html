@@ -65,6 +65,6 @@
     </div>
   </div>
 <app-share *ngIf="quickContribution" [URL]="url" [title]="quickContribution.title" [description]="quickContribution.description" [show]="show_share" (valueEmitted)="closePopup($event)"/>
-<app-modal [with_icon]="true" [title]="'added to basket' | translate " [with_basket_button]="true" [show]="show_add_popup" (valueEmitted)="closePopup($event)">
+<app-modal [with_icon]="true" [title]="'added to basket' | translate " [show]="show_add_popup" (valueEmitted)="closePopup($event)">
     <img withicon src="/app/assets/images/shared/check.png" alt="check" style="width:100px" class="d-block mx-auto">
 </app-modal>

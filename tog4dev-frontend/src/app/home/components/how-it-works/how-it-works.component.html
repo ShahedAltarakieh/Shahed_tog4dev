@@ -1,43 +1,49 @@
 <div class="how-it-works-container">
-  <div class="tg-section-header">
-    <h2 class="tg-section-title">{{ 'how your support works' | translate }}</h2>
-    <p class="tg-section-subtitle">{{ "every delegation to our sustainable development projects follows these key steps:" | translate }}</p>
-    <div class="tg-title-decoration"><span></span></div>
-  </div>
-
-  <div class="hiw-flow">
-    @for (step of steps; track step.n; let last = $last; let i = $index) {
-      <div class="hiw-col" [style.--delay]="(i * 90) + 'ms'">
-        <article class="hiw-card">
-          <span class="hiw-watermark" aria-hidden="true">{{ '0' + step.n }}</span>
-
-          <div class="hiw-card-head">
-            <div class="hiw-icon">
-              <mat-icon [svgIcon]="step.icon"></mat-icon>
-            </div>
-            <span class="hiw-step-tag">{{ "step" | translate }} {{ step.n }}</span>
-          </div>
-
-          <h3 class="hiw-title">{{ step.title | translate }}</h3>
-          <p class="hiw-desc">{{ step.desc | translate }}</p>
-
-          @if (step.hasCta) {
-            <a class="hiw-cta" [routerLink]="storageService.localized(aboutUsRoutes)">
-              {{ "learn more about us" | translate }}
-              <span class="arrow" aria-hidden="true">→</span>
-            </a>
-          }
-
-          <span class="hiw-card-glow" aria-hidden="true"></span>
-        </article>
+  <h2 class="section-title">{{ "how your support works" | translate }}</h2>
+  <p class="text-center fw-bold">{{ "discover more about together for intermediation services llc (together for development)" | translate }}, <a [routerLink]="aboutUsRoutes[storageService.siteLanguage$.value]">{{ "click here" | translate }}</a></p>
+  <p class="section-desc text-center">{{ "every delegation to our sustainable development projects follows these key steps:" | translate }}</p>
+  <div class="how-it-works-steps">
+    <div class="item">
+      <div class="how-it-works-step-item">
+        <div class="item-content">
+          <mat-icon svgIcon="how-it-works-1"></mat-icon>
+        </div>
+  
+        <p class="item-content-text">{{ "choose a project" | translate }}</p>
       </div>
-      @if (!last) {
-        <span class="hiw-arrow" aria-hidden="true">
-          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 6 15 12 9 18"/>
-          </svg>
-        </span>
-      }
-    }
+  
+      <mat-icon svgIcon="how-it-works-line" class="line"></mat-icon>
+  
+      <div class="how-it-works-step-item">
+        <div class="item-content">
+          <mat-icon svgIcon="how-it-works-2"></mat-icon>
+        </div>
+  
+        <p class="item-content-text">{{ "make a delegation" | translate }}</p>
+      </div>
+    </div>
+
+    <mat-icon svgIcon="how-it-works-line" class="line d-none d-md-block"></mat-icon>
+
+    <div class="item">
+      <div class="how-it-works-step-item">
+        <div class="item-content">
+          <mat-icon svgIcon="how-it-works-3"></mat-icon>
+        </div>
+  
+        <p class="item-content-text">{{ "project execution" | translate }}</p>
+      </div>
+  
+      <mat-icon svgIcon="how-it-works-line" class="line"></mat-icon>
+  
+      <div class="how-it-works-step-item">
+        <div class="item-content">
+          <mat-icon svgIcon="how-it-works-4"></mat-icon>
+        </div>
+  
+        <p class="item-content-text">{{ "receive a detailed report" | translate }}</p>
+      </div>
+
+    </div>
   </div>
 </div>

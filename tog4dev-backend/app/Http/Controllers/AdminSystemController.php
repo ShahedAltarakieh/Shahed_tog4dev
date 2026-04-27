@@ -29,7 +29,7 @@ class AdminSystemController extends Controller
 
         $recentUsers = User::orderBy('created_at', 'desc')
             ->limit(20)
-            ->get(['id', 'first_name', 'last_name', 'email', 'created_at']);
+            ->get(['id', 'name', 'email', 'created_at']);
 
         $recentSubscriptions = Subscription::orderBy('created_at', 'desc')
             ->limit(20)
@@ -55,7 +55,7 @@ class AdminSystemController extends Controller
                 'icon' => 'fas fa-user-plus',
                 'color' => 'primary',
                 'title' => __('app.new_user_registered'),
-                'description' => $u->first_name . ' ' . $u->last_name . ' (' . $u->email . ')',
+                'description' => $u->name . ' (' . $u->email . ')',
                 'time' => $u->created_at,
                 'id' => $u->id,
             ]);

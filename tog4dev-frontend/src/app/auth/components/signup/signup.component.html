@@ -1,151 +1,134 @@
-<div class="auth-page" id="signup-form">
-    <!-- Hero -->
-    <section class="hero-section">
-        <div class="hero-pattern" aria-hidden="true"></div>
-        <div class="container">
-            <div class="hero-content text-center text-white">
-                <span class="hero-badge">{{ 'sign up' | translate }}</span>
-                <h1 class="page-title">{{ 'welcome together for development' | translate }}</h1>
-                <p class="hero-subtitle">{{ 'your gateway to empowering communities and making a positive impact worldwide. join us in creating sustainable solutions for those in need.' | translate }}</p>
-            </div>
-        </div>
-    </section>
+<div class="container" id="signup-form">
+  <div class="row justify-content-center">
+      <div class="col-xl-6 col-lg-6 col-md-8 col-sm-10">
 
-    <!-- Form Card -->
-    <section class="auth-form-section">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-7 col-lg-8 col-md-10 col-sm-11 col-12">
-                    <div class="auth-form-card">
-                        <div class="form-header">
-                            <span class="form-eyebrow">{{ 'sign up' | translate }}</span>
-                            <h2 class="form-title">{{ 'create your account' | translate }}</h2>
-                            <p class="form-desc">{{ 'fill in your details to join our community' | translate }}</p>
-                        </div>
+          <div class="signup-section bg-white mx-auto">
+              <h1 class="signup-title text-center fw-bold">{{ 'welcome together for development' | translate }}</h1>
+              
+              <p class="signup-desc text-center">{{ 'your gateway to empowering communities and making a positive impact worldwide. join us in creating sustainable solutions for those in need.' | translate }}</p>
 
-                        <div class="form-container">
-                            <div class="input-container">
-                                <div class="fullname-wrapper d-flex flex-column flex-md-row">
-                                    <app-basic-input
-                                        [inputAttr]="{ id: 'first-name', name: 'first-name', label: 'first name', placeholder: 'your first name', isRequired: true}"
-                                        [value]="signupService.signupForm.first_name.value"
-                                        [errorMsg]="signupService.signupForm.first_name.errorMsg"
-                                        inputType="first name"
-                                        (valueChanged)="signupService.signupForm.first_name.value = $event"
-                                        (errorChanged)="firstNameErrorHandler($event)"
-                                    />
+              <div class="form-container">
+                  <div class="input-container">
+                    <div class="fullname-wrapper d-flex flex-column flex-md-row">
+                      <app-basic-input 
+                        [inputAttr]="{ id: 'first-name', name: 'first-name', label: 'first name', placeholder: 'your first name', isRequired: true}"
+                        [value]="signupService.signupForm.first_name.value"
+                        [errorMsg]="signupService.signupForm.first_name.errorMsg"
+                        inputType="first name"
+                        (valueChanged)="signupService.signupForm.first_name.value = $event"
+                        (errorChanged)="firstNameErrorHandler($event)"
+                      />
 
-                                    <app-basic-input
-                                        [inputAttr]="{ id: 'last-name', name: 'last-name', label: 'last name', placeholder: 'your last name', isRequired: true}"
-                                        [value]="signupService.signupForm.last_name.value"
-                                        [errorMsg]="signupService.signupForm.last_name.errorMsg"
-                                        inputType="last name"
-                                        (valueChanged)="signupService.signupForm.last_name.value = $event"
-                                        (errorChanged)="lastNameErrorHandler($event)"
-                                    />
-                                </div>
-
-                                <app-mobile-number
-                                    [value]="signupService.signupForm.phone.value"
-                                    [errorMsg]="signupService.signupForm.phone.errorMsg"
-                                    (valueChanged)="signupService.signupForm.phone.value = $event"
-                                    (phoneCodeChanged)="signupService.signupForm.phone_code.value = $event"
-                                    (errorChanged)="mobileErrorHandler($event)"
-                                />
-
-                                <app-basic-input
-                                    [inputAttr]="{ id: 'email', name: 'email', label: 'e-mail', placeholder: 'enter your email', isRequired: true, icon: 'email'}"
-                                    [value]="signupService.signupForm.email.value"
-                                    [errorMsg]="signupService.signupForm.email.errorMsg"
-                                    inputType="email"
-                                    (valueChanged)="signupService.signupForm.email.value = $event"
-                                    (errorChanged)="emailErrorHandler($event)"
-                                />
-
-                                <app-basic-input
-                                    [inputAttr]="{ id: 'password', name: 'password', label: 'password', placeholder: 'enter your password', isRequired: true, icon: 'eye'}"
-                                    [value]="signupService.signupForm.password.value"
-                                    [errorMsg]="signupService.signupForm.password.errorMsg"
-                                    inputType="password"
-                                    (valueChanged)="signupService.signupForm.password.value = $event"
-                                    (errorChanged)="passwordErrorHandler($event)"
-                                />
-
-                                <app-basic-input
-                                    [inputAttr]="{ id: 'birthday', name: 'birthday', label: 'birthday', placeholder: 'yyyy/mm/dd', isRequired: true, icon: 'date'}"
-                                    [value]="signupService.signupForm.birthday.value"
-                                    [errorMsg]="signupService.signupForm.birthday.errorMsg"
-                                    inputType="birthday"
-                                    (valueChanged)="signupService.signupForm.birthday.value= $event"
-                                    (errorChanged)="birthDayErrorHandler($event)"
-                                />
-
-                                <app-select-dropdown
-                                    id="country"
-                                    [items]="countries_list"
-                                    [value]="signupService.signupForm.country.value"
-                                    [errorMsg]="signupService.signupForm.country.errorMsg"
-                                    [selectedDropdownValue]="country_selected.country_name_english"
-                                    icon="{{ country_flag }}"
-                                    label="country"
-                                    placeholder="Your Country"
-                                    rightIcon="mobile-arrow.svg"
-                                    (valueChanged)="signupService.signupForm.country.value = $event"
-                                    (errorChanged)="countryErrorHandler($event)"
-                                />
-
-                                <app-basic-input
-                                    [inputAttr]="{ id: 'city', name: 'city', label: 'city', placeholder: 'enter city', isRequired: true, icon: 'location'}"
-                                    [value]="signupService.signupForm.city.value"
-                                    [errorMsg]="signupService.signupForm.city.errorMsg"
-                                    inputType="city"
-                                    (valueChanged)="signupService.signupForm.city.value = $event"
-                                    (errorChanged)="cityErrorHandler($event)"
-                                />
-                            </div>
-
-                            <div class="checkbox-container">
-                                <input id="privacy-policy" type="checkbox" (input)="onPrivacyPolicyCheck($event)">
-                                <label for="privacy-policy">
-                                    @if(storageService.siteLanguage$.value == "ar"){
-                                        <span>لقد قرأت وأوافق على <a [routerLink]="'route-terms-and-conditions' | translate ">شروط الاستخدام</a> و <a [routerLink]="'route-privacy-policy' | translate ">سياسة الخصوصية</a>.</span>
-                                    }
-                                    @else{
-                                        <span>I have read and agree to the <a [routerLink]="'route-terms-and-conditions' | translate ">Terms of Use</a> and <a [routerLink]="'route-privacy-policy' | translate ">Privacy Policy</a>.</span>
-                                    }
-                                </label>
-                            </div>
-
-                            <div class="checkbox-container">
-                                <input id="recieve-emails" type="checkbox" (input)="onReceiveEmailCheck($event)">
-                                <label for="recieve-emails">
-                                    <span>{{ 'receive email updates from Together for Development (including borrower updates and promotions). you can unsubscribe anytime.' | translate}}</span>
-                                </label>
-                            </div>
-
-                            <button
-                                class="submit-btn btn"
-                                [disabled]="!signupService.signupForm.first_name.isValid ||
-                                !signupService.signupForm.last_name.isValid ||
-                                !signupService.signupForm.birthday.isValid ||
-                                !signupService.signupForm.city.isValid ||
-                                !signupService.signupForm.email.isValid ||
-                                !signupService.signupForm.country.isValid ||
-                                !signupService.signupForm.password.isValid ||
-                                !signupService.signupForm.phone.isValid ||
-                                !signupService.privacyPolicyChecked ||
-                                isLoading"
-                                (click)="onFormSubmit()">
-                                {{ 'registration' | translate }}
-                            </button>
-
-                            @if (!!requestSuccessMsg) {
-                                <p class="success-msg">{{ requestSuccessMsg }}</p>
-                            }
-                        </div>
+                      <app-basic-input 
+                        [inputAttr]="{ id: 'last-name', name: 'last-name', label: 'last name', placeholder: 'your last name', isRequired: true}"
+                        [value]="signupService.signupForm.last_name.value"
+                        [errorMsg]="signupService.signupForm.last_name.errorMsg"
+                        inputType="last name"
+                        (valueChanged)="signupService.signupForm.last_name.value = $event"
+                        (errorChanged)="lastNameErrorHandler($event)"
+                      />
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
+
+                      <app-mobile-number
+                              [value]="signupService.signupForm.phone.value"
+                              [errorMsg]="signupService.signupForm.phone.errorMsg"
+                              (valueChanged)="signupService.signupForm.phone.value = $event"
+                              (phoneCodeChanged)="signupService.signupForm.phone_code.value = $event"
+                              (errorChanged)="mobileErrorHandler($event)"
+                      />
+
+                    <app-basic-input 
+                      [inputAttr]="{ id: 'email', name: 'email', label: 'e-mail', placeholder: 'enter your email', isRequired: true, icon: 'email'}"
+                      [value]="signupService.signupForm.email.value"
+                      [errorMsg]="signupService.signupForm.email.errorMsg"
+                      inputType="email"
+                      (valueChanged)="signupService.signupForm.email.value = $event"
+                      (errorChanged)="emailErrorHandler($event)"
+                    />
+
+                    <app-basic-input 
+                      [inputAttr]="{ id: 'password', name: 'password', label: 'password', placeholder: 'enter your password', isRequired: true, icon: 'eye'}"
+                      [value]="signupService.signupForm.password.value"
+                      [errorMsg]="signupService.signupForm.password.errorMsg"
+                      inputType="password"
+                      (valueChanged)="signupService.signupForm.password.value = $event"
+                      (errorChanged)="passwordErrorHandler($event)"
+                    />
+
+                    <app-basic-input
+                      [inputAttr]="{ id: 'birthday', name: 'birthday', label: 'birthday', placeholder: 'yyyy/mm/dd', isRequired: true, icon: 'date'}"
+                      [value]="signupService.signupForm.birthday.value"
+                      [errorMsg]="signupService.signupForm.birthday.errorMsg"
+                      inputType="birthday"
+                      (valueChanged)="signupService.signupForm.birthday.value= $event"
+                      (errorChanged)="birthDayErrorHandler($event)"
+                    />
+
+                    <app-select-dropdown
+                      id="country"
+                      [items]="countries_list"
+                      [value]="signupService.signupForm.country.value"
+                      [errorMsg]="signupService.signupForm.country.errorMsg"
+                      [selectedDropdownValue]="country_selected.country_name_english"
+                      icon="{{ country_flag }}"
+                      label="country"
+                      placeholder="Your Country"
+                      rightIcon="mobile-arrow.svg"
+                      (valueChanged)="signupService.signupForm.country.value = $event"
+                      (errorChanged)="countryErrorHandler($event)"
+                    />
+
+                  <app-basic-input
+                          [inputAttr]="{ id: 'city', name: 'city', label: 'city', placeholder: 'enter city', isRequired: true, icon: 'location'}"
+                          [value]="signupService.signupForm.city.value"
+                          [errorMsg]="signupService.signupForm.city.errorMsg"
+                          inputType="city"
+                          (valueChanged)="signupService.signupForm.city.value = $event"
+                          (errorChanged)="cityErrorHandler($event)"
+                  />
+                  </div>
+
+                  <div class="checkbox-container">
+                    <input id="privacy-policy" type="checkbox" (input)="onPrivacyPolicyCheck($event)">
+                    <label for="privacy-policy">
+                        @if(storageService.siteLanguage$.value == "ar"){
+                            <span>لقد قرأت وأوافق على <a [routerLink]="'route-terms-and-conditions' | translate ">شروط الاستخدام</a> و <a [routerLink]="'route-privacy-policy' | translate ">سياسة الخصوصية</a>.</span>
+                        }
+                        @else{
+                            <span>I have read and agree to the <a [routerLink]="'route-terms-and-conditions' | translate ">Terms of Use</a> and <a [routerLink]="'route-privacy-policy' | translate ">Privacy Policy</a>.</span>
+                        }
+                    </label>
+                  </div>
+
+                  <div class="checkbox-container">
+                    <input id="recieve-emails" type="checkbox" (input)="onReceiveEmailCheck($event)">
+                    <label for="recieve-emails">
+                      <span>{{ 'receive email updates from Together for Development (including borrower updates and promotions). you can unsubscribe anytime.' | translate}}</span>
+                    </label>
+                  </div>
+
+                  <button 
+                    class="submit-btn btn w-100" 
+                    [disabled]="!signupService.signupForm.first_name.isValid ||
+                    !signupService.signupForm.last_name.isValid ||
+                    !signupService.signupForm.birthday.isValid ||
+                    !signupService.signupForm.city.isValid ||
+                    !signupService.signupForm.email.isValid ||
+                    !signupService.signupForm.country.isValid ||
+                    !signupService.signupForm.password.isValid ||
+                    !signupService.signupForm.phone.isValid ||
+                    !signupService.privacyPolicyChecked ||
+                    isLoading"
+                    (click)="onFormSubmit()">
+                    {{ 'registration' | translate }}
+                  </button>
+              </div>
+
+              @if (!!requestSuccessMsg) {
+                <p>{{ requestSuccessMsg }}</p>
+              }
+          </div>
+      </div>
+  </div>
 </div>
+<hr class="hr-line">

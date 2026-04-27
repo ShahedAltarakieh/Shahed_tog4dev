@@ -96,6 +96,11 @@
                     {{ $contact->message }}
                 </div>
             </div>
+            <div class="mt-3 text-center">
+                <a href="{{ route('contact_us.index', ['type' => $type]) }}" class="btn btn-primary">
+                    {{ __('app.back') }}
+                </a>
+            </div>
         </div>
     </div>
 </div>

@@ -17,10 +17,8 @@ export interface NewsItem {
   image: string | null;
   image_tablet: string | null;
   image_mobile: string | null;
-  is_recent: boolean;
-  reading_time: number;
+  is_featured: boolean;
   published_at: string;
-  created_at: string;
   category: NewsCategory | null;
 }
 

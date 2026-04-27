@@ -1,87 +1,27 @@
-$primary: #13585D;
-$accent:  #FECD0F;
-
 .loader-overlay {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #13585D;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999999;
-  background:
-    radial-gradient(circle at 50% 40%, rgba(254, 205, 15, 0.12), transparent 55%),
-    $primary;
-  animation: overlay-fade 280ms ease both;
 }
 
-@keyframes overlay-fade {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+.loader {
+  border: 4px solid #13585D;
+  border-top: 4px solid #fff;
+  border-bottom: 4px solid #fff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
 }
 
-.logo-loader {
-  width: 180px;
-  height: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &__svg {
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-  }
-
-  &__path {
-    fill: transparent;
-    stroke: $accent;
-    stroke-width: 2.2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    filter: drop-shadow(0 0 4px rgba(254, 205, 15, 0.5));
-    /* path lengths are roughly 220–260; use a generous value */
-    stroke-dasharray: 300;
-    stroke-dashoffset: 300;
-  }
-
-  &__path--top {
-    animation: draw-stroke 1.4s ease-in-out infinite;
-  }
-
-  &__path--bottom {
-    /* second stroke starts a beat after the first */
-    animation: draw-stroke 1.4s ease-in-out infinite;
-    animation-delay: 0.25s;
-  }
-}
-
-@keyframes draw-stroke {
-  0% {
-    stroke-dashoffset: 300;
-    fill: transparent;
-  }
-  55% {
-    stroke-dashoffset: 0;
-    fill: transparent;
-  }
-  75% {
-    stroke-dashoffset: 0;
-    fill: rgba(254, 205, 15, 0.9);
-  }
-  95%, 100% {
-    stroke-dashoffset: 0;
-    fill: transparent;
-  }
-}
-
-/* ---------- Reduced motion ---------- */
-@media (prefers-reduced-motion: reduce) {
-  .loader-overlay,
-  .logo-loader__path {
-    animation: none !important;
-  }
-  .logo-loader__path {
-    stroke-dashoffset: 0;
-    fill: $accent;
-  }
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

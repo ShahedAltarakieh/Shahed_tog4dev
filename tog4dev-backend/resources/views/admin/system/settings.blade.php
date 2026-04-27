@@ -52,9 +52,6 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="header-title mb-3">{{ __('app.general_settings') }}</h5>
-                        <div class="alert alert-info" style="margin-bottom:16px;">
-                            {{ __('app.configured_in_env') }}
-                        </div>
                         <div class="form-group mb-3">
                             <label class="form-label" style="font-weight:600;font-size:13px;">{{ __('app.site_name') }}</label>
                             <input type="text" class="form-control" value="{{ env('APP_NAME') }}" readonly>
@@ -167,17 +164,8 @@
 <script>
 document.querySelectorAll('.settings-nav-item').forEach(function(item) {
     item.addEventListener('click', function(e) {
-        e.preventDefault();
         document.querySelectorAll('.settings-nav-item').forEach(function(el) { el.classList.remove('active'); });
         this.classList.add('active');
-        var target = this.getAttribute('href');
-        document.querySelectorAll('.tab-pane').forEach(function(pane) {
-            pane.classList.remove('show', 'active');
-        });
-        var targetPane = document.querySelector(target);
-        if (targetPane) {
-            targetPane.classList.add('show', 'active');
-        }
     });
 });
 </script>

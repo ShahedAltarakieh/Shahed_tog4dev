@@ -42,14 +42,14 @@
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label for="excerpt">{{ __('app.short description') }} (AR) <small class="text-muted">— {{ __('app.auto_generated_hint') }}</small></label>
-                                <textarea id="excerpt" name="excerpt" placeholder="{{ __('app.auto_generated_from_content') }}"
+                                <label for="excerpt">{{ __('app.short description') }} (AR)</label>
+                                <textarea id="excerpt" name="excerpt" placeholder="{{ __('app.short description') }}"
                                     class="form-control" rows="3">{{ old('excerpt', $data->excerpt) }}</textarea>
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label for="excerpt_en">{{ __('app.short description') }} (EN) <small class="text-muted">— {{ __('app.auto_generated_hint') }}</small></label>
-                                <textarea id="excerpt_en" name="excerpt_en" placeholder="{{ __('app.auto_generated_from_content') }}"
+                                <label for="excerpt_en">{{ __('app.short description') }} (EN)</label>
+                                <textarea id="excerpt_en" name="excerpt_en" placeholder="{{ __('app.short description') }}"
                                     class="form-control" rows="3">{{ old('excerpt_en', $data->excerpt_en) }}</textarea>
                             </div>
 
@@ -131,9 +131,13 @@
                                 <input type="checkbox" data-plugin="switchery" data-color="#1bb99a" name="status" value="1" {{ old('status', $data->status) ? 'checked' : '' }} />
                             </div>
 
+                            <div class="form-group col-md-6">
+                                <label for="is_featured" class="d-block">{{ __('app.featured') }}</label>
+                                <input type="checkbox" data-plugin="switchery" data-color="#3bafda" name="is_featured" value="1" {{ old('is_featured', $data->is_featured) ? 'checked' : '' }} />
+                            </div>
 
-                            <div class="form-group col-md-12">
-                                <button type="submit" class="btn btn-primary px-4">{{ __('app.save') }}</button>
+                            <div class="form-group col-md-12 text-center mt-3">
+                                <button type="submit" class="btn btn-primary px-5">{{ __('app.save') }}</button>
                             </div>
                         </div>
                     </div>
@@ -171,60 +175,15 @@ var quillBodyEn = new Quill('#editor-body-en', {
 
 quillBody.on('text-change', function() {
     document.getElementById('body').value = quillBody.root.innerHTML;
-    autoGenerateExcerpt('body', 'excerpt');
 });
 
 quillBodyEn.on('text-change', function() {
     document.getElementById('body_en').value = quillBodyEn.root.innerHTML;
-    autoGenerateExcerpt('body_en', 'excerpt_en');
 });
 
 document.querySelector('form').addEventListener('submit', function() {
     document.getElementById('body').value = quillBody.root.innerHTML;
     document.getElementById('body_en').value = quillBodyEn.root.innerHTML;
-});
-
-var excerptHasExisting = document.getElementById('excerpt').value.trim().length > 0;
-var excerptEnHasExisting = document.getElementById('excerpt_en').value.trim().length > 0;
-if (excerptHasExisting) document.getElementById('excerpt').dataset.manuallyEdited = 'true';
-if (excerptEnHasExisting) document.getElementById('excerpt_en').dataset.manuallyEdited = 'true';
-
-function autoGenerateExcerpt(bodyId, excerptId) {
-    var excerptField = document.getElementById(excerptId);
-    if (excerptField.dataset.manuallyEdited === 'true') return;
-
-    var html = document.getElementById(bodyId).value;
-    var tmp = document.createElement('div');
-    tmp.innerHTML = html;
-    var text = (tmp.textContent || tmp.innerText || '').trim();
-
-    if (!text) { excerptField.value = ''; return; }
-
-    var sentences = text.match(/[^.!?。]+[.!?。]+/g);
-    var excerpt = '';
-    if (sentences && sentences.length > 0) {
-        for (var i = 0; i < sentences.length && excerpt.length < 150; i++) {
-            excerpt += sentences[i].trim() + ' ';
-        }
-        excerpt = excerpt.trim();
-    } else {
-        excerpt = text;
-    }
-
-    if (excerpt.length > 200) {
-        excerpt = excerpt.substring(0, 197).replace(/\s+\S*$/, '') + '...';
-    } else if (text.length > excerpt.length) {
-        excerpt = excerpt.replace(/[.!?。]+$/, '') + '...';
-    }
-
-    excerptField.value = excerpt;
-}
-
-document.getElementById('excerpt').addEventListener('input', function() {
-    this.dataset.manuallyEdited = 'true';
-});
-document.getElementById('excerpt_en').addEventListener('input', function() {
-    this.dataset.manuallyEdited = 'true';
 });
 </script>
 @endsection

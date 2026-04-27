@@ -12,7 +12,7 @@ export class NewsService {
 
   constructor(public apiService: ApiService) {}
 
-  getNews(lang: string, params: { category?: string; search?: string; page?: number; perPage?: number; featured?: boolean } = {}) {
+  getNews(lang: 'ar' | 'en', params: { category?: string; search?: string; page?: number; perPage?: number; featured?: boolean } = {}) {
     const additionalHeaders = { 'Accept-Language': lang };
     const queryParams: Record<string, string> = {
       '_': new Date().getTime().toString(),
@@ -28,7 +28,7 @@ export class NewsService {
       .pipe(map(this.apiService.extractTypeFromMessage));
   }
 
-  getNewsArticle(lang: string, slug: string) {
+  getNewsArticle(lang: 'ar' | 'en', slug: string) {
     const additionalHeaders = { 'Accept-Language': lang };
     return this.apiService.get<{ data: NewsItem }>(this.apiUrl + 'api/v1/news/' + slug, {
       '_': new Date().getTime().toString(),
@@ -36,7 +36,7 @@ export class NewsService {
       .pipe(map(this.apiService.extractTypeFromMessage));
   }
 
-  getRelatedNews(lang: string, slug: string, limit: number = 4) {
+  getRelatedNews(lang: 'ar' | 'en', slug: string, limit: number = 4) {
     const additionalHeaders = { 'Accept-Language': lang };
     return this.apiService.get<{ data: NewsItem[] }>(this.apiUrl + 'api/v1/news/' + slug + '/related', {
       'limit': limit.toString(),
@@ -45,7 +45,7 @@ export class NewsService {
       .pipe(map(this.apiService.extractTypeFromMessage));
   }
 
-  getCategories(lang: string) {
+  getCategories(lang: 'ar' | 'en') {
     const additionalHeaders = { 'Accept-Language': lang };
     return this.apiService.get<{ data: NewsCategory[] }>(this.apiUrl + 'api/v1/news/categories', {
       '_': new Date().getTime().toString(),
@@ -53,7 +53,7 @@ export class NewsService {
       .pipe(map(this.apiService.extractTypeFromMessage));
   }
 
-  searchNews(lang: string, query: string, page: number = 1) {
+  searchNews(lang: 'ar' | 'en', query: string, page: number = 1) {
     const additionalHeaders = { 'Accept-Language': lang };
     return this.apiService.get<PaginatedResponse<NewsItem>>(this.apiUrl + 'api/v1/news/search', {
       'q': query,

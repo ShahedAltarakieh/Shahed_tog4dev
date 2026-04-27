@@ -1,0 +1,156 @@
+Description
+As a website user,
+I want to access News & Gallery from the website navigation and browse news, photos, and videos,
+so that I can view updates and media content in a clear, responsive, and user-friendly interface.
+
+Replit Instruction (TOP BLOCK)
+
+Build this as dynamic production-ready functionality.
+
+Frontend is in a separate repository.
+
+Must consume backend APIs only
+Must not use hardcoded production content
+Use clean, modular, scalable structure
+Scope
+Build the full public frontend experience for the News & Gallery module.
+
+This work must be implemented in the frontend repository and must consume data dynamically from backend APIs.
+
+No final production content should be hardcoded in the frontend.
+
+Functional Requirements
+1. Navigation
+
+Add News & Gallery to the main website navigation
+Clicking it opens the main News & Gallery page
+2. Main News & Gallery Page
+The main page must include 3 sections:
+
+News
+Photos
+Videos
+Each section should display preview items and include a CTA:
+More News
+More Photos
+More Videos
+3. Search
+
+Add a keyword search input
+Search must work across:
+news
+photos
+videos
+Search results must come from backend API only
+No hardcoded search results
+Search should support debounce for better UX
+4. News Listing UI
+Each news item must display:
+
+cover image
+category
+title
+short description / preview
+publish date
+Read More button
+5. News Details Page
+Clicking Read More opens the news details page.
+The page must include:
+
+hero/banner image
+breadcrumb
+category
+title
+publish date
+full content
+share section
+related news section
+6. Share Section
+The news details page must include sharing options for:
+
+Instagram
+Facebook
+WhatsApp
+Copy link
+7. Related News
+Display related news items under the news details page.
+Each related item must show:
+
+image
+title
+date
+8. Photos UI
+
+Display photos in gallery format
+Clicking a photo opens a full-size image or lightbox/gallery view
+9. Videos UI
+
+Display videos using YouTube links returned by API
+Clicking a video opens a playable view or embedded player
+10. Dedicated Pages
+Create separate pages for:
+
+All News
+All Photos
+All Videos
+Suggested routes:
+/news
+/news/:id
+/photos
+/videos
+11. Responsiveness
+
+Fully responsive on desktop and mobile
+Preserve layout and readability across screen sizes
+12. API Integration
+Frontend must consume backend APIs for:
+
+news list
+news details
+related news
+photos list
+videos list
+search
+13. States Handling
+Frontend must support:
+
+loading state
+empty state
+error state
+14. Pagination Support
+Frontend should support paginated list pages if provided by backend:
+
+News
+Photos
+Videos
+API Dependency
+This story depends on backend APIs being available.
+Frontend must consume dynamic data from backend and must not rely on static production content.
+
+Replit Implementation Notes
+
+Build in a modular and production-ready structure
+Keep components reusable
+Use environment variables for API base URL
+Keep page structure ready for future bilingual support and SEO metadata
+Do not implement future-phase features fully, but do not block them structurally
+Acceptance Criteria
+
+News & Gallery appears in navbar
+Main page shows News / Photos / Videos sections
+Search works using API data
+Read More / View More works correctly
+News details page displays correctly
+Related news displays correctly
+Photos and videos pages work correctly
+UI is responsive
+Loading, empty, and error states are handled
+No hardcoded final content is used
+Future-Ready Notes
+Frontend structure should be ready for future support of:
+
+featured news on top
+multiple images in news details
+tags-based filtering
+bilingual display
+SEO-aware page metadata
