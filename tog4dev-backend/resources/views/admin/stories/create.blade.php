@@ -45,16 +45,31 @@
                             <div class="form-group col-4">
                                 <label for="image">{{ __('app.image') }} (Web) (328x581)</label>
                                 <input type="file" id="image" name="image" data-plugins="dropify" data-height="200" data-allowed-file-extensions="png jpg jpeg webp" />
+                                @include('includes.admin.image-upload-notes', [
+                                    'recommendedSize' => '328 x 581 px',
+                                    'maxSize' => '5 MB',
+                                    'extensions' => 'png,jpg,jpeg,webp'
+                                ])
                             </div>
 
                             <div class="form-group col-4">
                                 <label for="image_tablet">{{ __('app.image') }} (Tablet) (367x474)</label>
                                 <input type="file" id="image_tablet" name="image_tablet" data-plugins="dropify" data-height="200" data-allowed-file-extensions="png jpg jpeg webp"  />
+                                @include('includes.admin.image-upload-notes', [
+                                    'recommendedSize' => '367 x 474 px',
+                                    'maxSize' => '5 MB',
+                                    'extensions' => 'png,jpg,jpeg,webp'
+                                ])
                             </div>
 
                             <div class="form-group col-4">
                                 <label for="image_mobile">{{ __('app.image') }} (Mobile) (367x474)</label>
                                 <input type="file" id="image_mobile" name="image_mobile" data-plugins="dropify" data-height="200" data-allowed-file-extensions="png jpg jpeg webp"  />
+                                @include('includes.admin.image-upload-notes', [
+                                    'recommendedSize' => '367 x 474 px',
+                                    'maxSize' => '5 MB',
+                                    'extensions' => 'png,jpg,jpeg,webp'
+                                ])
                             </div>
 
                             <!-- Image EN -->

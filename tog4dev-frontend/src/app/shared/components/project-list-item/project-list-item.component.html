@@ -24,7 +24,7 @@
           <h2 class="project-title mb-0">{{ project.title }}</h2>
           <p class="project-desc mb-0">{{ project.description }}</p>
       </div>
-      <a class="btn details-page text-center" [routerLink]="[detailsOrganizationsRoutes[storageService.siteLanguage$.value], project.category.slug, project.slug]">{{ "more details" | translate }}</a>
+      <a class="btn details-page text-center" [routerLink]="[storageService.localized(detailsOrganizationsRoutes), project.category.slug, project.slug]">{{ "more details" | translate }}</a>
   </div>
 
   <div class="link-icon-wrapper">
@@ -57,7 +57,7 @@
             </div>
 
             <div>
-                <a class="d-flex flex-column item-info text-decoration-none" [routerLink]="[detailsProjectsRoutes[storageService.siteLanguage$.value], project.category.slug, project.slug]">
+                <a class="d-flex flex-column item-info text-decoration-none" [routerLink]="[storageService.localized(detailsProjectsRoutes), project.category.slug, project.slug]">
                     <h2 class="project-title mb-0">{{ project.title }}</h2>
                     <p class="project-desc mb-0">{{ project.description }}</p>
                 </a>
@@ -78,13 +78,15 @@
             <p class="converted_currency_message" *ngIf="converted_price">
                 {{ amount }}{{ 'JOD' | translate }} {{ "equivalent to your currency approximately without transfer fees" | translate: {'total':converted_price, 'currency': converted_currency_label} }}
             </p>
-            <div class="footer-section d-flex justify-content-between">
-                <div class="quantity-section w-100 d-flex align-items-center">
-                    <span class="remove-quantity" (click)="decrease_quantity()"><img src="/app/assets/images/shared/minus.svg"></span>
-                    <span class="quantity-number text-center">{{ default_quantity }}</span>
-                    <span class="add-quantity" (click)="increase_quantity()"><img src="/app/assets/images/shared/plus.svg"></span>
+            <div class="footer-section">
+                <div class="footer-top d-flex justify-content-between align-items-center">
+                    <div class="quantity-section d-flex align-items-center">
+                        <span class="remove-quantity" (click)="decrease_quantity()"><img src="/app/assets/images/shared/minus.svg"></span>
+                        <span class="quantity-number text-center">{{ default_quantity }}</span>
+                        <span class="add-quantity" (click)="increase_quantity()"><img src="/app/assets/images/shared/plus.svg"></span>
+                    </div>
+                    <span class="total-price text-end">{{"total" | translate }}: <span class="amount-value">{{ amount }}{{ 'JOD' | translate }}</span></span>
                 </div>
-                <span class="total-price w-100 text-center">{{"total" | translate }}: <span>{{ amount }}{{ 'JOD' | translate }}</span></span>
                 <button class="btn contribute-btn text-center w-100" (click)="submitContribute($event)">{{ "order now" | translate }}</button>
             </div>
         </div>
@@ -130,7 +132,7 @@
 
             <div class="d-flex flex-column item-info">
 
-                <a class="d-flex flex-column text-decoration-none" [routerLink]="[detailsCrowdFundingsRoutes[storageService.siteLanguage$.value], project.category.slug, project.slug]">
+                <a class="d-flex flex-column text-decoration-none" [routerLink]="[storageService.localized(detailsCrowdFundingsRoutes), project.category.slug, project.slug]">
                     <h2 class="project-title mb-3">{{ project.title }}</h2>
                     <p class="project-desc mb-0">{{ project.description }}</p>
                 </a>
@@ -184,6 +186,6 @@
     <app-share [title]="project.title" [description]="project.description" [URL]="url" [show]="show_share" (valueEmitted)="closePopup($event)"/>
 }
 
-<app-modal [with_icon]="true" [title]="'added to basket' | translate " [show]="show_add_popup" (valueEmitted)="closePopup($event)">
+<app-modal [with_icon]="true" [title]="'added to basket' | translate " [with_basket_button]="true" [show]="show_add_popup" (valueEmitted)="closePopup($event)">
    <img withicon src="/app/assets/images/shared/check.png" alt="check" style="width:100px" class="d-block mx-auto">
 </app-modal>

@@ -42,9 +42,15 @@ class NewsAdminController extends Controller
         ]);
 
         $validated['status'] = $request->has('status') ? 1 : 0;
-        $validated['is_featured'] = $request->has('is_featured') ? 1 : 0;
         $validated['position'] = $validated['position'] ?? 0;
         unset($validated['image'], $validated['image_tablet'], $validated['image_mobile']);
+
+        if (empty($validated['excerpt']) && !empty($validated['body'])) {
+            $validated['excerpt'] = $this->generateExcerpt($validated['body']);
+        }
+        if (empty($validated['excerpt_en']) && !empty($validated['body_en'])) {
+            $validated['excerpt_en'] = $this->generateExcerpt($validated['body_en']);
+        }
 
         $news = News::create($validated);
 
@@ -88,8 +94,14 @@ class NewsAdminController extends Controller
         ]);
 
         $validated['status'] = $request->has('status') ? 1 : 0;
-        $validated['is_featured'] = $request->has('is_featured') ? 1 : 0;
         unset($validated['image'], $validated['image_tablet'], $validated['image_mobile']);
+
+        if (empty($validated['excerpt']) && !empty($validated['body'])) {
+            $validated['excerpt'] = $this->generateExcerpt($validated['body']);
+        }
+        if (empty($validated['excerpt_en']) && !empty($validated['body_en'])) {
+            $validated['excerpt_en'] = $this->generateExcerpt($validated['body_en']);
+        }
 
         $news->update($validated);
 
@@ -144,5 +156,34 @@ class NewsAdminController extends Controller
         }
 
         return redirect()->route('news-admin.index')->with('success', __('app.duplicated successfully'));
+    }
+
+    private function generateExcerpt(string $html): string
+    {
+        $text = trim(strip_tags($html));
+        if (empty($text)) return '';
+
+        preg_match_all('/[^.!?。]+[.!?。]+/', $text, $matches);
+        $sentences = $matches[0] ?? [];
+
+        $excerpt = '';
+        if (!empty($sentences)) {
+            foreach ($sentences as $sentence) {
+                if (mb_strlen($excerpt) >= 150) break;
+                $excerpt .= trim($sentence) . ' ';
+            }
+            $excerpt = trim($excerpt);
+        } else {
+            $excerpt = $text;
+        }
+
+        if (mb_strlen($excerpt) > 200) {
+            $excerpt = mb_substr($excerpt, 0, 197);
+            $excerpt = preg_replace('/\s+\S*$/', '', $excerpt) . '...';
+        } elseif (mb_strlen($text) > mb_strlen($excerpt)) {
+            $excerpt = preg_replace('/[.!?。]+$/', '', $excerpt) . '...';
+        }
+
+        return $excerpt;
     }
 }

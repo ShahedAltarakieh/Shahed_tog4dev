@@ -1,0 +1,291 @@
+import { Component, OnInit, OnDestroy, AfterViewInit, Inject, PLATFORM_ID, NgZone, HostBinding, HostListener } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { AnnouncementService, Announcement, pickLocalized } from 'app/shared/services/announcement/announcement.service';
+import { StorageService } from 'app/core/storage/storage.service';
+import { Subscription } from 'rxjs';
+
+@Component({
+  selector: 'app-announcement-bar',
+  standalone: true,
+  imports: [CommonModule, RouterLink],
+  templateUrl: './announcement-bar.component.html',
+  styleUrl: './announcement-bar.component.scss'
+})
+export class AnnouncementBarComponent implements OnInit, AfterViewInit, OnDestroy {
+  announcements: Announcement[] = [];
+  currentIndex = 0;
+  isPaused = false;
+  isBrowser = false;
+  transitioning = false;
+  stickyTop = 0;
+  isHeaderScrolled = false;
+  isMobile = false;
+  currentLang = 'en';
+
+  @HostBinding('style.top.px')
+  get hostStickyTop(): number {
+    return this.stickyTop;
+  }
+
+  @HostBinding('attr.dir')
+  get hostDir(): string {
+    return this.currentLang === 'ar' ? 'rtl' : 'ltr';
+  }
+
+  private rotateInterval: any;
+  private touchStartX = 0;
+  private touchEndX = 0;
+  private headerObserver: ResizeObserver | null = null;
+  private scrollHandler: (() => void) | null = null;
+  private headerHeight = 0;
+  private langSub: Subscription | null = null;
+
+  readonly badgeColors: Record<string, string> = {
+    'LIVE': '#ef4444',
+    'INFO': '#3b82f6',
+    'ALERT': '#f59e0b',
+    'NEW': '#10b981'
+  };
+
+  constructor(
+    private announcementService: AnnouncementService,
+    public storageService: StorageService,
+    private ngZone: NgZone,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
+
+  @HostListener('window:resize')
+  onResize(): void {
+    if (this.isBrowser) {
+      this.isMobile = window.innerWidth < 768;
+    }
+  }
+
+  ngOnInit(): void {
+    if (!this.isBrowser) return;
+
+    this.isMobile = window.innerWidth < 768;
+    const target = this.isMobile ? 'mobile' : 'desktop';
+
+    this.langSub = this.storageService.siteLanguage$.subscribe(lang => {
+      this.currentLang = (lang === 'ar') ? 'ar' : 'en';
+    });
+
+    this.announcementService.getAnnouncements(target).subscribe({
+      next: (items) => {
+        this.announcements = items;
+        if (this.announcements.length > 1) {
+          this.startAutoRotate();
+        }
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
+    if (!this.isBrowser) return;
+    this.observeHeaderHeight();
+  }
+
+  ngOnDestroy(): void {
+    this.stopAutoRotate();
+    if (this.langSub) {
+      this.langSub.unsubscribe();
+      this.langSub = null;
+    }
+    if (this.headerObserver) {
+      this.headerObserver.disconnect();
+      this.headerObserver = null;
+    }
+    if (this.scrollHandler) {
+      window.removeEventListener('scroll', this.scrollHandler);
+      this.scrollHandler = null;
+    }
+  }
+
+  get current(): Announcement | null {
+    return this.announcements[this.currentIndex] || null;
+  }
+
+  get displayText(): string {
+    if (!this.current) return '';
+    const lang = this.currentLang;
+    if (window.innerWidth < 768) {
+      const short = pickLocalized(this.current.short_text, this.current.short_text_ar, lang);
+      if (short && short.trim()) return short;
+    }
+    return pickLocalized(this.current.text, this.current.text_ar, lang);
+  }
+
+  get displayCta(): string {
+    if (!this.current) return '';
+    return pickLocalized(this.current.cta_text, this.current.cta_text_ar, this.currentLang);
+  }
+
+  get displayTitle(): string {
+    if (!this.current) return '';
+    return pickLocalized(this.current.title, this.current.title_ar, this.currentLang);
+  }
+
+  next(): void {
+    if (this.announcements.length <= 1 || this.transitioning) return;
+    this.transition(() => {
+      this.currentIndex = (this.currentIndex + 1) % this.announcements.length;
+    }, true);
+  }
+
+  prev(): void {
+    if (this.announcements.length <= 1 || this.transitioning) return;
+    this.transition(() => {
+      this.currentIndex = (this.currentIndex - 1 + this.announcements.length) % this.announcements.length;
+    }, true);
+  }
+
+  goTo(index: number): void {
+    if (index === this.currentIndex || this.transitioning) return;
+    this.transition(() => {
+      this.currentIndex = index;
+    }, true);
+  }
+
+  onMouseEnter(): void {
+    this.isPaused = true;
+    this.stopAutoRotate();
+  }
+
+  onMouseLeave(): void {
+    this.isPaused = false;
+    if (this.announcements.length > 1) {
+      this.scheduleNextRotation();
+    }
+  }
+
+  onTouchStart(event: TouchEvent): void {
+    this.touchStartX = event.changedTouches[0].screenX;
+  }
+
+  onTouchEnd(event: TouchEvent): void {
+    this.touchEndX = event.changedTouches[0].screenX;
+    this.handleSwipe();
+  }
+
+  isExternalLink(link: string | null): boolean {
+    if (!link) return false;
+    return link.startsWith('http://') || link.startsWith('https://');
+  }
+
+  private transition(changeFn: () => void, restartTimer = false): void {
+    this.transitioning = true;
+    setTimeout(() => {
+      changeFn();
+      setTimeout(() => {
+        this.transitioning = false;
+        if (restartTimer && !this.isPaused && this.announcements.length > 1) {
+          this.scheduleNextRotation();
+        }
+      }, 50);
+    }, 200);
+  }
+
+  private handleSwipe(): void {
+    const diff = this.touchStartX - this.touchEndX;
+    const isRtl = this.storageService.siteLanguage$.value === 'ar';
+    if (Math.abs(diff) > 50) {
+      if ((diff > 0 && !isRtl) || (diff < 0 && isRtl)) {
+        this.next();
+      } else {
+        this.prev();
+      }
+    }
+  }
+
+  private getDisplayDuration(): number {
+    if (!this.current) return 6000;
+    const text = this.displayText || '';
+    const wordCount = text.split(/\s+/).filter(w => w.length > 0).length;
+    if (wordCount <= 10) return 6000;
+    if (wordCount <= 25) return 10000;
+    return 14000;
+  }
+
+  private startAutoRotate(): void {
+    this.stopAutoRotate();
+    this.scheduleNextRotation();
+  }
+
+  private scheduleNextRotation(): void {
+    this.stopAutoRotate();
+    const duration = this.getDisplayDuration();
+    this.rotateInterval = setTimeout(() => {
+      if (this.announcements.length <= 1 || this.transitioning) return;
+      this.transitioning = true;
+      setTimeout(() => {
+        this.currentIndex = (this.currentIndex + 1) % this.announcements.length;
+        setTimeout(() => {
+          this.transitioning = false;
+          if (!this.isPaused) {
+            this.scheduleNextRotation();
+          }
+        }, 50);
+      }, 200);
+    }, duration);
+  }
+
+  private stopAutoRotate(): void {
+    if (this.rotateInterval) {
+      clearTimeout(this.rotateInterval);
+      this.rotateInterval = null;
+    }
+  }
+
+  private observeHeaderHeight(): void {
+    const headerDesktop = document.querySelector('header.header') as HTMLElement;
+    const headerMobile = document.querySelector('header.header-mobile') as HTMLElement;
+
+    const measureHeaderHeight = () => {
+      let height = 0;
+      if (headerDesktop && window.getComputedStyle(headerDesktop).display !== 'none') {
+        height = headerDesktop.getBoundingClientRect().height;
+      } else if (headerMobile && window.getComputedStyle(headerMobile).display !== 'none') {
+        height = headerMobile.getBoundingClientRect().height;
+      }
+      this.headerHeight = height;
+    };
+
+    const updateStickyTop = () => {
+      const activeHeader = (headerDesktop && window.getComputedStyle(headerDesktop).display !== 'none')
+        ? headerDesktop
+        : headerMobile;
+      const isHeaderSticky = activeHeader?.classList.contains('scrolled') ?? false;
+      const newTop = isHeaderSticky ? this.headerHeight : 0;
+      if (newTop !== this.stickyTop || isHeaderSticky !== this.isHeaderScrolled) {
+        this.ngZone.run(() => {
+          this.stickyTop = newTop;
+          this.isHeaderScrolled = isHeaderSticky;
+        });
+      }
+    };
+
+    measureHeaderHeight();
+    updateStickyTop();
+
+    this.ngZone.runOutsideAngular(() => {
+      const targets = [headerDesktop, headerMobile].filter(Boolean) as HTMLElement[];
+      if (targets.length > 0) {
+        this.headerObserver = new ResizeObserver(() => {
+          measureHeaderHeight();
+          updateStickyTop();
+        });
+        targets.forEach(t => this.headerObserver!.observe(t));
+      }
+
+      this.scrollHandler = () => {
+        measureHeaderHeight();
+        updateStickyTop();
+      };
+      window.addEventListener('scroll', this.scrollHandler, { passive: true });
+    });
+  }
+}

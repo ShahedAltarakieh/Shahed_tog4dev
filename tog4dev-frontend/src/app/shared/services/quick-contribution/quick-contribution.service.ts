@@ -11,7 +11,7 @@ export class QuickContributionService {
   private apiUrl = environment.apiUrl;
   constructor(public apiService: ApiService) { }
 
-  getContribution(lang: 'ar' | 'en', type: string | null = null, category_id: number | null = null) {
+  getContribution(lang: string, type: string | null = null, category_id: number | null = null) {
     const additionalHeaders = {
       'Accept-Language': lang,
     };

@@ -22,7 +22,7 @@
                                 <th>{{ __('app.category') }}</th>
                                 <th>{{ __('app.publish date') }}</th>
                                 <th>{{ __('app.status') }}</th>
-                                <th>{{ __('app.featured') }}</th>
+                                <th>{{ __('app.recent') }}</th>
                                 <th>{{ __('app.action') }}</th>
                             </tr>
                         </thead>
@@ -46,10 +46,10 @@
                                         </div>
                                     </td>
                                     <td>
-                                        @if($item->is_featured)
-                                            <span class="badge badge-success">{{ __('app.yes') }}</span>
+                                        @if($item->published_at && $item->published_at->greaterThanOrEqualTo(now()->subDays(7)))
+                                            <span class="badge badge-danger">{{ __('app.new') }}</span>
                                         @else
-                                            <span class="badge badge-secondary">{{ __('app.no') }}</span>
+                                            <span class="badge badge-light">-</span>
                                         @endif
                                     </td>
                                     <td>

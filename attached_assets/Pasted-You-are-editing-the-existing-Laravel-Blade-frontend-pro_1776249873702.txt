@@ -1,0 +1,169 @@
+You are editing the existing Laravel / Blade frontend project.
+
+IMPORTANT: Previous implementation misunderstood requirements.
+
+Now apply these CORRECTED changes exactly.
+
+Only update:
+
+* News cards / News page
+* Announcement top ticker / mobile marquee
+
+Keep current theme/design.
+
+==================================================
+
+1. REMOVE "READING TIME" FROM NEWS CARDS
+   ==================================================
+
+The previous "1 min read" on news cards is WRONG.
+
+Remove reading time completely from:
+
+* news cards
+* featured large card
+* news listing
+* news details metadata (unless separately needed later)
+
+Do NOT show:
+1 min read / 2 min read / etc
+
+==================================================
+2. READING TIME LOGIC IS FOR ANNOUNCEMENT TICKER ONLY
+=====================================================
+
+Use content/message length of Announcement text to determine how long the announcement stays visible in the top moving ticker before rotating.
+
+Logic example:
+
+Base display time:
+
+* short text = 6 sec
+* medium text = 10 sec
+* long text = 14 sec
+
+OR calculate by words count.
+
+Goal:
+User has enough time to read full moving announcement.
+
+Then rotate to next announcement.
+
+Apply especially for mobile.
+
+==================================================
+3. BIG FEATURED NEWS CARD - TAG POSITION
+========================================
+
+On large horizontal featured news card:
+
+Move NEW / RECENT tag to:
+
+TOP RIGHT CORNER of the card
+
+Not beside category.
+
+Example:
+
+---
+
+|                            NEW  |
+| image | title/content           |
+-----------------------------------
+
+Use absolute positioned badge.
+
+==================================================
+4. NEWS META ROW LAYOUT FIX
+===========================
+
+For ALL news cards:
+
+Same row:
+
+LEFT side:
+Category
+
+RIGHT side:
+Date
+
+Example:
+
+Health                     March 15, 2026
+
+Below that:
+Title
+Description
+Read More button at bottom
+
+Date must NOT appear under title anymore.
+
+==================================================
+5. READ MORE POSITION
+=====================
+
+Place Read More button/link at bottom of content area.
+
+Clean alignment.
+
+Desktop:
+bottom right
+
+Mobile:
+full width or bottom right depending best fit.
+
+==================================================
+6. MOBILE ANNOUNCEMENT BAR FIX
+==============================
+
+Top moving announcement on mobile currently cuts text.
+
+Fix ticker/marquee so full text becomes readable.
+
+Requirements:
+
+* smooth scrolling
+* enough speed (not too fast)
+* pause briefly before repeat
+* responsive width
+* no clipping
+* text vertically centered
+
+Use the calculated timing from section 2.
+
+==================================================
+7. REMOVE WRONG META FROM SMALL CARDS
+=====================================
+
+On small cards currently:
+
+date and reading time split badly.
+
+Fix to:
+
+Top row:
+Category left
+Date right
+
+No reading time.
+
+==================================================
+8. KEEP RESPONSIVE
+==================
+
+Desktop + Mobile + Tablet all clean.
+
+==================================================
+9. FINAL TEST
+=============
+
+Verify:
+
+* no "1 min read" anywhere on news cards
+* featured badge top-right
+* category/date same row
+* Read More bottom aligned
+* mobile announcement fully readable
+* ticker rotates with proper timing
+
+Then summarize changed files.

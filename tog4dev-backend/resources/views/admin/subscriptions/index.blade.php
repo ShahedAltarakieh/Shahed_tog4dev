@@ -1,5 +1,5 @@
 @extends('layouts.admin.show')
-@section('title') __('app.subscriptions') @endsection
+@section('title') {{ __('app.subscriptions') }} @endsection
 
 @section('content')
 @include('includes.admin.header', ['label_name' => __('app.subscriptions'), "download_button" => route('subscriptions.download', ["active" => $active])])
@@ -32,10 +32,13 @@
                                 <tr>
                                     <td>{{ $subscription->id }}</td>
                                     <td>{{ $subscription->payment?->cart_id }}</td>
-                                    <td>{{ $subscription->payment->userDetails->first_name ?? $subscription->user->first_name }} {{ $subscription->payment->userDetails->last_name ?? $subscription->user->last_name}}</td>
-                                    <td>{{ $subscription->payment->influencer->name ?? 'Website' }}</td>
-                                    <td>{{ $subscription->payment->userDetails->email ?? $subscription->user->email }}</td>
-                                    <td>{{ $subscription->payment->userDetails->phone ?? $subscription->user->phone }}</td>
+                                    <td>
+                                        {{ $subscription->payment?->userDetails?->first_name ?? $subscription->user?->first_name ?? '-' }}
+                                        {{ $subscription->payment?->userDetails?->last_name ?? $subscription->user?->last_name ?? '' }}
+                                    </td>
+                                    <td>{{ $subscription->payment?->influencer?->name ?? 'Website' }}</td>
+                                    <td>{{ $subscription->payment?->userDetails?->email ?? $subscription->user?->email ?? '-' }}</td>
+                                    <td>{{ $subscription->payment?->userDetails?->phone ?? $subscription->user?->phone ?? '-' }}</td>
                                     <td>{{ $subscription->price }}{{ __('app.currency') }}</td>
                                     <td>{{ $subscription->end_date }}</td>
                                     <td>

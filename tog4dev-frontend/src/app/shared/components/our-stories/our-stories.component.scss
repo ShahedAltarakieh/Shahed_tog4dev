@@ -1,14 +1,9 @@
+:host { display: block; padding-block: 16px 60px; }
+
 .swiper {
   margin-top: 20px;
   margin-bottom: 38px;
   max-width: 3500px;
-}
-
-.section-title{
-  color: #13585D;
-  font-size: 27px;
-  font-weight: 500;
-  line-height: 34px;
 }
 
 .slide-img {
@@ -56,6 +51,10 @@
   padding: 6px 10px;
   &:hover{
     background: #13585DB2;
+  }
+  &:focus-visible {
+    outline: 2px solid #FECD0F;
+    outline-offset: 3px;
   }
 }
 

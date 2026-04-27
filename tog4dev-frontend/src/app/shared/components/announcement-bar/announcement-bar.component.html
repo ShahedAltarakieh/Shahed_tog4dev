@@ -1,0 +1,98 @@
+@if (current) {
+<div class="announcement-bar"
+     [class.scrolled-active]="isHeaderScrolled"
+     [class.mobile-mode]="isMobile"
+     (mouseenter)="onMouseEnter()"
+     (mouseleave)="onMouseLeave()"
+     (touchstart)="onTouchStart($event)"
+     (touchend)="onTouchEnd($event)">
+  <div class="announcement-bar-inner">
+    @if (announcements.length > 1 && !isMobile) {
+      <button class="announcement-nav announcement-nav-prev" (click)="prev()" aria-label="Previous">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+    }
+
+    @if (isMobile) {
+      <div class="announcement-content mobile-ticker" [class.fade-out]="transitioning">
+        <span class="announcement-badge" [style.background]="badgeColors[current.badge_type]">
+          {{ current.badge_type }}
+        </span>
+        <div class="ticker-track">
+          <div class="ticker-text">
+            @if (current.link) {
+              @if (isExternalLink(current.link)) {
+                <a [href]="current.link" target="_blank" rel="noopener" class="announcement-link">
+                  <span>{{ displayText }}</span>
+                  @if (displayCta) {
+                    <span class="ticker-cta">{{ displayCta }} &rarr;</span>
+                  }
+                </a>
+              } @else {
+                <a [routerLink]="current.link" class="announcement-link">
+                  <span>{{ displayText }}</span>
+                  @if (displayCta) {
+                    <span class="ticker-cta">{{ displayCta }} &rarr;</span>
+                  }
+                </a>
+              }
+            } @else {
+              <span>{{ displayText }}</span>
+            }
+          </div>
+        </div>
+      </div>
+    } @else {
+      <div class="announcement-content" [class.fade-out]="transitioning">
+        <span class="announcement-badge" [style.background]="badgeColors[current.badge_type]">
+          {{ current.badge_type }}
+        </span>
+
+        @if (current.link) {
+          @if (isExternalLink(current.link)) {
+            <a [href]="current.link" target="_blank" rel="noopener" class="announcement-link">
+              <span class="announcement-text">{{ displayText }}</span>
+            </a>
+          } @else {
+            <a [routerLink]="current.link" class="announcement-link">
+              <span class="announcement-text">{{ displayText }}</span>
+            </a>
+          }
+        } @else {
+          <span class="announcement-text">{{ displayText }}</span>
+        }
+
+        @if (current.link && displayCta) {
+          @if (isExternalLink(current.link)) {
+            <a [href]="current.link" target="_blank" rel="noopener" class="announcement-cta">
+              {{ displayCta }}
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          } @else {
+            <a [routerLink]="current.link" class="announcement-cta">
+              {{ displayCta }}
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          }
+        }
+      </div>
+    }
+
+    @if (announcements.length > 1 && !isMobile) {
+      <div class="announcement-dots">
+        @for (item of announcements; track item.id; let i = $index) {
+          <button class="announcement-dot" [class.active]="i === currentIndex" (click)="goTo(i)" [attr.aria-label]="'Announcement ' + (i + 1)"></button>
+        }
+      </div>
+
+      <button class="announcement-nav announcement-nav-next" (click)="next()" aria-label="Next">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+    }
+  </div>
+</div>
+}

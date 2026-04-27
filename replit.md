@@ -93,7 +93,13 @@ Full-stack module for news articles and media gallery (photos/videos).
 - Pages: `NewsComponent`, `NewsDetailComponent` (modernized card layout with gradient hero, skeleton loaders, icon-only share buttons, enhanced related cards), `PhotosComponent` (uniform 4:3 grid, lightbox with prev/next navigation + keyboard support), `VideosComponent` (embedded player)
 - Routes: `/en/news`, `/en/news/:slug`, `/en/photos`, `/en/videos` + Arabic equivalents (landing page removed; `/en/news-gallery` redirects to `/en/news`)
 - Navigation: "News & Gallery" dropdown in header with SVG icons (News/Photos/Videos), click+hover toggle, rotating arrow indicator, closes on outside click
-- Features: debounced search, category filtering, pagination, share (Facebook/WhatsApp/Copy link), breadcrumbs, loading/empty/error states, "Read More" buttons
+- Features: debounced search, category filtering, pagination (7 items/page: 1 featured + 6 small cards), share (Facebook/WhatsApp/Copy link), breadcrumbs, loading/empty/error states, "Read More" buttons
+- Pagination layout: every page shows 1 large featured card (first item) + up to 6 small cards (3-column grid); consistent across all pages including search/filter results
+- Recent badge: automatic "NEW" badge on news published within 7 days (`published_at >= now - 7 days`); positioned top-right on image for both featured and small cards
+- Card layout: category LEFT + date RIGHT in same row; "Read More" button at bottom of card content
+- Mobile UX: overflow-x hidden, category pills wrap on mobile, article-body word-break, responsive images
+- Announcement bar: text-length-based rotation timing (6s short / 10s medium / 14s long); mobile uses marquee ticker scroll (no clipping/truncation); isMobile flag with window resize listener
+- Translation keys: `min read`, `new` in both en.json and ar.json
 
 ## Footer
 
@@ -121,14 +127,21 @@ Major visual and structural overhaul of the Laravel admin dashboard:
 - Empty state and breadcrumb components
 - Full RTL support via `admin-modern-rtl.css`
 
-**Sidebar Reorganization** (`includes/admin/side-bar.blade.php`):
-- Grouped into labeled sections: MAIN, CONTENT, BUSINESS, USERS, COMMUNICATION, SYSTEM
+**Sidebar IA Overhaul** (`includes/admin/side-bar.blade.php`):
+- Restructured into 6 sections: MAIN (Dashboard, Reports), CONTENT (Sliders, Contributions, Categories†, Testimonials†, Stories†, Partners†, Facts†, Items†, Announcements, News & Media†, SEO, Short Links), BUSINESS (Payments, Subscriptions†, Collection Team, Upload Sheets), CUSTOMERS (All Customers, Influencers, Admin Team†), COMMUNICATIONS (User Requests, Org Requests, Newsletter, Notifications), SYSTEM (Settings, Activity Logs, System Health) [† = has submenu]
+- Content section flattened: items are standalone links or collapsed submenus, no nested wrapper
+- Communications flattened: direct links to User Requests, Org Requests, Newsletter, Notifications
+- SEO and Short Links moved from System to Content section
+- Active menu indicator: yellow accent bar on left side via `active-menu` class with `request()->routeIs()` detection
+- Chevron rotation animation for expand/collapse (uses Font Awesome `fa-chevron-down` + CSS rotate)
+- Submenu dots: `.submenu-dot` circles for cleaner sub-items
+- `aria-expanded` attributes on all collapse toggles for accessibility
+- Collapsed sidebar (`body[data-sidebar-size="condensed"]`): icons only, labels hidden, flyout submenus on hover, CSS tooltips on icon hover
 - Section headers styled as uppercase labels (`sidebar-section-title`)
-- Updated icons for better visual consistency
 - Dark gradient sidebar background with hover states
 
 **Dashboard Home Redesign** (`admin/dashboard.blade.php`):
-- Welcome header with date range picker
+- Welcome header with custom date card (from/to flatpickr inputs + apply button, replacing floating range picker)
 - 4 primary KPI cards (today/week/month/year) with colored icon badges and % change indicators
 - Secondary KPI row: Total Users, Active Subscriptions, News Published, Pending Requests
 - All payments summary card + custom date range card
@@ -139,29 +152,54 @@ Major visual and structural overhaul of the Laravel admin dashboard:
 **Phase 2: New System Pages** (`resources/views/admin/system/`):
 - Activity Logs (`system/activity-logs.blade.php`) — filterable activity timeline
 - Notifications Center (`system/notifications.blade.php`) — alerts with severity badges
-- Settings Center (`system/settings.blade.php`) — tabbed navigation (General, Appearance, Security)
+- Settings Center (`system/settings.blade.php`) — tabbed navigation (General, Appearance, Security, Profile) with custom JS tab switching
 - System Health (`system/system-health.blade.php`) — KPIs, environment info, content overview, revenue/user charts, today's snapshot
 - Reports Center (`system/reports.blade.php`) — revenue/transaction/payment method charts with daily/monthly breakdown tables
-- Media Library (`system/media-library.blade.php`) — photo/video grid management
+- Media Library — REMOVED (photo/video managed via Gallery section)
+
+**Phase 3: Premium Admin Dashboard Rebuild**:
+- Login Page: Split-layout with brand panel (logo in original colors, feature list) + clean form (password toggle, error display, language switcher, mobile responsive)
+- Topbar: Search bar (Ctrl+K → command palette), notifications bell, language switcher with active state, user avatar dropdown (username, role, profile/security links, logout)
+- Sidebar: Professional IA — "Customers" (Users/Influencers/Admins), "Content Management", "News & Media", "Messages", "System Settings" with consistent Font Awesome icons
+- Full topbar CSS: `.topbar-search`, `.topbar-icon-btn`, `.topbar-user-btn`, `.topbar-dropdown-menu`, `.topbar-user-menu`, `.topbar-user-header` classes
+- RTL support for all topbar elements in `admin-modern-rtl.css`
+- 20+ new translation keys added to both EN and AR language files
+- Duplicate translation keys cleaned up across both locale files
 
 **AdminSystemController** (`app/Http/Controllers/AdminSystemController.php`):
-- 6 methods: activityLogs, notifications, settings, systemHealth, reportsCenter, mediaLibrary
-- Routes: `system.activity-logs`, `system.notifications`, `system.settings`, `system.health`, `system.reports`, `system.media-library` (all under `/system` prefix with `master` middleware)
+- 5 methods: activityLogs, notifications, settings, systemHealth, reportsCenter
+- Routes: `system.activity-logs`, `system.notifications`, `system.settings`, `system.health`, `system.reports` (all under `/system` prefix with `master` middleware)
 
 **Premium UX Components** (`public/js/admin-components.js`):
-- Command Palette (Ctrl+K) — search across pages with keyboard navigation
+- Command Palette (Ctrl+K) — search across pages with keyboard navigation, improved result icons with teal icon boxes, better empty state
 - Toast notification system (`window.AdminToast.show()`) — success/error/warning/info variants with auto-dismiss
 - Confirm dialog (`window.AdminConfirm.show()`) — promise-based confirmation modals
+- Sidebar menu arrow init: auto-rotates chevrons based on collapse state via Bootstrap collapse events
+- Sidebar memory: persists open/closed state across page loads via localStorage
 
 **Enhanced CSS Components** (`public/css/admin-modern.css`):
 - Activity timeline (`.activity-timeline`, `.activity-item`, `.activity-icon`)
 - Operations panel (`.operations-list`, `.operation-item`)
-- Settings navigation (`.settings-nav`, `.settings-nav-item`)
+- Settings navigation (`.settings-nav`, `.settings-nav-item`) with rounded border-radius
 - Media grid (`.media-grid`, `.media-card`, `.media-thumb`)
 - Status chips, action dropdowns, bulk actions bar, column chooser
 - Form enhancements (focus rings, help text, character counters)
 - Skeleton loading animation
 - Sticky table headers
+- Page header box (`.page-header-box`) for consistent page title layout
+- Back button (`.page-back-btn`) for sub-page navigation
+- Custom date card (`.custom-date-card`) with dashed border style
+- Improved breadcrumb component (`.breadcrumb-modern`) with FA separator icons
+- Dashboard KPI cards: conditional top-bar (only on hover/active), active card border highlight
+- Quick actions grid: fixed 3-column on desktop, 2-column on mobile
+- Collapsed sidebar styles: icon-only mode, flyout submenus on hover, CSS `::after` tooltips on icon hover (targets `body[data-sidebar-size="condensed"]`)
+- Navbar layout: CSS flexbox `order` properties fix float-right conflict (logo=1, hamburger=2, menu=3 with `margin-left:auto`); uses `:not(.topnav-menu-left)` selector to prevent specificity clash
+- Pagination: compact style (32px min-width, 5px padding), no shadows/scale, clean borders, unified for Bootstrap + DataTables
+- Image upload guidelines partial (`includes/admin/image-upload-notes.blade.php`): gradient background, icon rows, extension badges
+- Translation keys added: `image guidelines`, `recommended size`, `max file size`, `allowed extensions` (both EN and AR)
+- Responsive breakpoints: 991px tablet, 767px mobile, 575px small mobile
+- content-page transition for smooth sidebar collapse/expand
+- **Asset versions**: CSS/JS cache-busted to `?v=1.6`
 
 **Page Header Modernization** (`includes/admin/header.blade.php`):
 - Breadcrumb navigation
@@ -169,6 +207,85 @@ Major visual and structural overhaul of the Laravel admin dashboard:
 - Responsive flex layout
 
 **Files changed**: `public/css/admin-modern.css`, `public/css/admin-modern-rtl.css`, `public/js/admin-components.js`, `includes/admin/side-bar.blade.php`, `includes/admin/header.blade.php`, `admin/dashboard.blade.php`, `layouts/admin/show.blade.php`, `layouts/admin/add.blade.php`, `app/Http/Controllers/AdminSystemController.php`, `app/Http/Controllers/DashboardController.php`, `resources/views/admin/system/*`, `resources/lang/en/app.php`, `resources/lang/ar/app.php`, `routes/web.php`
+
+## Announcement Bar Module
+
+Full-stack announcement bar for displaying rotating announcements below the site header.
+
+**Backend** (`tog4dev-backend/`):
+- Model: `Announcement` with scopes `active()`, `inDate()`, `forTarget($target)`
+- Migration: `announcements` table (id, title, text, short_text, link, cta_text, badge_type, target_view, source_type, news_id, is_active, order_no, start_date, end_date)
+- Admin Controller: `AnnouncementAdminController` (CRUD, toggle status, reorder) with strict validation for `source_type` (manual/news) and `news_id` (required when source is news)
+- API Controller: `AnnouncementApiController` — `GET /api/v1/announcements?target=desktop|mobile`
+- Admin Views: `admin/announcements/` (index, create, edit) with:
+  - Source type selector (Manual vs Linked News) with auto-fill from news articles
+  - Interactive live preview showing how announcements appear on the frontend
+  - Desktop/mobile preview toggle
+  - Locale-aware news URL generation (EN/AR slugs)
+  - Drag reorder, status toggles, SweetAlert2 delete confirmation
+- Announcement management is centralized in Admin → Announcements (removed from News forms)
+- News forms retain auto-excerpt generation from body content (server-side + client-side)
+- Sidebar: Standalone "Announcements" link with bullhorn icon above News & Media section
+- Translation keys: 45+ announcement-related keys in both EN and AR
+
+**Frontend** (`tog4dev-frontend/`):
+- Service: `AnnouncementService` (`shared/services/announcement/`) with per-target caching via `shareReplay`, error-resilient (clears cache on failure, doesn't permanently cache errors)
+- Component: `AnnouncementBarComponent` (`shared/components/announcement-bar/`) — standalone Angular component
+- Features: auto-rotate (4.5s) with smooth fade transitions, pause on hover, swipe navigation, clickable messages when link exists, responsive (short_text for mobile), RTL support
+- **Sticky behavior**: Bar stays visible below navbar while scrolling using CSS `position: sticky` on `:host`. Dynamic `top` offset via `@HostBinding('style.top.px')` tracks header height using `ResizeObserver` + scroll listener. Syncs with header's `.scrolled` class (scroll > 50px threshold). z-index: 9 (below header's 10, above content). Subtle box-shadow for visual separation.
+- Admin-only visibility control: no close/dismiss button, no sessionStorage hide — bar always visible when active announcements exist, controlled exclusively from Admin Dashboard
+- Badge types: LIVE (red), INFO (blue), ALERT (amber), NEW (green)
+- Target views: desktop, mobile, both — API filters by target param
+- Integration: Added to `app.component.html` below `<app-header>`
+
+## About Us CMS Module
+
+Full-stack dynamic CMS for the About Us page with multi-country support, multi-language (AR/EN), admin management, and version control.
+
+**Backend** (`tog4dev-backend/`):
+- Models: `AboutPage`, `AboutSection`, `AboutSectionItem`, `AboutPageVersion` (with SoftDeletes, scopes: published, forCountry, global, visible)
+- Migrations: `about_pages`, `about_sections`, `about_section_items`, `about_page_versions`
+- 12 section types: hero, intro, highlights, statement, visionMission, coreValues, founders, beliefs, stats, slogan, contact, partners
+- API Controller: `AboutPageController` — `GET /api/v1/about?country=JO` with country→global fallback logic (country-specific page first, falls back to global, merges missing section keys from global)
+- API Resources: `AboutPageResource`, `AboutSectionResource`, `AboutSectionItemResource` (language-aware via Accept-Language header)
+- Admin Controller: `AboutPageAdminController` — full CRUD, publish/draft/unpublish, version rollback, section reorder (drag/drop), item CRUD, visibility toggle
+- Admin Views: `admin/about/` (index, create, edit) with SortableJS drag/drop, collapsible section editors, item modal (CRUD), version history panel
+- Admin Routes: `/about-management/*` under `master` middleware
+- Sidebar: "About Us CMS" link with info-circle icon
+- Content Seeder: `AboutPageSeeder` seeds Jordan page with all 12 sections + sample items
+- Versioning: publish creates snapshot in `about_page_versions`, rollback restores from snapshot
+
+**Frontend** (`tog4dev-frontend/src/app/static-pages/about-us/`):
+- Service: `AboutService` (`services/about.service.ts`) with typed interfaces (AboutPageData, AboutSection, AboutSectionItem)
+- Component: `AboutUsComponent` — fully dynamic rendering from API data, no hardcoded content
+- Renders all 12 section types with dedicated styling per section
+- Hero section: simplified — only displays title (lang key `about us`) + optional subtitle from `getSectionByKey('hero').subtitle`. Hero stores only `subtitle/subtitle_en`; image/video/CTA fields removed.
+- Loading spinner + error state handling
+- SEO: dynamic meta tags from API (title, description)
+- Responsive: grid layouts adapt for mobile/tablet/desktop
+
+**Admin standardization (Apr 2026)**:
+- All About admin views (index/create/edit) use `@include('includes.admin.header', ['label_name' => __('app.about_us|create_about_us|edit_about_us')])` — same pattern as other admin pages.
+- `OG Image` upload + `og_image_file` save logic removed.
+- Section-edit form for hero key only renders Subtitle AR/EN; controller `updateSection` short-circuits hero to subtitle-only.
+- Publish/Unpublish use AJAX with no page reload — DOM updated in-place (status badge + button swap) and JSON response includes `status`/`version`.
+
+## Navigation Visibility Manager Module
+
+Admin-controlled toggle for which menu items appear in the public navbar.
+
+**Backend**:
+- Migration: `2026_04_19_000002_create_nav_settings_table.php` — table `nav_settings` (page_key unique, label_en, label_ar, visible bool, order int). Seeds default keys: news_gallery, about_us, contact_us, crowdfunding, ngoverse, projects, organizations.
+- Model: `NavSetting` (fillable: page_key, label_en, label_ar, visible, order; casts visible→bool, order→int).
+- Admin: `Admin\NavSettingController` (index + update via PUT). View `admin/nav_settings/index.blade.php` with switch toggles and order inputs.
+- Routes: `/nav-settings` (web, master middleware) — `nav-settings.index`, `nav-settings.update`.
+- Sidebar: "Navigation Visibility" link with bars icon below About Us.
+- Public API: `GET /api/v1/navigation` → `Api\V1\NavSettingApiController` returns `{success, data:[{page_key,label_en,label_ar,visible,order}]}`.
+
+**Frontend**:
+- Service: `shared/services/navigation/navigation.service.ts` with `load()` (browser-only, cached via shareReplay) and `isVisible(pageKey)` (defaults to true if unknown).
+- `HeaderComponent` calls `navService.load()` in `ngOnInit` (only in browser via PLATFORM_ID), exposes `navVisible(key)`.
+- Header template (desktop + mobile + collapsible news/gallery section) wraps each menu `<li>` with `@if (navVisible('<key>'))`. No hardcoded visibility — disabling a key in admin hides it everywhere.
 
 ## Notes
 
@@ -178,3 +295,30 @@ Major visual and structural overhaul of the Laravel admin dashboard:
 - SSR compatibility fixes applied across ~20 components: all `window.location.href`, `window.scrollY`, `window.pageYOffset`, `window.location.origin` calls wrapped with `typeof window !== 'undefined'` guards
 - All 6 Swiper slider components (home-slider, project-slider, our-stories, testimonials, about-us-slider, ngoverse-slider) protected with `isPlatformBrowser()` guard in `initSwiper()` to prevent `i.children is not iterable` SSR errors
 - `MetaPixelService.fbq` getter guarded against SSR (`typeof window !== 'undefined'`) to prevent `window is not defined` errors during server rendering
+
+## Dynamic Contact Info (Apr 20, 2026)
+- Migration: `2026_04_20_000001_create_contact_info_table.php` — singleton table `contact_info` with bilingual (EN + `_ar`) text fields plus JSON arrays (`extra_phones`, `extra_emails`, `social_links`) and map fields (`map_link`, `map_embed_url`, `map_lat`, `map_lng`); seeded row id=1 with current production values.
+- Model: `App\Models\ContactInfo` with `current()` (auto-creates singleton) and `localized($key)` helper.
+- Admin: `Admin\ContactInfoAdminController` (edit + update with strict validation; `map_embed_url` allowlisted to `https://*google.*/maps...`); blade at `admin/contact_info/edit.blade.php`; sidebar link `contact-info-admin.edit`; routes under `master` middleware at `/contact-info` (PUT update).
+- Public API: `Api\V1\ContactInfoController@show` at `GET /api/v1/contact-info`. Locale resolution via `?lang=` query first, then `Accept-Language` header, normalizing `ar-*`/`en-*` -> `ar`/`en` (defaults to en). Returns localized payload with EN<->AR fallback per field.
+- Frontend: `ContactInfoService` (HTTP client, sends `Accept-Language` + `?lang=` param), `ContactComponent` subscribes to `storageService.siteLanguage$` and reloads on language switch. On error, resets `info/socials/mapEmbedSafe` so template falls back to defaults. Map iframe uses `safeMapUrl()` allowlist (Google Maps domains only) before `bypassSecurityTrustResourceUrl`.
+- Lang strings added to `resources/lang/{en,ar}/app.php` for all admin labels (`contact_info`, `quick_cards`, `office_card`, etc.).
+
+## Dynamic Multi-Language Foundation (Apr 21, 2026)
+- Migration: `2026_04_21_000001_create_languages_table.php` — `languages` table with `code` (unique), `name`, `native_name`, `direction` (ltr/rtl), `is_default`, `is_active`, `position`. Seeder seeds EN (default, LTR) + AR (RTL).
+- Model: `App\Models\Language` with `active()` scope, single-default enforcement on save, `CACHE_KEY` constant; auto-busts `Cache::forget` on save/delete.
+- Admin: `Admin\LanguageAdminController` (full CRUD + `set_default` action) under `master` middleware at `/languages`. Blade views `index/create/edit`. Sidebar link in System section. Default language cannot be deactivated or deleted.
+- Public APIs: `GET /api/v1/languages` (no auth) and `GET /api/v2/languages` (no auth, mirror for partners). Returns `{data:[{code,name,native_name,direction,is_default,position}], default, version}` with 300s `Cache-Control: public, max-age=300` + Laravel cache.
+- Lang strings added to `resources/lang/{en,ar}/app.php`: `languages`, `native name`, `direction`, `set as default`, `cannot remove default language` (+ AR), `lowercase letters only, e.g. en, ar, fr, es`, `default language must be active.`, `cannot deactivate default language.`, `cannot delete default language.`.
+
+### Default-language invariants (enforcement model)
+- **At most one default**: enforced at the DB level via single-default unique index (Postgres partial unique, MySQL virtual generated column + unique, SQLite partial unique).
+- **At least one default**: enforced at the application level by `LanguageAdminController` (cannot deactivate/un-default/delete the sole default) plus a self-healing path in `Language::defaultCode()` that auto-promotes a row if none is marked default. (Standard SQL cannot enforce row-existence cross-table; this convergence guarantee is intentional.)
+- **Default rows must be active**: enforced at all entry points by the `Language::saving` model event (forces `is_active = true` whenever `is_default = true`), plus controller-side validation rejection in `store()` / `update()`.
+- Frontend service: `LanguagesService` fetches `/api/v1/languages` on bootstrap with silent fallback to hardcoded EN+AR if the API is unreachable. Exposes `availableLanguages$` (BehaviorSubject) + `defaultLanguage`.
+- StorageService: `siteLanguage$` widened from `'ar'|'en'` to `string`; `AppLanguage` interface re-exported.
+- TextDirectionService: now accepts an explicit direction (passed by caller from API metadata) instead of hardcoding `ar => rtl`.
+- `translate-loader-factory` falls back to `en.json` when a non-English translation file 404s — keeps UI usable for new admin-added languages until the team uploads the JSON.
+- AppComponent: loads languages on init, validates URL `:lang` segment (unknown codes redirect to default), calls `translate.addLangs(codes)` dynamically.
+- HeaderComponent: cycle-toggle button when ≤2 languages, dropdown when >2; mobile menu shows full list when >2. URL swap generalized for arbitrary codes; legacy EN↔AR translated route mapping retained for backward compatibility.
+- Backward compatibility: existing `title`/`title_en` columns are NOT touched — code that switches on `'ar'` vs `'en'` strings continues to work. New languages fall back to English content per existing model accessors until per-language columns are added downstream.

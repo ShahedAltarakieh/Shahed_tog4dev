@@ -1,44 +1,161 @@
-<div class="container">
-  <div class="contact-page">
-    <h1 class="title text-center">{{ "contact us" | translate }}</h1>
-  
-    <p class="title-desc text-center">
-        {{ "together for intermediation services llc (together for development)" | translate }} - {{ "First Floor, Office 103 - Hayat" | translate }}
-    <br>
-        {{ "FM Building, behind Al-Dustour Newspaper - University of Jordan Street, Amman, Jordan." | translate }}
-    </p>
+<div class="contact-page">
 
-    <p class="address text-center">{{ "Mobile & WhatsApp: +962 779 400 900" | translate }}
-      <br /> {{ "Landline: +962 6 40 20 202" | translate }}</p>
-  
-    <ul class="social-media-links">
-      <li>
-        <a href="https://www.facebook.com/share/h4FZ2p8TsLWE2vKy/?mibextid=LQQJ4d" target="_blank">
-          <img src="/app/assets/images/contact-us/facebook.svg" alt="facebook">
-        </a>
-      </li>
-      <li>
-        <a href="https://www.instagram.com/tog4dev/profilecard/?igsh=MmEyNnFhZDR2cDY4" target="_blank">
-          <img src="/app/assets/images/contact-us/instagram.svg" alt="instagram">
-        </a>
-      </li>
-      <li>
-        <a href="https://snapchat.com/t/kwXP9FSM" target="_blank">
-          <img src="/app/assets/images/contact-us/snapchat.svg" alt="snapchat">
-        </a>
-      </li>
-      <li>
-        <a href="https://x.com/Tog4Dev?t=YxqzngaJv1WOAeS1241qMw&s=09" target="_blank">
-          <img src="/app/assets/images/contact-us/x.svg" alt="twitter / X">
-        </a>
-      </li>
-    </ul>
-    <p class="form-title text-center"> {{ "If you have any inquiries" | translate }}<br>{{ "please complete the form below" | translate }}.</p>
-      <div class="row justify-content-center">
-          <div class="col-md-8">
-              <app-contact-us-form [type]="2"/>
-          </div>
+  <section class="hero-section">
+    <div class="hero-pattern"></div>
+    <div class="container">
+      <div class="hero-content text-center">
+        <span class="hero-badge">{{ "contact us" | translate }}</span>
+        <h1 class="page-title text-white">{{ "Get In Touch" | translate }}</h1>
+        <p class="hero-subtitle text-white">{{ "We'd love to hear from you. Send us a message and we'll respond as soon as possible." | translate }}</p>
       </div>
-  </div>
+    </div>
+  </section>
+
+  <section class="contact-cards-section">
+    <div class="container">
+      <div class="contact-cards-grid">
+        <a class="contact-info-card"
+           [href]="'tel:' + (info?.phone_primary || '+962779400900')">
+          <div class="info-icon" aria-hidden="true"><i class="fas fa-phone-alt"></i></div>
+          <div class="info-body">
+            <span class="info-label">{{ "phone" | translate }}</span>
+            <span class="info-value" dir="ltr">{{ info?.phone_primary || '+962 779 400 900' }}</span>
+            <span class="info-sub">{{ info?.phone_sub || ("Mobile & WhatsApp" | translate) }}</span>
+          </div>
+        </a>
+
+        <a class="contact-info-card"
+           [href]="'tel:' + (info?.landline || '+96264020202')">
+          <div class="info-icon" aria-hidden="true"><i class="fas fa-headset"></i></div>
+          <div class="info-body">
+            <span class="info-label">{{ "Landline" | translate }}</span>
+            <span class="info-value" dir="ltr">{{ info?.landline || '+962 6 40 20 202' }}</span>
+            <span class="info-sub">{{ info?.landline_sub || ("Sun – Thu · 9am – 5pm" | translate) }}</span>
+          </div>
+        </a>
+
+        <a class="contact-info-card"
+           [href]="'mailto:' + (info?.email_primary || 'info@tog4dev.com')">
+          <div class="info-icon" aria-hidden="true"><i class="fas fa-envelope"></i></div>
+          <div class="info-body">
+            <span class="info-label">{{ "email" | translate }}</span>
+            <span class="info-value">{{ info?.email_primary || 'info@tog4dev.com' }}</span>
+            <span class="info-sub">{{ info?.email_sub || ("We reply within 24 hours" | translate) }}</span>
+          </div>
+        </a>
+
+        <a class="contact-info-card" target="_blank" rel="noopener"
+           [href]="info?.map_link || 'https://maps.app.goo.gl/5rUnmTWCu17rQvGZ6'">
+          <div class="info-icon" aria-hidden="true"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="info-body">
+            <span class="info-label">{{ "address" | translate }}</span>
+            <span class="info-value">{{ info?.city_country || ("Amman, Jordan" | translate) }}</span>
+            <span class="info-sub">{{ info?.street_short || ("University of Jordan Street" | translate) }}</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-main-section">
+    <div class="container">
+      <div class="contact-main-grid">
+
+        <aside class="contact-aside">
+          <div class="aside-stack">
+          <div class="aside-card">
+            <h3 class="aside-title">{{ "Visit Our Office" | translate }}</h3>
+            <p class="aside-desc">
+              {{ info?.company_name || ("together for intermediation services llc (together for development)" | translate) }}
+            </p>
+            <ul class="aside-list">
+              @if(info?.address_line1) {
+                <li>
+                  <i class="fas fa-building" aria-hidden="true"></i>
+                  <span>{{ info?.address_line1 }}</span>
+                </li>
+              } @else {
+                <li>
+                  <i class="fas fa-building" aria-hidden="true"></i>
+                  <span>{{ "First Floor, Office 103 - Hayat" | translate }}</span>
+                </li>
+              }
+              @if(info?.address_line2) {
+                <li>
+                  <i class="fas fa-road" aria-hidden="true"></i>
+                  <span>{{ info?.address_line2 }}</span>
+                </li>
+              } @else {
+                <li>
+                  <i class="fas fa-road" aria-hidden="true"></i>
+                  <span>{{ "FM Building, behind Al-Dustour Newspaper - University of Jordan Street, Amman, Jordan." | translate }}</span>
+                </li>
+              }
+              <li>
+                <i class="far fa-clock" aria-hidden="true"></i>
+                <span>{{ info?.working_hours || ("Sun – Thu · 9am – 5pm" | translate) }}</span>
+              </li>
+            </ul>
+
+            <div class="aside-divider"></div>
+
+            <h4 class="aside-subtitle">{{ "Follow Us" | translate }}</h4>
+            <ul class="social-media-links">
+              @if(socials.length) {
+                @for(s of socials; track s.key) {
+                  <li>
+                    <a [href]="s.url" target="_blank" rel="noopener" [attr.aria-label]="s.label">
+                      <i [class]="s.icon" aria-hidden="true"></i>
+                    </a>
+                  </li>
+                }
+              } @else {
+                <li>
+                  <a href="https://www.facebook.com/share/h4FZ2p8TsLWE2vKy/?mibextid=LQQJ4d" target="_blank" rel="noopener" aria-label="Facebook">
+                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.instagram.com/tog4dev/profilecard/?igsh=MmEyNnFhZDR2cDY4" target="_blank" rel="noopener" aria-label="Instagram">
+                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://snapchat.com/t/kwXP9FSM" target="_blank" rel="noopener" aria-label="Snapchat">
+                    <i class="fab fa-snapchat-ghost" aria-hidden="true"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://x.com/Tog4Dev?t=YxqzngaJv1WOAeS1241qMw&s=09" target="_blank" rel="noopener" aria-label="X / Twitter">
+                    <i class="fab fa-x-twitter" aria-hidden="true"></i>
+                  </a>
+                </li>
+              }
+            </ul>
+          </div>
+
+          <div class="map-card">
+            <iframe
+              [title]="'Our Location on Google Maps' | translate"
+              [src]="mapEmbedSafe || 'https://www.google.com/maps?q=31.9976776,35.8801005&z=17&output=embed'"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen></iframe>
+          </div>
+          </div>
+        </aside>
+
+        <div class="contact-form-card">
+          <div class="form-header">
+            <span class="form-eyebrow">{{ "Send Us a Message" | translate }}</span>
+            <h2 class="form-title">{{ "If you have any inquiries" | translate }}</h2>
+            <p class="form-desc">{{ "please complete the form below" | translate }}.</p>
+          </div>
+          <app-contact-us-form [type]="2"/>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
 </div>
-<hr>

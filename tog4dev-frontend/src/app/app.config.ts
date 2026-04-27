@@ -1,8 +1,9 @@
-import { ApplicationConfig, importProvidersFrom, inject, provideAppInitializer } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, inject, Injector, provideAppInitializer } from '@angular/core';
 import { InMemoryScrollingOptions, provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withFetch, HttpClient } from '@angular/common/http';
+import { withHttpTransferCacheOptions } from '@angular/platform-browser';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { translateLoaderFactory } from './translate-loader-factory';
@@ -19,10 +20,14 @@ const scrollConfig: InMemoryScrollingOptions = {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes), 
-    provideClientHydration(),
     provideRouter(routes, withInMemoryScrolling(scrollConfig)),
-    provideClientHydration(),
+    provideClientHydration(
+      withHttpTransferCacheOptions({
+        includeHeaders: ['Accept-Language'],
+        includePostRequests: false,
+        filter: () => true,
+      })
+    ),
     provideAnimations(),
     provideHttpClient(withFetch()),
     importProvidersFrom(
@@ -30,7 +35,7 @@ export const appConfig: ApplicationConfig = {
         loader: {
           provide: TranslateLoader,
           useFactory: translateLoaderFactory,
-          deps: [HttpClient],
+          deps: [HttpClient, Injector],
         },
       }),
     ),

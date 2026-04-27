@@ -1,6 +1,20 @@
 .content-page {
     margin-left: 0 !important;
     margin-right: var(--sidebar-width) !important;
+    transition: margin-right 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Keep page spacing consistent with LTR */
+.content-page .container-fluid > .row.mt-3,
+.content-page .container-fluid > .row.mt-3.mb-3,
+.content-page .container-fluid > .row.mt-3.mb-2,
+.content-page .container-fluid > .row.mt-2.mb-2,
+.content-page .container-fluid > .row.mt-2.mb-1 {
+    margin-top: 0 !important;
+}
+
+.content-page .container-fluid > .row.mb-3 {
+    margin-bottom: 16px !important;
 }
 
 .left-side-menu {
@@ -8,12 +22,14 @@
     right: 0 !important;
 }
 
-.navbar-custom .topnav-menu {
-    float: left !important;
+.navbar-custom .topnav-menu:not(.topnav-menu-left) {
+    float: none !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
 }
 
 .navbar-custom .topnav-menu-left {
-    float: right !important;
+    float: none !important;
 }
 
 .navbar-custom .dropdown-menu-right {
@@ -28,7 +44,7 @@ select.form-control {
 }
 
 .nav-second-level > li > a {
-    padding: 8px 52px 8px 16px !important;
+    padding: 7px 49px 7px 16px !important;
 }
 
 .nav-second-level .nav-second-level > li > a {
@@ -41,6 +57,11 @@ select.form-control {
     margin-left: 6px;
 }
 
+.submenu-dot {
+    margin-right: 0;
+    margin-left: 6px;
+}
+
 .action-btns {
     direction: ltr;
 }
@@ -48,6 +69,29 @@ select.form-control {
 .dt-buttons .btn {
     margin-right: 0 !important;
     margin-left: 4px !important;
+}
+
+.topbar-search-icon {
+    left: auto;
+    right: 14px;
+}
+
+.topbar-search-kbd {
+    right: auto;
+    left: 8px;
+}
+
+.topbar-search-input {
+    padding: 0 42px 0 40px !important;
+}
+
+.topbar-user-btn {
+    padding: 4px 4px 4px 12px !important;
+}
+
+.topbar-user-menu .dropdown-item i {
+    margin-left: 8px;
+    margin-right: 0;
 }
 
 .activity-item:hover {
@@ -64,6 +108,7 @@ select.form-control {
 .settings-nav-item {
     border-left: none;
     border-right: 3px solid transparent;
+    border-radius: var(--admin-radius-sm) 0 0 var(--admin-radius-sm);
 }
 
 .settings-nav-item.active {
@@ -71,12 +116,7 @@ select.form-control {
     border-right-color: var(--admin-primary);
 }
 
-.quick-action-btn i {
-    margin-right: 0;
-    margin-left: 8px;
-}
-
-.breadcrumb-item + .breadcrumb-item::before {
+.breadcrumb-modern .breadcrumb-item + .breadcrumb-item::before {
     content: "\f104" !important;
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
@@ -94,8 +134,86 @@ select.form-control {
     text-align: left;
 }
 
+#sidebar-menu > ul > li > a .menu-arrow {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+#sidebar-menu > ul > li > a.active-menu::before {
+    left: auto;
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.page-back-btn {
+    flex-direction: row-reverse;
+}
+
+.page-back-btn i.fa-arrow-left::before {
+    content: "\f061";
+}
+
+body[data-sidebar-size="condensed"] .content-page {
+    margin-right: var(--sidebar-collapsed-width) !important;
+    margin-left: 0 !important;
+}
+
+body[data-sidebar-size="condensed"] .left-side-menu #sidebar-menu > ul > li > a::after {
+    left: auto;
+    right: calc(var(--sidebar-collapsed-width) - 2px);
+}
+
+/* In condensed mode, avoid hover popout submenus (can appear as empty white box) */
+body[data-sidebar-size="condensed"] .left-side-menu #sidebar-menu > ul > li:hover > a + .collapse {
+    display: none !important;
+}
+
+/* (submenu popout intentionally disabled in condensed mode) */
+
 @media (max-width: 991.98px) {
     .content-page {
         margin-right: 0 !important;
+    }
+
+    body.sidebar-enable .content-page {
+        margin-right: 0 !important;
+    }
+
+    .left-side-menu {
+        transform: translateX(100%);
+        left: auto !important;
+        right: 0 !important;
+    }
+
+    body.sidebar-enable .left-side-menu {
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 767.98px) {
+    .dashboard-custom-date-row > div {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .dashboard-custom-date-row .custom-date-line {
+        flex-direction: column;
+        align-items: stretch !important;
+    }
+
+    .dashboard-custom-date-row .custom-date-controls {
+        justify-content: flex-start !important;
+    }
+
+    .dashboard-custom-date-row .custom-date-controls > span.kpi-label,
+    .dashboard-custom-date-row .custom-date-controls > span:not(.kpi-label),
+    .dashboard-custom-date-row .custom-date-input-group,
+    .dashboard-custom-date-row .custom-date-apply-btn {
+        width: 100%;
+    }
+
+    .dashboard-custom-date-row .custom-date-total {
+        width: 100%;
+        justify-content: space-between !important;
     }
 }

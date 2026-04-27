@@ -6,6 +6,12 @@ use App\Http\Controllers\Api\V2\ItemController;
 use App\Http\Controllers\Api\V2\UserController;
 use App\Http\Controllers\Api\V2\PaymentController;
 use App\Http\Controllers\Api\V2\QuickContributionController;
+use App\Http\Controllers\Api\V2\LanguagesController;
+
+// Public language listing (no API key required) - mirrors v1 for partner consumption
+Route::prefix('v2')->group(function () {
+    Route::get('/languages', [LanguagesController::class, 'index']);
+});
 
 Route::prefix('v2')->middleware(['api.key'])->group(function () {
     // Categories routes

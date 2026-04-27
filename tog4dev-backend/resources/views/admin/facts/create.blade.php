@@ -48,10 +48,20 @@
                                 <div class="form-group col-6">
                                     <label for="logo">{{ __('app.logo') }} (AR) (53x46)</label>
                                     <input type="file" id="logo" name="logo" data-plugins="dropify" data-height="200" data-allowed-file-extensions="png jpg jpeg webp" />
+                                    @include('includes.admin.image-upload-notes', [
+                                        'recommendedSize' => '53 x 46 px',
+                                        'maxSize' => '5 MB',
+                                        'extensions' => 'png,jpg,jpeg,webp'
+                                    ])
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="logo_en">{{ __('app.logo') }} (EN) (53x46)</label>
                                     <input type="file" id="logo_en" name="logo_en" data-plugins="dropify" data-height="200" data-allowed-file-extensions="png jpg jpeg webp" />
+                                    @include('includes.admin.image-upload-notes', [
+                                        'recommendedSize' => '53 x 46 px',
+                                        'maxSize' => '5 MB',
+                                        'extensions' => 'png,jpg,jpeg,webp'
+                                    ])
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="category_id">{{ __('app.category') }}</label>

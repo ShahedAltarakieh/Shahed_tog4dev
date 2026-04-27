@@ -1,248 +1,379 @@
-<div class="container px-5 px-md-2">
-  <h1 class="page-title text-center text-white">{{ "who we are?" | translate }}</h1>
-
-  <app-about-us-slider />
-
-  <div class="container">
-  @if(storageService.siteLanguage$.value == "ar"){
-      <p class="text-intro">
-        <b>"توظيف التكنولوجيا لدفع جميع أنواع الأعمال نحو التقدّم"</b>
-        هي الرؤية التي اختارتها معاً للوساطة التجارية (معاً للتنمية)، حيث نؤمن إيمانًا راسخًا بأن التكنولوجيا تمثل اليوم حجر الأساس للابتكار والتطوير في جميع المجالات.
-ومع تزايد التحديات التي تواجه الأعمال عالميًا، أصبحت الحاجة ملحّة لاستخدام التكنولوجيا بفعالية واستدامة لتعزيز جودة المشاريع، ورفع الكفاءة التشغيلية، وتحقيق أثر ملموس.
-      </p>
-
-      <p class="text-intro">
-        في هذا السياق، تتبنى
-        <b> "معاً للوساطة التجارية ذ.م.م (معاً للتنمية)" </b>
-        رؤية طموحة تقوم على توظيف التكنولوجيا لتحسين جودة تنفيذ المشاريع سواء كانت افتراضية أو ميدانية، وتوسيع أثرها من خلال:
-      </p>
-      <ul>
-          <li>استخدام منصات رقمية متنوعة لإدارة المشاريع بكفاءة، بما في ذلك تتبع عمليات التوكيل، إدارة الفرق الميدانية، وضمان الشفافية.</li>
-          <li>تطبيق أنظمة الذكاء الاصطناعي لتقليل الاعتماد على الموارد البشرية، مما يعمل على خفض التكاليف الإدارية وزيادة الإنتاجية.</li>
-          <li>تطوير تطبيقات رقمية وأنظمة تخطيط موارد المؤسسات تدعم الابتكار والمشاريع التقنية، وتعمل على بناء قدرات الجمعيات الربحية وغير الربحية، والمنظمات غير الحكومية المحلية، ومؤسسات المجتمع المحلي.</li>
-      </ul>
-      <p class="fw-bold">{{ "together for development company implements customized development solutions and projects for individuals, companies, and non-profit organizations exclusively through mutually agreed service contracts. we emphasize that the company does not accept any form of donations or in-kind donations, in compliance with our institutional policies and applicable regulations." | translate }}</p>
-  }
-  @else {
-      <p class="text-intro">
-          <b>"Leveraging Technology to Advance All Types of Businesses"</b> 
-          is the vision chosen by Together for Intermediation Services (Together for Development), as we firmly believe that technology today represents the cornerstone of innovation and development across all fields. With the growing business challenges worldwide, the need to utilize technology effectively and sustainably has become more critical than ever to enhance project quality, drive operational efficiency, and deliver measurable impact.
-      </p>
-
-      <p class="text-intro">In this context, <b>"Together for Intermediation Services LLC (Together for Development)"</b> adopts an ambitious vision of employing technology to improve the quality of Virtual and on site project implementation services and expand their impact through:</p>
-      <ul>
-          <li>Utilizing different digital platforms to efficiently manage projects, including tracking delegations, managing field teams, and ensuring transparency.</li>
-          <li>Implementing AI systems to reduce the required human resources, thereby decreasing administrative expenses and enhancing productivity.</li>
-          <li>Developing digital applications and ERP systems that support innovative development and tech-led projects, while building the capacity of for-profit and non-profit associations, local NGOs, and CBOs.</li>
-      </ul>
-      <p class="fw-bold">{{ "together for development company implements customized development solutions and projects for individuals, companies, and non-profit organizations exclusively through mutually agreed service contracts. we emphasize that the company does not accept any form of donations or in-kind donations, in compliance with our institutional policies and applicable regulations." | translate }}</p>
-  }
-    <ul class="goals">
-        @if(storageService.siteLanguage$.value == "ar"){
-          <li>
-            <span class="goal-title">رؤيتنا:</span>
-            <p class="goal-desc">أن نكون روادًا عالميين في التنمية المدعومة بالتكنولوجيا، من خلال تمكين جميع أنواع الأعمال والمؤسسات عبر حلول رقمية مبتكرة، فعّالة من حيث التكلفة، وذات أثر عالٍ.
-                نطمح إلى عالم تلعب فيه التكنولوجيا دوراً حيوياً في تسريع جودة وانتشار وأداء المشاريع، سواء كانت افتراضية أو ميدانية، وفي مختلف القطاعات والمناطق.
-            </p>
-          </li>
-          <li>
-            <span class="goal-title">رسالتنا:</span>
-            <p class="goal-desc">
-                تسخير قوة التكنولوجيا والابتكار لتقديم حلول فعّالة، شفافة، وقابلة للتوسع تخدم التنمية ونمو الأعمال.
-نُمكّن المؤسسات الربحية وغير الربحية، والمنظمات غير الحكومية المحلية، ومؤسسات المجتمع المحلي من خلال تطبيق منصات ذكية، وأنظمة تخطيط موارد المؤسسات، وأدوات الذكاء الاصطناعي، مما يوفر الوقت، خفض التكاليف، ورفع جودة التنفيذ، لتحقيق أثر ملموس في كل مشروع نقوم به.
-            </p>
-          </li>
-          <li>
-            <span class="goal-title">قيمنا الجوهرية:</span>
-            <ul>
-                <li>الابتكار – نعتمد على أحدث الحلول لمواجهة تحديات التنمية المعقّدة.</li>
-                <li>الكفاءة – نركز على الأدوات التي توفّر الوقت وتقلّل التكاليف لتحقيق أقصى أثر ممكن.</li>
-                <li>الشفافية – نلتزم بإدارة المشاريع بوضوح، ومحاسبة، وبيانات دقيقة.</li>
-                <li>الجودة – نضمن تنفيذ مشاريع بمعايير عالية وقيمة قابلة للقياس.</li>
-                <li>التمكين – نبني قدرات المؤسسات لإدارة وتوسيع أثرها من خلال التكنولوجيا.</li>
-                <li>النزاهة – نعمل بأمانة ومسؤولية في جميع تعاملاتنا.</li>
-            </ul>
-          </li>
+<div class="about-page" [attr.dir]="currentLang === 'ar' ? 'rtl' : 'ltr'" [attr.lang]="currentLang">
+  <div class="hero-section">
+    <div class="hero-pattern"></div>
+    <div class="container">
+      <div class="hero-content text-center">
+        <span class="hero-badge">{{ "about us" | translate }}</span>
+        <h1 class="page-title text-white">{{ getSectionByKey('hero')?.title || ('about us' | translate) }}</h1>
+        @if (getSectionByKey('hero')?.subtitle; as heroSub) {
+          <p class="hero-subtitle text-white">{{ heroSub }}</p>
         }
-        @else{
-            <li>
-                <span class="goal-title">Our Vision:</span>
-                <p class="goal-desc">
-                    To become a global leader in tech-enabled development, advancing all types of businesses and organizations through innovative, cost-effective, and high-impact digital solutions. We envision a world where technology accelerates the quality, reach, and performance of projects virtual and on-site across sectors and regions.
-                </p>
-            </li>
-            <li>
-                <span class="goal-title">Our Mission:</span>
-                <p class="goal-desc">
-                    To harness the power of technology and innovation to deliver efficient, transparent, and scalable solutions for development and business growth.
-                    We empower for-profit and non-profit entities, local NGOs, and CBOs by implementing smart platforms, ERP systems, and AI tools that save time, reduce costs, and enhance quality, enabling measurable impact in every project we deliver.                    
-                </p>
-            </li>
-            <li>
-                <span class="goal-title">Our Core Values:</span>
-                <ul>
-                    <li>Innovation – We embrace cutting-edge solutions to solve complex development challenges.</li>
-                    <li>Efficiency – We prioritize time-saving and cost-effective tools that maximize impact.</li>
-                    <li>Transparency – We ensure clear, accountable, and data-driven project management.</li>
-                    <li>Quality – We commit to delivering high-standard outcomes with measurable value.</li>
-                    <li>Empowerment – We build capacity for organizations to manage and scale their impact through technology.</li>
-                    <li>Integrity – We operate with honesty and responsibility across all our engagements.</li>
-                </ul>
-            </li>
-        }
-    </ul>
-        <div class="row rami-details mt-5">
-            <div class="col-md-4">
-                <img src="/app/assets/images/rami.png" alt="رامي أبو السمن – مؤسس شركة معاً للوساطة التجارية ذ.م.م (معاً للتنمية)" class="img-fluid rounded">
-            </div>
-            <div class="col-md-8">
-                @if(storageService.siteLanguage$.value == "ar"){
-                    <h3 class="mb-3">رامي أبو السمن – مؤسس شركة معاً للوساطة التجارية (معاً للتنمية)</h3>
-                    <p class="text-intro">
-                        المؤسس والمدير العام لشركة معاً للوساطة التجارية (معاً للتنمية): يقود الابتكار في تطوير الأعمال وتعزيز قدرات المنظمات لتنفيذ مشاريع ذات أثر طويل المدى باستخدام الحلول التقنية.
-                    </p>
-                    <p class="text-intro">
-                        <span class="fw-bold d-inline-block">
-رائد أعمال اجتماعي ومدافع عن الشباب:
-                        </span>
-                         يمتلك أكثر من 20 عامًا من الخبرة الفنية، ويركّز على تمكين الأجيال الشابة ودعم المجتمعات المهمشة.
-                    </p>
-                    <p class="text-intro">
-                        <span class="fw-bold d-inline-block">
-                        مؤسس منظمة مجددون الأردن:
-                        </span>
-                        وهي منظمة غير ربحية تأسست عام 2009 في الأردن، تهدف إلى تمكين الشباب، ودعم الفئات الأقل حظًا، وتعزيز ثقافة التطوع. قادت المنظمة مبادرات شارك فيها أكثر من 15,000 متطوع، وأثّرت في حياة أكثر من 600,000 مستفيد.
-                    </p>
-                    <p class="text-intro">
-                        <span class="fw-bold d-inline-block">
-مؤسس ومدير سابق لأكاديمية أورنج للبرمجة – الأردن (2019 – 2022):
-                        </span>
-                         لعب دورًا محوريًا في تحويل الأكاديمية إلى مركز رائد في التعليم التقني، وحقق معدل توظيف تجاوز 80% بين الخريجين.
-                    </p>
-                    <p class="text-intro">
-                        <span class="fw-bold d-inline-block">
-مبتكر تطبيق شريان:
-                        </span>
-                         منصة تقنية تربط بين المتبرعين بالدم والمرضى المحتاجين، وتُعد نموذجًا فعّالًا لاستخدام التكنولوجيا في تحقيق الأهداف الإنسانية.
-                    </p>
-                    <p class="text-intro">
-                        <span class="fw-bold d-inline-block">
-حاصل على درجة البكالوريوس في هندسة البرمجيات:
-                        </span>
-                         خريج جامعة فيلادلفيا، ومدرب معتمد في مجال الوقاية من الإدمان لدى الشباب.
-                    </p>
-                    <p class="text-intro">
-                        <span class="fw-bold d-inline-block">
-متحدث وملهم:
-                        </span>
-                         يظهر بانتظام على المنصات الوطنية ووسائل الإعلام، ويشارك رؤاه حول ريادة الأعمال الاجتماعية، وتمكين الشباب، ودور التكنولوجيا في إحداث التغيير الاجتماعي.
-                    </p>
-                }
-                @else {
-                    <h3 class="mb-3">Rami Abu Al-Samen - Founder of Together for Development</h3>
-                    <p class="text-intro">
-                        <span class="fw-bold d-inline-block">Founder and General Manager of Together for Development:</span> Driving innovation in business development and organizational capacity enhancement to create long impact projects utilizing tech-solutions.
-                    </p>
-                    <p class="text-intro">
-                        <span class="fw-bold d-inline-block">Social Entrepreneur and Youth Advocate:</span> With over 20 years of technical experience, he focuses on empowering young generations and supporting underserved communities.
-                    </p>
-                    <p class="text-intro">
-                        <span class="fw-bold d-inline-block">Founder of Mujaddidun Jordan:</span> A non-profit organization established in 2009 in Jordan, aimed at empowering youth, supporting underprivileged groups, and promoting volunteerism. The organization has led initiatives involving over 15,000 volunteers, impacting the lives of more than 600,000 beneficiaries.
-                    </p>
-                    <p class="text-intro">
-                        <span class="fw-bold d-inline-block"> Founder and Former Director of Orange Coding Academy – Jordan (2019-2022):</span> Played a pivotal role in transforming the academy into a leading center for technical education, achieving an employment rate exceeding 80% among graduates.
-                    </p>
-                    <p class="text-intro">
-                        <span class="fw-bold d-inline-block"> Creator of Sharian App:</span> A tech platform connecting blood donors with patients in need, serving as an effective model for using technology to achieve humanitarian goals.
-                    </p>
-                    <p class="text-intro">
-                        <span class="fw-bold d-inline-block"> Bachelor's Degree in Software Engineering:</span> A graduate of Philadelphia University and a certified trainer in youth addiction prevention.
-                    </p>
-                    <p class="text-intro">
-                        <span class="fw-bold d-inline-block"> Speaker and Inspirer:</span> A regular presence on national platforms and media, sharing insights on social entrepreneurship, youth empowerment, and the role of technology in driving social change.
-                    </p>
-                }
-            </div>
-            <div class="col-12 mt-5 text-center">
-                @if(storageService.siteLanguage$.value == "ar"){
-                    <p class="text-intro">
-                        نؤمن بقوة التكنولوجيا وبالتأثير المتزايد للشركات المعتمدة على الحلول التقنية حول العالم في إحداث تحول جذري في طريقة تنفيذ الأعمال والمشاريع التنموية.
-                    </p>
-                    <p class="text-intro">
-                        ومن خلال تسخير الابتكار، نسعى إلى تحسين جودة المشاريع، وخفض التكاليف، وتوفير الوقت، وتفعيل إدارة أداء أكثر ذكاءً.
-                    </p>
-                    <p class="text-intro">
-                        تركيزنا ينصب على ابتكار حلول قابلة للتوسّع، فعّالة، وعالية الأثر، تُمكّن المؤسسات من إحداث تغيير ملموس في مختلف القطاعات.
-                    </p>
-                }
-                @else {
-                    <p class="text-intro">
-                        We believe in the power of technology and the growing influence of tech-enabled companies across the world to transform the way businesses and development projects are delivered.
-                    </p>
-                    <p class="text-intro">
-                        By leveraging innovation, we aim to enhance project quality, reduce costs, save time, and enable smarter performance management.                    </p>
-                    <p class="text-intro">
-                        Our focus is on creating scalable, efficient, and high-impact solutions that empower organizations to deliver meaningful change across sectors.
-                    </p>
-                }
-            </div>
-        </div>
+      </div>
     </div>
-</div>
+  </div>
 
-<div class="how-to-contribute text-center mt-5">
-    @if(storageService.siteLanguage$.value == "ar"){
-        <h2 class="title mb-3">العنوان داخل الاردن</h2>
+  @if (loading) {
+    <div class="loading-container">
+      <div class="loading-pulse">
+        <div class="pulse-ring"></div>
+        <div class="pulse-core"></div>
+      </div>
+    </div>
+  }
 
-        <div class="how-to-contribute-info">
-            <div class="how-to-contribute-adresses">
+  @if (!loading && !error) {
+    @for (section of sections; track section.id) {
+      @if (section.section_key !== 'hero' && section.is_visible && hasContent(section)) {
 
-                <div class="address-info">
-                    <b>التواصل مع فريق العمل وطلب فريق التحصيل: </b><br />
-                    هاتف: <span class="dir-ltr d-inline-block">+962 779 400 900</span>
+        @if (section.section_key === 'intro') {
+          <section class="about-section intro-section animate-on-scroll">
+            <div class="container">
+              @if (section.title) {
+                <div class="section-header">
+                  <span class="section-icon"><i class="fas fa-book-open"></i></span>
+                  <h2 class="section-title">{{ section.title }}</h2>
+                  <div class="title-decoration"><span></span></div>
                 </div>
-
-                <div class="address-info">
-                    <b>عنوان المكتب:</b> <br />
-                    ١١٩٥٣، مكتب ١٠٣، مبنى الحياة، شارع الشريح، قرب شارع الملكة رانيا، عمّان، الأردن<br />
-                </div>
+              }
+              @if (section.subtitle) {
+                <p class="section-subtitle">{{ section.subtitle }}</p>
+              }
+              @if (section.body) {
+                <div class="intro-body" [innerHTML]="section.body"></div>
+              }
             </div>
-        </div>
-    }
-    @else {
-        <h2 class="title mb-3">Jordan address</h2>
+          </section>
+        }
 
-        <div class="how-to-contribute-info">
-            <div class="how-to-contribute-adresses">
-                 <div class="address-info">
-                    <b>Contact the Team or Request Collection Services: </b><br />
-                    Phone: +962 779 400 900
+        @if (section.section_key === 'highlights') {
+          <section class="about-section highlights-section animate-on-scroll">
+            <div class="container">
+              @if (section.title) {
+                <div class="section-header">
+                  <span class="section-icon"><i class="fas fa-star"></i></span>
+                  <h2 class="section-title">{{ section.title }}</h2>
+                  <div class="title-decoration"><span></span></div>
                 </div>
-
-                <div class="address-info">
-                    <b>Visit us at our office:</b> <br />
-                    11953, Office 103, Hayat Building, Al-Shareeh St. near Queen Rania St., Amman, Jordan<br />
-                </div>
+              }
+              <div class="highlights-grid">
+                @for (item of section.items; track item.id; let i = $index) {
+                  <div class="highlight-card" [style.animation-delay]="(i * 0.12) + 's'">
+                    @if (item.icon) {
+                      <div class="highlight-icon"><i [class]="item.icon"></i></div>
+                    }
+                    @if (item.title) {
+                      <h3>{{ item.title }}</h3>
+                    }
+                    @if (item.description) {
+                      <p>{{ item.description }}</p>
+                    }
+                  </div>
+                }
+              </div>
             </div>
-        </div>
-    }
-</div>
+          </section>
+        }
 
-<div class="contribute-benefits text-center mb-5">
-    @if(storageService.siteLanguage$.value == "ar"){
-      <span class="contribute-benefits-stats">+2 مليون</span>
-      <span class="contribute-benefits-text-1">مستفيد شهري من مشاريعنا</span>
-      <p class="contribute-benefits-text-2">توكيلك لنا يصنع الفرق!</p>
-      <p class="contribute-benefits-text-2">حيثما وُجدت الحاجة، نُبادر معًا.</p>
-    }
-    @else {
-        <span class="contribute-benefits-stats">Over 2,000,000</span>
-        <span class="contribute-benefits-text-1">lives improved through our projects so far!</span>
-        <p class="contribute-benefits-text-2">Together, We Make Difference!</p>
-        <p class="contribute-benefits-text-2">Where need arises, our journey begins — together.</p>
-    }
-</div>
+        @if (section.section_key === 'statement') {
+          <section class="about-section statement-section animate-on-scroll">
+            <div class="statement-bg-shapes">
+              <span class="shape s1"></span>
+              <span class="shape s2"></span>
+            </div>
+            <div class="container">
+              <div class="statement-box">
+                @if (section.title) {
+                  <div class="statement-icon"><i class="fas fa-quote-right"></i></div>
+                  <h2>{{ section.title }}</h2>
+                }
+                @if (section.body) {
+                  <div class="statement-body" [innerHTML]="section.body"></div>
+                }
+              </div>
+            </div>
+          </section>
+        }
 
-<div class="mb-5">
-    <app-our-partners [partnersList]="partnersList" />
+        @if (section.section_key === 'visionMission') {
+          <section class="about-section vision-mission-section animate-on-scroll">
+            <div class="container">
+              @if (section.title) {
+                <div class="section-header">
+                  <span class="section-icon"><i class="fas fa-compass"></i></span>
+                  <h2 class="section-title">{{ section.title }}</h2>
+                  <div class="title-decoration"><span></span></div>
+                </div>
+              }
+              <div class="vm-grid">
+                @for (item of section.items; track item.id; let i = $index) {
+                  <div class="vm-card" [style.animation-delay]="(i * 0.15) + 's'">
+                    @if (item.icon) {
+                      <div class="vm-icon"><i [class]="item.icon"></i></div>
+                    }
+                    @if (item.title) {
+                      <h3>{{ item.title }}</h3>
+                    }
+                    @if (item.description) {
+                      <p>{{ item.description }}</p>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </section>
+        }
+
+        @if (section.section_key === 'coreValues') {
+          <section class="about-section core-values-section animate-on-scroll">
+            <div class="container">
+              @if (section.title) {
+                <div class="section-header">
+                  <span class="section-icon"><i class="fas fa-gem"></i></span>
+                  <h2 class="section-title">{{ section.title }}</h2>
+                  <div class="title-decoration"><span></span></div>
+                </div>
+              }
+              @if (section.subtitle) {
+                <p class="section-subtitle">{{ section.subtitle }}</p>
+              }
+              <div class="values-grid">
+                @for (item of section.items; track item.id; let i = $index) {
+                  <div class="value-card" [style.animation-delay]="(i * 0.1) + 's'">
+                    @if (item.icon) {
+                      <div class="value-icon"><i [class]="item.icon"></i></div>
+                    }
+                    @if (item.title) {
+                      <h4>{{ item.title }}</h4>
+                    }
+                    @if (item.description) {
+                      <p>{{ item.description }}</p>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </section>
+        }
+
+        @if (section.section_key === 'founders') {
+          <section class="about-section founders-section animate-on-scroll">
+            <div class="container">
+              @if (section.title) {
+                <div class="section-header">
+                  <span class="section-icon"><i class="fas fa-users"></i></span>
+                  <h2 class="section-title">{{ section.title }}</h2>
+                  <div class="title-decoration"><span></span></div>
+                </div>
+              }
+              <div class="founders-grid">
+                @for (item of section.items; track item.id; let i = $index) {
+                  <div class="founder-card" [style.animation-delay]="(i * 0.12) + 's'">
+                    @if (item.image) {
+                      <div class="founder-image">
+                        <img [src]="item.image" [alt]="item.title" loading="lazy">
+                      </div>
+                    } @else {
+                      <div class="founder-avatar">
+                        <i class="fas fa-user"></i>
+                      </div>
+                    }
+                    @if (item.title) {
+                      <h4>{{ item.title }}</h4>
+                    }
+                    @if (item.label) {
+                      <span class="founder-role">{{ item.label }}</span>
+                    }
+                    @if (item.description) {
+                      <p>{{ item.description }}</p>
+                    }
+                    @if (item.social_links && (item.social_links | keyvalue).length) {
+                      <div class="founder-socials">
+                        @for (link of item.social_links | keyvalue; track link.key) {
+                          <a [href]="link.value" target="_blank" rel="noopener">
+                            <i [class]="'fab fa-' + link.key"></i>
+                          </a>
+                        }
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </section>
+        }
+
+        @if (section.section_key === 'beliefs') {
+          <section class="about-section beliefs-section animate-on-scroll">
+            <div class="container">
+              @if (section.title) {
+                <div class="section-header">
+                  <span class="section-icon"><i class="fas fa-lightbulb"></i></span>
+                  <h2 class="section-title">{{ section.title }}</h2>
+                  <div class="title-decoration"><span></span></div>
+                </div>
+              }
+              <div class="beliefs-grid">
+                @for (item of section.items; track item.id; let i = $index) {
+                  <div class="belief-card" [style.animation-delay]="(i * 0.1) + 's'">
+                    @if (item.icon) {
+                      <div class="belief-icon"><i [class]="item.icon"></i></div>
+                    }
+                    <div class="belief-content">
+                      @if (item.title) {
+                        <h4>{{ item.title }}</h4>
+                      }
+                      @if (item.description) {
+                        <p>{{ item.description }}</p>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          </section>
+        }
+
+        @if (section.section_key === 'stats') {
+          <section class="about-section stats-section animate-on-scroll">
+            <div class="stats-bg-pattern"></div>
+            <div class="container">
+              @if (section.title) {
+                <div class="section-header">
+                  <span class="section-icon light"><i class="fas fa-chart-bar"></i></span>
+                  <h2 class="section-title text-white">{{ section.title }}</h2>
+                  <div class="title-decoration light"><span></span></div>
+                </div>
+              }
+              <div class="stats-grid">
+                @for (item of section.items; track item.id; let i = $index) {
+                  <div class="stat-card" [style.animation-delay]="(i * 0.15) + 's'">
+                    <div class="stat-card-inner">
+                      @if (item.icon) {
+                        <div class="stat-icon"><i [class]="item.icon"></i></div>
+                      }
+                      @if (item.value) {
+                        <div class="stat-value">{{ formatCounter(item.id, item.value) }}</div>
+                      }
+                      @if (item.label) {
+                        <div class="stat-label">{{ item.label }}</div>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          </section>
+        }
+
+        @if (section.section_key === 'slogan') {
+          <section class="about-section slogan-section animate-on-scroll">
+            <div class="container text-center">
+              <div class="slogan-wrapper">
+                <div class="slogan-icon"><i class="fas fa-hands-helping"></i></div>
+                @if (section.title) {
+                  <h2 class="slogan-text">{{ section.title }}</h2>
+                }
+                @if (section.body) {
+                  <p class="slogan-body">{{ section.body }}</p>
+                }
+                @if (section.cta_text && section.cta_link) {
+                  <a [href]="section.cta_link" class="slogan-btn">
+                    {{ section.cta_text }}
+                    <i class="fas fa-arrow-left ms-2"></i>
+                  </a>
+                }
+              </div>
+            </div>
+          </section>
+        }
+
+        @if (section.section_key === 'contact') {
+          <section class="about-section contact-section animate-on-scroll">
+            <div class="container">
+              @if (section.title) {
+                <div class="section-header">
+                  <span class="section-icon"><i class="fas fa-envelope"></i></span>
+                  <h2 class="section-title">{{ section.title }}</h2>
+                  <div class="title-decoration"><span></span></div>
+                </div>
+              }
+              @if (section.body) {
+                <div class="contact-body" [innerHTML]="section.body"></div>
+              }
+              <div class="contact-items">
+                @for (item of section.items; track item.id; let i = $index) {
+                  <div class="contact-item" [style.animation-delay]="(i * 0.1) + 's'">
+                    @if (item.icon) {
+                      <div class="contact-icon"><i [class]="item.icon"></i></div>
+                    }
+                    <div class="contact-info">
+                      @if (item.title) {
+                        <span class="contact-label">{{ item.title }}</span>
+                      }
+                      @if (item.value) {
+                        <a [href]="item.link || '#'" class="contact-value">{{ item.value }}</a>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          </section>
+        }
+
+        @if (section.section_key === 'partners') {
+          <section class="about-section partners-section animate-on-scroll">
+            <div class="container">
+              @if (section.title) {
+                <div class="section-header">
+                  <span class="section-icon"><i class="fas fa-handshake"></i></span>
+                  <h2 class="section-title">{{ section.title }}</h2>
+                  <div class="title-decoration"><span></span></div>
+                </div>
+              }
+              <div class="partners-marquee" [class.rtl]="currentLang === 'ar'">
+                <div class="partners-track">
+                  @for (item of section.items; track 'a-' + item.id) {
+                    <div class="partner-logo">
+                      @if (item.link) {
+                        <a [href]="item.link" target="_blank" rel="noopener">
+                          @if (item.image) {
+                            <img [src]="item.image" [alt]="item.title" loading="lazy">
+                          } @else if (item.title) {
+                            <span>{{ item.title }}</span>
+                          }
+                        </a>
+                      } @else {
+                        @if (item.image) {
+                          <img [src]="item.image" [alt]="item.title" loading="lazy">
+                        } @else if (item.title) {
+                          <span>{{ item.title }}</span>
+                        }
+                      }
+                    </div>
+                  }
+                  @for (item of section.items; track 'b-' + item.id) {
+                    <div class="partner-logo" aria-hidden="true">
+                      @if (item.image) {
+                        <img [src]="item.image" [alt]="" loading="lazy">
+                      } @else if (item.title) {
+                        <span>{{ item.title }}</span>
+                      }
+                    </div>
+                  }
+                </div>
+              </div>
+            </div>
+          </section>
+        }
+      }
+    }
+  }
+
+  @if (error) {
+    <div class="error-container">
+      <div class="error-icon"><i class="fas fa-exclamation-triangle"></i></div>
+      <p>{{ "something went wrong" | translate }}</p>
+    </div>
+  }
 </div>

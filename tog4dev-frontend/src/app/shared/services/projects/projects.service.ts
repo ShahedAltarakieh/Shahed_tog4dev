@@ -10,7 +10,7 @@ export class ProjectsService {
   private apiUrl = environment.apiUrl;
   constructor(public apiService: ApiService) { }
 
-  getProjects(lang: 'ar' | 'en', type: string | null = null, category_id: number | null = null) {
+  getProjects(lang: string, type: string | null = null, category_id: number | null = null) {
     const additionalHeaders = {
       'Accept-Language': lang,
     };
@@ -21,7 +21,7 @@ export class ProjectsService {
     }, additionalHeaders)
       .pipe(map(this.apiService.extractTypeFromMessage));
   }
-  getProject(lang: 'ar' | 'en', slug: string | null) {
+  getProject(lang: string, slug: string | null) {
     const additionalHeaders = {
       'Accept-Language': lang,
     };

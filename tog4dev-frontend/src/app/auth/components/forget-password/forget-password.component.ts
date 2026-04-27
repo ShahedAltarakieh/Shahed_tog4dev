@@ -32,7 +32,7 @@ export class ForgetPasswordComponent {
   };
   show_success_popup: boolean = false;
   isLoading: boolean = false;
-  loginRoutes: Record<'ar' | 'en', string> = {
+  loginRoutes: Record<string, string> = {
     'ar': '/ar/تسجيل-الدخول',
     'en': '/en/login',
   };

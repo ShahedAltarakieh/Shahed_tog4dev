@@ -27,11 +27,11 @@ export class LoginComponent {
   isLoading = false;
   error_message: string = '';
 
-  signupRoutes: Record<'ar' | 'en', string> = {
+  signupRoutes: Record<string, string> = {
     ar: '/ar/إنشاء-حساب',
     en: '/en/signup',
   };
-  forgetRoutes: Record<'ar' | 'en', string> = {
+  forgetRoutes: Record<string, string> = {
     ar: '/ar/نسيت-كلمة-المرور',
     en: '/en/forget-password',
   };

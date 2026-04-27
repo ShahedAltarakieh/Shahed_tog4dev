@@ -25,6 +25,7 @@ use App\Http\Controllers\Api\V1\ShortLinkController;
 use App\Http\Controllers\Api\V1\NewsController;
 use App\Http\Controllers\Api\V1\GalleryController;
 use App\Http\Controllers\Api\V1\SearchController;
+use App\Http\Controllers\Api\V1\AnnouncementApiController;
 
 Route::prefix('v1')->group(function () {
     // Authentication routes
@@ -36,6 +37,9 @@ Route::prefix('v1')->group(function () {
     Route::get('/shortlinks/{code}', [ShortLinkController::class, 'index']);
 
     Route::get('/get-currency/{code}', [UserController::class, 'get_currency']);
+
+    // Languages (active list, public)
+    Route::get('/languages', [\App\Http\Controllers\Api\V1\LanguagesController::class, 'index'])->name('languages.index');
 
     // facts
     Route::get('/facts', [FactController::class, 'index'])->name('facts');
@@ -55,6 +59,8 @@ Route::prefix('v1')->group(function () {
     Route::post('/newsletter', [NewsletterSubscriberController::class, 'store'])->name('newsletter');
     // Contact Us
     Route::post('/contact-us', [ContactUsController::class, 'store'])->name('contact_us');
+    // Contact Info (admin-managed)
+    Route::get('/contact-info', [\App\Http\Controllers\Api\V1\ContactInfoController::class, 'show'])->name('contact_info.show');
     // Sliders
     Route::get('/sliders', [SliderController::class, 'index'])->name('sliders');
 
@@ -68,6 +74,13 @@ Route::prefix('v1')->group(function () {
     Route::get('/gallery/videos', [GalleryController::class, 'videos'])->name('gallery.videos');
 
     Route::get('/search', [SearchController::class, 'search'])->name('search');
+
+    Route::get('/announcements', [AnnouncementApiController::class, 'index'])->name('announcements.api');
+
+    Route::get('/about', [\App\Http\Controllers\Api\V1\AboutPageController::class, 'show'])->name('about.show');
+    Route::post('/about/track', [\App\Http\Controllers\Api\V1\AboutPageController::class, 'trackEvent'])->name('about.track');
+    Route::get('/navigation', [\App\Http\Controllers\Api\V1\NavSettingApiController::class, 'index'])->name('navigation.api');
+    Route::get('/page-maintenance', [\App\Http\Controllers\Api\V1\PageMaintenanceController::class, 'index'])->name('page-maintenance.api');
 
     Route::get('/quick-contributions', [QuickContributionController::class, 'index']);
 

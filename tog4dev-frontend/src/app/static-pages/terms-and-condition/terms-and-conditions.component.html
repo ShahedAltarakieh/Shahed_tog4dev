@@ -1,77 +1,289 @@
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="mb-4 mt-5">{{ "terms and conditions" | translate }}</h1>
-            @if(storageService.siteLanguage$.value == "ar"){
-                <p class="mb-4">
-                    نحن شركة رائدة متخصصة في مجموعة متكاملة من الخدمات المتميزة تشمل إدارة المياه، الطاقة المتجددة، التكنولوجيا، الخدمات الصحية والغذائية، بالإضافة إلى التجارة والتدريب وإدارة المشاريع والوساطة التجارية.
-                </p>
-                <h4>أولاً: التزامات الطرف الأول</h4>
-                <ol class="mb-4">
-                    <li>اختيار الشركاء المناسبين والاكفاء وذوي الخبرة في بلد تنفيذ المشروع لضمان جودة تقديم الخدمة وتنفيذها بكل سهولة ويسر.</li>
-                    <li>تحديد الموقع المناسب وتجهيز المستلزمات والخامات والمعدات ووسائل النقل اللازمة والمساندة اللوجستية للتنفيذ.</li>
-                    <li>الالتزام بالمدة الزمنية المحددة في العقد، إلا في حال حدوث ظروف قاهرة أو أحداث طارئة خارجة عن إرادة الطرف الأول تحول دون الالتزام بالمواعيد المحددة.</li>
-                    <li>تقديم الوثائق والتقارير اللازمة للطرف الثاني لإثبات تقدم العمل وإنجاز مراحله وفقاً للوسائل التي يراها الطرف الأول مناسبة.</li>
-                    <li>اتخاذ جميع الإجراءات اللازمة لضمان جودة الخدمات المقدمة، على أن تقتصر مسؤوليات الطرف الأول على الالتزامات المنصوص عليها في هذا العقد، ولا يتحمل الفريق الأول أي التزامات أو مسؤوليات أخرى خارجة عن إرادته.</li>
-                    <li>سداد الالتزامات المالية المستحقة للشركاء وفقاً لمراحل تنفيذ المشروع وبعد اكتماله.</li>
-                </ol>
-
-                <h4  class="mb-4">ثانياً: التزامات الطرف الثاني</h4>
-                <ol class="mb-4">
-                    <li>يلتزم الطرف الثاني بسداد المبلغ المحدد في الملحق رقم العقد أو ما يعادله بالعملة المحلية للطرف الأول، مقابل تنفيذ الخدمات المتفق عليها في العقد.</li>
-                    <li>يتعهد الطرف الأول بموجب الضمان المقدم من منفذ المشروع بأن يضمن المشاريع الإنشائية لمدة سنة واحدة من تاريخ التسليم، دون تحمل أي مسؤولية عن الظروف الخارجة عن إرادته.</li>
-                    <li>يُعد شراء العميل للخدمة أو الخدمات المقدمة من الشركة بمثابة توكيل صريح منه، وستقوم الشركة بتنفيذ هذه الخدمات وتسليمها وفقاً لما هو متفق عليه، ولا يشترط توقيع العميل خطياً لتحقيق سريانه. وفي حال عدم اعتراض العميل خلال مدة أقصاها (24) ساعة من تاريخ استلام العقد، يُعد ذلك قبولًا كاملاً ونهائيًا بجميع بنوده. وأي اعتراض يقدَّم من قبل العميل بعد هذه المدة يخضع لأحكام سياسة الإرجاع المعتمدة لدى الشركة.</li>
-                </ol>
-
-                <h4 class="mb-4">ثالثاً: أحكام عامة</h4>
-                <ol>
-                    <li>إذا تعذر على الطرف الأول تنفيذ المشروع بعد التعاقد بسبب عدم توفر الظروف الملائمة أو وقوع قوة قاهرة، يتوجب على الشركة البحث عن حلول بديلة وإبلاغ الطرف الثاني بالمدة الزمنية الإضافية المطلوبة.</li>
-                    <li class="fw-bold">
-                        تُنفذ شركة معاً للوساطة التجارية ذ.م.م (معاً للتنمية) مُخصصة للأفراد والشركات والمؤسسات غير الربحية حصراً عبر عقود خدمات مُتفق عليها، مع التأكيد على أن الشركة لا تقبل أي تبرعات مالية أو عينية بأي شكل من الأشكال، تماشياً مع سياساتها المؤسسية والأنظمة المعمول بها.
-                    </li>
-                    <li>يعتبر الطرف الأول قد أنجز جميع التزاماته بمجرد تنفيذ المشروع وتسليم تقرير مصور وفيديو يوثق التنفيذ، إلا في حال وجود ظروف قاهرة تمنع ذلك (كالحروب أو الأزمات الإنسانية). يتم الإخطار بإتمام التنفيذ عبر رسالة واتساب على الرقم المزود من الطرف الثاني أو بأي وسيلة يراها الطرف الأول مناسبة.</li>
-                    <li>تقتصر كفالة المشاريع الإنشائية على عام واحد من تاريخ التسليم، ويعتمد العمر الافتراضي لهذه المشاريع على ظروف الاستخدام من قبل المستفيدين النهائيين وفقاً للسياسات المعتمدة من الجهات المنفذة.</li>
-                    <li>يتم تنفيذ المشروع من قبل الشركة أو من خلال شركائها الدوليين او المحليين المتخصصين في الدولة التي يتم فيها التنفيذ.</li>
-                    <li>في حال إلغاء الطرف الثاني للعقد قبل بدء التنفيذ، يتم خصم 25% من قيمة العقد، وإعادة المبلغ المتبقي. أما إذا بدأ التنفيذ، فلا يحق للطرف الثاني المطالبة باسترداد أي مبالغ مدفوعة، وتحدد الشركة وحدها ذلك.</li>
-                    <li>في حال نشوء أي خلاف بين الطرفين حول تنفيذ أو تفسير هذا العقد، يتم اللجوء إلى المحاكم الأردنية – محكمة قصر العدل (العبدلي)، ويخضع العقد للقوانين السارية في المملكة الأردنية الهاشمية.</li>
-                    <li>في حال تعذر على الشركة تسليم المواد المشتراة أو تأجيل توزيعها بسبب ظروف قاهرة أو أوضاع خارجة عن إرادتها (مثل الأزمات، الحروب، القيود القانونية، أو اشتراطات الجهات المنفذة)، يحق للشركة، ودون الحاجة للحصول على موافقة مسبقة من الطرف الثاني، إعادة توزيع المواد على الفئات المستهدفة أو الفئات المحتاجة الأخرى داخل و/أو خارج بلد التنفيذ، وذلك تفاديًا لتلف المواد أو ضياعها، ودون أن يترتب على الشركة أي مسؤولية بهذا الخصوص.</li>
-                </ol>
-            }
-            @else {
-
-                <p class="mb-4">
-                    We are a leading company specializing in a comprehensive range of distinguished services, including water management, renewable energy, technology, health, and food services, in addition to trade, training, project management, and commercial brokerage.
-                </p>
-                <h4>First: Obligations of the First Party</h4>
-                <ol class="mb-4">
-                    <li>Selecting qualified and experienced partners in the project implementation country to ensure the quality and ease of service delivery and execution.</li>
-                    <li>Determining the appropriate location and preparing the necessary supplies, materials, equipment, means of transportation, and logistical support required for execution.</li>
-                    <li>Committing to the timeframe specified in the contract, unless force majeure or unforeseen events beyond the control of the First Party prevent adherence to the agreed deadlines.</li>
-                    <li>Providing the necessary documents and reports to the Second Party to demonstrate work progress and stage completion, using methods deemed appropriate by the First Party.</li>
-                    <li>Selecting qualified and experienced partners in the project implementation country to ensure the quality and ease of service delivery and execution.</li>
-                    <li>Taking all necessary measures to ensure the quality of services provided, with the First Party’s responsibilities limited only to the obligations stated in this contract. The First Party shall not be held responsible for any commitments or liabilities beyond their control.</li>
-                    <li>Settling the financial dues of the partners based on project execution stages and upon its completion.</li>
-                </ol>
-                <h4>Second: Obligations of the Second Party</h4>
-                <ol class="mb-4">
-                    <li>The Second Party shall pay the amount specified in the contract annex or its equivalent in the First Party's local currency, in return for the execution of the agreed services.</li>
-                    <li>The First Party, through the guarantee provided by the project executor, shall ensure that construction projects are covered for one year from the date of delivery, without bearing any responsibility for factors beyond its control.</li>
-                    <li>The client's purchase of any service offered by the company shall be considered an explicit authorization for the company to execute and deliver the service as agreed upon, without requiring a written signature from the client for the contract to be deemed valid. If the client does not raise any objection within a maximum of twenty-four (24) hours from the date of receiving the contract, this shall be considered full and final acceptance of all its terms. Any objection submitted after this period shall be subject to the company's approved return policy.</li>
-                </ol>
-                <h4>Third: General Provisions</h4>
-                <ol class="mb-4">
-                    <li>If the First Party is unable to implement the project after the contract due to unsuitable conditions or force majeure, the company must seek alternative solutions and inform the Second Party of any additional time required.</li>
-                    <li class="fw-bold">
-                        Together for Intermediation Services LLC (Together for Development) Company implements customized development solutions and projects for individuals, companies, and non-profit organizations exclusively through mutually agreed service contracts. We emphasize that the company does not accept any form of donations or in-kind donations, in compliance with our institutional policies and applicable regulations.
-                    </li>
-                    <li>The First Party shall be considered to have fulfilled all obligations once the project is implemented and a report with photos and video documentation is submitted, except in cases of force majeure (such as wars or humanitarian crises). Notification of completion will be sent via WhatsApp to the number provided by the Second Party or by any method deemed appropriate by the First Party.</li>
-                    <li>The guarantee for construction projects is limited to one year from the date of delivery, and the lifespan of these projects depends on how they are used by the final beneficiaries, in accordance with the policies of the executing entities.</li>
-                    <li>The project shall be executed by the company or its international or local partners specialized in the country where the implementation takes place.</li>
-                    <li>If the Second Party cancels the contract before implementation begins, 25% of the contract value will be deducted and the remaining amount refunded. If execution has already begun, the Second Party shall not be entitled to any refund, and the company alone shall make that determination.</li>
-                    <li>In case of any dispute between the two parties regarding the execution or interpretation of this contract, the matter shall be referred to the Jordanian courts – Palace of Justice (Abdali), and the contract shall be governed by the applicable laws of the Hashemite Kingdom of Jordan.</li>
-                    <li>If the Company is unable to deliver the purchased materials or is required to postpone their distribution due to force majeure events or circumstances beyond its control (including, but not limited to, crises, wars, legal restrictions, or requirements imposed by implementing entities), the Company shall have the right, without the need to obtain prior approval from the Second Party, to redistribute the materials to the targeted beneficiaries or to other needy groups within and/or outside the country of implementation, in order to prevent damage to or loss of the materials, and without incurring any liability whatsoever in this regard</li>
-                </ol>
-            }
-        </div>
+<div
+  class="legal-page"
+  [attr.dir]="storageService.siteLanguage$.value === 'ar' ? 'rtl' : 'ltr'"
+>
+  <section class="hero-section">
+    <div class="hero-pattern" aria-hidden="true"></div>
+    <div class="container">
+      <div class="hero-content text-center">
+        <span class="hero-badge">{{ "legal" | translate }}</span>
+        <h1 class="page-title">{{ "terms and conditions" | translate }}</h1>
+        <p class="hero-subtitle">
+          {{
+            "please read these terms carefully before using our services."
+              | translate
+          }}
+        </p>
+      </div>
     </div>
+  </section>
+
+  <section class="legal-card-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10 col-12">
+          <div class="legal-card">
+            @if (storageService.siteLanguage$.value == "ar") {
+              <p class="mb-4">
+                نحن شركة رائدة متخصصة في مجموعة متكاملة من الخدمات المتميزة تشمل
+                إدارة المياه، الطاقة المتجددة، التكنولوجيا، الخدمات الصحية
+                والغذائية، بالإضافة إلى التجارة والتدريب وإدارة المشاريع
+                والوساطة التجارية.
+              </p>
+              <h4>أولاً: التزامات الطرف الأول</h4>
+              <ol class="mb-4">
+                <li>
+                  اختيار الشركاء المناسبين والاكفاء وذوي الخبرة في بلد تنفيذ
+                  المشروع لضمان جودة تقديم الخدمة وتنفيذها بكل سهولة ويسر.
+                </li>
+                <li>
+                  تحديد الموقع المناسب وتجهيز المستلزمات والخامات والمعدات
+                  ووسائل النقل اللازمة والمساندة اللوجستية للتنفيذ.
+                </li>
+                <li>
+                  الالتزام بالمدة الزمنية المحددة في العقد، إلا في حال حدوث ظروف
+                  قاهرة أو أحداث طارئة خارجة عن إرادة الطرف الأول تحول دون
+                  الالتزام بالمواعيد المحددة.
+                </li>
+                <li>
+                  تقديم الوثائق والتقارير اللازمة للطرف الثاني لإثبات تقدم العمل
+                  وإنجاز مراحله وفقاً للوسائل التي يراها الطرف الأول مناسبة.
+                </li>
+                <li>
+                  اتخاذ جميع الإجراءات اللازمة لضمان جودة الخدمات المقدمة، على
+                  أن تقتصر مسؤوليات الطرف الأول على الالتزامات المنصوص عليها في
+                  هذا العقد، ولا يتحمل الفريق الأول أي التزامات أو مسؤوليات أخرى
+                  خارجة عن إرادته.
+                </li>
+                <li>
+                  سداد الالتزامات المالية المستحقة للشركاء وفقاً لمراحل تنفيذ
+                  المشروع وبعد اكتماله.
+                </li>
+              </ol>
+
+              <h4>ثانياً: التزامات الطرف الثاني</h4>
+              <ol class="mb-4">
+                <li>
+                  يلتزم الطرف الثاني بسداد المبلغ المحدد في الملحق رقم العقد أو
+                  ما يعادله بالعملة المحلية للطرف الأول، مقابل تنفيذ الخدمات
+                  المتفق عليها في العقد.
+                </li>
+                <li>
+                  يتعهد الطرف الأول بموجب الضمان المقدم من منفذ المشروع بأن يضمن
+                  المشاريع الإنشائية لمدة سنة واحدة من تاريخ التسليم، دون تحمل
+                  أي مسؤولية عن الظروف الخارجة عن إرادته.
+                </li>
+                <li>
+                  يُعد شراء العميل للخدمة أو الخدمات المقدمة من الشركة بمثابة
+                  توكيل صريح منه، وستقوم الشركة بتنفيذ هذه الخدمات وتسليمها
+                  وفقاً لما هو متفق عليه، ولا يشترط توقيع العميل خطياً لتحقيق
+                  سريانه. وفي حال عدم اعتراض العميل خلال مدة أقصاها
+                  <span class="highlight">(24) ساعة</span> من تاريخ استلام
+                  العقد، يُعد ذلك <strong>قبولًا كاملاً ونهائيًا</strong> بجميع
+                  بنوده. وأي اعتراض يقدَّم من قبل العميل بعد هذه المدة يخضع
+                  لأحكام سياسة الإرجاع المعتمدة لدى الشركة.
+                </li>
+              </ol>
+
+              <h4>ثالثاً: أحكام عامة</h4>
+              <ol>
+                <li>
+                  إذا تعذر على الطرف الأول تنفيذ المشروع بعد التعاقد بسبب عدم
+                  توفر الظروف الملائمة أو وقوع قوة قاهرة، يتوجب على الشركة البحث
+                  عن حلول بديلة وإبلاغ الطرف الثاني بالمدة الزمنية الإضافية
+                  المطلوبة.
+                </li>
+                <li class="fw-bold">
+                  تُنفذ شركة معاً للوساطة التجارية ذ.م.م (معاً للتنمية) مُخصصة
+                  للأفراد والشركات والمؤسسات غير الربحية حصراً عبر عقود خدمات
+                  مُتفق عليها، مع التأكيد على أن الشركة لا تقبل أي تبرعات مالية
+                  أو عينية بأي شكل من الأشكال، تماشياً مع سياساتها المؤسسية
+                  والأنظمة المعمول بها.
+                </li>
+                <li>
+                  يعتبر الطرف الأول قد أنجز جميع التزاماته بمجرد تنفيذ المشروع
+                  وتسليم تقرير مصور وفيديو يوثق التنفيذ، إلا في حال وجود ظروف
+                  قاهرة تمنع ذلك (كالحروب أو الأزمات الإنسانية). يتم الإخطار
+                  بإتمام التنفيذ عبر رسالة واتساب على الرقم المزود من الطرف
+                  الثاني أو بأي وسيلة يراها الطرف الأول مناسبة.
+                </li>
+                <li>
+                  تقتصر كفالة المشاريع الإنشائية على عام واحد من تاريخ التسليم،
+                  ويعتمد العمر الافتراضي لهذه المشاريع على ظروف الاستخدام من قبل
+                  المستفيدين النهائيين وفقاً للسياسات المعتمدة من الجهات
+                  المنفذة.
+                </li>
+                <li>
+                  يتم تنفيذ المشروع من قبل الشركة أو من خلال شركائها الدوليين او
+                  المحليين المتخصصين في الدولة التي يتم فيها التنفيذ.
+                </li>
+                <li>
+                  في حال إلغاء الطرف الثاني للعقد قبل بدء التنفيذ، يتم خصم
+                  <span class="highlight">25% من قيمة العقد</span>، وإعادة
+                  المبلغ المتبقي. أما إذا بدأ التنفيذ، فلا يحق  �لطرف الثاني
+                  المطالبة باسترداد أي مبالغ مدفوعة، وتحدد الشركة وحدها ذلك.
+                </li>
+                <li>
+                  في حال نشوء أي خلاف بين الطرفين حول تنفيذ أو تفسير هذا العقد،
+                  يتم اللجوء إلى المحاكم الأردنية – محكمة قصر العدل (العبدلي)،
+                  ويخضع العقد للقوانين السارية في المملكة الأردنية الهاشمية.
+                </li>
+                <li>
+                  في حال تعذر على الشركة تسليم المواد المشتراة أو تأجيل توزيعها
+                  بسبب ظروف قاهرة أو أوضاع خارجة عن إرادتها (مثل الأزمات،
+                  الحروب، القيود القانونية، أو اشتراطات الجهات المنفذة)، يحق
+                  للشركة، ودون الحاجة للحصول على موافقة مسبقة من الطرف الثاني،
+                  إعادة توزيع المواد على الفئات المستهدفة أو الفئات المحتاجة
+                  الأخرى داخل و/أو خارج بلد التنفيذ، وذلك تفاديًا لتلف المواد أو
+                  ضياعها، ودون أن يترتب على الشركة أي مسؤولية بهذا الخصوص.
+                </li>
+              </ol>
+            } @else {
+              <p class="mb-4">
+                We are a leading company specializing in a comprehensive range
+                of distinguished services, including water management, renewable
+                energy, technology, health, and food services, in addition to
+                trade, training, project management, and commercial brokerage.
+              </p>
+              <h4>First: Obligations of the First Party</h4>
+              <ol class="mb-4">
+                <li>
+                  Selecting qualified and experienced partners in the project
+                  implementation country to ensure the quality and ease of
+                  service delivery and execution.
+                </li>
+                <li>
+                  Determining the appropriate location and preparing the
+                  necessary supplies, materials, equipment, means of
+                  transportation, and logistical support required for execution.
+                </li>
+                <li>
+                  Committing to the timeframe specified in the contract, unless
+                  force majeure or unforeseen events beyond the control of the
+                  First Party prevent adherence to the agreed deadlines.
+                </li>
+                <li>
+                  Providing the necessary documents and reports to the Second
+                  Party to demonstrate work progress and stage completion, using
+                  methods deemed appropriate by the First Party.
+                </li>
+                <li>
+                  Selecting qualified and experienced partners in the project
+                  implementation country to ensure the quality and ease of
+                  service delivery and execution.
+                </li>
+                <li>
+                  Taking all necessary measures to ensure the quality of
+                  services provided, with the First Party’s responsibilities
+                  limited only to the obligations stated in this contract. The
+                  First Party shall not be held responsible for any commitments
+                  or liabilities beyond their control.
+                </li>
+                <li>
+                  Settling the financial dues of the partners based on project
+                  execution stages and upon its completion.
+                </li>
+              </ol>
+              <h4>Second: Obligations of the Second Party</h4>
+              <ol class="mb-4">
+                <li>
+                  The Second Party shall pay the amount specified in the
+                  contract annex or its equivalent in the First Party's local
+                  currency, in return for the execution of the agreed services.
+                </li>
+                <li>
+                  The First Party, through the guarantee provided by the project
+                  executor, shall ensure that construction projects are covered
+                  for <span class="highlight">one year</span> from the date of
+                  delivery, without bearing any responsibility for factors
+                  beyond its control.
+                </li>
+                <li>
+                  The client's purchase of any service offered by the company
+                  shall be considered an explicit authorization for the company
+                  to execute and deliver the service as agreed upon, without
+                  requiring a written signature from the client for the contract
+                  to be deemed valid. If the client does not raise any objection
+                  within a maximum of
+                  <span class="highlight">twenty-four (24) hours</span> from the
+                  date of receiving the contract, this shall be considered
+                  <strong>full and final acceptance</strong> of all its terms.
+                  Any objection submitted after this period shall be subject to
+                  the company's approved return policy.
+                </li>
+              </ol>
+              <h4>Third: General Provisions</h4>
+              <ol class="mb-4">
+                <li>
+                  If the First Party is unable to implement the project after
+                  the contract due to unsuitable conditions or force majeure,
+                  the company must seek alternative solutions and inform the
+                  Second Party of any additional time required.
+                </li>
+                <li class="fw-bold">
+                  Together for Intermediation Services LLC (Together for
+                  Development) Company implements customized development
+                  solutions and projects for individuals, companies, and
+                  non-profit organizations exclusively through mutually agreed
+                  service contracts. We emphasize that the company does not
+                  accept any form of donations or in-kind donations, in
+                  compliance with our institutional policies and applicable
+                  regulations.
+                </li>
+                <li>
+                  The First Party shall be considered to have fulfilled all
+                  obligations once the project is implemented and a report with
+                  photos and video documentation is submitted, except in cases
+                  of force majeure (such as wars or humanitarian crises).
+                  Notification of completion will be sent via WhatsApp to the
+                  number provided by the Second Party or by any method deemed
+                  appropriate by the First Party.
+                </li>
+                <li>
+                  The guarantee for construction projects is limited to one year
+                  from the date of delivery, and the lifespan of these projects
+                  depends on how they are used by the final beneficiaries, in
+                  accordance with the policies of the executing entities.
+                </li>
+                <li>
+                  The project shall be executed by the company or its
+                  international or local partners specialized in the country
+                  where the implementation takes place.
+                </li>
+                <li>
+                  If the Second Party cancels the contract before implementation
+                  begins,
+                  <span class="highlight">25% of the contract value</span> will
+                  be deducted and the remaining amount refunded. If execution
+                  has already begun, the Second Party shall
+                  <strong>not be entitled to any refund</strong>, and the
+                  company alone shall make that determination.
+                </li>
+                <li>
+                  In case of any dispute between the two parties regarding the
+                  execution or interpretation of this contract, the matter shall
+                  be referred to the Jordanian courts – Palace of Justice
+                  (Abdali), and the contract shall be governed by the applicable
+                  laws of the Hashemite Kingdom of Jordan.
+                </li>
+                <li>
+                  If the Company is unable to deliver the purchased materials or
+                  is required to postpone their distribution due to force
+                  majeure events or circumstances beyond its control (including,
+                  but not limited to, crises, wars, legal restrictions, or
+                  requirements imposed by implementing entities), the Company
+                  shall have the right, without the need to obtain prior
+                  approval from the Second Party, to redistribute the materials
+                  to the targeted beneficiaries or to other needy groups within
+                  and/or outside the country of implementation, in order to
+                  prevent damage to or loss of the materials, and without
+                  incurring any liability whatsoever in this regard.
+                </li>
+              </ol>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>

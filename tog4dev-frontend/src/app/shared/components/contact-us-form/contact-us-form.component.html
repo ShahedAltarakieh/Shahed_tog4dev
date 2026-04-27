@@ -76,6 +76,7 @@
         </div>
         <div class="form-group col-12">
             <app-mobile-number
+                [isRequired]="true"
                 [value]="contactUsFormService.contactUsForm.phone.value"
                 [errorMsg]="contactUsFormService.contactUsForm.phone.errorMsg"
                 (valueChanged)="contactUsFormService.contactUsForm.phone.value = $event"
@@ -106,15 +107,21 @@
         </div>
     </div>
 </form>
-<app-modal [title]="'contact request' | translate " [show]="show_popup" (valueEmitted)="closePopup($event)">
+<app-modal [title]="'contact request' | translate " [show]="show_popup" [success_icon]="true" (valueEmitted)="closePopup($event)">
     @if(type == 1){
-        <p>{{ "we deeply appreciate your commitment to creating positive impact!" | translate }}</p>
+        <p class="lead-text">{{ "we deeply appreciate your commitment to creating positive impact!" | translate }}</p>
         <p class="d-sm-none">{{ "your request has been successfully received, and our team will contact you soon" | translate }}</p>
-        <p class="d-none d-sm-block">{{ "your request has been successfully received, and our team will contact you soon to explore opportunities for collaboration and enhancing community impact together. if you have any urgent inquiries, please feel free to contact us at +962779400900" | translate}}</p>
+        <p class="d-none d-sm-block">
+            {{ "your request has been successfully received, and our team will contact you soon to explore opportunities for collaboration and enhancing community impact together. If you have any urgent inquiries, please feel free to contact us at" | translate}}
+            <a class="modal-phone" dir="ltr" href="tel:+962779400900">+962&nbsp;7&nbsp;7940&nbsp;0900</a>
+        </p>
     }
     @if(type == 2 || type == 3){
-        <p>{{ "thank you for your commitment to making a difference!" | translate }}</p>
+        <p class="lead-text">{{ "thank you for your commitment to making a difference!" | translate }}</p>
         <p class="d-sm-none">{{ "your request has been successfully received, and our team will contact you soon" | translate }}</p>
-        <p class="d-none d-sm-block">{{ "your request has been successfully submitted, and we will reach out to you soon to continue this journey of giving together. if you need any urgent assistance, please contact us at +962779400900" | translate }}</p>
+        <p class="d-none d-sm-block">
+            {{ "your request has been successfully submitted, and we will reach out to you soon to continue this journey of giving together. If you need any urgent assistance, please contact us at" | translate }}
+            <a class="modal-phone" dir="ltr" href="tel:+962779400900">+962&nbsp;7&nbsp;7940&nbsp;0900</a>
+        </p>
     }
 </app-modal>

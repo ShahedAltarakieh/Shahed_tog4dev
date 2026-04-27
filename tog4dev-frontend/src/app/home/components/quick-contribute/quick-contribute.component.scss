@@ -1,35 +1,57 @@
 .help-project-form {
     position: absolute;
     z-index: 2;
-    top: 35%;
+    top: 50%;
+    transform: translateY(-50%);
     right: 70px;
-    background: rgba(19, 88, 93, 0.3);
-    backdrop-filter: blur(56px);
-    padding: 22px;
-    border-radius: 16px;
-    max-width: 442px;
+    background: linear-gradient(135deg, rgba(19, 88, 93, 0.55) 0%, rgba(19, 88, 93, 0.35) 100%);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    padding: 28px 26px;
+    border-radius: 24px;
+    max-width: 460px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.18);
+
     &.ar{
       left: 70px;
       right: unset;
     }
+
     .contribution-title {
-      font-size: 27px;
-      font-weight: 500;
-      line-height: 34px;
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 32px;
       width: calc(100% - 15px);
+      letter-spacing: 0.2px;
     }
-  
+
     .link-icon {
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 8px;
-      border: 1px solid #fff;
-      height: 28px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.08);
+      height: 32px;
       cursor: pointer;
-      width: 28px;
+      width: 32px;
+      transition: all 250ms ease;
+
+      &:hover {
+        background: #FECD0F;
+        border-color: #FECD0F;
+        transform: scale(1.08);
+        img { filter: brightness(0); }
+      }
+
+      &:focus-visible {
+        outline: 2px solid #FECD0F;
+        outline-offset: 2px;
+      }
     }
-    
+
     .custom-contribute {
       input {
         all: unset;
@@ -41,105 +63,138 @@
         box-sizing: border-box;
       }
     }
-  
+
     .contribute-btn {
-      background: rgba(254, 205, 15, 1);
+      background: linear-gradient(135deg, #FECD0F 0%, #f4b800 100%);
       border-radius: 14px;
       border: unset;
       color: #0F0F0F;
-      font-size: 14px;
-      font-weight: 400;
+      font-size: 15px;
+      font-weight: 700;
       line-height: 18px;
-      min-height: 30px;
-      transition: all 0.5s;
+      min-height: 44px;
+      letter-spacing: 0.3px;
+      box-shadow: 0 8px 20px rgba(254, 205, 15, 0.40);
+      transition: transform 280ms ease, box-shadow 280ms ease;
+
       &:hover{
-        transform: scaleY(1.2);
-        box-shadow: 0px 1.76px 3.52px 0px rgba(0, 0, 0, 0.25);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 26px rgba(254, 205, 15, 0.55);
+      }
+
+      &:focus-visible {
+        outline: 2px solid #ffffff;
+        outline-offset: 2px;
       }
     }
-    
+
     .help-project-desc {
       font-size: 14px;
-      line-height: 16.5px;
+      line-height: 18px;
       height: 36px;
       max-height: 36px;
       overflow: hidden;
       font-weight: 400;
+      opacity: 0.92;
       display: -webkit-box;
       -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;  
+      -webkit-box-orient: vertical;
     }
-  
+
     .contribute-options {
       text-align: center;
-      gap: 5px;
-    
+      gap: 8px;
+
       .contribute-input{
-        height: 30px !important;
-        padding: 5px;
-        background-color: transparent;
-        border: 1px solid #E0E0E0;
+        height: 36px !important;
+        padding: 6px 10px;
+        background-color: rgba(255,255,255,0.08);
+        border: 1px solid rgba(224, 224, 224, 0.5);
         border-radius: 12px;
         text-align: center;
-        font-size: 14.06px;
-        font-weight: 400;
-        line-height: 17.58px;
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 17px;
         color: #fff;
         min-width: 135px;
+        transition: all 220ms ease;
         &::placeholder{
-          color: #E0E0E0;
+          color: rgba(224, 224, 224, 0.7);
+        }
+        &:focus {
+          outline: none;
+          border-color: #FECD0F;
+          background: rgba(254, 205, 15, 0.08);
         }
       }
       .btn-static-amount {
-        height: 30px !important;
+        height: 36px !important;
         min-width: 65px;
-        color: #E0E0E0;
-        padding: 5px;
-        border: 1px solid #E0E0E0;
+        color: #ffffff;
+        padding: 5px 8px;
+        border: 1px solid rgba(224, 224, 224, 0.55);
         border-radius: 12px;
+        background: rgba(255,255,255,0.06);
         cursor: pointer;
-        transition: all 300ms;
+        transition: all 250ms ease;
         width: 100%;
+        font-weight: 600;
+        font-size: 13px;
+        &:focus-visible {
+          outline: 2px solid #FECD0F;
+          outline-offset: 2px;
+        }
         &:hover{
-          box-shadow: 0px 1.76px 3.52px 0px rgba(0, 0, 0, 0.25);
+          background: rgba(254, 205, 15, 0.15);
+          border-color: #FECD0F;
           color: #fff;
-          transform: scale(1.05);
+          transform: translateY(-1px);
         }
         &.active {
-          background-color: rgba(254, 205, 15, 1);
-          color: #000000;
+          background: linear-gradient(135deg, #FECD0F 0%, #f4b800 100%);
+          color: #0F0F0F;
+          border-color: #FECD0F;
+          box-shadow: 0 6px 14px rgba(254, 205, 15, 0.40);
         }
       }
     }
-  
+
     .options {
       display: flex;
-      gap: 5px;
-    
+      gap: 8px;
+
       button {
         display: flex;
         align-items: center;
         justify-content: center;
-        background: #E8E8E8;
+        background: rgba(255,255,255,0.92);
         flex: 50%;
         border-radius: 12px;
         width: 174.88px;
-        padding: 14px 10px;
+        padding: 12px 10px;
         cursor: pointer;
-        color: #0F0F0F;
+        color: #13585D;
         font-size: 14px;
-        font-weight: 400;
+        font-weight: 700;
         line-height: 14px;
-        transition: all 0.4s;
+        transition: all 280ms ease;
+        border: 1px solid transparent;
+        &:focus-visible {
+          outline: 2px solid #FECD0F;
+          outline-offset: 2px;
+        }
         &:hover{
-          background-color: rgba(254, 205, 15, 1);
-          border: 1px solid rgba(254, 205, 15, 1) !important;
-          color: #000000;
-          transform: scale(1.02);
+          background: #FECD0F;
+          border-color: #FECD0F;
+          color: #0F0F0F;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 18px rgba(254, 205, 15, 0.35);
         }
         &.active{
-          background-color: rgba(254, 205, 15, 1);
-          color: #000000;
+          background: linear-gradient(135deg, #FECD0F 0%, #f4b800 100%);
+          color: #0F0F0F;
+          border-color: #FECD0F;
+          box-shadow: 0 6px 14px rgba(254, 205, 15, 0.40);
         }
       }
     }
@@ -148,17 +203,20 @@
 @media all and (max-width: 767px) {
   .help-project-form {
     top: unset;
+    transform: none;
     width: 100%;
     max-width: unset;
     bottom: -145px;
     right: 10px;
     width: calc(100% - 20px);
     left: 10px;
+    padding: 20px 18px;
+    border-radius: 20px;
     &.ar{
       left: 10px;
       right: 10px;
     }
-    .contribute-options {   
+    .contribute-options {
       .contribute-input{
         font-size: 12px;
         min-width: 105px;
@@ -169,12 +227,13 @@
       }
     }
     .contribution-title {
-      font-size: 16px;
+      font-size: 18px;
       line-height: 24px;
     }
-    .options {    
+    .options {
       button {
         font-size: 12px;
+        padding: 10px 8px;
       }
     }
   }
@@ -184,6 +243,7 @@
   font-size: 12px;
   color:#fff;
   text-decoration: underline;
+  opacity: 0.9;
 }
 @media all and (max-width: 500px) {
   .contribute-options{
@@ -195,7 +255,7 @@
 }
 
 .has_error{
-  border: 1.5px solid #FF0000 !important;
+  border: 1.5px solid #FF6B6B !important;
   &::placeholder{
     color: #E0E0E0 !important;
   }

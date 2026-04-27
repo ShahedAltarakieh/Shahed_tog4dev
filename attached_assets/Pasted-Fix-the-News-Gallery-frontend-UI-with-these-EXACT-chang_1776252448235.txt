@@ -1,0 +1,107 @@
+Fix the News & Gallery frontend UI with these EXACT changes (desktop + mobile). Do not change anything else.
+
+====================================================
+
+1. FEATURED LARGE CARD (TOP BIG CARD)
+   ====================================================
+
+A) NEW TAG POSITION
+
+* Move the NEW badge onto the IMAGE itself.
+* Place it at top-right corner of the image.
+* Use absolute positioning.
+* Same style as small cards.
+
+B) DATE POSITION
+
+* Date must be perfectly aligned to the far RIGHT edge of the content area.
+* Same horizontal line as category badge.
+* Use flex row:
+  left = category badge
+  right = date
+
+C) CONTENT LAYOUT
+Under row(category + date):
+
+* title
+* short description
+* Read More button at bottom-right
+
+====================================================
+2. MOBILE ANNOUNCEMENT BAR (VERY IMPORTANT)
+===========================================
+
+Current issue:
+Text drops to next line / wraps.
+
+Need:
+Convert announcement area into REAL scrolling news ticker.
+
+On mobile only:
+
+* Single horizontal bar
+* One line only
+* No wrapping
+* Overflow hidden
+* Auto scrolling text from right to left
+* Like breaking news strip
+
+Example CSS:
+
+white-space: nowrap;
+overflow: hidden;
+
+Animated inner text:
+transform translateX(...)
+
+Use infinite marquee style smooth animation.
+
+Desktop keep current normal style.
+
+====================================================
+3. MOBILE ANNOUNCEMENT PRIORITY
+===============================
+
+If text too long:
+
+* It must continue scrolling
+* Never break line
+* Never hide message completely
+
+====================================================
+4. BIG CARD MOBILE
+==================
+
+Keep responsive layout:
+
+* image top
+* content below
+* NEW badge remains over image top-right
+
+====================================================
+5. CLEAN ALIGNMENT
+==================
+
+Check spacing:
+
+* category/date same line
+* date flush right exactly
+* no uneven margins
+
+====================================================
+6. KEEP EXISTING FUNCTIONALITY
+==============================
+
+Do NOT break:
+
+* search
+* category filters
+* pagination
+* read more links
+* existing data loading
+
+====================================================
+7. OUTPUT
+=========
+
+Apply changes directly in project files and show me edited files list.

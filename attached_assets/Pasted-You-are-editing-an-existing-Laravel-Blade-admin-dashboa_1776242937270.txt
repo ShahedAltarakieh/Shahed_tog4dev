@@ -1,0 +1,170 @@
+You are editing an existing Laravel / Blade admin dashboard project.
+
+Do NOT redesign everything. Keep the current theme, colors, branding, and existing structure. Only improve and fix the current UI/UX.
+
+Apply these exact changes:
+
+==================================================
+
+1. CUSTOM DATE CARD
+   ==================================================
+
+Move the top-right date range picker (from/to dates) into the "Custom Date" dashboard card.
+
+Inside that card add:
+
+* From date input
+* To date input
+* Apply button
+* Total amount display
+
+Style the inputs and button to match all other dashboard cards:
+
+* same border radius
+* same height
+* same spacing
+* same shadows
+* clean modern look
+
+Remove the floating top-right date picker.
+
+==================================================
+2. MATCH CARD HEIGHTS
+=====================
+
+Make equal heights:
+
+A) Operations card height = Quick Actions card height
+
+B) Monthly Overview card height = Payment Methods card height
+
+Use responsive flex/grid layout so heights stay aligned on desktop/tablet/mobile.
+
+==================================================
+3. IMPROVE MONTHLY BREAKDOWN TABLE
+==================================
+
+Enhance styling:
+
+* sticky table header
+* zebra rows
+* hover row effect
+* cleaner padding
+* better spacing
+* softer borders
+* responsive horizontal scroll on mobile
+* modern professional admin look
+
+==================================================
+4. FIX BACK BUTTON POSITION
+===========================
+
+Back button still appears on right side.
+
+Move it to the LEFT side beside "Add New" button.
+
+Must work correctly in both:
+
+* English (LTR)
+* Arabic (RTL)
+
+==================================================
+5. CLEAN PAGINATION STYLE
+=========================
+
+Current pagination is too large and messy.
+
+Create one unified pagination style for all tables/pages:
+
+* compact
+* modern
+* smaller buttons
+* equal spacing
+* rounded corners
+* active state uses current brand color
+* hover state polished
+
+Apply globally across all pages.
+
+==================================================
+6. SIDEBAR DUPLICATE DROPDOWN ICONS
+===================================
+
+Some sidebar items show two dropdown arrows.
+
+Fix it so each collapsible menu shows ONLY ONE chevron icon.
+
+Likely cause:
+
+* Bootstrap default arrow
+* custom arrow
+
+Disable duplicate source.
+
+==================================================
+7. REMOVE MEDIA LIBRARY PAGE
+============================
+
+Completely remove Media Library page from:
+
+* sidebar
+* routes
+* command palette / search
+* breadcrumbs
+* navigation references
+
+Keep:
+
+* News
+* Photos *Videos
+* Categories
+
+==================================================
+8. TABLE IMAGE STYLE
+====================
+
+Improve image thumbnails inside tables:
+
+* same size everywhere
+* rounded corners
+* object-fit cover
+* modern neat look
+
+==================================================
+9. RESPONSIVE QUALITY CHECK
+===========================
+
+Verify all pages on:
+
+* Desktop
+* Tablet
+* Mobile
+
+Fix overflow, spacing, broken alignment, sidebar issues, tables, buttons.
+
+==================================================
+10. IMPORTANT RULES
+===================
+
+* Keep existing theme/colors
+* Keep existing routes unless removing Media Library
+* Keep current branding/logo
+* Do not break RTL Arabic layout
+* Do not rewrite whole project
+* Only improve existing UI cleanly
+* Reuse current CSS classes when possible
+
+==================================================
+11. FINAL TASK
+==============
+
+After changes:
+
+* run project
+* verify no console errors
+* verify no Blade errors
+* verify sidebar works
+* verify dashboard layout aligned
+* verify pagination unified
+
+Then provide summary of changed files.

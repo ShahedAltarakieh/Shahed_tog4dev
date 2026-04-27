@@ -149,6 +149,9 @@
                                     {{ formatDate(article.published_at) }}
                                 </span>
                             }
+                            @if (article.is_recent) {
+                                <span class="article-recent-badge">{{ "new" | translate }}</span>
+                            }
                         </div>
                     </div>
 

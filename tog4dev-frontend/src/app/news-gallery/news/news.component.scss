@@ -15,8 +15,8 @@ $radius: 14px;
 
 .hero-section {
     position: relative;
-    background: linear-gradient(145deg, $primary 0%, $primary-dark 50%, darken($primary-dark, 8%) 100%);
-    padding: 80px 0 60px;
+    background: linear-gradient(145deg, #1a6e6e, #0d4f4f, #072c2c);
+    padding: 28px 0 60px;
     overflow: hidden;
 
     .hero-pattern {
@@ -151,6 +151,7 @@ $radius: 14px;
         color: inherit;
         min-height: 340px;
         transition: box-shadow 0.3s;
+        position: relative;
 
         &:hover {
             box-shadow: 0 12px 40px rgba(0,0,0,0.12);
@@ -179,6 +180,27 @@ $radius: 14px;
             img { width: 80px; opacity: 0.4; object-fit: contain; }
         }
 
+        .featured-recent-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #e74c3c;
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(#e74c3c, 0.35);
+            z-index: 2;
+
+            [dir="rtl"] & {
+                right: auto;
+                left: 12px;
+            }
+        }
+
         .featured-gradient {
             position: absolute;
             inset: 0;
@@ -192,6 +214,13 @@ $radius: 14px;
         flex-direction: column;
         justify-content: center;
 
+        .featured-top-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
         .featured-category {
             display: inline-block;
             width: fit-content;
@@ -203,7 +232,11 @@ $radius: 14px;
             background: $primary-light;
             padding: 4px 12px;
             border-radius: 6px;
-            margin-bottom: 14px;
+        }
+
+        .featured-date {
+            font-size: 0.82rem;
+            color: #999;
         }
 
         .featured-title {
@@ -227,16 +260,8 @@ $radius: 14px;
         .featured-meta {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-end;
             margin-top: 20px;
-
-            .meta-date {
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                font-size: 0.82rem;
-                color: #999;
-            }
 
             .meta-read {
                 display: flex;
@@ -253,7 +278,7 @@ $radius: 14px;
 
 .news-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 26px;
     padding-bottom: 48px;
 }
@@ -299,19 +324,24 @@ $radius: 14px;
             img { width: 70px; opacity: 0.35; object-fit: contain; }
         }
 
-        .featured-badge {
+        .recent-badge {
             position: absolute;
             top: 12px;
             right: 12px;
-            background: $accent;
+            background: #e74c3c;
             color: #fff;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba($accent, 0.4);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(#e74c3c, 0.35);
+
+            [dir="rtl"] & {
+                right: auto;
+                left: 12px;
+            }
         }
     }
 
@@ -321,13 +351,24 @@ $radius: 14px;
         display: flex;
         flex-direction: column;
 
+        .card-meta-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
         .card-category {
             font-size: 0.72rem;
             text-transform: uppercase;
             letter-spacing: 0.8px;
             color: $primary;
             font-weight: 700;
-            margin-bottom: 8px;
+        }
+
+        .card-date {
+            font-size: 0.75rem;
+            color: #b0b0b0;
         }
 
         .card-title {
@@ -358,13 +399,14 @@ $radius: 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 16px;
+            margin-top: auto;
             padding-top: 14px;
             border-top: 1px solid #f0f0f0;
 
-            .card-date {
-                font-size: 0.78rem;
-                color: #b0b0b0;
+            .card-read-more {
+                font-size: 0.82rem;
+                color: $primary;
+                font-weight: 600;
             }
 
             .card-arrow {
@@ -394,9 +436,16 @@ $radius: 14px;
 
 .loading-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 26px;
     padding: 20px 0;
+}
+
+.skeleton-featured {
+    height: 280px;
+    border-radius: $radius;
+    background: #eee;
+    margin-bottom: 30px;
 }
 
 .skeleton-card {
@@ -479,6 +528,11 @@ $radius: 14px;
         grid-template-columns: 1fr;
         .featured-content { padding: 24px; }
     }
+
+    .news-grid,
+    .loading-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (max-width: 768px) {
@@ -494,9 +548,23 @@ $radius: 14px;
         align-items: stretch;
         padding: 12px 14px;
         margin-top: -20px;
+        gap: 12px;
 
-        .search-wrapper { flex: 1; }
-        .category-pills { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+        .search-wrapper {
+            flex: 1;
+
+            .search-input { width: 100%; }
+        }
+
+        .category-pills {
+            flex-wrap: wrap;
+            gap: 8px;
+
+            .pill {
+                padding: 8px 14px;
+                font-size: 0.8rem;
+            }
+        }
     }
 
     .news-grid {
