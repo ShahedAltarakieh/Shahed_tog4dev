@@ -8,7 +8,7 @@ export class PaymentsService {
   private apiUrl = environment.apiUrl;
   constructor(public httpClient: HttpClient) { }
 
-  getPayment(lang: string, cart_id: string) {
+  getPayment(lang: 'ar' | 'en', cart_id: string) {
     return this.httpClient.get<any>(this.apiUrl + 'api/v1/payments/status/'+cart_id, {
       headers: { 'Accept-Language': lang, 'Content-Type': 'application/json' },
       params: {
@@ -16,7 +16,7 @@ export class PaymentsService {
       }
     });
   }
-  updatePurchaseOrderMeta(lang: string, cart_id: string) {
+  updatePurchaseOrderMeta(lang: 'ar' | 'en', cart_id: string) {
     return this.httpClient.get<any>(this.apiUrl + 'api/v1/payments/store-meta-purchase/'+cart_id, {
       headers: { 'Accept-Language': lang, 'Content-Type': 'application/json' },
       params: {

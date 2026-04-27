@@ -16,23 +16,16 @@ export class TextDirectionService {
   }
 
   /**
-   * Sets the text direction for the application. Direction is sourced from
-   * the active language metadata (admin-managed in the database) — never
-   * derived from the language code itself, so RTL languages added in the
-   * future work without code changes. When direction is unknown we default
-   * to LTR (the only safe default that does not silently flip the layout).
-   * @param lang The language code (used for the html `lang` attribute).
-   * @param direction Direction from the active language metadata.
+   * Sets the text direction for the application based on the language code
+   * @param lang The language code to set the text direction for
    */
-  setDirection(lang: string, direction?: 'ltr' | 'rtl') {
-    const resolved: 'ltr' | 'rtl' = direction === 'rtl' || direction === 'ltr'
-      ? direction
-      : 'ltr';
-    this.appDirection = resolved;
-
+  setDirection(lang: string) {
+    const direction = lang === 'ar' ? 'rtl' : 'ltr';
+    this.appDirection = direction;
+    
     // Only set the attribute if running in the browser
     if (isPlatformBrowser(this.platformId)) {
-      this.renderer.setAttribute(document.documentElement, 'dir', resolved);
+      this.renderer.setAttribute(document.documentElement, 'dir', direction);
       this.renderer.setAttribute(document.documentElement, 'lang', lang);
     }
   }

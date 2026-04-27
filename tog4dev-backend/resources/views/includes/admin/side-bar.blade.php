@@ -303,12 +303,6 @@
     </a>
 </li>
 <li>
-    <a href="{{ route('languages-admin.index') }}" data-tooltip="{{ __('app.languages') }}" class="{{ request()->routeIs('languages-admin.*') ? 'active-menu' : '' }}">
-        <i class="fas fa-language"></i>
-        <span>{{ __('app.languages') }}</span>
-    </a>
-</li>
-<li>
     <a href="{{ route('system.activity-logs') }}" data-tooltip="{{ __('app.activity_logs') }}" class="{{ request()->routeIs('system.activity-logs') ? 'active-menu' : '' }}">
         <i class="fas fa-history"></i>
         <span>{{ __('app.activity_logs') }}</span>

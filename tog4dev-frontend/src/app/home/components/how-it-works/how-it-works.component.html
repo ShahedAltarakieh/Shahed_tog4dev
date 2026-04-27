@@ -22,7 +22,7 @@
           <p class="hiw-desc">{{ step.desc | translate }}</p>
 
           @if (step.hasCta) {
-            <a class="hiw-cta" [routerLink]="storageService.localized(aboutUsRoutes)">
+            <a class="hiw-cta" [routerLink]="aboutUsRoutes[storageService.siteLanguage$.value]">
               {{ "learn more about us" | translate }}
               <span class="arrow" aria-hidden="true">→</span>
             </a>

@@ -10,7 +10,7 @@ export class TestimonialsService {
   private apiUrl = environment.apiUrl;
   constructor(public httpClient: HttpClient) { }
 
-  getTestimonials(lang: string, type: string | null = null, category_id: number | null = null, home_only: boolean | null = null) {
+  getTestimonials(lang: 'ar' | 'en', type: string | null = null, category_id: number | null = null, home_only: boolean | null = null) {
     return this.httpClient.get<GetTestimonialResponse>(this.apiUrl + 'api/v1/testimonials', {
       headers: { 'Accept-Language': lang, 'Content-Type': 'application/json' },
       params: {

@@ -10,7 +10,7 @@ export class HomeSliderService {
   private apiUrl = environment.apiUrl;
   constructor(public httpClient: HttpClient) { }
 
-  getHomeSliders(lang: string){
+  getHomeSliders(lang: 'ar' | 'en'){
     return this.httpClient.get<GetSliderResponse>(this.apiUrl + 'api/v1/sliders', {
       headers: { 'Accept-Language': lang, 'Content-Type': 'application/json' },
       params: {

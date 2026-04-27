@@ -38,9 +38,6 @@ Route::prefix('v1')->group(function () {
 
     Route::get('/get-currency/{code}', [UserController::class, 'get_currency']);
 
-    // Languages (active list, public)
-    Route::get('/languages', [\App\Http\Controllers\Api\V1\LanguagesController::class, 'index'])->name('languages.index');
-
     // facts
     Route::get('/facts', [FactController::class, 'index'])->name('facts');
     // Stories

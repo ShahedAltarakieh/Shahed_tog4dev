@@ -57,7 +57,7 @@
                                     <input type="checkbox" id="remember-me" name="remember-me" (input)="onRememberMeCheck($event)">
                                     <label for="remember-me">{{ 'remember me' | translate }}</label>
                                 </div>
-                                <a [routerLink]="storageService.localized(forgetRoutes)" class="forget-password">{{ "forget password?" | translate }}</a>
+                                <a [routerLink]="forgetRoutes[storageService.siteLanguage$.value]" class="forget-password">{{ "forget password?" | translate }}</a>
                             </div>
 
                             <div class="alert alert-danger p-2" style="font-size:14px;" *ngIf="error_message">
@@ -75,7 +75,7 @@
 
                         <p class="auth-switch text-center">
                             {{ "don't have an account?" | translate }}
-                            <a [routerLink]="storageService.localized(signupRoutes)">{{ "sign up" | translate }}</a>
+                            <a [routerLink]="signupRoutes[storageService.siteLanguage$.value]">{{ "sign up" | translate }}</a>
                         </p>
                     </div>
                 </div>

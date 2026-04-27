@@ -257,17 +257,6 @@ Route::group(
             Route::put('/', [\App\Http\Controllers\Admin\PageMaintenanceController::class, 'update'])->name('page-maintenance.update');
         });
 
-        Route::prefix('languages')->middleware('master')->group(function () {
-            Route::get('/', [\App\Http\Controllers\Admin\LanguageAdminController::class, 'index'])->name('languages-admin.index');
-            Route::get('/create', [\App\Http\Controllers\Admin\LanguageAdminController::class, 'create'])->name('languages-admin.create');
-            Route::post('/', [\App\Http\Controllers\Admin\LanguageAdminController::class, 'store'])->name('languages-admin.store');
-            Route::get('/{id}', [\App\Http\Controllers\Admin\LanguageAdminController::class, 'show'])->name('languages-admin.show');
-            Route::put('/{id}', [\App\Http\Controllers\Admin\LanguageAdminController::class, 'update'])->name('languages-admin.update');
-            Route::delete('/{id}', [\App\Http\Controllers\Admin\LanguageAdminController::class, 'destroy'])->name('languages-admin.destroy');
-            Route::post('/change-status/{id}', [\App\Http\Controllers\Admin\LanguageAdminController::class, 'change_status'])->name('languages-admin.change_status');
-            Route::post('/set-default/{id}', [\App\Http\Controllers\Admin\LanguageAdminController::class, 'set_default'])->name('languages-admin.set_default');
-        });
-
         Route::prefix('announcements')->middleware('master')->group(function () {
             Route::get('/', [AnnouncementAdminController::class, 'index'])->name('announcements.index');
             Route::get('/create', [AnnouncementAdminController::class, 'create'])->name('announcements.create');

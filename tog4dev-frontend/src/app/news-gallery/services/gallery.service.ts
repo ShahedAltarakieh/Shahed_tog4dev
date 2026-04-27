@@ -12,7 +12,7 @@ export class GalleryService {
 
   constructor(public apiService: ApiService) {}
 
-  getPhotos(lang: string, params: { category?: string; search?: string; page?: number; perPage?: number } = {}) {
+  getPhotos(lang: 'ar' | 'en', params: { category?: string; search?: string; page?: number; perPage?: number } = {}) {
     const additionalHeaders = { 'Accept-Language': lang };
     const queryParams: Record<string, string> = {
       '_': new Date().getTime().toString(),
@@ -27,7 +27,7 @@ export class GalleryService {
       .pipe(map(this.apiService.extractTypeFromMessage));
   }
 
-  getVideos(lang: string, params: { category?: string; search?: string; page?: number; perPage?: number; display_target?: string } = {}) {
+  getVideos(lang: 'ar' | 'en', params: { category?: string; search?: string; page?: number; perPage?: number; display_target?: string } = {}) {
     const additionalHeaders = { 'Accept-Language': lang };
     const queryParams: Record<string, string> = {
       '_': new Date().getTime().toString(),

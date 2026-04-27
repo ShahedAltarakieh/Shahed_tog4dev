@@ -27,7 +27,7 @@ interface HiwStep {
 })
 export class HowItWorksComponent {
 
-  aboutUsRoutes: Record<string, string> = {
+  aboutUsRoutes: Record<'ar' | 'en', string> = {
     ar: '/ar/من-نحن',
     en: '/en/about-us',
   };

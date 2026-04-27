@@ -63,7 +63,7 @@ export class BasketComponent implements OnInit {
 
   @ViewChildren(BasketItemComponent) basketItemComponents!: QueryList<BasketItemComponent>;
 
-  basketRoutes: Record<string, string> = {
+  basketRoutes: Record<'ar' | 'en', string> = {
     ar: 'ar/السلة',
     en: 'en/basket',
   };
@@ -174,7 +174,7 @@ export class BasketComponent implements OnInit {
         this.submit_payment();
       }
     };
-    const lang = this.storageService.siteLanguage$.value as string;
+    const lang = this.storageService.siteLanguage$.value as 'ar' | 'en';
     if (payload.items.length > 0) {
       this.isLoading = true;
       this.cartService.storeDedicationNames(lang, payload).subscribe({
@@ -275,7 +275,7 @@ export class BasketComponent implements OnInit {
     this.show_collection_modal = false;
     this.show_error_payment = false;
     this.payment_error_modal = false;
-    this.router.navigate([this.storageService.localized(this.basketRoutes)], {
+    this.router.navigate([this.basketRoutes[this.storageService.siteLanguage$.value]], {
       queryParams: {
         'payment': null,
         'message': null
